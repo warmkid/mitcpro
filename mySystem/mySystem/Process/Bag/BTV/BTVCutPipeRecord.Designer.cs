@@ -150,7 +150,7 @@
             // tb成品代码
             // 
             this.tb成品代码.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb成品代码.Location = new System.Drawing.Point(15, 12);
+            this.tb成品代码.Location = new System.Drawing.Point(358, 46);
             this.tb成品代码.Name = "tb成品代码";
             this.tb成品代码.Size = new System.Drawing.Size(100, 26);
             this.tb成品代码.TabIndex = 8;
@@ -338,14 +338,16 @@
             this.btn提交数据审核.UseVisualStyleBackColor = true;
             this.btn提交数据审核.Click += new System.EventHandler(this.btn提交数据审核_Click);
             // 
-            // cmb产品代码
+            // cmb成品代码
             // 
+            this.cmb成品代码.Enabled = false;
             this.cmb成品代码.Font = new System.Drawing.Font("宋体", 12F);
             this.cmb成品代码.FormattingEnabled = true;
-            this.cmb成品代码.Location = new System.Drawing.Point(350, 46);
-            this.cmb成品代码.Name = "cmb产品代码";
+            this.cmb成品代码.Location = new System.Drawing.Point(21, 7);
+            this.cmb成品代码.Name = "cmb成品代码";
             this.cmb成品代码.Size = new System.Drawing.Size(108, 24);
             this.cmb成品代码.TabIndex = 271;
+            this.cmb成品代码.Visible = false;
             // 
             // BTVCutPipeRecord
             // 

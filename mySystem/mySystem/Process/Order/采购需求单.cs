@@ -178,7 +178,11 @@ namespace mySystem.Process.Order
                 DataRow dr = dtOuter.NewRow();
                 dr = writeOuterDefault(dr, 订单号, dt拟交货日期);
                 dtOuter.Rows.Add(dr);
-                ((DataTable)bsOuter.DataSource).Rows[0]["审核结果"] = 0;
+                if (((DataTable)bsOuter.DataSource).Rows[0]["审核结果"] == DBNull.Value)
+                {
+                    ((DataTable)bsOuter.DataSource).Rows[0]["审核结果"] = 0;
+                }
+                //((DataTable)bsOuter.DataSource).Rows[0]["审核结果"] = 0;
                 daOuter.Update((DataTable)bsOuter.DataSource);
                 readOuterData(订单号);
                 outerBind();

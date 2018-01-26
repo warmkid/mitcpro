@@ -1246,7 +1246,10 @@ namespace mySystem.Process.Bag.BTV
 
         private void BTVRawMaterialDispensing_FormClosing(object sender, FormClosingEventArgs e)
         {
-            writeDGVWidthToSetting(dataGridView1);
+            if (dataGridView1.Columns.Count > 0)
+            {
+                writeDGVWidthToSetting(dataGridView1);
+            }
         }
     }
 }

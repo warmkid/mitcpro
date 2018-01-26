@@ -1475,8 +1475,14 @@ namespace mySystem.Process.Bag.BTV
 
         private void BTV3DProRecord_FormClosing(object sender, FormClosingEventArgs e)
         {
-            writeDGVWidthToSetting(dataGridView1);
-            writeDGVWidthToSetting(dataGridView2);
+            if (dataGridView1.Columns.Count > 0)
+            {
+                writeDGVWidthToSetting(dataGridView1);
+            }
+            if (dataGridView2.Columns.Count > 0)
+            {
+                writeDGVWidthToSetting(dataGridView2);
+            }
         }
 
         
