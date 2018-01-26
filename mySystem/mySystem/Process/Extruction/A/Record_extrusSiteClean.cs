@@ -219,7 +219,11 @@ namespace mySystem.Extruction.Process
                     da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
                 else
                 {
-                    ((DataTable)bs_prodinstr.DataSource).Rows[0]["审核是否通过"] = 0;
+                    if (((DataTable)bs_prodinstr.DataSource).Rows[0]["审核是否通过"] == DBNull.Value)
+                    {
+                        ((DataTable)bs_prodinstr.DataSource).Rows[0]["审核是否通过"] = 0;
+                    }
+                    //((DataTable)bs_prodinstr.DataSource).Rows[0]["审核是否通过"] = 0;
                     da_prodinstr_sql.Update((DataTable)bs_prodinstr.DataSource);
                 }
 

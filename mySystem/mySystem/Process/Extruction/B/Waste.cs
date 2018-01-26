@@ -98,7 +98,11 @@ namespace mySystem.Process.Extruction.B
                 }
                 else
                 {
-                    ((DataTable)bsOuter.DataSource).Rows[0]["审核是否通过"] = 0;
+                    if (((DataTable)bsOuter.DataSource).Rows[0]["审核是否通过"] == DBNull.Value)
+                    {
+                        ((DataTable)bsOuter.DataSource).Rows[0]["审核是否通过"] = 0;
+                    }
+                    //((DataTable)bsOuter.DataSource).Rows[0]["审核是否通过"] = 0;
                     daOuterSQL.Update((DataTable)bsOuter.DataSource);
                 }
                 
