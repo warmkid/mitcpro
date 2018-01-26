@@ -58,7 +58,7 @@ namespace mySystem.Process.Bag.BTV
 
             setControlFalse();
 
-            cmb成品代码.Enabled = true;
+            tb成品代码.Enabled = true;
             tb产品批号.ReadOnly = false;
             dtp生产日期.Enabled = true;
             btn查询新建.Enabled = true;
@@ -184,10 +184,9 @@ namespace mySystem.Process.Bag.BTV
                     }
                     else
                     {
-                        for (int i = 0; i < dt代码批号.Rows.Count; i++)
-                        {
-                            cmb成品代码.Items.Add(dt代码批号.Rows[i][1].ToString());//添加
-                        }
+                        tb成品代码.Text=dt代码批号.Rows[0][0].ToString();//添加
+                        //cmb成品代码.SelectedItem = 0;
+                        tb产品批号.Text = dt代码批号.Rows[0][1].ToString();
                         
                     }
                     datemp.Dispose();
@@ -203,8 +202,8 @@ namespace mySystem.Process.Bag.BTV
             { }
 
             //*********数据填写*********//
-            cmb成品代码.SelectedIndex = -1;
-            tb产品批号.Text = "";
+            //cmb成品代码.SelectedIndex = -1;
+            //tb产品批号.Text = "";
         }
 
         //根据状态设置可读写性
@@ -329,7 +328,7 @@ namespace mySystem.Process.Bag.BTV
             
             //查询条件始终不可编辑
             tb生产指令编号.Enabled = false;
-            cmb成品代码.Enabled = false;
+            tb成品代码.Enabled = false;
             tb产品批号.Enabled = false;
             dtp生产日期.Enabled = false;
             btn查询新建.Enabled = false;
@@ -475,8 +474,8 @@ namespace mySystem.Process.Bag.BTV
             //解绑->绑定
             tb生产指令编号.DataBindings.Clear();
             tb生产指令编号.DataBindings.Add("Text", bs记录.DataSource, "生产指令编号");
-            cmb成品代码.DataBindings.Clear();
-            cmb成品代码.DataBindings.Add("Text", bs记录.DataSource, "成品代码");
+            tb成品代码.DataBindings.Clear();
+            tb成品代码.DataBindings.Add("Text", bs记录.DataSource, "成品代码");
             tb产品批号.DataBindings.Clear();
             tb产品批号.DataBindings.Add("Text", bs记录.DataSource, "产品批号");
             dtp生产日期.DataBindings.Clear();
@@ -493,7 +492,7 @@ namespace mySystem.Process.Bag.BTV
         {
             dr["生产指令ID"] = InstruID;
             dr["生产指令编号"] = Instruction;
-            dr["成品代码"] = cmb成品代码.Text;
+            dr["成品代码"] = tb成品代码.Text;
             dr["产品批号"] = tb产品批号.Text;
             dr["生产日期"] = DateTime.Now.ToString("yyyy/MM/dd");
             dr["审核员"] = "";
@@ -638,12 +637,12 @@ namespace mySystem.Process.Bag.BTV
         //用于显示/新建数据
         private void btn查询新建_Click(object sender, EventArgs e)
         {
-            if (cmb成品代码.Text == "" || tb产品批号.Text == "")
+            if (tb成品代码.Text == "" || tb产品批号.Text == "")
             {
                 MessageBox.Show("成品代码和产品批号均不能为空");
                 return;
             }
-            Prodcode = cmb成品代码.Text;
+            Prodcode = tb成品代码.Text;
             Prodbatch = tb产品批号.Text ;
             date = dtp生产日期.Value ;
             DataShow(InstruID, Prodcode, Prodbatch, date);
@@ -741,7 +740,7 @@ namespace mySystem.Process.Bag.BTV
             //外表保存
             bs记录.EndEdit();
             da记录.Update((DataTable)bs记录.DataSource);
-            readOuterData(InstruID, cmb成品代码.Text,tb产品批号.Text,dtp生产日期.Value);
+            readOuterData(InstruID, tb成品代码.Text,tb产品批号.Text,dtp生产日期.Value);
             outerBind();
 
             setEnableReadOnly();
@@ -1077,8 +1076,16 @@ namespace mySystem.Process.Bag.BTV
 
         private void BTVCutPipeRecord_FormClosing(object sender, FormClosingEventArgs e)
         {
-            writeDGVWidthToSetting(dataGridView1);
+            if (dataGridView1.Columns.Count > 0)
+            {
+                if (dataGridView1.Columns.Count > 0)
+                {
+                    writeDGVWidthToSetting(dataGridView1);
+                }
+            }
         }
+
+        
 
     }
 }

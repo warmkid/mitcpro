@@ -245,12 +245,6 @@
     <Compile Include="Process\Bag\BTV\BTVMaterialRecord.Designer.cs">
       <DependentUpon>BTVMaterialRecord.cs</DependentUpon>
     </Compile>
-    <Compile Include="Process\Bag\BTV\BTVProInstruction.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Process\Bag\BTV\BTVProInstruction.Designer.cs">
-      <DependentUpon>BTVProInstruction.cs</DependentUpon>
-    </Compile>
     <Compile Include="Process\Bag\BTV\BTVPunchDrawingConfirm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1429,9 +1423,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\BTV\BTVMaterialRecord.resx">
       <DependentUpon>BTVMaterialRecord.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Process\Bag\BTV\BTVProInstruction.resx">
-      <DependentUpon>BTVProInstruction.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\BTV\BTVPunchDrawingConfirm.resx">
       <DependentUpon>BTVPunchDrawingConfirm.cs</DependentUpon>

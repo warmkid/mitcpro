@@ -409,7 +409,7 @@ namespace mySystem.Process.Bag.BTV
             dr["生产日期"] = DateTime.Now.ToString("yyyy/MM/dd");
             dr["班次"] = mySystem.Parameter.userflight;
             dr["备注"] = "确认打“√”，否打“×”";
-
+            dr["生产产品"] = false;
             dr["操作员"] = mySystem.Parameter.userName;
             dr["操作日期"] = DateTime.Now.ToString("yyyy/MM/dd");
             dr["审核员"] = "";
@@ -918,7 +918,10 @@ namespace mySystem.Process.Bag.BTV
         private void BTVConfirmBefore_FormClosing(object sender, FormClosingEventArgs e)
         {
             //string width = getDGVWidth(dataGridView1);
-            writeDGVWidthToSetting(dataGridView1);
+            if (dataGridView1.Columns.Count > 0)
+            {
+                writeDGVWidthToSetting(dataGridView1);
+            }
         }
 
         
