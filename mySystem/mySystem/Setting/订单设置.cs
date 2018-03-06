@@ -429,6 +429,31 @@ namespace mySystem.Setting
                     //    MessageBox.Show("存货代码有重复，请检查");
                     //    return;
                     //}
+
+                    // 检查是否有空行
+                    
+                    foreach (DataRow dr in dt存货档案.Rows)
+                    {
+                        bool isEmpty = true;
+                        object[] items = dr.ItemArray;
+                        int l = items.Length;
+                        for (int i = 1; i < l; ++i)
+                        {
+                            string item = items[i].ToString().Trim();
+                            if (!(item.Equals("") || item == null))
+                            {
+                                isEmpty = false;
+                                break;
+                            }
+                        }
+                        if (isEmpty)
+                        {
+                            MessageBox.Show("请勿保存空白数据！");
+                            return;
+                        }
+                    }
+
+
                     da存货档案.Update((DataTable)bs存货档案.DataSource);
                     dt存货档案.Clear();
                     da存货档案.Fill(dt存货档案);
