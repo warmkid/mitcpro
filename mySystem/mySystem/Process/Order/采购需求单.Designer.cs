@@ -56,6 +56,7 @@
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
+            this.btn更新 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.SuspendLayout();
@@ -326,11 +327,23 @@
             this.label11.TabIndex = 145;
             this.label11.Text = "需要采购组件信息：";
             // 
+            // btn更新
+            // 
+            this.btn更新.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn更新.Location = new System.Drawing.Point(579, 582);
+            this.btn更新.Name = "btn更新";
+            this.btn更新.Size = new System.Drawing.Size(75, 23);
+            this.btn更新.TabIndex = 146;
+            this.btn更新.Text = "更新";
+            this.btn更新.UseVisualStyleBackColor = true;
+            this.btn更新.Click += new System.EventHandler(this.btn更新_Click);
+            // 
             // 采购需求单
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(953, 617);
+            this.Controls.Add(this.btn更新);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.dataGridView2);
@@ -399,5 +412,6 @@
         private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Button btn更新;
     }
 }

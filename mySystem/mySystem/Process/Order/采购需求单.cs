@@ -972,5 +972,97 @@ namespace mySystem.Process.Order
                 isFirstBind2 = false;
             }
         }
+
+        private void btn更新_Click(object sender, EventArgs e)
+        {
+            // 重新读取BOM列表信息
+            SqlDataAdapter da = new SqlDataAdapter("select * from 销售订单 where 订单号='" + _订单号 + "'", mySystem.Parameter.conn);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+
+            if (dt.Rows.Count == 0)
+            {
+                MessageBox.Show("读取销售订单数据失败");
+                return;
+
+            }
+
+
+            int 销售订单ID = Convert.ToInt32(dt.Rows[0]["ID"]);
+
+
+            readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
+            setDataGridViewColumn();
+            innerBind();
+            
+            Hashtable ht产成品, ht组件;
+            ht产成品 = new Hashtable();
+            ht组件 = new Hashtable();
+            da = new SqlDataAdapter("select * from 销售订单详细信息 where 销售订单ID=" + 销售订单ID, mySystem.Parameter.conn);
+            dt = new DataTable();
+            da.Fill(dt);
+            // 获取所有存货档案信息
+            daCH = new SqlDataAdapter("select ID,存货代码,BOM列表 from 设置存货档案", mySystem.Parameter.conn);
+            dtCH = new DataTable();
+            daCH.Fill(dtCH);
+
+            // 重新读取BOM信息
+            foreach (DataRow dr in dt.Rows)
+            {
+                string 存货代码 = dr["存货代码"].ToString();
+                double 订单数量 = Convert.ToDouble(dr["数量"]);
+                if (!ht产成品.ContainsKey(存货代码))
+                {
+                    ht产成品[存货代码] = 0;
+                }
+                ht产成品[存货代码] = Convert.ToDouble(ht产成品[存货代码]) + 订单数量;
+                // 通过函数获得者一个代码需要的组件hashtable
+                // 然后和总的hashtable 合并
+                /*
+                JArray BOM_IDS = JArray.Parse(ht产成品BOM[存货代码].ToString());
+                foreach (JToken sid in BOM_IDS)
+                {
+                    int id = Convert.ToInt32(sid["ID"]);
+                    double 数量每产品 = Convert.ToDouble(sid["数量"]);
+                    if (ht组件.ContainsKey(id))
+                    {
+                        ht组件[id] = Convert.ToInt32(ht组件[id]) + 订单数量 * 数量每产品;
+                    }
+                    else
+                    {
+                        ht组件[id] = 订单数量 * 数量每产品;
+                    }
+                }*/
+                //写个函数生成ht组件
+                Hashtable tmp = get组件信息(存货代码, 订单数量);
+                // 合并
+                foreach (int k in tmp.Keys.OfType<int>().ToArray<int>())
+                {
+                    if (!ht组件.ContainsKey(k)) ht组件[k] = 0;
+                    ht组件[k] = Math.Round(Convert.ToDouble(ht组件[k]) + Convert.ToDouble(tmp[k]), 2);
+                }
+                //
+            }
+
+            // 更新内表每一行的数据
+            foreach (DataRow dr in dtInner.Rows)
+            {
+                string daima = dr["存货代码"].ToString();
+                DataRow[] drs = dtCH.Select("存货代码='" + daima + "'");
+                if (drs.Length == 0)
+                {
+                    continue;
+                }
+                int id = Convert.ToInt32(drs[0]["ID"]);
+                dr["订单数量"] = ht组件[id];
+                dr["采购数量"] = ht组件[id];
+            }
+            daInner.Update((DataTable)bsInner.DataSource);
+            readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
+            innerBind();
+
+           
+            
+        }
     }
 }
