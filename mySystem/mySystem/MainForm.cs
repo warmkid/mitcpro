@@ -445,53 +445,78 @@ namespace mySystem
             //oXL.Visible = true;
             // 修改Sheet中某行某列的值
             
-            string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
-            OleDbConnection conn;
-            conn = new OleDbConnection(strConnect);
+//            string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
+//                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
+//            OleDbConnection conn;
+//            conn = new OleDbConnection(strConnect);
+//            conn.Open();
+
+            string strConnect = "server=" + mySystem.Parameter.IP_port + ";database=dingdan_kucun;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
+            SqlConnection conn;
+            conn = new SqlConnection(strConnect);
             conn.Open();
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 设置存货档案", conn);
+
+            SqlDataAdapter da = new SqlDataAdapter("select * from 设置存货档案", conn);
             DataTable dt存货档案 = new DataTable();
             da.Fill(dt存货档案);
-            da = new OleDbDataAdapter("select * from 库存台帐 where 0=1", conn);
-            OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
+            da = new SqlDataAdapter("select * from 库存台帐 where", conn);
+            SqlCommandBuilder cb = new SqlCommandBuilder(da);
             DataTable dt = new DataTable();
             da.Fill(dt);
             for (int i = 2; ; ++i)
             {
+                string 存货代码 = my.Cells[i, 5].Value != null ? Convert.ToString(my.Cells[i, 5].Value) : "";
+                string 批号 = my.Cells[i, 6].Value != null ? Convert.ToString(my.Cells[i, 6].Value) : "";
+                DataRow[] drs库存 = dt.Select("产品代码='" + 存货代码 + "' and 产品批号='" + 批号 + "'");
 
-                string 仓库名称 = my.Cells[i, 1].Value != null ? Convert.ToString( my.Cells[i, 1].Value) : "";
-                string 存货名称 = my.Cells[i, 3].Value != null ?Convert.ToString( my.Cells[i, 3].Value) : "";
-                string 规格型号 = my.Cells[i, 4].Value != null ?Convert.ToString( my.Cells[i, 4].Value ): "";
-                string 存货代码 = my.Cells[i, 5].Value != null ?Convert.ToString( my.Cells[i, 5].Value ): "";
-                if (my.Cells[i, 5].Value == null) break;
-                string 批号 = my.Cells[i, 6].Value != null ? Convert.ToString( my.Cells[i, 6].Value ): "";
-                double 现存数量 = my.Cells[i, 8].Value != null ?Convert.ToDouble( my.Cells[i, 8].Value ): 0;
 
-                
-
-                DataRow dr = dt.NewRow();
-                dr["仓库名称"] = 仓库名称;
-                dr["产品名称"] = 存货名称;
-                dr["产品代码"] = 存货代码;
-                dr["产品规格"] = 规格型号;
-                dr["产品批号"] = 批号;
-                dr["现存数量"] = 现存数量;
-                dr["状态"] = "合格";
-                dr["用途"] = "__自由";
-                dr["冻结状态"] = true;
-                dr["供应商名称"] = "无";
-                DataRow[] drs = dt存货档案.Select("存货代码='" + 存货代码 + "'");
-                if (drs.Length > 0)
+                if (drs库存.Length == 0)
                 {
-                    dr["换算率"] = drs[0]["换算率"];
-                    dr["现存件数"] = Convert.ToDouble(dr["现存数量"]) / Convert.ToDouble(drs[0]["换算率"]);
-                    dr["主计量单位"] = drs[0]["主计量单位名称"];
+                    string 仓库名称 = my.Cells[i, 1].Value != null ? Convert.ToString(my.Cells[i, 1].Value) : "";
+                    string 存货名称 = my.Cells[i, 3].Value != null ? Convert.ToString(my.Cells[i, 3].Value) : "";
+                    string 规格型号 = my.Cells[i, 4].Value != null ? Convert.ToString(my.Cells[i, 4].Value) : "";
+
+                    if (my.Cells[i, 5].Value == null) break;
+
+                    double 现存数量 = my.Cells[i, 8].Value != null ? Convert.ToDouble(my.Cells[i, 8].Value) : 0;
+
+
+
+                    DataRow dr = dt.NewRow();
+                    dr["仓库名称"] = 仓库名称;
+                    dr["产品名称"] = 存货名称;
+                    dr["产品代码"] = 存货代码;
+                    dr["产品规格"] = 规格型号;
+                    dr["产品批号"] = 批号;
+                    dr["现存数量"] = 现存数量;
+                    dr["状态"] = "合格";
+                    dr["用途"] = "__自由";
+                    dr["冻结状态"] = true;
+                    dr["供应商名称"] = "无";
+                    DataRow[] drs = dt存货档案.Select("存货代码='" + 存货代码 + "'");
+                    if (drs.Length > 0)
+                    {
+                        dr["换算率"] = drs[0]["换算率"];
+                        dr["现存件数"] = Convert.ToDouble(dr["现存数量"]) / Convert.ToDouble(drs[0]["换算率"]);
+                        dr["主计量单位"] = drs[0]["主计量单位名称"];
+                    }
+                    dt.Rows.Add(dr);
                 }
-                dt.Rows.Add(dr);
+                else
+                {
+                    double 现存数量 = my.Cells[i, 8].Value != null ? Convert.ToDouble(my.Cells[i, 8].Value) : 0;
+                    drs库存[0]["现存数量"] = 现存数量;
+                    DataRow[] drs = dt存货档案.Select("存货代码='" + 存货代码 + "'");
+                    if (drs.Length > 0)
+                    {
+                        drs库存[0]["换算率"] = drs[0]["换算率"];
+                        drs库存[0]["现存件数"] = Convert.ToDouble(drs库存[0]["现存数量"]) / Convert.ToDouble(drs[0]["换算率"]);
+                        drs库存[0]["主计量单位"] = drs[0]["主计量单位名称"];
+                    }
+                }
             }
             da.Update(dt);
-            MessageBox.Show("导入供应商成功");
+            MessageBox.Show("导入库存台账成功");
         }
 
         void import供应商()
