@@ -259,10 +259,12 @@ namespace mySystem.Process.Order
                 {
                     setControlFalse();
                     btn取消订单.Enabled = true;
+                    btn修改.Enabled = true;
                 }
                 else
                 {
                     btn取消订单.Enabled = true;
+                    btn修改.Enabled = false;
                 }
                     
                 
@@ -271,6 +273,14 @@ namespace mySystem.Process.Order
             {
                 if (Parameter.FormState.未保存 == _formState || Parameter.FormState.审核未通过 == _formState) setControlTrue();
                 else setControlFalse();
+                // 修改时的状态
+                if (dtOuter.Rows[0]["审核员"].ToString().Equals("_修改中"))
+                {
+                    setControlFalse();
+                    dataGridView1.ReadOnly = false;
+                    btn提交审核.Enabled = true;
+                    btn确认.Enabled = true;
+                }
             }
 
 
@@ -299,6 +309,7 @@ namespace mySystem.Process.Order
             btn提交审核.Enabled = false;
             btn新建.Enabled = false;
             btn取消订单.Enabled = false;
+            btn修改.Enabled = false;
         }
 
         void setControlFalse()
@@ -685,6 +696,7 @@ namespace mySystem.Process.Order
 
         public override void CheckResult()
         {
+            bool is修改后 = dtOuter.Rows[0]["审核员"].Equals("_修改中");
             //获得审核信息
             dtOuter.Rows[0]["审核员"] = mySystem.Parameter.userName;
             dtOuter.Rows[0]["审核时间"] = ckform.time;
@@ -720,7 +732,65 @@ namespace mySystem.Process.Order
 
 
             save();
+
+            // 更新后续可能的表单
+            if (is修改后)
+            {
+                更新销售需求单和销售批准单();
+
+            }
+            
+
             base.CheckResult();
+        }
+
+        void 更新销售需求单和销售批准单()
+        {
+            string 订单号 = dtOuter.Rows[0]["订单号"].ToString();
+            string 状态 = dtOuter.Rows[0]["状态"].ToString();
+            if (状态.Equals("已生成采购需求单"))
+            {
+                mySystem.Process.Order.采购需求单 form = new mySystem.Process.Order.采购需求单(mainform, 订单号);
+                form.更新();
+                // 获取所有需求单流水号，每个流水号循环处理
+                List<String> x需求单流水号 = form.get需求流水号();
+                foreach (String l流水号 in x需求单流水号)
+                {
+                    // 查找批准单详细信息，是否有这个号
+                    String sql = "select * from 采购批准单详细信息 where 组件订单需求流水号='{0}' and 用途='{1}'";
+                    SqlDataAdapter da = new SqlDataAdapter(String.Format(sql, l流水号, 订单号), mySystem.Parameter.conn);
+                    SqlCommandBuilder cb = new SqlCommandBuilder(da);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+                    if (dt.Rows.Count > 0)
+                    {
+                        // 如果有，比较区别，记录变化
+                        double 原来的数量 = Convert.ToDouble(dt.Rows[0]["采购数量"]);
+                        double 原来的件数 = Convert.ToDouble(dt.Rows[0]["采购件数"]);
+                       
+                        DataRow[] drs = form.dtInner.Select("组件订单需求流水号='x需求单流水号'");
+                        double 现在的数量 = Convert.ToDouble(drs[0]["采购数量"]);
+                        double 现在的件数 = Convert.ToDouble(drs[0]["采购件数"]);
+                        // 更新批准单详细信息
+                        dt.Rows[0]["采购数量"] = 现在的数量;
+                        dt.Rows[0]["采购件数"] = 现在的件数;
+                        da.Update(dt);
+                        // 拿到产品代码和批准单ID
+                        string 代码 = dt.Rows[0]["存货代码"].ToString();
+                        int 批准单id = Convert.ToInt32(dt.Rows[0]["ID"]);
+                        // 更新实际购入信息
+                        sql = "select * from 采购批准单实际购入信息 where 采购批准单ID={0} and 产品代码='{1}'";
+                        da = new SqlDataAdapter(String.Format(sql, 批准单id, 代码), mySystem.Parameter.conn);
+                        cb = new SqlCommandBuilder(da);
+                        dt = new DataTable();
+                        da.Fill(dt);
+                        dt.Rows[0]["订单需求数量"] = Convert.ToDouble(dt.Rows[0]["订单需求数量"]) + 现在的数量 - 原来的数量;
+                        dt.Rows[0]["实际购入"] = Convert.ToDouble(dt.Rows[0]["实际购入"]) + 现在的数量 - 原来的数量;
+                        da.Update(dt);
+                    }
+                    
+                }
+            }
         }
 
         void addOtherEventHandler()
@@ -1014,6 +1084,24 @@ namespace mySystem.Process.Order
         private void btn打印_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btn修改_Click(object sender, EventArgs e)
+        {
+            if (DialogResult.Yes == MessageBox.Show("修改意见为:" + textbox修改.Text, "确认", MessageBoxButtons.YesNo))
+            {
+                dtOuter.Rows[0]["审核员"] = "_修改中";
+                string log = "\n=====================================\n";
+                log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n审核员：" + mySystem.Parameter.userName + " 要求修改\n";
+                log += "修改意见：" + textbox修改.Text;
+                dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
+                save();
+
+                if (_userState == Parameter.UserState.操作员)
+                {
+                    btn提交审核.Enabled = true;
+                }
+            }
         }
 
     }

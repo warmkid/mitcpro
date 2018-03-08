@@ -23,7 +23,7 @@ namespace mySystem.Process.Order
 //        OleDbConnection conn;
         SqlDataAdapter daOuter, daInner;
         SqlCommandBuilder cbOuter, cbInner;
-        DataTable dtOuter, dtInner;
+        public DataTable dtOuter, dtInner;
         BindingSource bsOuter, bsInner;
         Hashtable ht产成品BOM;
         DataTable dt存货档案;
@@ -975,6 +975,12 @@ namespace mySystem.Process.Order
 
         private void btn更新_Click(object sender, EventArgs e)
         {
+            更新();
+        }
+
+
+        public void 更新()
+        {
             // 重新读取BOM列表信息
             SqlDataAdapter da = new SqlDataAdapter("select * from 销售订单 where 订单号='" + _订单号 + "'", mySystem.Parameter.conn);
             DataTable dt = new DataTable();
@@ -994,7 +1000,7 @@ namespace mySystem.Process.Order
             readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
             setDataGridViewColumn();
             innerBind();
-            
+
             Hashtable ht产成品, ht组件;
             ht产成品 = new Hashtable();
             ht组件 = new Hashtable();
@@ -1059,10 +1065,18 @@ namespace mySystem.Process.Order
             }
             daInner.Update((DataTable)bsInner.DataSource);
             readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
-            innerBind();
-
-           
-            
+            innerBind(); 
         }
+
+        public List<String> get需求流水号()
+        {
+            List<String> ret = new List<string>();
+            foreach (DataRow dr in dtInner.Rows)
+            {
+                ret.Add(dr["组件订单需求流水号"].ToString());
+            }
+            return ret;
+        }
+
     }
 }

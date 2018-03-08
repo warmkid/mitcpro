@@ -835,6 +835,8 @@ namespace mySystem.Setting
             dgv存货档案.Columns["存货名称"].Width = 300;
             dgv存货档案.Columns["规格型号"].Width = 300;
             dgv存货档案.Columns["BOM列表"].Width = 100;
+
+            dgv存货档案.Columns["存货代码"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
         }
 
         private void btn复制类型_Click(object sender, EventArgs e)
