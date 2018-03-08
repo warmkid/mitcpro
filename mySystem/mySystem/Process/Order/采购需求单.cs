@@ -888,7 +888,7 @@ namespace mySystem.Process.Order
         {
             //外表信息
             mysheet.Cells[4, 3].Value = dtOuter.Rows[0]["用途"].ToString();
-            mysheet.Cells[4, 7].Value = Convert.ToDateTime(dtOuter.Rows[0]["期望到货时间"]).ToString("D");
+            mysheet.Cells[4, 7].Value = Convert.ToDateTime(dtOuter.Rows[0]["期望到货时间"]).ToString("yyyy-MM-dd");
             mysheet.Cells[4, 10].Value = dtOuter.Rows[0]["采购申请单号"].ToString();
 
             int ind = 0;
@@ -903,10 +903,10 @@ namespace mySystem.Process.Order
                 mysheet.Cells[8 + i, 4].Value = dtInner.Rows[i]["规格型号"].ToString();
                 mysheet.Cells[8 + i, 5].Value = dtInner.Rows[i]["件数"].ToString();
                 mysheet.Cells[8 + i, 6].Value = dtInner.Rows[i]["数量"].ToString();
-                mysheet.Cells[8 + i, 7].Value = dtInner.Rows[i]["单位"].ToString();
-                mysheet.Cells[8 + i, 8].Value = dtInner.Rows[i]["订单数量"].ToString();
-                mysheet.Cells[8 + i, 9].Value = dtInner.Rows[i]["采购件数"].ToString();
-                mysheet.Cells[8 + i, 10].Value = dtInner.Rows[i]["采购数量"].ToString();
+                mysheet.Cells[8 + i, 7].Value = dtInner.Rows[i]["订单数量"].ToString();
+                mysheet.Cells[8 + i, 8].Value = dtInner.Rows[i]["单位"].ToString();
+                mysheet.Cells[8 + i, 9].Value = dtInner.Rows[i]["采购数量"].ToString();
+                mysheet.Cells[8 + i, 10].Value = dtInner.Rows[i]["采购件数"].ToString();
                 mysheet.Cells[8 + i, 11].Value = dtInner.Rows[i]["推荐供应商"].ToString();
             }
             //需要插入的部分
@@ -925,10 +925,10 @@ namespace mySystem.Process.Order
                     mysheet.Cells[8 + i, 4].Value = dtInner.Rows[i]["规格型号"].ToString();
                     mysheet.Cells[8 + i, 5].Value = dtInner.Rows[i]["件数"].ToString();
                     mysheet.Cells[8 + i, 6].Value = dtInner.Rows[i]["数量"].ToString();
-                    mysheet.Cells[8 + i, 7].Value = dtInner.Rows[i]["单位"].ToString();
-                    mysheet.Cells[8 + i, 8].Value = dtInner.Rows[i]["订单数量"].ToString();
-                    mysheet.Cells[8 + i, 9].Value = dtInner.Rows[i]["采购件数"].ToString();
-                    mysheet.Cells[8 + i, 10].Value = dtInner.Rows[i]["采购数量"].ToString();
+                    mysheet.Cells[8 + i, 7].Value = dtInner.Rows[i]["订单数量"].ToString();
+                    mysheet.Cells[8 + i, 8].Value = dtInner.Rows[i]["单位"].ToString();
+                    mysheet.Cells[8 + i, 9].Value = dtInner.Rows[i]["采购数量"].ToString();
+                    mysheet.Cells[8 + i, 10].Value = dtInner.Rows[i]["采购件数"].ToString();
                     mysheet.Cells[8 + i, 11].Value = dtInner.Rows[i]["推荐供应商"].ToString();
                 }
                 ind = rownum - 5;
