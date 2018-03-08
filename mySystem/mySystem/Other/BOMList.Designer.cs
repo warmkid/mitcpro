@@ -29,16 +29,16 @@
         private void InitializeComponent()
         {
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.存货代码 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.存货名称 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.规格型号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.数量 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnDone = new System.Windows.Forms.Button();
             this.btnDel = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.btn导入 = new System.Windows.Forms.Button();
             this.btn浏览 = new System.Windows.Forms.Button();
-            this.存货代码 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.存货名称 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.规格型号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.数量 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -59,6 +59,32 @@
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.Size = new System.Drawing.Size(555, 203);
             this.dataGridView1.TabIndex = 0;
+            // 
+            // 存货代码
+            // 
+            this.存货代码.HeaderText = "存货代码";
+            this.存货代码.Name = "存货代码";
+            this.存货代码.Width = 150;
+            // 
+            // 存货名称
+            // 
+            this.存货名称.HeaderText = "存货名称";
+            this.存货名称.Name = "存货名称";
+            this.存货名称.ReadOnly = true;
+            this.存货名称.Width = 150;
+            // 
+            // 规格型号
+            // 
+            this.规格型号.HeaderText = "规格型号";
+            this.规格型号.Name = "规格型号";
+            this.规格型号.ReadOnly = true;
+            this.规格型号.Width = 150;
+            // 
+            // 数量
+            // 
+            this.数量.HeaderText = "数量";
+            this.数量.Name = "数量";
+            this.数量.Width = 60;
             // 
             // btnAdd
             // 
@@ -117,32 +143,6 @@
             this.btn浏览.UseVisualStyleBackColor = true;
             this.btn浏览.Click += new System.EventHandler(this.btn浏览_Click);
             // 
-            // 存货代码
-            // 
-            this.存货代码.HeaderText = "存货代码";
-            this.存货代码.Name = "存货代码";
-            this.存货代码.Width = 150;
-            // 
-            // 存货名称
-            // 
-            this.存货名称.HeaderText = "存货名称";
-            this.存货名称.Name = "存货名称";
-            this.存货名称.ReadOnly = true;
-            this.存货名称.Width = 150;
-            // 
-            // 规格型号
-            // 
-            this.规格型号.HeaderText = "规格型号";
-            this.规格型号.Name = "规格型号";
-            this.规格型号.ReadOnly = true;
-            this.规格型号.Width = 150;
-            // 
-            // 数量
-            // 
-            this.数量.HeaderText = "数量";
-            this.数量.Name = "数量";
-            this.数量.Width = 60;
-            // 
             // BOMList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -155,9 +155,11 @@
             this.Controls.Add(this.btnDone);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.dataGridView1);
+            this.KeyPreview = true;
             this.Name = "BOMList";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "BOMList";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.BOMList_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

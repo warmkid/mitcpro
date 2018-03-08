@@ -29,6 +29,7 @@ namespace mySystem.Other
             getOtherData();
             dataGridView1.EditingControlShowing += new DataGridViewEditingControlShowingEventHandler(dataGridView1_EditingControlShowing);
             dataGridView1.CellEndEdit += new DataGridViewCellEventHandler(dataGridView1_CellEndEdit);
+
         }
 
         public BOMList(JArray ja)
@@ -251,8 +252,18 @@ namespace mySystem.Other
         {
             if (dataGridView1.CurrentCell != null)
             {
-                int ridx = dataGridView1.CurrentCell.RowIndex;
-                dataGridView1.Rows.RemoveAt(ridx);
+                HashSet<int> ids = new HashSet<int>();
+                foreach (DataGridViewCell dgvc in dataGridView1.SelectedCells)
+                {
+                    ids.Add(dgvc.RowIndex);
+                }
+                List<int> lids = ids.ToList();
+                lids.Sort();
+                lids.Reverse();
+                foreach (int r in lids)
+                {
+                    dataGridView1.Rows.RemoveAt(r);
+                }
             }
         }
 
@@ -335,6 +346,14 @@ namespace mySystem.Other
            
             MessageBox.Show("导入BOM列表成功");
 
+        }
+
+        private void BOMList_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete)
+            {
+                btnDel.PerformClick();
+            }
         }
 
 
