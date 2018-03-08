@@ -260,6 +260,7 @@ namespace mySystem.Process.Order
                     setControlFalse();
                     btn取消订单.Enabled = true;
                     btn修改.Enabled = true;
+                    textbox修改.ReadOnly = false;
                 }
                 else
                 {
@@ -734,7 +735,7 @@ namespace mySystem.Process.Order
             save();
 
             // 更新后续可能的表单
-            if (is修改后)
+            if (true)
             {
                 更新销售需求单和销售批准单();
 
