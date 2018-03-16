@@ -976,6 +976,10 @@ namespace mySystem.Process.Order
         private void btn更新_Click(object sender, EventArgs e)
         {
             更新();
+
+            dataGridView1.Columns["件数"].Visible = false;
+            dataGridView1.Columns["数量"].Visible = false;
+            dataGridView1.Columns["订单数量"].Visible = false;
         }
 
 
