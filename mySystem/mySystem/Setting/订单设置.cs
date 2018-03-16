@@ -393,22 +393,39 @@ namespace mySystem.Setting
         {
             //DataRow dr = dt存货档案.NewRow();
             int idx = dt存货档案.Rows.Count;
-            dt存货档案.Rows.InsertAt(dt存货档案.NewRow(), dt存货档案.Rows.Count);
+            dt存货档案.Rows.InsertAt(dt存货档案.NewRow(), idx);            
             dt存货档案.Rows[idx]["存货代码"] = "";
             dt存货档案.Rows[idx]["存货名称"] = "";
             //setDataGridViewRowNums(this.dgv存货档案);
             if (dgv存货档案.Rows.Count > 0)
-                dgv存货档案.FirstDisplayedScrollingRowIndex = dgv存货档案.Rows.Count - 1;
+            {
+                dgv存货档案.FirstDisplayedScrollingRowIndex = 0;
+                for (int i = 0; i < dgv存货档案.SelectedCells.Count; ++i)
+                {
+                    dgv存货档案.SelectedCells[i].Selected = false;
+                }
+                dgv存货档案.Rows[0].Selected = true;
+            }
             refresh序号();
         }
 
         private void del存货档案_Click(object sender, EventArgs e)
         {
             int idx = this.dgv存货档案.CurrentRow.Index;
-            dt存货档案.Rows[idx].Delete();
-            da存货档案.Update((DataTable)bs存货档案.DataSource);
-            dt存货档案.Clear();
-            da存货档案.Fill(dt存货档案);
+            if (dgv存货档案.Rows[idx].Cells[0].Value == DBNull.Value)
+            {
+                dgv存货档案.Rows.RemoveAt(idx);
+            }
+            else
+            {
+                int id = Convert.ToInt32(dgv存货档案.Rows[idx].Cells[0].Value);
+                dt存货档案.Select("ID=" + id)[0].Delete();
+                da存货档案.Update((DataTable)bs存货档案.DataSource);
+                dt存货档案.Clear();
+                da存货档案.Fill(dt存货档案);
+            }
+            
+            
             //setDataGridViewRowNums(this.dgv存货档案);
             refresh序号();
         }
@@ -801,8 +818,13 @@ namespace mySystem.Setting
             dgv存货档案.RowHeadersVisible = true;
             foreach (DataGridViewColumn dgvc in dgv存货档案.Columns)
             {
-                dgvc.SortMode = DataGridViewColumnSortMode.Automatic;
+                dgvc.SortMode = DataGridViewColumnSortMode.Programmatic;
+                if (dgvc.Name == "存货代码")
+                {
+                    dgv存货档案.Sort(dgvc, ListSortDirection.Ascending); 
+                }
             }
+            
            
             dgv存货档案.Columns["存货代码"].Frozen = true;
         }
@@ -903,6 +925,59 @@ namespace mySystem.Setting
             //{
             //    writeDGVWidthToSetting(dgv存货档案);
             //}
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (dgv存货档案.SelectedCells.Count != 0)
+            {
+                MessageBox.Show(dgv存货档案.Rows.IndexOf(dgv存货档案.SelectedCells[0].OwningRow).ToString());
+                //dgv存货档案.SelectedCells[0].OwningRow.;
+            }
+        }
+
+        private void btn行复制_Click(object sender, EventArgs e)
+        {
+            //DataRow dr = dt存货档案.NewRow();
+            if (dgv存货档案.SelectedCells.Count != 0)
+            {
+                Random r = new Random();
+                // 先复制数据，然后填充datarow
+                int idx_src = dgv存货档案.SelectedCells[0].RowIndex;
+                string new代码 = "";
+                DataRow newdr = dt存货档案.NewRow();
+                for (int i = 0; i < dgv存货档案.Rows[idx_src].Cells.Count; ++i)
+                {
+                    if (dgv存货档案.Rows[idx_src].Cells[i].OwningColumn.Name == "ID")
+                        continue;
+                    if (dgv存货档案.Rows[idx_src].Cells[i].OwningColumn.Name == "存货代码")
+                    {
+                        newdr[dgv存货档案.Rows[idx_src].Cells[i].OwningColumn.Name] = dgv存货档案.Rows[idx_src].Cells[i].Value + "("+r.Next(100)+")";
+                        new代码 = newdr[dgv存货档案.Rows[idx_src].Cells[i].OwningColumn.Name].ToString();
+                    }
+                    else
+                    {
+                        newdr[dgv存货档案.Rows[idx_src].Cells[i].OwningColumn.Name] = dgv存货档案.Rows[idx_src].Cells[i].Value;
+                    }
+                }
+               
+                dt存货档案.Rows.InsertAt(newdr, idx_src+1);
+                
+                
+                // 清空选中状态
+                for (int i = 0; i < dgv存货档案.SelectedCells.Count; ++i)
+                {
+                    dgv存货档案.SelectedCells[i].Selected = false;
+                }
+                refresh序号();
+                dgv存货档案.Rows[idx_src + 1].Selected = true;
+            }
+            //int idx = dt存货档案.Rows.Count;
+            //dt存货档案.Rows.InsertAt(dt存货档案.NewRow(), dt存货档案.Rows.Count);
+            //dt存货档案.Rows[idx]["存货代码"] = "";
+            //dt存货档案.Rows[idx]["存货名称"] = "";
+            //setDataGridViewRowNums(this.dgv存货档案);
+            
         }
 
        

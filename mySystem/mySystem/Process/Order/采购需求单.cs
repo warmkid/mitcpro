@@ -81,12 +81,20 @@ namespace mySystem.Process.Order
 
         private void addOtherEventHandler()
         {
-            dataGridView1.AllowUserToAddRows = false;
             dataGridView1.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dataGridView1_DataBindingComplete);
             dataGridView1.EditingControlShowing += new DataGridViewEditingControlShowingEventHandler(dataGridView1_EditingControlShowing);
+            setDataGridView1ColumnsFormat();
+        }
+
+        private void setDataGridView1ColumnsFormat()
+        {
+            dataGridView1.AllowUserToAddRows = false;
             dataGridView1.Columns["件数"].Visible = false;
             dataGridView1.Columns["数量"].Visible = false;
             dataGridView1.Columns["订单数量"].Visible = false;
+            int idx = dataGridView1.Columns["单位"].DisplayIndex;
+            dataGridView1.Columns["采购数量"].DisplayIndex = idx + 1;
+            dataGridView1.Columns["采购件数"].DisplayIndex = idx + 2;
             foreach (DataGridViewColumn dgvc in dataGridView1.Columns)
             {
                 if (dgvc.Name != "推荐供应商")
@@ -976,10 +984,10 @@ namespace mySystem.Process.Order
         private void btn更新_Click(object sender, EventArgs e)
         {
             更新();
-
-            dataGridView1.Columns["件数"].Visible = false;
-            dataGridView1.Columns["数量"].Visible = false;
-            dataGridView1.Columns["订单数量"].Visible = false;
+            setDataGridView1ColumnsFormat();
+            //dataGridView1.Columns["件数"].Visible = false;
+            //dataGridView1.Columns["数量"].Visible = false;
+            //dataGridView1.Columns["订单数量"].Visible = false;
         }
 
 
