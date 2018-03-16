@@ -1054,7 +1054,9 @@ namespace mySystem.Process.Order
                 //
             }
 
+            
             // 更新内表每一行的数据
+            // 如果 DtInner中某一行本来没有 BOM，现在有了怎么办？
             foreach (DataRow dr in dtInner.Rows)
             {
                 string daima = dr["存货代码"].ToString();
@@ -1064,8 +1066,15 @@ namespace mySystem.Process.Order
                     continue;
                 }
                 int id = Convert.ToInt32(drs[0]["ID"]);
-                dr["订单数量"] = ht组件[id];
-                dr["采购数量"] = ht组件[id];
+                try
+                {
+                    dr["订单数量"] = ht组件[id];
+                    dr["采购数量"] = ht组件[id];
+                }
+                catch
+                {
+                    dr.Delete();
+                }
             }
             daInner.Update((DataTable)bsInner.DataSource);
             readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
