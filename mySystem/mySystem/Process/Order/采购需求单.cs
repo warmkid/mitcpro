@@ -1020,7 +1020,7 @@ namespace mySystem.Process.Order
             dt = new DataTable();
             da.Fill(dt);
             // 获取所有存货档案信息
-            daCH = new SqlDataAdapter("select ID,存货代码,BOM列表 from 设置存货档案", mySystem.Parameter.conn);
+            daCH = new SqlDataAdapter("select ID,存货代码,BOM列表,存货名称,规格型号,推荐供应商,换算率,主计量单位名称 from 设置存货档案", mySystem.Parameter.conn);
             dtCH = new DataTable();
             daCH.Fill(dtCH);
 
@@ -1065,6 +1065,9 @@ namespace mySystem.Process.Order
             
             // 更新内表每一行的数据
             // 如果 DtInner中某一行本来没有 BOM，现在有了怎么办？
+
+
+            List<int> updated组件ID = new List<int>();
             foreach (DataRow dr in dtInner.Rows)
             {
                 string daima = dr["存货代码"].ToString();
@@ -1082,8 +1085,54 @@ namespace mySystem.Process.Order
                 catch
                 {
                     dr.Delete();
+                    continue;
+                }
+                updated组件ID.Add(id);
+                // 通过读取数据库   更新该产品的其他信息
+                dr["存货名称"] = drs[0]["存货名称"];
+                dr["规格型号"] = drs[0]["规格型号"];
+                dr["推荐供应商"] = drs[0]["推荐供应商"];
+                dr["数量"] = drs[0]["换算率"];
+                dr["采购件数"] = Convert.ToDouble(dr["采购数量"]) / Convert.ToDouble(drs[0]["换算率"]);
+            }
+
+
+            // 最后看看ht组件和dtinner的行数是否一致，不一致的话说明有遗漏
+            foreach (int k in ht组件.Keys.OfType<int>().ToArray<int>())
+            {
+                if (updated组件ID.Contains(k))
+                {
+                    continue;
+                }
+                else
+                {
+                    DataRow[] drs = dtCH.Select("ID=" + k);
+                    if (drs.Length == 0) continue;
+                    DataRow ndr = dtInner.NewRow();
+                    ndr["采购需求单ID"] = dtOuter.Rows[0]["ID"];
+                    
+                   
+                    string prefix = "PACR";
+                    string yymmdd = DateTime.Now.ToString("yyMMdd");
+                    string s = dtInner.Rows[dtInner.Rows.Count - 1]["组件订单需求流水号"].ToString();
+                    int no = Convert.ToInt32(s.Substring(10, 3));
+                    ndr["组件订单需求流水号"] = prefix + yymmdd + (no + 1).ToString("D3");
+
+                    ndr["存货代码"] = drs[0]["存货代码"];
+                    ndr["存货名称"] = drs[0]["存货名称"];
+                    ndr["规格型号"] = drs[0]["规格型号"];
+                    ndr["件数"] = 1;
+                    ndr["数量"] = drs[0]["换算率"];
+                    ndr["单位"] = drs[0]["主计量单位名称"];
+                    ndr["订单数量"] = ht组件[k];
+                    ndr["采购数量"] = ht组件[k];
+                    ndr["采购件数"] = Math.Round(Convert.ToDouble(ht组件[k]) / Convert.ToDouble(drs[0]["换算率"]), 2);
+                    ndr["推荐供应商"] = drs[0]["推荐供应商"];
+                    dtInner.Rows.Add(ndr);
                 }
             }
+
+
             daInner.Update((DataTable)bsInner.DataSource);
             readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
             innerBind(); 
@@ -1098,6 +1147,8 @@ namespace mySystem.Process.Order
             }
             return ret;
         }
+
+       
 
     }
 }

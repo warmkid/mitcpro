@@ -36,6 +36,8 @@
             this.btn复制类型 = new System.Windows.Forms.Button();
             this.Btn保存组件设置 = new System.Windows.Forms.Button();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.btn行复制 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.tb名称q = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.btn查询订单设置 = new System.Windows.Forms.Button();
@@ -90,8 +92,6 @@
             this.del业务类型 = new System.Windows.Forms.Button();
             this.add业务类型 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.btn行复制 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage存货档案设置.SuspendLayout();
             this.groupBox6.SuspendLayout();
@@ -219,6 +219,29 @@
             this.groupBox6.Size = new System.Drawing.Size(1066, 464);
             this.groupBox6.TabIndex = 54;
             this.groupBox6.TabStop = false;
+            // 
+            // btn行复制
+            // 
+            this.btn行复制.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn行复制.Location = new System.Drawing.Point(87, 14);
+            this.btn行复制.Name = "btn行复制";
+            this.btn行复制.Size = new System.Drawing.Size(70, 30);
+            this.btn行复制.TabIndex = 64;
+            this.btn行复制.Text = "行复制";
+            this.btn行复制.UseVisualStyleBackColor = true;
+            this.btn行复制.Click += new System.EventHandler(this.btn行复制_Click);
+            // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.button1.Location = new System.Drawing.Point(773, 22);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(70, 30);
+            this.button1.TabIndex = 63;
+            this.button1.Text = "测试";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // tb名称q
             // 
@@ -792,29 +815,6 @@
             this.label2.TabIndex = 55;
             this.label2.Text = "业务类型";
             // 
-            // button1
-            // 
-            this.button1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button1.Location = new System.Drawing.Point(773, 22);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(70, 30);
-            this.button1.TabIndex = 63;
-            this.button1.Text = "测试";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Visible = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // btn行复制
-            // 
-            this.btn行复制.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn行复制.Location = new System.Drawing.Point(87, 14);
-            this.btn行复制.Name = "btn行复制";
-            this.btn行复制.Size = new System.Drawing.Size(70, 30);
-            this.btn行复制.TabIndex = 64;
-            this.btn行复制.Text = "行复制";
-            this.btn行复制.UseVisualStyleBackColor = true;
-            this.btn行复制.Click += new System.EventHandler(this.btn行复制_Click);
-            // 
             // 订单设置
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -823,6 +823,9 @@
             this.Controls.Add(this.tabControl1);
             this.Name = "订单设置";
             this.Text = "订单设置";
+            this.Deactivate += new System.EventHandler(this.订单设置_Deactivate);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.订单设置_FormClosing);
+            this.VisibleChanged += new System.EventHandler(this.订单设置_VisibleChanged);
             this.tabControl1.ResumeLayout(false);
             this.tabPage存货档案设置.ResumeLayout(false);
             this.tabPage存货档案设置.PerformLayout();

@@ -12,7 +12,7 @@ using Newtonsoft.Json.Linq;
 
 namespace mySystem.Setting
 {
-    public partial class 订单设置 : Form
+    public partial class 订单设置 : BaseForm
     {
 
        
@@ -58,6 +58,8 @@ namespace mySystem.Setting
 
         string copied工序 = "", copied类型 = "";
 
+        bool isFirstBindDGV存货档案 = true;
+
         public 订单设置()
         {
             InitializeComponent();
@@ -67,6 +69,16 @@ namespace mySystem.Setting
             dgv存货档案.CellEndEdit += new DataGridViewCellEventHandler(dgv存货档案_CellEndEdit);
             tb代码q.PreviewKeyDown += new PreviewKeyDownEventHandler(tb代码q_PreviewKeyDown);
             tb名称q.PreviewKeyDown += new PreviewKeyDownEventHandler(tb名称q_PreviewKeyDown);
+            dgv存货档案.DataBindingComplete += dgv存货档案_DataBindingComplete;
+        }
+
+        void dgv存货档案_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            if (isFirstBindDGV存货档案)
+            {
+                readDGVWidthFromSettingAndSet(dgv存货档案);
+                isFirstBindDGV存货档案 = false;
+            }
         }
 
         void dgv存货档案_CellEndEdit(object sender, DataGridViewCellEventArgs e)
@@ -412,6 +424,7 @@ namespace mySystem.Setting
         private void del存货档案_Click(object sender, EventArgs e)
         {
             int idx = this.dgv存货档案.CurrentRow.Index;
+            int dispIdx = dgv存货档案.FirstDisplayedScrollingRowIndex;
             if (dgv存货档案.Rows[idx].Cells[0].Value == DBNull.Value)
             {
                 dgv存货档案.Rows.RemoveAt(idx);
@@ -424,8 +437,11 @@ namespace mySystem.Setting
                 dt存货档案.Clear();
                 da存货档案.Fill(dt存货档案);
             }
-            
-            
+
+            if (dispIdx > 0)
+                dgv存货档案.FirstDisplayedScrollingRowIndex = dispIdx - 1;
+            else
+                dgv存货档案.FirstDisplayedScrollingRowIndex = 0;
             //setDataGridViewRowNums(this.dgv存货档案);
             refresh序号();
         }
@@ -447,7 +463,7 @@ namespace mySystem.Setting
                     //    return;
                     //}
 
-                    // 检查是否有空行
+                    // 检查是否有空行 检查是否有 乘号
                     
                     foreach (DataRow dr in dt存货档案.Rows)
                     {
@@ -466,6 +482,12 @@ namespace mySystem.Setting
                         if (isEmpty)
                         {
                             MessageBox.Show("请勿保存空白数据！");
+                            return;
+                        }
+
+                        if (items[2].ToString().Contains("×"))
+                        {
+                            MessageBox.Show("包含非法字符：×");
                             return;
                         }
                     }
@@ -929,11 +951,25 @@ namespace mySystem.Setting
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (dgv存货档案.SelectedCells.Count != 0)
+            //if (dgv存货档案.SelectedCells.Count != 0)
+            //{
+            //    MessageBox.Show(dgv存货档案.Rows.IndexOf(dgv存货档案.SelectedCells[0].OwningRow).ToString());
+            //    //dgv存货档案.SelectedCells[0].OwningRow.;
+            //}
+            // 把乘号都变成大写 X
+            string sql = "select ID, 存货代码 from 设置存货档案 ";
+            DataTable dt = new DataTable("设置存货档案"); //""中的是表名
+            SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, tb代码q.Text, tb名称q.Text), mySystem.Parameter.conn);
+            SqlCommandBuilder cb = new SqlCommandBuilder(da);
+            da.Fill(dt);
+            foreach (DataRow dr in dt.Rows)
             {
-                MessageBox.Show(dgv存货档案.Rows.IndexOf(dgv存货档案.SelectedCells[0].OwningRow).ToString());
-                //dgv存货档案.SelectedCells[0].OwningRow.;
+                if (dr["存货代码"].ToString().Contains("×"))
+                {
+                    dr["存货代码"] = dr["存货代码"].ToString().Replace("×", "X");
+                }
             }
+           da.Update(dt);
         }
 
         private void btn行复制_Click(object sender, EventArgs e)
@@ -978,6 +1014,27 @@ namespace mySystem.Setting
             //dt存货档案.Rows[idx]["存货名称"] = "";
             //setDataGridViewRowNums(this.dgv存货档案);
             
+        }
+
+        private void 订单设置_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //if (dgv存货档案.ColumnCount > 0)
+            //{
+            //    writeDGVWidthToSetting(dgv存货档案);
+            //}
+        }
+
+        private void 订单设置_Deactivate(object sender, EventArgs e)
+        {
+            //MessageBox.Show("11");
+        }
+
+        private void 订单设置_VisibleChanged(object sender, EventArgs e)
+        {
+            if (dgv存货档案.ColumnCount > 0)
+            {
+                writeDGVWidthToSetting(dgv存货档案);
+            }
         }
 
        
