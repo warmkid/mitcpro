@@ -438,6 +438,15 @@ namespace mySystem.Setting
                 da存货档案.Fill(dt存货档案);
             }
 
+            if (idx != 0)
+            {
+                dgv存货档案.Rows[idx - 1].Selected = true;
+            }
+            else
+            {
+                dgv存货档案.Rows[0].Selected = true;
+            }
+
             if (dispIdx > 0)
                 dgv存货档案.FirstDisplayedScrollingRowIndex = dispIdx - 1;
             else
@@ -805,6 +814,8 @@ namespace mySystem.Setting
 
         private void btn查询订单设置_Click(object sender, EventArgs e)
         {
+            if(dgv存货档案.DataSource!=null)
+                writeDGVWidthToSetting(dgv存货档案);
             //DataRow[] drs = dt存货档案.Select("存货代码 like'%"+tb代码q.Text+"%' and 存货名称 like '%"+tb名称q.Text+"%'");
             //dt存货档案Show = dt存货档案.Clone();
             //foreach (DataRow dr in drs)
@@ -849,6 +860,7 @@ namespace mySystem.Setting
             
            
             dgv存货档案.Columns["存货代码"].Frozen = true;
+            readDGVWidthFromSettingAndSet(dgv存货档案);
         }
 
 
