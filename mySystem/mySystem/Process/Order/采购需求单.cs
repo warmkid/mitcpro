@@ -95,6 +95,7 @@ namespace mySystem.Process.Order
             int idx = dataGridView1.Columns["单位"].DisplayIndex;
             dataGridView1.Columns["采购数量"].DisplayIndex = idx + 1;
             dataGridView1.Columns["采购件数"].DisplayIndex = idx + 2;
+            dataGridView1.Columns["采购件数"].DefaultCellStyle.Format = "N2";
             foreach (DataGridViewColumn dgvc in dataGridView1.Columns)
             {
                 if (dgvc.Name != "推荐供应商")
