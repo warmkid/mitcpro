@@ -289,7 +289,7 @@ namespace mySystem.Other
             // 选择一个Sheet，注意Sheet的序号是从1开始的
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
             // 设置该进程是否可见
-            //oXL.Visible = true;
+            oXL.Visible = false;
             // 修改Sheet中某行某列的值
             List<String> ls = new List<string>();
 //            string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
