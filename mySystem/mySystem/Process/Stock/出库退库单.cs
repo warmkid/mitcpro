@@ -74,6 +74,10 @@ namespace mySystem.Process.Stock
 
             dgv出库单.Columns["ID"].Visible = false;
             dgv出库单.Columns["T材料出库单ID"].Visible = false;
+
+            // 只读
+            dgv出库单.ReadOnly = true;
+            dgv退库单.ReadOnly = true;
         }
 
 

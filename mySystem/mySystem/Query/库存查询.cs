@@ -140,7 +140,9 @@ namespace mySystem.Query
             dgv检验台账.RowHeadersVisible = false;
             dgv检验台账.Columns["ID"].Visible = false;
             try
-            { setDataGridViewBackColor("审核人", dgv检验台账); }
+            { 
+                //setDataGridViewBackColor("审核人", dgv检验台账); 
+            }
             catch
             { }
             Utility.setDataGridViewAutoSizeMode(dgv检验台账, DataGridViewAutoSizeColumnMode.AllCells);

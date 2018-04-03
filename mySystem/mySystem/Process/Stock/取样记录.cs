@@ -424,7 +424,7 @@ namespace mySystem.Process.Stock
 
         private void btn取样证_Click(object sender, EventArgs e)
         {
-            
+            if (dataGridView1.SelectedCells.Count <= 0) return;
             int rIdx=dataGridView1.SelectedCells[0].RowIndex;
             int selectedId = Convert.ToInt32(dtInner.Rows[rIdx]["ID"]);
             取样证 form = new 取样证(selectedId);

@@ -70,6 +70,12 @@ namespace mySystem.Setting
             tb代码q.PreviewKeyDown += new PreviewKeyDownEventHandler(tb代码q_PreviewKeyDown);
             tb名称q.PreviewKeyDown += new PreviewKeyDownEventHandler(tb名称q_PreviewKeyDown);
             dgv存货档案.DataBindingComplete += dgv存货档案_DataBindingComplete;
+            dgv存货档案.DataError += dgv存货档案_DataError;
+        }
+
+        void dgv存货档案_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            MessageBox.Show("输入有误！");
         }
 
         void dgv存货档案_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)

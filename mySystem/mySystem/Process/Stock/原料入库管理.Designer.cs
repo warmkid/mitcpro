@@ -43,15 +43,18 @@
             this.tp物资请验单 = new System.Windows.Forms.TabPage();
             this.btn读取物资请验单 = new System.Windows.Forms.Button();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.tp取样记录 = new System.Windows.Forms.TabPage();
+            this.btn读取取样记录 = new System.Windows.Forms.Button();
+            this.dataGridView5 = new System.Windows.Forms.DataGridView();
+            this.tp检验记录 = new System.Windows.Forms.TabPage();
+            this.dgv检验记录 = new System.Windows.Forms.DataGridView();
+            this.btn读取检验记录 = new System.Windows.Forms.Button();
             this.tp复验记录 = new System.Windows.Forms.TabPage();
             this.btn读取复验记录 = new System.Windows.Forms.Button();
             this.dataGridView3 = new System.Windows.Forms.DataGridView();
             this.tp不合格品处理记录 = new System.Windows.Forms.TabPage();
             this.btn读取不合格品记录 = new System.Windows.Forms.Button();
             this.dataGridView4 = new System.Windows.Forms.DataGridView();
-            this.tp取样记录 = new System.Windows.Forms.TabPage();
-            this.btn读取取样记录 = new System.Windows.Forms.Button();
-            this.dataGridView5 = new System.Windows.Forms.DataGridView();
             this.dateTimePicker开始 = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -59,9 +62,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.comboBox审核状态 = new System.Windows.Forms.ComboBox();
             this.button查询 = new System.Windows.Forms.Button();
-            this.tp检验记录 = new System.Windows.Forms.TabPage();
-            this.dgv检验记录 = new System.Windows.Forms.DataGridView();
-            this.btn读取检验记录 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tp到货单.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv到货单)).BeginInit();
@@ -71,14 +71,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgv入库单)).BeginInit();
             this.tp物资请验单.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
-            this.tp复验记录.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
-            this.tp不合格品处理记录.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
             this.tp取样记录.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).BeginInit();
             this.tp检验记录.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv检验记录)).BeginInit();
+            this.tp复验记录.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
+            this.tp不合格品处理记录.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -92,7 +92,7 @@
             this.tabControl1.Controls.Add(this.tp检验记录);
             this.tabControl1.Controls.Add(this.tp复验记录);
             this.tabControl1.Controls.Add(this.tp不合格品处理记录);
-            this.tabControl1.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tabControl1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tabControl1.Location = new System.Drawing.Point(19, 91);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -133,13 +133,14 @@
             // 
             // btn到货单读取
             // 
-            this.btn到货单读取.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn到货单读取.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn到货单读取.Location = new System.Drawing.Point(651, 18);
             this.btn到货单读取.Name = "btn到货单读取";
             this.btn到货单读取.Size = new System.Drawing.Size(75, 28);
             this.btn到货单读取.TabIndex = 5;
             this.btn到货单读取.Text = "读取";
             this.btn到货单读取.UseVisualStyleBackColor = true;
+            this.btn到货单读取.Visible = false;
             this.btn到货单读取.Click += new System.EventHandler(this.btn到货单读取_Click);
             // 
             // tp物资验收记录
@@ -177,7 +178,7 @@
             // 
             // btn读取验收记录
             // 
-            this.btn读取验收记录.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn读取验收记录.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn读取验收记录.Location = new System.Drawing.Point(645, 16);
             this.btn读取验收记录.Name = "btn读取验收记录";
             this.btn读取验收记录.Size = new System.Drawing.Size(75, 28);
@@ -209,7 +210,7 @@
             // 
             // btn读取入库单
             // 
-            this.btn读取入库单.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn读取入库单.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn读取入库单.Location = new System.Drawing.Point(651, 18);
             this.btn读取入库单.Name = "btn读取入库单";
             this.btn读取入库单.Size = new System.Drawing.Size(75, 28);
@@ -248,6 +249,69 @@
             this.dataGridView2.RowTemplate.Height = 23;
             this.dataGridView2.Size = new System.Drawing.Size(702, 342);
             this.dataGridView2.TabIndex = 0;
+            // 
+            // tp取样记录
+            // 
+            this.tp取样记录.Controls.Add(this.btn读取取样记录);
+            this.tp取样记录.Controls.Add(this.dataGridView5);
+            this.tp取样记录.Location = new System.Drawing.Point(4, 29);
+            this.tp取样记录.Name = "tp取样记录";
+            this.tp取样记录.Padding = new System.Windows.Forms.Padding(3);
+            this.tp取样记录.Size = new System.Drawing.Size(759, 428);
+            this.tp取样记录.TabIndex = 4;
+            this.tp取样记录.Text = "取样记录";
+            this.tp取样记录.UseVisualStyleBackColor = true;
+            // 
+            // btn读取取样记录
+            // 
+            this.btn读取取样记录.Location = new System.Drawing.Point(646, 20);
+            this.btn读取取样记录.Name = "btn读取取样记录";
+            this.btn读取取样记录.Size = new System.Drawing.Size(75, 23);
+            this.btn读取取样记录.TabIndex = 3;
+            this.btn读取取样记录.Text = "读取";
+            this.btn读取取样记录.UseVisualStyleBackColor = true;
+            this.btn读取取样记录.Click += new System.EventHandler(this.btn读取取样记录_Click);
+            // 
+            // dataGridView5
+            // 
+            this.dataGridView5.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView5.Location = new System.Drawing.Point(19, 58);
+            this.dataGridView5.Name = "dataGridView5";
+            this.dataGridView5.RowTemplate.Height = 23;
+            this.dataGridView5.Size = new System.Drawing.Size(702, 364);
+            this.dataGridView5.TabIndex = 2;
+            // 
+            // tp检验记录
+            // 
+            this.tp检验记录.Controls.Add(this.dgv检验记录);
+            this.tp检验记录.Controls.Add(this.btn读取检验记录);
+            this.tp检验记录.Location = new System.Drawing.Point(4, 29);
+            this.tp检验记录.Name = "tp检验记录";
+            this.tp检验记录.Padding = new System.Windows.Forms.Padding(3);
+            this.tp检验记录.Size = new System.Drawing.Size(759, 428);
+            this.tp检验记录.TabIndex = 7;
+            this.tp检验记录.Text = "检验记录";
+            this.tp检验记录.UseVisualStyleBackColor = true;
+            // 
+            // dgv检验记录
+            // 
+            this.dgv检验记录.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv检验记录.Location = new System.Drawing.Point(33, 62);
+            this.dgv检验记录.Name = "dgv检验记录";
+            this.dgv检验记录.RowTemplate.Height = 23;
+            this.dgv检验记录.Size = new System.Drawing.Size(693, 348);
+            this.dgv检验记录.TabIndex = 5;
+            // 
+            // btn读取检验记录
+            // 
+            this.btn读取检验记录.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn读取检验记录.Location = new System.Drawing.Point(651, 18);
+            this.btn读取检验记录.Name = "btn读取检验记录";
+            this.btn读取检验记录.Size = new System.Drawing.Size(75, 28);
+            this.btn读取检验记录.TabIndex = 6;
+            this.btn读取检验记录.Text = "读取";
+            this.btn读取检验记录.UseVisualStyleBackColor = true;
+            this.btn读取检验记录.Click += new System.EventHandler(this.btn读取检验记录_Click_1);
             // 
             // tp复验记录
             // 
@@ -311,40 +375,9 @@
             this.dataGridView4.Size = new System.Drawing.Size(709, 345);
             this.dataGridView4.TabIndex = 0;
             // 
-            // tp取样记录
-            // 
-            this.tp取样记录.Controls.Add(this.btn读取取样记录);
-            this.tp取样记录.Controls.Add(this.dataGridView5);
-            this.tp取样记录.Location = new System.Drawing.Point(4, 29);
-            this.tp取样记录.Name = "tp取样记录";
-            this.tp取样记录.Padding = new System.Windows.Forms.Padding(3);
-            this.tp取样记录.Size = new System.Drawing.Size(759, 428);
-            this.tp取样记录.TabIndex = 4;
-            this.tp取样记录.Text = "取样记录";
-            this.tp取样记录.UseVisualStyleBackColor = true;
-            // 
-            // btn读取取样记录
-            // 
-            this.btn读取取样记录.Location = new System.Drawing.Point(646, 20);
-            this.btn读取取样记录.Name = "btn读取取样记录";
-            this.btn读取取样记录.Size = new System.Drawing.Size(75, 23);
-            this.btn读取取样记录.TabIndex = 3;
-            this.btn读取取样记录.Text = "读取";
-            this.btn读取取样记录.UseVisualStyleBackColor = true;
-            this.btn读取取样记录.Click += new System.EventHandler(this.btn读取取样记录_Click);
-            // 
-            // dataGridView5
-            // 
-            this.dataGridView5.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView5.Location = new System.Drawing.Point(19, 58);
-            this.dataGridView5.Name = "dataGridView5";
-            this.dataGridView5.RowTemplate.Height = 23;
-            this.dataGridView5.Size = new System.Drawing.Size(702, 364);
-            this.dataGridView5.TabIndex = 2;
-            // 
             // dateTimePicker开始
             // 
-            this.dateTimePicker开始.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dateTimePicker开始.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.dateTimePicker开始.Location = new System.Drawing.Point(145, 13);
             this.dateTimePicker开始.Name = "dateTimePicker开始";
             this.dateTimePicker开始.Size = new System.Drawing.Size(240, 26);
@@ -353,7 +386,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label1.Location = new System.Drawing.Point(20, 20);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(72, 16);
@@ -363,7 +396,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label2.Location = new System.Drawing.Point(20, 52);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(72, 16);
@@ -372,7 +405,7 @@
             // 
             // dateTimePicker结束
             // 
-            this.dateTimePicker结束.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dateTimePicker结束.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.dateTimePicker结束.Location = new System.Drawing.Point(145, 45);
             this.dateTimePicker结束.Name = "dateTimePicker结束";
             this.dateTimePicker结束.Size = new System.Drawing.Size(240, 26);
@@ -381,7 +414,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label3.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label3.Location = new System.Drawing.Point(490, 18);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(72, 16);
@@ -390,7 +423,7 @@
             // 
             // comboBox审核状态
             // 
-            this.comboBox审核状态.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.comboBox审核状态.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.comboBox审核状态.FormattingEnabled = true;
             this.comboBox审核状态.Location = new System.Drawing.Point(595, 15);
             this.comboBox审核状态.Name = "comboBox审核状态";
@@ -399,7 +432,7 @@
             // 
             // button查询
             // 
-            this.button查询.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.button查询.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.button查询.Location = new System.Drawing.Point(641, 57);
             this.button查询.Name = "button查询";
             this.button查询.Size = new System.Drawing.Size(75, 28);
@@ -407,38 +440,6 @@
             this.button查询.Text = "查询";
             this.button查询.UseVisualStyleBackColor = true;
             this.button查询.Click += new System.EventHandler(this.button查询_Click);
-            // 
-            // tp检验记录
-            // 
-            this.tp检验记录.Controls.Add(this.dgv检验记录);
-            this.tp检验记录.Controls.Add(this.btn读取检验记录);
-            this.tp检验记录.Location = new System.Drawing.Point(4, 29);
-            this.tp检验记录.Name = "tp检验记录";
-            this.tp检验记录.Padding = new System.Windows.Forms.Padding(3);
-            this.tp检验记录.Size = new System.Drawing.Size(759, 428);
-            this.tp检验记录.TabIndex = 7;
-            this.tp检验记录.Text = "检验记录";
-            this.tp检验记录.UseVisualStyleBackColor = true;
-            // 
-            // dgv检验记录
-            // 
-            this.dgv检验记录.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv检验记录.Location = new System.Drawing.Point(33, 62);
-            this.dgv检验记录.Name = "dgv检验记录";
-            this.dgv检验记录.RowTemplate.Height = 23;
-            this.dgv检验记录.Size = new System.Drawing.Size(693, 348);
-            this.dgv检验记录.TabIndex = 5;
-            // 
-            // btn读取检验记录
-            // 
-            this.btn读取检验记录.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn读取检验记录.Location = new System.Drawing.Point(651, 18);
-            this.btn读取检验记录.Name = "btn读取检验记录";
-            this.btn读取检验记录.Size = new System.Drawing.Size(75, 28);
-            this.btn读取检验记录.TabIndex = 6;
-            this.btn读取检验记录.Text = "读取";
-            this.btn读取检验记录.UseVisualStyleBackColor = true;
-            this.btn读取检验记录.Click += new System.EventHandler(this.btn读取检验记录_Click_1);
             // 
             // 原料入库管理
             // 
@@ -464,14 +465,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgv入库单)).EndInit();
             this.tp物资请验单.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
-            this.tp复验记录.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
-            this.tp不合格品处理记录.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
             this.tp取样记录.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).EndInit();
             this.tp检验记录.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgv检验记录)).EndInit();
+            this.tp复验记录.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
+            this.tp不合格品处理记录.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

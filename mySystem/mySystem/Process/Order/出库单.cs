@@ -575,6 +575,7 @@ namespace mySystem.Process.Order
             // 在dtinner里加一行
             // 最后审核时处理一下借用信息，确认数量，判断订单是否完成
             // 那边要加一个删除按钮
+            if (dataGridView3.CurrentCell == null) return;
             int ridx = dataGridView3.CurrentCell.RowIndex;
             if (ridx < 0) return;
             if (Convert.ToBoolean(dataGridView3["冻结状态", ridx].Value)) return;

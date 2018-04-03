@@ -157,6 +157,17 @@ namespace mySystem.Process.Stock
 
             dgv检验记录.Columns["ID"].Visible = false;
             dgv检验记录.Columns["物资验收记录ID"].Visible = false;
+
+
+            // dgv只读
+            dgv到货单.ReadOnly = true;
+            dgv检验记录.ReadOnly = true;
+            dgv入库单.ReadOnly = true;
+            dataGridView1.ReadOnly = true;
+            dataGridView2.ReadOnly = true;
+            dataGridView3.ReadOnly = true;
+            dataGridView4.ReadOnly = true;
+            dataGridView5.ReadOnly = true;
         }
 
         void dgv检验记录_CellDoubleClick(object sender, DataGridViewCellEventArgs e)

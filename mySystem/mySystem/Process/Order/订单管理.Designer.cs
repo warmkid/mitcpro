@@ -105,7 +105,7 @@
             this.tabControl1.Controls.Add(this.tabPage采购批准单);
             this.tabControl1.Controls.Add(this.tabPage采购订单);
             this.tabControl1.Controls.Add(this.tabPage出库单);
-            this.tabControl1.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tabControl1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -420,6 +420,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(160, 26);
             this.textBox1.TabIndex = 22;
+            this.textBox1.Visible = false;
             // 
             // label9
             // 
@@ -430,6 +431,7 @@
             this.label9.TabIndex = 21;
             this.label9.Text = "？？";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label9.Visible = false;
             // 
             // dtp采购批准单结束时间
             // 
