@@ -143,7 +143,7 @@ namespace mySystem.Query
             { setDataGridViewBackColor("审核人", dgv检验台账); }
             catch
             { }
-            Utility.setDataGridViewAutoSizeMode(dgv检验台账);
+            Utility.setDataGridViewAutoSizeMode(dgv检验台账, DataGridViewAutoSizeColumnMode.AllCells);
         }
 
         void dgv库存台账_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -173,21 +173,24 @@ namespace mySystem.Query
                     dgvr.DefaultCellStyle.BackColor = Color.Yellow;
                 }
             }
-            Utility.setDataGridViewAutoSizeMode(dgv库存台账);
+            Utility.setDataGridViewAutoSizeMode(dgv库存台账, DataGridViewAutoSizeColumnMode.NotSet);
+            dgv库存台账.Columns["产品代码"].Width = 200;
+            dgv库存台账.Columns["产品名称"].Width = 200;
+            dgv库存台账.Columns["产品规格"].Width = 200;
         }
 
         void dgv出库单_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             dgv出库单.RowHeadersVisible = false;
             dgv出库单.Columns["ID"].Visible = false;
-            Utility.setDataGridViewAutoSizeMode(dgv出库单);
+            Utility.setDataGridViewAutoSizeMode(dgv出库单, DataGridViewAutoSizeColumnMode.AllCells);
         }
 
         void dgv退货台账_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             dgv退货台账.RowHeadersVisible = false;
             dgv退货台账.Columns["ID"].Visible = false;
-            Utility.setDataGridViewAutoSizeMode(dgv退货台账);
+            Utility.setDataGridViewAutoSizeMode(dgv退货台账, DataGridViewAutoSizeColumnMode.AllCells);
         }
 
 
