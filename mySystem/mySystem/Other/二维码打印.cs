@@ -89,11 +89,16 @@ namespace mySystem.Other
             cb = new SqlCommandBuilder(da);
             dt = new DataTable();
             da.Fill(dt);
-            DataRow dr = dt.NewRow();
-            dr["二维码"] = tb二维码.Text;
-            dr["库存ID"] = yid;
-            dt.Rows.Add(dr);
-            da.Update(dt);
+            if (dt.Rows.Count <= 0)
+            {
+                DataRow dr = dt.NewRow();
+                dr["二维码"] = tb二维码.Text;
+                dr["库存ID"] = yid;
+                dr["数量"] = 0;
+                dt.Rows.Add(dr);
+                da.Update(dt);
+            }
+            
         }
 
         private void btn生成二维码_Click(object sender, EventArgs e)

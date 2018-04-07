@@ -739,7 +739,7 @@ namespace mySystem.Other
                 continue;
             }
             // 保存数据的方法，每次保存之后重新读取数据，重新绑定控件
-            da记录详情.Update((DataTable)bs记录详情.DataSource);
+            da记录详情sql.Update((DataTable)bs记录详情.DataSource);
             readInnerData(_id);
             innerBind();
         }
@@ -758,7 +758,7 @@ namespace mySystem.Other
                 continue;
             }
             // 保存数据的方法，每次保存之后重新读取数据，重新绑定控件
-            da记录详情.Update((DataTable)bs记录详情.DataSource);
+            da记录详情sql.Update((DataTable)bs记录详情.DataSource);
             readInnerData(_id);
             innerBind();
             setEnableReadOnly();

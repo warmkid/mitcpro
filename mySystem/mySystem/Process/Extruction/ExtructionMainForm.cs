@@ -508,7 +508,8 @@ namespace mySystem
                 Parameter.proInstruID = instruID;
                 InitBtn();
 
-                CheckHour(); //立即执行一次 
+                // 不再两个小时提醒了
+                //CheckHour(); //立即执行一次 
                 //定时器开始计时
 
                 //TODO: 时间间隔设置为参数
@@ -530,7 +531,7 @@ namespace mySystem
                 Parameter.proInstruID = instruID;
                 InitBtn();
 
-                CheckHour(); //立即执行一次 
+                //CheckHour(); //立即执行一次 
                 //定时器开始计时
 
                 //TODO: 时间间隔设置为参数
@@ -546,7 +547,7 @@ namespace mySystem
         #region 定时器
         private void timer1_Tick(object sender, EventArgs e)
         {
-            CheckHour();
+            // CheckHour();
         }
         
         //定时器调用的函数，判断时间，查看是否填写
@@ -991,7 +992,7 @@ namespace mySystem
                             DateTime left11 = new DateTime(left1.Year, left1.Month, left1.Day, left1.Hour, left1.Minute, left1.Second);
                             SqlCommand comm1 = new SqlCommand();
                             comm1.Connection = Parameter.conn;
-                            comm1.CommandText = "select * from " + table1 + " where 生产指令ID = " + Parameter.proInstruID + " and 生产日期 like '" + "'" + now.Date.ToShortDateString() + "''";
+                            comm1.CommandText = "select * from " + table1 + " where 生产指令ID = " + Parameter.proInstruID + " and 生产日期 like '"  + now.Date.ToString("yyyy-MM-dd") + "'";
                             SqlDataReader reader1 = comm1.ExecuteReader();//执行查询
                             int instruID = -1;
                             if (reader1.Read())

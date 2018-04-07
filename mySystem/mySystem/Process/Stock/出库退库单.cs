@@ -125,7 +125,7 @@ namespace mySystem.Process.Stock
                     }
                     else
                     {
-                        sql = @"SELECT * FROM 材料退库单 where ID in (select T材料退库单ID from 材料退库单详细信息 where 审核员 is null and 退库日期时间 between '{0}' and '{1}')";
+                        sql = @"SELECT * FROM 材料退库单 where ID in (select T材料退库单ID from 材料退库单详细信息 where  退库日期时间 between '{0}' and '{1}')";
                         da = new SqlDataAdapter(string.Format(sql, startT, endT), mySystem.Parameter.conn);
                     }
                      dt退库单 = new DataTable("退库单");
@@ -140,7 +140,7 @@ namespace mySystem.Process.Stock
                     }
                     else
                     {
-                        sql = @"select * from 材料出库单详细信息 where 审核员 is null and 出库日期时间 between '{0}' and '{1}'";
+                        sql = @"select * from 材料出库单详细信息 where 出库日期时间 between '{0}' and '{1}'";
                         da = new SqlDataAdapter(string.Format(sql, startT, endT), mySystem.Parameter.conn);
                     }
                     dt出库单 = new DataTable("出库单");

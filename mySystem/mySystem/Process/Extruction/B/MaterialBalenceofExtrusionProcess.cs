@@ -413,7 +413,7 @@ namespace mySystem.Extruction.Process
 
              string Uname = "吹膜工序废品记录";
              string Ucol = "合计不良品数量";
-             string Tsqlcmd = "SELECT " + Tcol + " FROM " + Tname + " WHERE " + where + " = " + __生产指令ID + ";";
+             string Tsqlcmd = "SELECT sum(" + Tcol + ") FROM " + Tname + " WHERE " + where + " = " + __生产指令ID + ";";
              string Asqlcmd1 = "SELECT " + Acol1 + " FROM " + Aname + " WHERE " + where + " = " + __生产指令ID + ";";
              string Asqlcmd2 = "SELECT " + Acol2 + " FROM " + Aname + " WHERE " + where + " = " + __生产指令ID + ";";
              string Asqlcmd3 = "SELECT " + Acol3 + " FROM " + Aname + " WHERE " + where + " = " + __生产指令ID + ";";
@@ -448,6 +448,7 @@ namespace mySystem.Extruction.Process
              }
              else
              {
+                 // 生产检验记录不止一张表
                  SqlCommand Tcmd = new SqlCommand(Tsqlcmd, mySystem.Parameter.conn);
                  SqlCommand Acmd1 = new SqlCommand(Asqlcmd1, mySystem.Parameter.conn);
                  SqlCommand Acmd2 = new SqlCommand(Asqlcmd2, mySystem.Parameter.conn);

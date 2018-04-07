@@ -90,11 +90,13 @@ namespace mySystem.Process.Extruction.A
             readOuterData(__生产指令编号, __生产日期);
             removeOuterBind();
             outerBind();
+            
             if (0 == dtOuter.Rows.Count)
             {
                 DataRow newrow = dtOuter.NewRow();
                 newrow = writeOuterDefault(newrow, (Convert.ToString(Parameter.userflight) == "白班") ? true : false);
                 dtOuter.Rows.Add(newrow);
+                
                 if(!mySystem.Parameter.isSqlOk)
                     daOuter.Update((DataTable)bsOuter.DataSource);
                 else
@@ -116,7 +118,7 @@ namespace mySystem.Process.Extruction.A
             setDataGridViewRowNums();
             InnerBind();            
             是否覆盖原有项目();
-            填写交班员();
+            
 
             //update Outer
             //if (!mySystem.Parameter.isSqlOk)
@@ -126,6 +128,7 @@ namespace mySystem.Process.Extruction.A
             readOuterData(__生产指令编号, __生产日期);
             removeOuterBind();
             outerBind();
+            填写交班员();
             setEnableReadOnly(true);
           
         }

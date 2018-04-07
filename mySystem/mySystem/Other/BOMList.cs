@@ -333,7 +333,7 @@ namespace mySystem.Other
                 }
                 catch (Exception ee)
                 {
-                    MessageBox.Show("读取第"+i+"行数据失败，请检查！");
+                    MessageBox.Show("读取第"+i+"行数据失败，请检查！ ");
                 }
                 
                 

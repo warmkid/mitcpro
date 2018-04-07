@@ -1307,7 +1307,7 @@ namespace mySystem.Extruction.Process
             // 选择一个Sheet，注意Sheet的序号是从1开始的
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[4];
             // 修改Sheet中某行某列的值
-            SqlDataAdapter da = new SqlDataAdapter("select 生产指令信息表.生产指令编号 as 生产指令编号 from 吹膜机组开机前确认表,生产指令信息表 where 生产指令信息表.ID=吹膜机组开机前确认表.生产指令ID", mySystem.Parameter.conn);
+            SqlDataAdapter da = new SqlDataAdapter("select 生产指令信息表.生产指令编号 as 生产指令编号 from 生产指令信息表,吹膜工序领料退料记录 where 生产指令信息表.ID=吹膜工序领料退料记录.生产指令ID and 吹膜工序领料退料记录.生产指令ID=" + dt_prodinstr.Rows[0]["生产指令ID"], mySystem.Parameter.conn);
             DataTable dt = new DataTable();
             da.Fill(dt);
             string zhiling = "";

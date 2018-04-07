@@ -321,8 +321,8 @@ namespace mySystem
                 }
                 
                 string str膜卷编号 = "";
-                if( dt_检验记录_详细.Rows.Count>0)
-                    str膜卷编号 += dt_检验记录_详细.Rows[0][0].ToString() + "-" + dt_检验记录_详细.Rows[dt_检验记录_详细.Rows.Count - 1][0].ToString();
+                if (dt_检验记录_详细.Rows.Count <= 0) continue;
+                str膜卷编号 += dt_检验记录_详细.Rows[0][0].ToString() + "-" + dt_检验记录_详细.Rows[dt_检验记录_详细.Rows.Count - 1][0].ToString();
                 float sum_膜卷长度 = 0, sum_膜卷重量 = 0;
                 for (int kk = 0; kk < dt_检验记录_详细.Rows.Count; kk++)
                 {
@@ -333,7 +333,7 @@ namespace mySystem
                 }                
                 DataRow dr = dt_prodlist.NewRow();
 
-                string date_temp1 = ((DateTime)dt_检验记录.Rows[i]["生产日期"]).ToShortDateString();//标准
+                string date_temp1 = ((DateTime)dt_检验记录.Rows[i]["生产日期"]). ToString("yyyy-MM-dd");//标准
                 string code_temp1 = dt_检验记录.Rows[i]["产品名称"].ToString();//之前表上名字错误，应该是产品代码
                 string flight_temp1=((bool)dt_检验记录.Rows[i]["班次"])==true?"白班":"夜班";
                 bool flight_temp1_bool = (bool)dt_检验记录.Rows[i]["班次"];
@@ -361,7 +361,7 @@ namespace mySystem
                 float sum_废品重量 = 0;
                 for (int j = 0; j < dt_废品记录.Rows.Count; j++)
                 {                   
-                    string date_temp2=((DateTime)dt_废品记录.Rows[j]["生产日期"]).ToShortDateString();                    
+                    string date_temp2=((DateTime)dt_废品记录.Rows[j]["生产日期"]).ToString("yyyy-MM-dd");                    
                     string code_temp2 = dt_废品记录.Rows[j]["产品代码"].ToString();
                     string flight_temp2=dt_废品记录.Rows[j]["班次"].ToString();
 
@@ -385,8 +385,14 @@ namespace mySystem
                 }
                 else
                 {
-                    acsql = "select * from 吹膜供料记录 where 生产指令ID=" + id + " and 产品代码='" + code_temp1 + "' and 班次=" + (flight_temp1_bool?1:0) + " and 供料日期='" + date_temp1 + "'";
-                    SqlCommand comm4 = new SqlCommand(acsql, mySystem.Parameter.conn);
+                    // 供料记录改了，一个生产指令只有一个记录了，所以查询条件不要那么多
+                    // 应该查供料记录详细信息，按日期查
+                    //acsql = "select * from 吹膜供料记录 where 生产指令ID=" + id;
+                    acsql = "select sum(吹膜供料记录详细信息.外层供料量) as 外层供料量合计a ,sum(吹膜供料记录详细信息.中内层供料量) as 中内层供料量合计b from 吹膜供料记录详细信息,吹膜供料记录 where 吹膜供料记录详细信息.T吹膜供料记录ID=吹膜供料记录.ID and 吹膜供料记录详细信息.供料时间 between '{0}' and '{1}' and 吹膜供料记录.生产指令ID={2}";
+                    SqlCommand comm4 = new SqlCommand(String.Format( acsql,
+                        date_temp1,
+                        DateTime.Parse(date_temp1).AddDays(1).ToString("yyyy-MM-dd"),
+                        id), mySystem.Parameter.conn);
                     SqlDataAdapter da4 = new SqlDataAdapter(comm4);
                     da4.Fill(dt_供料记录);
                 }
@@ -402,9 +408,9 @@ namespace mySystem
                         dr["加料B"] = float.Parse(dt_供料记录.Rows[0]["中内层供料量合计b"].ToString());//加料B1C
                     else
                         dr["加料B"] = 0;
-                    if (dt_供料记录.Rows[0]["中层供料量合计c"] != null && dt_供料记录.Rows[0]["中层供料量合计c"].ToString() != "")
-                        dr["加料B2"] = float.Parse(dt_供料记录.Rows[0]["中层供料量合计c"].ToString());//加料B2
-                    else
+                    //if (dt_供料记录.Rows[0]["中层供料量合计c"] != null && dt_供料记录.Rows[0]["中层供料量合计c"].ToString() != "")
+                    //    dr["加料B2"] = float.Parse(dt_供料记录.Rows[0]["中层供料量合计c"].ToString());//加料B2
+                    //else
                         dr["加料B2"] = 0;
                 }
                 else
@@ -931,7 +937,7 @@ namespace mySystem
 
             float temp = (sum_生产重量 + sum_废品重量) / (sum_工时+0.0001f);
             dt_prodinstr.Rows[0]["工时效率"] =Math.Round((float)temp, 2) ;
-            dt_prodinstr.Rows[0]["成品率"] = Math.Round(sum_生产重量 / (sum_加料A + sum_加料B1C + sum_加料B2) * 100);
+            dt_prodinstr.Rows[0]["成品率"] = Math.Round(sum_生产重量 / (sum_加料A + sum_加料B1C + sum_加料B2+0.000001) * 100);
             if (!mySystem.Parameter.isSqlOk)
             {
                 da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);

@@ -486,11 +486,27 @@ namespace mySystem.Process.Stock
                 ndr["二维码"] = erweima;
                 ndr["操作"] = "入库";
                 dtLishi.Rows.Add(ndr);
-                ndr = dtXinxi.NewRow();
+
+                daXinxi = new SqlDataAdapter("select * from 二维码信息 where 二维码='"+erweima+"'", mySystem.Parameter.conn);
+                cbXinxi = new SqlCommandBuilder(daXinxi);
+                dtXinxi = new DataTable("二维码信息");
+                daXinxi.Fill(dtXinxi);
+                if (dtXinxi.Rows.Count <= 0)
+                {
+                    ndr = dtXinxi.NewRow();
+                }
+                else
+                {
+                    ndr = dtXinxi.Rows[0];
+                }
                 ndr["二维码"] = erweima;
                 ndr["库存ID"] = id;
                 ndr["数量"] = shulaing;
-                dtXinxi.Rows.Add(ndr);
+                if (dtXinxi.Rows.Count <= 0)
+                {
+                    dtXinxi.Rows.Add(ndr);
+                }
+                
             }
             daLishi.Update(dtLishi);
             daXinxi.Update(dtXinxi);

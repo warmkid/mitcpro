@@ -66,6 +66,10 @@ namespace BatchProductRecord
                 }
                 else
                 {
+                    if (((DataTable)bsOuter.DataSource).Rows[0]["审核是否通过"] == DBNull.Value)
+                    {
+                        ((DataTable)bsOuter.DataSource).Rows[0]["审核是否通过"] = false;
+                    }
                     daOuter_sql.Update((DataTable)bsOuter.DataSource);
                 }
                 
@@ -1349,11 +1353,11 @@ namespace BatchProductRecord
             {
                 try
                 {
-                    Int32.Parse(dataGridView1.Rows[r].Cells[1].Value.ToString());
+                    List<Int32> pages = getIntList(dataGridView1.Rows[r].Cells[1].Value.ToString());
                 }
                 catch 
                 {
-                    MessageBox.Show("打印页数需填入数字！");
+                    MessageBox.Show("打印页数请填入数字或遵循1-2这种格式");
                     return;
                 }
             }
