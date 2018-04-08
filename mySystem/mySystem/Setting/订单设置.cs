@@ -984,10 +984,11 @@ namespace mySystem.Setting
             {
                 if (dr["存货代码"].ToString().Contains("×"))
                 {
+                    System.Console.WriteLine(dr["存货代码"].ToString().Replace("×", "X"));
                     dr["存货代码"] = dr["存货代码"].ToString().Replace("×", "X");
                 }
             }
-           da.Update(dt);
+            da.Update(dt);
         }
 
         private void btn行复制_Click(object sender, EventArgs e)

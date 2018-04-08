@@ -1257,7 +1257,7 @@ namespace mySystem.Process.Extruction.B
                 readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
                 innerBind();
                 计算不良品数量合计();
-                daOuter.Fill((DataTable)bsOuter.DataSource);
+                daOuterSQL.Fill((DataTable)bsOuter.DataSource);
                 removeOuterBinding();
                 outerBind();
             }

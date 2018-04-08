@@ -388,11 +388,11 @@ namespace mySystem
                     // 供料记录改了，一个生产指令只有一个记录了，所以查询条件不要那么多
                     // 应该查供料记录详细信息，按日期查
                     //acsql = "select * from 吹膜供料记录 where 生产指令ID=" + id;
-                    acsql = "select sum(吹膜供料记录详细信息.外层供料量) as 外层供料量合计a ,sum(吹膜供料记录详细信息.中内层供料量) as 中内层供料量合计b from 吹膜供料记录详细信息,吹膜供料记录 where 吹膜供料记录详细信息.T吹膜供料记录ID=吹膜供料记录.ID and 吹膜供料记录详细信息.供料时间 between '{0}' and '{1}' and 吹膜供料记录.生产指令ID={2}";
+                    acsql = "select sum(吹膜供料记录详细信息.外层供料量) as 外层供料量合计a ,sum(吹膜供料记录详细信息.中内层供料量) as 中内层供料量合计b from 吹膜供料记录详细信息,吹膜供料记录 where 吹膜供料记录详细信息.T吹膜供料记录ID=吹膜供料记录.ID and 吹膜供料记录详细信息.供料时间 between '{0}' and '{1}' and 吹膜供料记录.生产指令ID={2} and 吹膜供料记录详细信息.班次='{3}'";
                     SqlCommand comm4 = new SqlCommand(String.Format( acsql,
                         date_temp1,
                         DateTime.Parse(date_temp1).AddDays(1).ToString("yyyy-MM-dd"),
-                        id), mySystem.Parameter.conn);
+                        id,flight_temp1), mySystem.Parameter.conn);
                     SqlDataAdapter da4 = new SqlDataAdapter(comm4);
                     da4.Fill(dt_供料记录);
                 }

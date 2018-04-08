@@ -561,6 +561,11 @@ namespace BatchProductRecord
         void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             calc合计();
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
         }
 
         public ProcessProductInstru(mySystem.MainForm mainform,int id)
@@ -2475,11 +2480,7 @@ namespace BatchProductRecord
 
         private void dataGridView1_DataBindingComplete_1(object sender, DataGridViewBindingCompleteEventArgs e)
         {
-            if (isFirstBind)
-            {
-                readDGVWidthFromSettingAndSet(dataGridView1);
-                isFirstBind = false;
-            }
+           
         }
 
         private void ProcessProductInstru_FormClosing(object sender, FormClosingEventArgs e)

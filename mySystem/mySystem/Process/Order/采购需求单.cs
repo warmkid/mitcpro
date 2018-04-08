@@ -1095,6 +1095,7 @@ namespace mySystem.Process.Order
                 dr["推荐供应商"] = drs[0]["推荐供应商"];
                 dr["数量"] = drs[0]["换算率"];
                 dr["采购件数"] = Convert.ToDouble(dr["采购数量"]) / Convert.ToDouble(drs[0]["换算率"]);
+                dr["单位"] = drs[0]["主计量单位名称"];
             }
 
 

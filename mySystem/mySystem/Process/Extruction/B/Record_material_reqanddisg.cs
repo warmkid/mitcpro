@@ -1481,7 +1481,7 @@ namespace mySystem.Extruction.Process
             }
             
             dt_prodlist.Clear();
-            da_prodlist.Fill(dt_prodlist);
+            da_prodlistsql.Fill(dt_prodlist);
             dataGridView1.ClearSelection();
             dataGridView1.Rows[index - 1].Selected = true;
 
@@ -1532,7 +1532,7 @@ namespace mySystem.Extruction.Process
             }
             
             dt_prodlist.Clear();
-            da_prodlist.Fill(dt_prodlist);
+            da_prodlistsql.Fill(dt_prodlist);
             dataGridView1.ClearSelection();
             dataGridView1.Rows[index + 1].Selected = true;
 

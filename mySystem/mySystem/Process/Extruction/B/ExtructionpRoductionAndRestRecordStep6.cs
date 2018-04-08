@@ -530,7 +530,18 @@ namespace mySystem.Extruction.Process
                 cb白班.Checked = Convert.ToBoolean(dt1.Rows[0]["班次"].ToString());
                 cb夜班.Checked = !cb白班.Checked;
                 InstruID = Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString());
-                DataShow(Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString()), dt1.Rows[0]["产品名称"].ToString(), Convert.ToBoolean(dt1.Rows[0]["班次"].ToString()), Convert.ToDateTime(dt1.Rows[0]["生产日期"].ToString()));
+
+                readOuterData(ID);
+                outerBind();
+                dataGridView1.Columns.Clear();
+                readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
+                setDataGridViewColumns();
+                innerBind();
+
+                addComputerEventHandler();  // 设置自动计算类事件
+                setFormState();  // 获取当前窗体状态：窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过
+                setEnableReadOnly();  //根据状态设置可读写性 
+                //DataShow(Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString()), dt1.Rows[0]["产品名称"].ToString(), Convert.ToBoolean(dt1.Rows[0]["班次"].ToString()), Convert.ToDateTime(dt1.Rows[0]["生产日期"].ToString()));
             }
         }
         
@@ -554,6 +565,28 @@ namespace mySystem.Extruction.Process
                 dt记录 = new DataTable(table);
                 //da记录_sql = new SqlDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID.ToString() + " and 产品名称 = '" + productName + "' and 班次 = " + flight.ToString() + " and 生产日期 like '#" + searchTime.ToString("yyyy/MM/dd") + "#' ", conn);
                 da记录_sql = new SqlDataAdapter("select top 1 * from " + table + " where 生产指令ID = " + InstruID.ToString() + " and 产品名称 = '" + productName + "' and 班次 = " + (flight?1:0) + " order by ID DESC", conn);
+                cb记录_sql = new SqlCommandBuilder(da记录_sql);
+                da记录_sql.Fill(dt记录);
+            }
+        }
+
+        private void readOuterData(Int32 ID)
+        {
+            if (!isSqlOk)
+            {
+                bs记录 = new BindingSource();
+                dt记录 = new DataTable(table);
+                //da记录 = new OleDbDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID.ToString() + " and 产品名称 = '" + productName + "' and 班次 = " + flight.ToString() + " and 生产日期 = #" + searchTime.ToString("yyyy/MM/dd") + "# ", connOle);
+                da记录 = new OleDbDataAdapter("select  * from " + table + " where ID = " + ID.ToString(), connOle);
+                cb记录 = new OleDbCommandBuilder(da记录);
+                da记录.Fill(dt记录);
+            }
+            else
+            {
+                bs记录 = new BindingSource();
+                dt记录 = new DataTable(table);
+                //da记录_sql = new SqlDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID.ToString() + " and 产品名称 = '" + productName + "' and 班次 = " + flight.ToString() + " and 生产日期 like '#" + searchTime.ToString("yyyy/MM/dd") + "#' ", conn);
+                da记录_sql = new SqlDataAdapter("select * from " + table + " where ID = " + ID.ToString(), conn);
                 cb记录_sql = new SqlCommandBuilder(da记录_sql);
                 da记录_sql.Fill(dt记录);
             }
@@ -1363,6 +1396,7 @@ namespace mySystem.Extruction.Process
             {
                 bs记录 = new BindingSource();
                 dt记录 = new DataTable(table);
+                dtp生产日期.Value = DateTime.Now;
                 if (!mySystem.Parameter.isSqlOk)
                 {
                     da记录 = new OleDbDataAdapter("select * from " + table + " where 0=1", connOle);
