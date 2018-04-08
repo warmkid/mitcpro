@@ -63,6 +63,22 @@ namespace mySystem.Other
         private void btn打印_Click(object sender, EventArgs e)
         {
             // TODO 打印
+            // 打印二维码
+            if (tb二维码.Text == "") return;
+            ZXing.BarcodeWriter bw = new BarcodeWriter();
+
+            bw.Format = BarcodeFormat.QR_CODE;
+            Bitmap b = bw.Write(tb二维码.Text);
+            b.Save("code.bmp");
+
+
+            System.Drawing.Printing.PrintDocument pd = new System.Drawing.Printing.PrintDocument();
+            pd.PrintPage += pd_PrintPage;
+            PrintDialog pdlg = new PrintDialog();
+            pdlg.Document = pd;
+            if (pdlg.ShowDialog() != DialogResult.OK) return;
+            pd.Print();
+
             
             string sql;
             //OleDbDataAdapter da;
@@ -98,7 +114,20 @@ namespace mySystem.Other
                 dt.Rows.Add(dr);
                 da.Update(dt);
             }
-            
+
+           
+
+        }
+
+        void pd_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        {
+
+            float x = e.MarginBounds.Left;
+            float y = e.MarginBounds.Top;
+            float w = e.MarginBounds.Width;
+            float h = e.MarginBounds.Height;
+
+            e.Graphics.DrawImage(Image.FromFile("code.bmp"), x, y, w, h);
         }
 
         private void btn生成二维码_Click(object sender, EventArgs e)

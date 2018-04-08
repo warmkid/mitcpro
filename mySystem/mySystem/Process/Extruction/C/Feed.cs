@@ -145,7 +145,8 @@ namespace mySystem.Process.Extruction.C
             dr["生产指令编号"] = Parameter.proInstruction;
             dr["生产指令ID"] = Parameter.proInstruID;
             dr["生产日期"] = Convert.ToDateTime(dtp生产日期.Value.ToShortDateString());
-            dr["班次"] = Parameter.userflight;
+            // 班次这一列实际已经没用了
+            dr["班次"] = true;
             dr["审核员"] = "";
             //this part to add log 
             //格式： 
