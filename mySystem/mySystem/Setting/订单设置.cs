@@ -979,16 +979,38 @@ namespace mySystem.Setting
             DataTable dt = new DataTable("设置存货档案"); //""中的是表名
             SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, tb代码q.Text, tb名称q.Text), mySystem.Parameter.conn);
             SqlCommandBuilder cb = new SqlCommandBuilder(da);
+            //da.Fill(dt);
+            //foreach (DataRow dr in dt.Rows)
+            //{
+            //    if (dr["存货代码"].ToString().Contains("×"))
+            //    {
+            //        System.Console.WriteLine(dr["存货代码"].ToString().Replace("×", "X"));
+            //        dr["存货代码"] = dr["存货代码"].ToString().Replace("×", "X");
+            //    }
+            //}
+            //da.Update(dt);
+            // 去重
             da.Fill(dt);
+            System.Collections.Hashtable ht = new System.Collections.Hashtable();
             foreach (DataRow dr in dt.Rows)
             {
-                if (dr["存货代码"].ToString().Contains("×"))
+                if (!ht.ContainsKey(dr["存货代码"]))
                 {
-                    System.Console.WriteLine(dr["存货代码"].ToString().Replace("×", "X"));
-                    dr["存货代码"] = dr["存货代码"].ToString().Replace("×", "X");
+                    ht.Add(dr["存货代码"], 0);
+                }
+                int n = (int)ht[dr["存货代码"]];
+                ht[dr["存货代码"]] = n + 1;
+            }
+            foreach (Object h in ht.Keys)
+            {
+                int n = (int)ht[h];
+                if (n > 1)
+                {
+                    System.Console.WriteLine(h.ToString());
+                    System.Console.WriteLine(n);
+                    System.Console.WriteLine("*******");
                 }
             }
-            da.Update(dt);
         }
 
         private void btn行复制_Click(object sender, EventArgs e)
