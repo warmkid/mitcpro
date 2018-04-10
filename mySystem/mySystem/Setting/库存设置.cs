@@ -36,6 +36,11 @@ namespace mySystem.Setting
         private DataTable dt权限;
         private BindingSource bs权限;
         private SqlCommandBuilder cb权限;
+        private SqlDataAdapter da预警;
+        private DataTable dt预警;
+        private BindingSource bs预警;
+        private SqlCommandBuilder cb预警;
+        private List<string> ls产品代码;
 
 
         private void Initdgv()
@@ -52,8 +57,69 @@ namespace mySystem.Setting
             bs权限 = new BindingSource();
             EachInitdgv(dgv权限);
 
+            bs预警 = new BindingSource();
+            EachInitdgv(dgv预警);
+
+            get所有产品代码();
+            dgv预警.EditingControlShowing += dgv预警_EditingControlShowing;
+            dgv预警.CellEndEdit += dgv预警_CellEndEdit;
         }
 
+        void dgv预警_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            String curStr;
+            double curDou;
+            int idx;
+            bool ok;
+            switch (dgv预警.Columns[e.ColumnIndex].Name)
+            {
+                case "产品代码":
+                    curStr = dgv预警[e.ColumnIndex, e.RowIndex].Value.ToString();
+                    idx = ls产品代码.IndexOf(curStr);
+                    if (idx >= 0)
+                    {
+                        dgv预警["产品代码", e.RowIndex].Value = ls产品代码[idx];
+                    }
+                    else
+                    {
+                        dgv预警["产品代码", e.RowIndex].Value = "";
+                    }
+                    break;
+            }
+        }
+
+        void dgv预警_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            TextBox tb = (e.Control as TextBox);
+            tb.AutoCompleteCustomSource = null;
+            AutoCompleteStringCollection acsc;
+            if (tb == null) return;
+            switch (dgv预警.CurrentCell.OwningColumn.Name)
+            {
+                case "产品代码":
+                    acsc = new AutoCompleteStringCollection();
+                    acsc.AddRange(ls产品代码.ToArray());
+                    tb.AutoCompleteCustomSource = acsc;
+                    tb.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                    tb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                    break;
+                
+            }
+        }
+
+        void get所有产品代码()
+        {
+            ls产品代码 = new List<string>();
+            SqlDataAdapter da;
+            DataTable dt;
+            da = new SqlDataAdapter("select * from 设置存货档案", mySystem.Parameter.conn);
+            dt = new DataTable();
+            da.Fill(dt);
+            foreach (DataRow dr in dt.Rows)
+            {
+                ls产品代码.Add(dr["存货代码"].ToString());
+            }
+        }
 
         private void Bind()
         {
@@ -126,6 +192,24 @@ namespace mySystem.Setting
             this.dgv权限.Columns["步骤"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv权限.Columns["ID"].Visible = false;
 
+            //************************    库存预警     *******************************************
+            //dt预警 = new DataTable("库存预警");
+            //da预警 = new SqlDataAdapter("select * from 设置库存预警", mySystem.Parameter.conn);
+            //cb预警 = new SqlCommandBuilder(da预警);
+            //dt预警.Columns.Add("序号", System.Type.GetType("System.String"));
+            //da预警.Fill(dt预警);
+            //bs预警.DataSource = dt预警;
+            //this.dgv预警.DataSource = bs预警.DataSource;
+            //setDataGridViewRowNums(this.dgv预警);
+            //foreach (DataGridViewColumn dgvc in dgv预警.Columns)
+            //{
+
+            //    dgvc.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            //    dgvc.Resizable = DataGridViewTriState.True;
+            //    dgvc.SortMode = DataGridViewColumnSortMode.Automatic;
+            //}
+            //this.dgv预警.Columns["ID"].Visible = false;
+            query预警("");
         }
 
         private void setDataGridViewRowNums(DataGridView dgv)
@@ -161,6 +245,7 @@ namespace mySystem.Setting
 
         private void del供应商_Click(object sender, EventArgs e)
         {
+            if (this.dgv供应商.CurrentRow == null) return;
             int idx = this.dgv供应商.CurrentRow.Index;
             dt供应商.Rows[idx].Delete();
             da供应商.Update((DataTable)bs供应商.DataSource);
@@ -180,6 +265,7 @@ namespace mySystem.Setting
 
         private void del检验标准_Click(object sender, EventArgs e)
         {
+            if (dgv检验标准.CurrentRow == null) return;
             int idx = this.dgv检验标准.CurrentRow.Index;
             dt检验标准.Rows[idx].Delete();
             da检验标准.Update((DataTable)bs检验标准.DataSource);
@@ -226,12 +312,15 @@ namespace mySystem.Setting
 
         private void del人员_Click(object sender, EventArgs e)
         {
-            int idx = this.dgv人员.SelectedCells[0].RowIndex;
-            dt人员.Rows[idx].Delete();
-            da人员.Update((DataTable)bs人员.DataSource);
-            dt人员.Clear();
-            da人员.Fill(dt人员);
-            setDataGridViewRowNums(this.dgv人员);
+            if (this.dgv人员.SelectedCells.Count > 0)
+            {
+                int idx = this.dgv人员.SelectedCells[0].RowIndex;
+                dt人员.Rows[idx].Delete();
+                da人员.Update((DataTable)bs人员.DataSource);
+                dt人员.Clear();
+                da人员.Fill(dt人员);
+                setDataGridViewRowNums(this.dgv人员);
+            }
         }
 
         private void Btn保存人员_Click(object sender, EventArgs e)
@@ -408,7 +497,76 @@ namespace mySystem.Setting
             }
         }
 
-        
+        private void btn添加_库存预警_Click(object sender, EventArgs e)
+        {
+            DataRow dr = dt预警.NewRow();
+            dt预警.Rows.InsertAt(dt预警.NewRow(), dt预警.Rows.Count);
+            setDataGridViewRowNums(this.dgv预警);
+            if (dgv预警.Rows.Count > 0)
+                dgv预警.FirstDisplayedScrollingRowIndex = dgv预警.Rows.Count - 1;
+        }
+
+        private void btn查询_库存预警_Click(object sender, EventArgs e)
+        {
+            query预警(tb产品代码.Text.Trim());
+        }
+
+        void query预警(String daima)
+        {
+            //************************    库存预警     *******************************************
+            dt预警 = new DataTable("库存预警");
+            String sql = "select * from 设置库存预警 where 产品代码 like '%{0}%'";
+            da预警 = new SqlDataAdapter(String.Format(sql,daima), mySystem.Parameter.conn);
+            cb预警 = new SqlCommandBuilder(da预警);
+            dt预警.Columns.Add("序号", System.Type.GetType("System.String"));
+            da预警.Fill(dt预警);
+            bs预警.DataSource = dt预警;
+            this.dgv预警.DataSource = bs预警.DataSource;
+            setDataGridViewRowNums(this.dgv预警);
+            foreach (DataGridViewColumn dgvc in dgv预警.Columns)
+            {
+
+                dgvc.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dgvc.Resizable = DataGridViewTriState.True;
+                dgvc.SortMode = DataGridViewColumnSortMode.Automatic;
+            }
+            this.dgv预警.Columns["ID"].Visible = false;
+        }
+
+        private void btn删除_库存预警_Click(object sender, EventArgs e)
+        {
+            if (this.dgv预警.SelectedCells.Count > 0)
+            {
+                int idx = this.dgv预警.SelectedCells[0].RowIndex;
+                dt预警.Rows[idx].Delete();
+                da预警.Update((DataTable)bs预警.DataSource);
+                dt预警.Clear();
+                da预警.Fill(dt预警);
+                setDataGridViewRowNums(this.dgv预警);
+            }
+        }
+
+        private void btn保存_库存预警_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!Parameter.isSqlOk)
+                { }
+                else
+                {
+                    da预警.Update((DataTable)bs预警.DataSource);
+                    dt预警.Clear();
+                    da预警.Fill(dt预警);
+                    setDataGridViewRowNums(this.dgv预警);
+
+                  
+
+                }
+                MessageBox.Show("保存成功！");
+            }
+            catch(Exception ee)
+            { MessageBox.Show("保存失败！\n原因："+ee.Message, "错误"); }
+        }
 
 
     }

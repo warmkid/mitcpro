@@ -560,7 +560,7 @@ namespace mySystem.Other
             dr["序号"] = 0;
             dr["申请日期时间"] = Convert.ToDateTime(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
             dr["物料代码"] = _dt物料代码数量.Rows[0]["物料代码"].ToString();
-            dr["物料批号"] = _dt物料代码数量.Rows[0]["物料代码"].ToString();
+            dr["物料批号"] = _dt物料代码数量.Rows[0]["物料批号"].ToString();
             dr["申请数量主计量"] = _dt物料代码数量.Rows[0]["数量"].ToString();
             dr["申请数量辅计量"] = 0;
             dr["操作员"] = mySystem.Parameter.userName;

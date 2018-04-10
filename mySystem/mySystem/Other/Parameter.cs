@@ -375,14 +375,54 @@ namespace mySystem
                 connUser = connToServer(strConn);
                 if (!isOk)
                 {
-                    MessageBox.Show("连接数据库失败.");
+                    // ping name of server and get correct of ip
+                    AppSettingsSection appSettings = ConfigurationManager.OpenExeConfiguration(System.Windows.Forms.Application.ExecutablePath).AppSettings;
+                    String ServerPCName = null;
+                    if (appSettings.Settings["ServerPCName"] != null)
+                    {
+                        ServerPCName = appSettings.Settings["ServerPCName"].Value;
+                    }
+                    else
+                    {
+                        MessageBox.Show("获取服务器名称失败.");
+                        throw new Exception("获取服务器名称失败");
+                    }
+                    System.Net.IPHostEntry host = System.Net.Dns.GetHostEntry(ServerPCName);
+                    String ip = "";
+                    foreach (System.Net.IPAddress ipp in host.AddressList)
+                    {
+                        if (ipp.ToString().Contains(":")) continue;
+                        else
+                        {
+                            ip = ipp.ToString();
+                            appSettings.Settings["ip"].Value = ip;
+                            appSettings.CurrentConfiguration.Save();
+                            ip = appSettings.Settings["ip"].Value;
+                            Parameter.IP_port = ip + "," + appSettings.Settings["port"].Value;
+                            break;
+                        }
+                    }
+                    if (ip.Equals(""))
+                    {
+                        MessageBox.Show("连接服务器失败.");
+                    }
 
-                    Connect2SqlForm con2sql = new Connect2SqlForm();
-                    con2sql.IPChange += new Connect2SqlForm.DelegateIPChange(IPChanged);
-                    con2sql.ShowDialog();
-                    //strConn = "server=" + IP_port + ";database=user;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
-                    //connUser = connToServer(strConn);
-                    Application.Exit();
+                    // 第二次尝试
+                    
+                    strConn = "server=" + IP_port + ";database=user;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
+                    isOk = false;
+                    connUser = connToServer(strConn);
+                    if (!isOk)
+                    {
+                        Connect2SqlForm con2sql = new Connect2SqlForm();
+                        con2sql.IPChange += new Connect2SqlForm.DelegateIPChange(IPChanged);
+                        con2sql.ShowDialog();
+                        //strConn = "server=" + IP_port + ";database=user;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
+                        //connUser = connToServer(strConn);
+                        Application.Exit();
+                    }
+
+                    
                 }
 
             }

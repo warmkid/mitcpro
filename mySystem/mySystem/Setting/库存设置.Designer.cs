@@ -54,6 +54,14 @@
             this.del人员 = new System.Windows.Forms.Button();
             this.add人员 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
+            this.tabPage库存预警 = new System.Windows.Forms.TabPage();
+            this.dgv预警 = new System.Windows.Forms.DataGridView();
+            this.btn查询_库存预警 = new System.Windows.Forms.Button();
+            this.lbl产品代码 = new System.Windows.Forms.Label();
+            this.tb产品代码 = new System.Windows.Forms.TextBox();
+            this.btn添加_库存预警 = new System.Windows.Forms.Button();
+            this.btn删除_库存预警 = new System.Windows.Forms.Button();
+            this.btn保存_库存预警 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage基本信息设置.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -65,6 +73,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgv权限)).BeginInit();
             this.groupBox7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv人员)).BeginInit();
+            this.tabPage库存预警.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv预警)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -72,7 +82,8 @@
             this.tabControl1.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
             this.tabControl1.Controls.Add(this.tabPage基本信息设置);
             this.tabControl1.Controls.Add(this.tabPage人员);
-            this.tabControl1.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tabControl1.Controls.Add(this.tabPage库存预警);
+            this.tabControl1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tabControl1.Location = new System.Drawing.Point(12, 7);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -116,7 +127,7 @@
             // 
             // del检验标准
             // 
-            this.del检验标准.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.del检验标准.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.del检验标准.Location = new System.Drawing.Point(100, 14);
             this.del检验标准.Name = "del检验标准";
             this.del检验标准.Size = new System.Drawing.Size(70, 30);
@@ -127,7 +138,7 @@
             // 
             // add检验标准
             // 
-            this.add检验标准.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.add检验标准.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.add检验标准.Location = new System.Drawing.Point(12, 14);
             this.add检验标准.Name = "add检验标准";
             this.add检验标准.Size = new System.Drawing.Size(70, 30);
@@ -139,7 +150,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
+            this.label1.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold);
             this.label1.Location = new System.Drawing.Point(35, 266);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(135, 20);
@@ -148,7 +159,7 @@
             // 
             // Btn保存项目
             // 
-            this.Btn保存项目.Font = new System.Drawing.Font("SimSun", 12F);
+            this.Btn保存项目.Font = new System.Drawing.Font("宋体", 12F);
             this.Btn保存项目.Location = new System.Drawing.Point(968, 468);
             this.Btn保存项目.Name = "Btn保存项目";
             this.Btn保存项目.Size = new System.Drawing.Size(90, 33);
@@ -179,7 +190,7 @@
             // 
             // del供应商
             // 
-            this.del供应商.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.del供应商.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.del供应商.Location = new System.Drawing.Point(100, 14);
             this.del供应商.Name = "del供应商";
             this.del供应商.Size = new System.Drawing.Size(70, 30);
@@ -190,7 +201,7 @@
             // 
             // add供应商
             // 
-            this.add供应商.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.add供应商.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.add供应商.Location = new System.Drawing.Point(12, 14);
             this.add供应商.Name = "add供应商";
             this.add供应商.Size = new System.Drawing.Size(70, 30);
@@ -202,7 +213,7 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
+            this.label15.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold);
             this.label15.Location = new System.Drawing.Point(31, 15);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(156, 20);
@@ -226,7 +237,7 @@
             // 
             // Btn保存人员
             // 
-            this.Btn保存人员.Font = new System.Drawing.Font("SimSun", 12F);
+            this.Btn保存人员.Font = new System.Drawing.Font("宋体", 12F);
             this.Btn保存人员.Location = new System.Drawing.Point(937, 508);
             this.Btn保存人员.Name = "Btn保存人员";
             this.Btn保存人员.Size = new System.Drawing.Size(90, 33);
@@ -265,7 +276,7 @@
             // 
             // button3
             // 
-            this.button3.Font = new System.Drawing.Font("SimSun", 12F);
+            this.button3.Font = new System.Drawing.Font("宋体", 12F);
             this.button3.Location = new System.Drawing.Point(975, 362);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(81, 33);
@@ -275,7 +286,7 @@
             // 
             // button5
             // 
-            this.button5.Font = new System.Drawing.Font("SimSun", 12F);
+            this.button5.Font = new System.Drawing.Font("宋体", 12F);
             this.button5.Location = new System.Drawing.Point(873, 362);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(82, 33);
@@ -286,7 +297,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
+            this.label3.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold);
             this.label3.Location = new System.Drawing.Point(17, 292);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(219, 20);
@@ -315,7 +326,7 @@
             // 
             // del人员
             // 
-            this.del人员.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.del人员.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.del人员.Location = new System.Drawing.Point(100, 14);
             this.del人员.Name = "del人员";
             this.del人员.Size = new System.Drawing.Size(70, 30);
@@ -326,7 +337,7 @@
             // 
             // add人员
             // 
-            this.add人员.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.add人员.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.add人员.Location = new System.Drawing.Point(12, 14);
             this.add人员.Name = "add人员";
             this.add人员.Size = new System.Drawing.Size(70, 30);
@@ -338,12 +349,94 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
+            this.label4.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold);
             this.label4.Location = new System.Drawing.Point(17, 15);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(177, 20);
             this.label4.TabIndex = 53;
             this.label4.Text = "库存管理人员设置";
+            // 
+            // tabPage库存预警
+            // 
+            this.tabPage库存预警.Controls.Add(this.btn保存_库存预警);
+            this.tabPage库存预警.Controls.Add(this.btn删除_库存预警);
+            this.tabPage库存预警.Controls.Add(this.btn添加_库存预警);
+            this.tabPage库存预警.Controls.Add(this.tb产品代码);
+            this.tabPage库存预警.Controls.Add(this.lbl产品代码);
+            this.tabPage库存预警.Controls.Add(this.btn查询_库存预警);
+            this.tabPage库存预警.Controls.Add(this.dgv预警);
+            this.tabPage库存预警.Location = new System.Drawing.Point(4, 29);
+            this.tabPage库存预警.Name = "tabPage库存预警";
+            this.tabPage库存预警.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage库存预警.Size = new System.Drawing.Size(1120, 554);
+            this.tabPage库存预警.TabIndex = 4;
+            this.tabPage库存预警.Text = "库存预警";
+            this.tabPage库存预警.UseVisualStyleBackColor = true;
+            // 
+            // dgv预警
+            // 
+            this.dgv预警.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv预警.Location = new System.Drawing.Point(82, 69);
+            this.dgv预警.Name = "dgv预警";
+            this.dgv预警.RowTemplate.Height = 23;
+            this.dgv预警.Size = new System.Drawing.Size(516, 418);
+            this.dgv预警.TabIndex = 0;
+            // 
+            // btn查询_库存预警
+            // 
+            this.btn查询_库存预警.Location = new System.Drawing.Point(429, 34);
+            this.btn查询_库存预警.Name = "btn查询_库存预警";
+            this.btn查询_库存预警.Size = new System.Drawing.Size(75, 23);
+            this.btn查询_库存预警.TabIndex = 1;
+            this.btn查询_库存预警.Text = "查询";
+            this.btn查询_库存预警.UseVisualStyleBackColor = true;
+            this.btn查询_库存预警.Click += new System.EventHandler(this.btn查询_库存预警_Click);
+            // 
+            // lbl产品代码
+            // 
+            this.lbl产品代码.AutoSize = true;
+            this.lbl产品代码.Location = new System.Drawing.Point(90, 37);
+            this.lbl产品代码.Name = "lbl产品代码";
+            this.lbl产品代码.Size = new System.Drawing.Size(72, 16);
+            this.lbl产品代码.TabIndex = 2;
+            this.lbl产品代码.Text = "产品代码";
+            // 
+            // tb产品代码
+            // 
+            this.tb产品代码.Location = new System.Drawing.Point(201, 34);
+            this.tb产品代码.Name = "tb产品代码";
+            this.tb产品代码.Size = new System.Drawing.Size(166, 26);
+            this.tb产品代码.TabIndex = 3;
+            // 
+            // btn添加_库存预警
+            // 
+            this.btn添加_库存预警.Location = new System.Drawing.Point(642, 96);
+            this.btn添加_库存预警.Name = "btn添加_库存预警";
+            this.btn添加_库存预警.Size = new System.Drawing.Size(75, 23);
+            this.btn添加_库存预警.TabIndex = 4;
+            this.btn添加_库存预警.Text = "添加";
+            this.btn添加_库存预警.UseVisualStyleBackColor = true;
+            this.btn添加_库存预警.Click += new System.EventHandler(this.btn添加_库存预警_Click);
+            // 
+            // btn删除_库存预警
+            // 
+            this.btn删除_库存预警.Location = new System.Drawing.Point(642, 229);
+            this.btn删除_库存预警.Name = "btn删除_库存预警";
+            this.btn删除_库存预警.Size = new System.Drawing.Size(75, 23);
+            this.btn删除_库存预警.TabIndex = 5;
+            this.btn删除_库存预警.Text = "删除";
+            this.btn删除_库存预警.UseVisualStyleBackColor = true;
+            this.btn删除_库存预警.Click += new System.EventHandler(this.btn删除_库存预警_Click);
+            // 
+            // btn保存_库存预警
+            // 
+            this.btn保存_库存预警.Location = new System.Drawing.Point(642, 359);
+            this.btn保存_库存预警.Name = "btn保存_库存预警";
+            this.btn保存_库存预警.Size = new System.Drawing.Size(75, 23);
+            this.btn保存_库存预警.TabIndex = 6;
+            this.btn保存_库存预警.Text = "保存";
+            this.btn保存_库存预警.UseVisualStyleBackColor = true;
+            this.btn保存_库存预警.Click += new System.EventHandler(this.btn保存_库存预警_Click);
             // 
             // 库存设置
             // 
@@ -366,6 +459,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgv权限)).EndInit();
             this.groupBox7.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgv人员)).EndInit();
+            this.tabPage库存预警.ResumeLayout(false);
+            this.tabPage库存预警.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv预警)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -398,6 +494,14 @@
         private System.Windows.Forms.Button del人员;
         private System.Windows.Forms.Button add人员;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TabPage tabPage库存预警;
+        private System.Windows.Forms.Button btn保存_库存预警;
+        private System.Windows.Forms.Button btn删除_库存预警;
+        private System.Windows.Forms.Button btn添加_库存预警;
+        private System.Windows.Forms.TextBox tb产品代码;
+        private System.Windows.Forms.Label lbl产品代码;
+        private System.Windows.Forms.Button btn查询_库存预警;
+        private System.Windows.Forms.DataGridView dgv预警;
 
     }
 }

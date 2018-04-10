@@ -35,6 +35,7 @@
             this.MainQueryBtn = new System.Windows.Forms.Button();
             this.MainPanel = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.btn导入 = new System.Windows.Forms.Button();
             this.btn浏览 = new System.Windows.Forms.Button();
@@ -43,7 +44,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.timer2 = new System.Windows.Forms.Timer(this.components);
-            this.label2 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -124,12 +124,22 @@
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(911, 39);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(56, 14);
+            this.label2.TabIndex = 10;
+            this.label2.Text = "v0.9.11";
+            // 
             // textBox1
             // 
             this.textBox1.Location = new System.Drawing.Point(349, 31);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(277, 23);
             this.textBox1.TabIndex = 9;
+            this.textBox1.Visible = false;
             // 
             // btn导入
             // 
@@ -139,6 +149,7 @@
             this.btn导入.TabIndex = 8;
             this.btn导入.Text = "导入存货档案";
             this.btn导入.UseVisualStyleBackColor = true;
+            this.btn导入.Visible = false;
             this.btn导入.Click += new System.EventHandler(this.btn导入_Click);
             // 
             // btn浏览
@@ -149,6 +160,7 @@
             this.btn浏览.TabIndex = 7;
             this.btn浏览.Text = "浏览";
             this.btn浏览.UseVisualStyleBackColor = true;
+            this.btn浏览.Visible = false;
             this.btn浏览.Click += new System.EventHandler(this.btn浏览_Click);
             // 
             // ExitBtn
@@ -189,22 +201,13 @@
             // 
             this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(911, 39);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(14, 14);
-            this.label2.TabIndex = 10;
-            this.label2.Text = "s";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1358, 699);
-            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.MainPanel);
+            this.Controls.Add(this.groupBox1);
             this.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));

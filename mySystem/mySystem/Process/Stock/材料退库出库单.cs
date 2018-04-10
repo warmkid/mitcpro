@@ -70,6 +70,7 @@ namespace mySystem.Process.Stock
             addDataEventHandler();  // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged
 
             IDShow(ID);
+            check库存();
         }
         //生产材料退库单或者材料出库单
         //dtOut中应包含生产指令ID，生产指令编码，产品代码，产品批号
@@ -133,7 +134,8 @@ namespace mySystem.Process.Stock
                 //    return false;
                 //外表ID = int.Parse(dt_temp2.Rows[0]["ID"].ToString());
 
-                daout_reader = new SqlDataAdapter("select * from " + temptable + " where 生产指令ID=" + dtOut.Rows[0]["生产指令ID"].ToString() + " and 属于工序='" + str工序+"'", conn);
+
+                daout_reader = new SqlDataAdapter("select top 1 * from " + temptable + " where 生产指令ID=" + dtOut.Rows[0]["生产指令ID"].ToString() + " and 属于工序='" + str工序+"' order by ID DESC", conn);
                 cb_reader = new SqlCommandBuilder(daout_reader);
                 daout_reader.Fill(dt_reader);
                 if (dt_reader.Rows.Count <= 0)
@@ -508,7 +510,7 @@ namespace mySystem.Process.Stock
             //*******************************表格内部******************************// 
             if (dt记录.Rows.Count <= 0)
             {
-                MessageBox.Show("改ID下没有对应的记录");
+                MessageBox.Show("该ID下没有对应的记录");
                 return;
             }
             //二维码表绑定
@@ -1791,6 +1793,31 @@ namespace mySystem.Process.Stock
                 writeDGVWidthToSetting(dataGridView2);
             if (dataGridView3.Columns.Count > 0)
                 writeDGVWidthToSetting(dataGridView3);
+        }
+
+        void check库存()
+        {
+            SqlCommand comm;
+            String sql = "select sum(现存数量) from 库存台帐 where 产品代码='{0}'";
+            foreach (DataRow dr in dt记录详情.Rows)
+            {
+                String daima = dr["物料代码"].ToString();
+                double shuliang = Convert.ToDouble(dr["发料数量"]);
+                comm = new SqlCommand(String.Format(sql, daima), conn);
+                Object res = comm.ExecuteScalar();
+                double a = 0;
+                if (res != DBNull.Value)
+                {
+                    a = Convert.ToDouble(comm.ExecuteScalar());
+                }
+
+                if (a <= shuliang)
+                {
+                    MessageBox.Show("产品: " + daima + " 的库存数量不足以发货", "警告");
+                    return;
+                }
+                
+            }
         }
         
     }

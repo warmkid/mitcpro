@@ -11,6 +11,7 @@ using System.Data.SqlClient;
 using System.Data.OleDb;
 using CustomUIControls;
 using System.Configuration;
+using System.Collections;
 
 
 namespace mySystem
@@ -28,8 +29,9 @@ namespace mySystem
 
         public MainForm()
         {
+            
             readSQLConfig();
-            Parameter.InitConnUser(); //初始化连接到有用户表的数据库
+            //Parameter.InitConnUser(); //初始化连接到有用户表的数据库
             //Parameter.ConnUserInit();
             LoginForm login = new LoginForm(this);
             login.ShowDialog();
@@ -38,6 +40,7 @@ namespace mySystem
             userLabel.Text = Parameter.userName;
             InitTaskBar();
             SearchUnchecked();
+            check库存预警();
             timer1.Interval = interval;
             timer1.Start();
 
@@ -713,6 +716,49 @@ namespace mySystem
             }
         }
 
+        void check库存预警()
+        {
+            String strCon = "server=" + mySystem.Parameter.IP_port + ";database=dingdan_kucun;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
+            SqlConnection conn = new SqlConnection(strCon);
+            conn.Open();
+            Hashtable ht = new Hashtable();
+            SqlDataAdapter da;
+            DataTable dt;
+            List<string> 预警代码 = new List<string>();
+            // 获取预警设置
+            da = new SqlDataAdapter("select * from 设置库存预警", conn);
+            dt = new DataTable("库存预警");
+            da.Fill(dt);
+            foreach (DataRow dr in dt.Rows)
+            {
+                ht.Add(dr["产品代码"].ToString(), Convert.ToDouble(dr["预警值"]));
+            }
+            // 检查是否要预警
+            String sql = "select sum(现存数量) from 库存台帐 where 产品代码='{0}'";
+            SqlCommand comm;
+            foreach (Object k in ht.Keys)
+            {
+                comm = new SqlCommand(String.Format(sql, k.ToString()), conn);
+                Object res = comm.ExecuteScalar();
+                if (res != DBNull.Value)
+                {
+                    double a = Convert.ToDouble(comm.ExecuteScalar());
+                    double b = Convert.ToDouble(ht[k]);
+                    if (a <= b) 预警代码.Add(k.ToString());
+                }
+            }
+            if (预警代码.Count > 0)
+            {
+                StringBuilder sb = new StringBuilder("下列产品库存告急：\n");
+                foreach (String s in 预警代码)
+                {
+                    sb.Append(s+"\n");
+                }
+                MessageBox.Show(sb.ToString(), "警告");
+            }
+        }
+
 
     }
 }
+ 

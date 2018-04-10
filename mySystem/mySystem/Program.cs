@@ -22,9 +22,9 @@ namespace mySystem
             }
             catch (Exception e)
             {
-                String dt = DateTime.Now.ToString("yyyy-MM-dd_hh-mm_ss");
+                String dt = DateTime.Now.ToString("yyyy-MM-dd_HH-mm_ss");
                 MessageBox.Show(String.Format("出现错误，信息已记录至{0}.txt ", dt));
-                System.IO.File.WriteAllText(String.Format("{0}.txt ", dt), e.StackTrace);
+                System.IO.File.WriteAllText(String.Format("{0}.txt ", dt), e.Message + "\n" + e.StackTrace);
                 System.Diagnostics.Process.Start("explorer.exe", ".");
             }
         }

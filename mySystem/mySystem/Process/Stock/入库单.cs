@@ -436,6 +436,7 @@ namespace mySystem.Process.Stock
                 create检验记录();
                 // 拿到库存ID，向两张二维码表插入数据
                 save二维码信息(dtInner, 库存ID);
+                MessageBox.Show("已自动生产物资请验单，取样记录，检验记录；插入库存台账！","提示");
             }
             else
             {
@@ -583,7 +584,6 @@ namespace mySystem.Process.Stock
             }
             int n = Convert .ToInt32 (cmd.ExecuteScalar ());
 
-            MessageBox.Show("已加入库存台账！");
             return n;
         }
 
@@ -634,7 +634,7 @@ namespace mySystem.Process.Stock
             dtMore.Rows.Add(ndr);
 
             da.Update(dtMore);
-            MessageBox.Show("已自动生产物资请验单！");
+            
         }
 
         private string create请验编号()
@@ -737,7 +737,6 @@ namespace mySystem.Process.Stock
             dtMore.Rows.Add(ndr);
 
             da.Update(dtMore);
-            MessageBox.Show("已自动生产取样记录！");
         }
 
 
@@ -801,7 +800,6 @@ namespace mySystem.Process.Stock
             dt.Rows.Add(ndr);
 
             da.Update(dt);
-            MessageBox.Show("已自动生产检验记录！");
         }
 
         private void btn删除_Click(object sender, EventArgs e)

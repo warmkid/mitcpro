@@ -37,12 +37,15 @@
             this.btn退货 = new System.Windows.Forms.Button();
             this.btn出库 = new System.Windows.Forms.Button();
             this.btn入库 = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.btn导入 = new System.Windows.Forms.Button();
+            this.btn浏览 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // btn出库退库单
             // 
-            this.btn出库退库单.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn出库退库单.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn出库退库单.Location = new System.Drawing.Point(361, 289);
             this.btn出库退库单.Name = "btn出库退库单";
             this.btn出库退库单.Size = new System.Drawing.Size(109, 32);
@@ -86,7 +89,7 @@
             // 
             // btn原料入库
             // 
-            this.btn原料入库.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn原料入库.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn原料入库.Location = new System.Drawing.Point(361, 186);
             this.btn原料入库.Name = "btn原料入库";
             this.btn原料入库.Size = new System.Drawing.Size(109, 32);
@@ -107,7 +110,7 @@
             // 
             // btn退货
             // 
-            this.btn退货.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn退货.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn退货.Location = new System.Drawing.Point(361, 83);
             this.btn退货.Name = "btn退货";
             this.btn退货.Size = new System.Drawing.Size(109, 32);
@@ -138,11 +141,41 @@
             this.btn入库.Visible = false;
             this.btn入库.Click += new System.EventHandler(this.btn入库_Click);
             // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(204, 344);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(277, 21);
+            this.textBox1.TabIndex = 14;
+            // 
+            // btn导入
+            // 
+            this.btn导入.Location = new System.Drawing.Point(595, 343);
+            this.btn导入.Name = "btn导入";
+            this.btn导入.Size = new System.Drawing.Size(103, 23);
+            this.btn导入.TabIndex = 13;
+            this.btn导入.Text = "导入存货档案";
+            this.btn导入.UseVisualStyleBackColor = true;
+            this.btn导入.Click += new System.EventHandler(this.btn导入_Click);
+            // 
+            // btn浏览
+            // 
+            this.btn浏览.Location = new System.Drawing.Point(496, 343);
+            this.btn浏览.Name = "btn浏览";
+            this.btn浏览.Size = new System.Drawing.Size(75, 23);
+            this.btn浏览.TabIndex = 12;
+            this.btn浏览.Text = "浏览";
+            this.btn浏览.UseVisualStyleBackColor = true;
+            this.btn浏览.Click += new System.EventHandler(this.btn浏览_Click);
+            // 
             // 库存管理
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(878, 407);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.btn导入);
+            this.Controls.Add(this.btn浏览);
             this.Controls.Add(this.btn出库退库单);
             this.Controls.Add(this.btn读取);
             this.Controls.Add(this.btn文件上传);
@@ -156,6 +189,7 @@
             this.Text = "库存管理";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -170,5 +204,8 @@
         private System.Windows.Forms.Button btn读取;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button btn出库退库单;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button btn导入;
+        private System.Windows.Forms.Button btn浏览;
     }
 }
