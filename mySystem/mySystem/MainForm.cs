@@ -12,7 +12,7 @@ using System.Data.OleDb;
 using CustomUIControls;
 using System.Configuration;
 using System.Collections;
-
+using System.Threading;
 
 namespace mySystem
 {
@@ -26,11 +26,61 @@ namespace mySystem
         int interval = 7200000; //两小时
         TaskbarNotifier taskbarNotifier1; //右下角提示框
         int timer2Interval = 60000;
+        mySystem.Other.Connecting c;
+
+        private void ThreadFunc()
+        {
+            MethodInvoker mi = new MethodInvoker(this.ShowMsgForm);
+            this.BeginInvoke(mi);
+        }
+
+        private void ShowMsgForm()
+        {
+            
+            c.Show();
+            //CustomUIControls.TaskbarNotifier taskbarNotifier1;
+            //taskbarNotifier1 = new CustomUIControls.TaskbarNotifier();
+            //taskbarNotifier1.SetBackgroundBitmap(new Bitmap(Image.FromFile(@"../../pic/skin_logo.bmp")), Color.FromArgb(255, 0, 255));
+            //taskbarNotifier1.SetCloseBitmap(new Bitmap(Image.FromFile(@"../../pic/close_logo.bmp")), Color.FromArgb(255, 0, 255), new Point(190, 12));
+            //taskbarNotifier1.TitleRectangle = new Rectangle(65, 25, 135, 60);
+            //taskbarNotifier1.ContentRectangle = new Rectangle(15, 65, 205, 150);
+            //taskbarNotifier1.CloseClickable = true;
+            //taskbarNotifier1.TitleClickable = false;
+            //taskbarNotifier1.ContentClickable = false;
+            //taskbarNotifier1.EnableSelectionRectangle = false;
+            //taskbarNotifier1.KeepVisibleOnMousOver = true;
+            //taskbarNotifier1.ReShowOnMouseOver = true;
+            //taskbarNotifier1.Show("提示", "正在连接服务器", 500, 2000, 500);
+            //System.Console.WriteLine("thread");
+        }  
+
+
+        //void showInfo()
+        //{
+        //    CustomUIControls.TaskbarNotifier taskbarNotifier1;
+        //    taskbarNotifier1 = new CustomUIControls.TaskbarNotifier();
+        //    taskbarNotifier1.SetBackgroundBitmap(new Bitmap(Image.FromFile(@"../../pic/skin_logo.bmp")), Color.FromArgb(255, 0, 255));
+        //    taskbarNotifier1.SetCloseBitmap(new Bitmap(Image.FromFile(@"../../pic/close_logo.bmp")), Color.FromArgb(255, 0, 255), new Point(190, 12));
+        //    taskbarNotifier1.TitleRectangle = new Rectangle(65, 25, 135, 60);
+        //    taskbarNotifier1.ContentRectangle = new Rectangle(15, 65, 205, 150);
+        //    taskbarNotifier1.CloseClickable = true;
+        //    taskbarNotifier1.TitleClickable = false;
+        //    taskbarNotifier1.ContentClickable = false;
+        //    taskbarNotifier1.EnableSelectionRectangle = false;
+        //    taskbarNotifier1.KeepVisibleOnMousOver = true;
+        //    taskbarNotifier1.ReShowOnMouseOver = true;
+        //    taskbarNotifier1.Show("提示", "正在连接服务器", 500, 2000, 500);
+        //    System.Console.WriteLine("thread");
+        //}
+
 
         public MainForm()
         {
             
             readSQLConfig();
+            //Thread FormThread = new Thread(new ThreadStart(ThreadFunc));
+            //FormThread.Start();  
+            
             //Parameter.InitConnUser(); //初始化连接到有用户表的数据库
             //Parameter.ConnUserInit();
             LoginForm login = new LoginForm(this);
@@ -949,6 +999,12 @@ namespace mySystem
             reader.Dispose();
             comm.Dispose();
             commnew.Dispose();
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            
+
         }
 
 

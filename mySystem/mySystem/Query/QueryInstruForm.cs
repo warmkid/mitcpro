@@ -122,6 +122,33 @@ namespace mySystem
             Utility.setDataGridViewAutoSizeMode(dgv);
         }
 
+        private void Bind吹膜(String person, String time,bool mod)
+        {
+            String tblName = "生产指令信息表";
+            dt = new DataTable(tblName); //""中的是表名
+            String sql = "";
+            if (mod)
+            {
+                sql ="select * from {0} where {1} like '%{2}%' and {3} between '{4}' and '{5}' and 状态=4 order by ID";
+                
+            }
+            else
+            {
+                sql = "select * from {0} where {1} like '%{2}%' and {3} between '{4}' and '{5}' and 状态<>4 order by ID";
+            }
+            da = new SqlDataAdapter(String.Format(sql, tblName, person, writer, time, date1, date2.AddDays(1)), mySystem.Parameter.conn);
+            
+            cb = new SqlCommandBuilder(da);
+            dt.Columns.Add("序号", System.Type.GetType("System.String"));
+            da.Fill(dt);
+            bs.DataSource = dt;
+            this.dgv.DataBindings.Clear();
+            this.dgv.DataSource = bs.DataSource; //绑定
+            //显示序号
+            setDataGridViewRowNums();
+            Utility.setDataGridViewAutoSizeMode(dgv);
+        }
+
         private void setDataGridViewRowNums()
         {
             int coun = this.dgv.Rows.Count;
@@ -132,6 +159,11 @@ namespace mySystem
         }
 
         private void SearchBtn_Click(object sender, EventArgs e)
+        {
+            search();
+        }
+
+        public void search()
         {
             if (this.comboBox1.SelectedIndex == -1)
             {
@@ -151,15 +183,15 @@ namespace mySystem
             switch (processName)
             {
                 case "吹膜":
-                    Bind("生产指令信息表", " 编制人", "编制时间");        
-
+                    //Bind("生产指令信息表", " 编制人", "编制时间");        
+                    Bind吹膜("编制人", "编制时间", cb吹膜更改.Checked);
                     break;
                 case "清洁分切":
-                    Bind("清洁分切工序生产指令", " 编制人", "编制时间");        
+                    Bind("清洁分切工序生产指令", " 编制人", "编制时间");
 
                     break;
                 case "CS制袋":
-                    Bind("生产指令", " 操作员", "操作时间");        
+                    Bind("生产指令", " 操作员", "操作时间");
 
                     break;
                 case "PE制袋":
@@ -190,12 +222,24 @@ namespace mySystem
                 {
                     int selectIndex = this.dgv.CurrentRow.Index;
                     int ID = Convert.ToInt32(this.dgv.Rows[selectIndex].Cells["ID"].Value);
+                    bool b;
                     switch (processName)
                     {
                         case "吹膜":
-                            BatchProductRecord.ProcessProductInstru form1 = new BatchProductRecord.ProcessProductInstru(base.mainform, ID);
-                            form1.ShowDialog();
+                            b = mySystem.ExtructionMainForm.checkUser(Parameter.userName, Parameter.userRole, "生产指令信息表");
+                            if (b)
+                            {
+                                BatchProductRecord.ProcessProductInstru form1 = new BatchProductRecord.ProcessProductInstru(base.mainform, ID);
+                                form1.Owner = this;
+                                form1.ShowDialog();
+                            }
+                            else
+                            {
+                                MessageBox.Show("您无权查看该页面！");
+                                return;
+                            }
 
+                            
                             break;
                         case "清洁分切":
                             mySystem.Process.CleanCut.Instru form2 = new Process.CleanCut.Instru(mainform, ID);

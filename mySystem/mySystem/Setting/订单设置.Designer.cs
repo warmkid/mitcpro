@@ -150,7 +150,7 @@
             // btn粘贴工序
             // 
             this.btn粘贴工序.Font = new System.Drawing.Font("宋体", 12F);
-            this.btn粘贴工序.Location = new System.Drawing.Point(504, 515);
+            this.btn粘贴工序.Location = new System.Drawing.Point(504, 465);
             this.btn粘贴工序.Name = "btn粘贴工序";
             this.btn粘贴工序.Size = new System.Drawing.Size(90, 33);
             this.btn粘贴工序.TabIndex = 61;
@@ -161,7 +161,7 @@
             // btn复制工序
             // 
             this.btn复制工序.Font = new System.Drawing.Font("宋体", 12F);
-            this.btn复制工序.Location = new System.Drawing.Point(337, 515);
+            this.btn复制工序.Location = new System.Drawing.Point(337, 465);
             this.btn复制工序.Name = "btn复制工序";
             this.btn复制工序.Size = new System.Drawing.Size(90, 33);
             this.btn复制工序.TabIndex = 60;
@@ -172,7 +172,7 @@
             // btn粘贴类型
             // 
             this.btn粘贴类型.Font = new System.Drawing.Font("宋体", 12F);
-            this.btn粘贴类型.Location = new System.Drawing.Point(174, 515);
+            this.btn粘贴类型.Location = new System.Drawing.Point(174, 465);
             this.btn粘贴类型.Name = "btn粘贴类型";
             this.btn粘贴类型.Size = new System.Drawing.Size(90, 33);
             this.btn粘贴类型.TabIndex = 59;
@@ -183,7 +183,7 @@
             // btn复制类型
             // 
             this.btn复制类型.Font = new System.Drawing.Font("宋体", 12F);
-            this.btn复制类型.Location = new System.Drawing.Point(43, 515);
+            this.btn复制类型.Location = new System.Drawing.Point(43, 465);
             this.btn复制类型.Name = "btn复制类型";
             this.btn复制类型.Size = new System.Drawing.Size(90, 33);
             this.btn复制类型.TabIndex = 58;
@@ -194,7 +194,7 @@
             // Btn保存组件设置
             // 
             this.Btn保存组件设置.Font = new System.Drawing.Font("宋体", 12F);
-            this.Btn保存组件设置.Location = new System.Drawing.Point(979, 515);
+            this.Btn保存组件设置.Location = new System.Drawing.Point(893, 465);
             this.Btn保存组件设置.Name = "Btn保存组件设置";
             this.Btn保存组件设置.Size = new System.Drawing.Size(90, 33);
             this.Btn保存组件设置.TabIndex = 57;
@@ -216,7 +216,7 @@
             this.groupBox6.Controls.Add(this.add存货档案);
             this.groupBox6.Location = new System.Drawing.Point(31, 34);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(1066, 464);
+            this.groupBox6.Size = new System.Drawing.Size(985, 411);
             this.groupBox6.TabIndex = 54;
             this.groupBox6.TabStop = false;
             // 
@@ -234,7 +234,7 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button1.Location = new System.Drawing.Point(773, 22);
+            this.button1.Location = new System.Drawing.Point(753, 22);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(70, 30);
             this.button1.TabIndex = 63;
@@ -264,7 +264,7 @@
             // btn查询订单设置
             // 
             this.btn查询订单设置.Font = new System.Drawing.Font("宋体", 12F);
-            this.btn查询订单设置.Location = new System.Drawing.Point(963, 22);
+            this.btn查询订单设置.Location = new System.Drawing.Point(877, 22);
             this.btn查询订单设置.Name = "btn查询订单设置";
             this.btn查询订单设置.Size = new System.Drawing.Size(75, 30);
             this.btn查询订单设置.TabIndex = 60;
@@ -279,7 +279,7 @@
             this.dgv存货档案.Name = "dgv存货档案";
             this.dgv存货档案.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
             this.dgv存货档案.RowTemplate.Height = 23;
-            this.dgv存货档案.Size = new System.Drawing.Size(1026, 393);
+            this.dgv存货档案.Size = new System.Drawing.Size(940, 324);
             this.dgv存货档案.TabIndex = 2;
             this.dgv存货档案.RowStateChanged += new System.Windows.Forms.DataGridViewRowStateChangedEventHandler(this.dgv存货档案_RowStateChanged);
             // 
@@ -351,7 +351,7 @@
             // Btn保存人员
             // 
             this.Btn保存人员.Font = new System.Drawing.Font("宋体", 12F);
-            this.Btn保存人员.Location = new System.Drawing.Point(937, 508);
+            this.Btn保存人员.Location = new System.Drawing.Point(890, 48);
             this.Btn保存人员.Name = "Btn保存人员";
             this.Btn保存人员.Size = new System.Drawing.Size(90, 33);
             this.Btn保存人员.TabIndex = 57;
@@ -547,7 +547,7 @@
             // save基本信息设置
             // 
             this.save基本信息设置.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.save基本信息设置.Location = new System.Drawing.Point(1001, 505);
+            this.save基本信息设置.Location = new System.Drawing.Point(922, 53);
             this.save基本信息设置.Name = "save基本信息设置";
             this.save基本信息设置.Size = new System.Drawing.Size(94, 30);
             this.save基本信息设置.TabIndex = 3;

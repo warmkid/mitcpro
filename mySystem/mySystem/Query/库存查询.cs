@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
 using System.Data.SqlClient;
+using ZXing;
 
 namespace mySystem.Query
 {
@@ -286,6 +287,51 @@ namespace mySystem.Query
                     dgv.Rows[i].DefaultCellStyle.BackColor = Color.Gray;
                 }
             }
+        }
+
+        private void btn打印二维码_Click(object sender, EventArgs e)
+        {
+            if (dgv库存台账.CurrentCell == null) return;
+            int 库存ID = Convert.ToInt32(dgv库存台账.CurrentCell.OwningRow.Cells["ID"].Value);
+            SqlDataAdapter da = new SqlDataAdapter(String.Format("select * from 二维码信息 where 库存ID={0}",库存ID),mySystem.Parameter.conn);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            String id = mySystem.Other.InputDataGridView.getIDs("", dt, false);
+            if ("" == id)
+            {
+                return;
+            }
+            da = new SqlDataAdapter(String.Format("select * from 二维码信息 where ID={0}", id), mySystem.Parameter.conn);
+            dt = new DataTable();
+            da.Fill(dt);
+            if(dt.Rows.Count==0)   {
+                MessageBox.Show("找不到ID为"+id+"的二维码");
+            }
+            String erwema = dt.Rows[0]["二维码"].ToString();
+            if (erwema == "") return;
+            ZXing.BarcodeWriter bw = new BarcodeWriter();
+
+            bw.Format = BarcodeFormat.QR_CODE;
+            Bitmap b = bw.Write(erwema);
+            b.Save("code.bmp");
+
+
+            System.Drawing.Printing.PrintDocument pd = new System.Drawing.Printing.PrintDocument();
+            pd.PrintPage += pd_PrintPage;
+            PrintDialog pdlg = new PrintDialog();
+            pdlg.Document = pd;
+            if (pdlg.ShowDialog() != DialogResult.OK) return;
+            pd.Print();
+        }
+
+        void pd_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        {
+            float x = e.MarginBounds.Left;
+            float y = e.MarginBounds.Top;
+            float w = e.MarginBounds.Width;
+            float h = e.MarginBounds.Height;
+
+            e.Graphics.DrawImage(Image.FromFile("code.bmp"), x, y, w, h);
         }
 
 

@@ -351,7 +351,7 @@ namespace mySystem.Process.Extruction.B
                     //the formState is to be checked
                     if (Parameter.FormState.待审核 == _formState)
                     {
-                        setControlTrue();
+                        setControlFalse();
                         btn审核.Enabled = true;
                         //one more button should be avtive here!
                     }
@@ -871,20 +871,6 @@ namespace mySystem.Process.Extruction.B
         //check the operator, make sure the operator exists in userlist
         private void btn保存_Click(object sender, EventArgs e)
         {
-            String n;
-            if (!checkOuterData(out n))
-            {
-                MessageBox.Show("请填写完整的信息: " + n, "提示");
-                return;
-            }
-
-
-
-            if (!checkInnerData(dataGridView1))
-            {
-                MessageBox.Show("请填写完整的表单信息", "提示");
-                return;
-            }
             
             for (int i = 0; i < dtInner.Rows.Count; i++)
             {
@@ -933,6 +919,21 @@ namespace mySystem.Process.Extruction.B
 
         private void btn提交审核_Click(object sender, EventArgs e)
         {
+            String n;
+            if (!checkOuterData(out n))
+            {
+                MessageBox.Show("请填写完整的信息: " + n, "提示");
+                return;
+            }
+
+
+
+            if (!checkInnerData(dataGridView1))
+            {
+                MessageBox.Show("请填写完整的表单信息", "提示");
+                return;
+            }
+            
             if (DialogResult.Yes == MessageBox.Show("确认本表已经填完吗？提交审核之后不可修改", "提示", MessageBoxButtons.YesNo))
             {
                 foreach (DataRow dr in dtInner.Rows)

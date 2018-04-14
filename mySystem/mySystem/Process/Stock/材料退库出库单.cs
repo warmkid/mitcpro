@@ -1770,6 +1770,25 @@ namespace mySystem.Process.Stock
                         }
 
                     }
+                    if (e.RowIndex % 2 == 1 && dataGridView2.Columns[e.ColumnIndex].Name == "二维码")
+                    {
+                        if (dataGridView2.Rows[e.RowIndex].Cells["二维码"].Value ==
+                            dataGridView2.Rows[e.RowIndex - 1].Cells["二维码"].Value)
+                        {
+                            dataGridView2.Rows[e.RowIndex].Cells["数量"].Value =
+                                dataGridView2.Rows[e.RowIndex - 1].Cells["数量"].Value;
+                        }
+                        else
+                        {
+                            double u = Convert.ToDouble( dataGridView2.Rows[e.RowIndex].Cells["数量"].Value);
+                              double d =Convert.ToDouble(  dataGridView2.Rows[e.RowIndex - 1].Cells["数量"].Value);
+                              if (d >= u)
+                              {
+                                  dataGridView2.Rows[e.RowIndex - 1].Cells["数量"].Value =
+                                      dataGridView2.Rows[e.RowIndex].Cells["数量"].Value;
+                              }
+                        }
+                    }
                 }
             }
 

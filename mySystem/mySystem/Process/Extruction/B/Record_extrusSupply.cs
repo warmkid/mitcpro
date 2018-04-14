@@ -1102,7 +1102,7 @@ namespace WindowsFormsApplication1
             {
                 if (Parameter.FormState.待审核 == _formState)
                 {
-                    setControlTrue();
+                    setControlFalse();
                     bt审核.Enabled = true;
                 }
                 else setControlFalse();
@@ -1168,20 +1168,7 @@ namespace WindowsFormsApplication1
         }
         private void bt保存_Click(object sender, EventArgs e)
         {
-            String n;
-            if (!checkOuterData(out n))
-            {
-                MessageBox.Show("请填写完整的信息: " + n, "提示");
-                return;
-            }
-
-
-
-            if (!checkInnerData(dataGridView1))
-            {
-                MessageBox.Show("请填写完整的表单信息", "提示");
-                return;
-            }
+            
             bool rt = save();
             //控件可见性
             if (rt && _userState == Parameter.UserState.操作员)
@@ -1633,6 +1620,20 @@ namespace WindowsFormsApplication1
 
         private void bt提交审核_Click(object sender, EventArgs e)
         {
+            String n;
+            if (!checkOuterData(out n))
+            {
+                MessageBox.Show("请填写完整的信息: " + n, "提示");
+                return;
+            }
+
+
+
+            if (!checkInnerData(dataGridView1))
+            {
+                MessageBox.Show("请填写完整的表单信息", "提示");
+                return;
+            }
             if (DialogResult.Yes == MessageBox.Show("确认本表已经填完吗？提交审核之后不可修改", "提示", MessageBoxButtons.YesNo))
             {
                 foreach (DataRow dr in dt_prodlist.Rows)

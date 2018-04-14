@@ -92,7 +92,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label6.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label6.Location = new System.Drawing.Point(33, 15);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(156, 20);
@@ -219,7 +219,7 @@
             this.SetPeoplePanelBottom.Controls.Add(this.dgvUser);
             this.SetPeoplePanelBottom.Location = new System.Drawing.Point(12, 203);
             this.SetPeoplePanelBottom.Name = "SetPeoplePanelBottom";
-            this.SetPeoplePanelBottom.Size = new System.Drawing.Size(1145, 400);
+            this.SetPeoplePanelBottom.Size = new System.Drawing.Size(1145, 344);
             this.SetPeoplePanelBottom.TabIndex = 1;
             // 
             // SaveEditBtn
@@ -255,7 +255,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label7.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label7.Location = new System.Drawing.Point(34, 19);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(135, 20);
@@ -269,7 +269,7 @@
             this.dgvUser.Name = "dgvUser";
             this.dgvUser.RowHeadersVisible = false;
             this.dgvUser.RowTemplate.Height = 23;
-            this.dgvUser.Size = new System.Drawing.Size(999, 281);
+            this.dgvUser.Size = new System.Drawing.Size(999, 223);
             this.dgvUser.TabIndex = 0;
             this.dgvUser.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgvUser_DataBindingComplete);
             // 
@@ -280,7 +280,7 @@
             this.ClientSize = new System.Drawing.Size(1170, 615);
             this.Controls.Add(this.SetPeoplePanelBottom);
             this.Controls.Add(this.SetPeoplePanelTop);
-            this.Font = new System.Drawing.Font("SimSun", 12F);
+            this.Font = new System.Drawing.Font("宋体", 12F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "SetPeopleForm";

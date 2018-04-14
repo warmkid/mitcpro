@@ -39,6 +39,7 @@
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btn复制 = new System.Windows.Forms.Button();
+            this.cb吹膜更改 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             this.SuspendLayout();
             // 
@@ -156,11 +157,23 @@
             this.btn复制.UseVisualStyleBackColor = true;
             this.btn复制.Click += new System.EventHandler(this.btn复制_Click);
             // 
+            // cb吹膜更改
+            // 
+            this.cb吹膜更改.AutoSize = true;
+            this.cb吹膜更改.Font = new System.Drawing.Font("宋体", 12F);
+            this.cb吹膜更改.Location = new System.Drawing.Point(414, 27);
+            this.cb吹膜更改.Name = "cb吹膜更改";
+            this.cb吹膜更改.Size = new System.Drawing.Size(155, 20);
+            this.cb吹膜更改.TabIndex = 26;
+            this.cb吹膜更改.Text = "查询被更改的指令";
+            this.cb吹膜更改.UseVisualStyleBackColor = true;
+            // 
             // QueryInstruForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1170, 615);
+            this.Controls.Add(this.cb吹膜更改);
             this.Controls.Add(this.btn复制);
             this.Controls.Add(this.dgv);
             this.Controls.Add(this.SearchBtn);
@@ -194,5 +207,6 @@
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btn复制;
+        private System.Windows.Forms.CheckBox cb吹膜更改;
     }
 }

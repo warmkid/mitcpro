@@ -38,6 +38,7 @@
             this.UserIDTextBox = new System.Windows.Forms.TextBox();
             this.用户ID = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -53,7 +54,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("SimHei", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.Font = new System.Drawing.Font("黑体", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label1.Location = new System.Drawing.Point(136, 30);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(194, 21);
@@ -62,7 +63,7 @@
             // 
             // ExitButton
             // 
-            this.ExitButton.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.ExitButton.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.ExitButton.Image = ((System.Drawing.Image)(resources.GetObject("ExitButton.Image")));
             this.ExitButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.ExitButton.Location = new System.Drawing.Point(188, 153);
@@ -76,7 +77,7 @@
             // 
             // LoginButton
             // 
-            this.LoginButton.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.LoginButton.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.LoginButton.Image = ((System.Drawing.Image)(resources.GetObject("LoginButton.Image")));
             this.LoginButton.Location = new System.Drawing.Point(51, 153);
             this.LoginButton.Name = "LoginButton";
@@ -90,7 +91,7 @@
             // 
             // UserPWTextBox
             // 
-            this.UserPWTextBox.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.UserPWTextBox.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.UserPWTextBox.Location = new System.Drawing.Point(120, 115);
             this.UserPWTextBox.Name = "UserPWTextBox";
             this.UserPWTextBox.PasswordChar = '*';
@@ -101,7 +102,7 @@
             // 用户密码
             // 
             this.用户密码.AutoSize = true;
-            this.用户密码.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.用户密码.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.用户密码.Location = new System.Drawing.Point(49, 118);
             this.用户密码.Name = "用户密码";
             this.用户密码.Size = new System.Drawing.Size(56, 16);
@@ -110,7 +111,7 @@
             // 
             // UserIDTextBox
             // 
-            this.UserIDTextBox.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.UserIDTextBox.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.UserIDTextBox.Location = new System.Drawing.Point(120, 84);
             this.UserIDTextBox.Name = "UserIDTextBox";
             this.UserIDTextBox.Size = new System.Drawing.Size(174, 26);
@@ -120,7 +121,7 @@
             // 用户ID
             // 
             this.用户ID.AutoSize = true;
-            this.用户ID.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.用户ID.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.用户ID.Location = new System.Drawing.Point(49, 87);
             this.用户ID.Name = "用户ID";
             this.用户ID.Size = new System.Drawing.Size(72, 16);
@@ -141,7 +142,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(338, 201);
+            this.ClientSize = new System.Drawing.Size(334, 197);
             this.ControlBox = false;
             this.Controls.Add(this.usernameLabel);
             this.Controls.Add(this.label1);
@@ -159,6 +160,8 @@
             this.Name = "LoginForm";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Load += new System.EventHandler(this.LoginForm_Load);
+            this.Shown += new System.EventHandler(this.LoginForm_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -176,5 +179,6 @@
         private System.Windows.Forms.TextBox UserPWTextBox;
         private System.Windows.Forms.Button LoginButton;
         private System.Windows.Forms.Button ExitButton;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }

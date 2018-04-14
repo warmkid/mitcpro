@@ -7,6 +7,7 @@ using System.Data.OleDb;
 using System.Windows.Forms;
 using System.Data.Common;
 using System.Configuration;
+using System.Drawing;
 
 namespace mySystem
 {
@@ -349,7 +350,7 @@ namespace mySystem
 
         #endregion
 
-
+        
         //初始化连接有用户表的数据库
         public static void InitConnUser()
         {
@@ -358,9 +359,11 @@ namespace mySystem
                 string strsql = @"Provider=Microsoft.Jet.OLEDB.4.0;
                                 Data Source=../../database/user.mdb;Persist Security Info=False";
                 isOk = false;
+                
                 connOleUser = connToServerOle(strsql);
                 while (!isOk)
                 {
+                    
                     MessageBox.Show("连接数据库失败", "error");
                     return ;
                 }
@@ -373,9 +376,13 @@ namespace mySystem
                 strConn = "server=" + IP_port + ";database=user;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
                 //MessageBox.Show(IP_port);
                 isOk = false;
+                // 显示提示框，说明正在连接服务器IP
+                
                 connUser = connToServer(strConn);
                 if (!isOk)
                 {
+
+                    //taskbarNotifier1.Show("提示", "连接失败，正在自动检测服务器地址，请稍候", 500, 2000, 500);
                     // ping name of server and get correct of ip
                     AppSettingsSection appSettings = ConfigurationManager.OpenExeConfiguration(System.Windows.Forms.Application.ExecutablePath).AppSettings;
                     String ServerPCName = null;
@@ -389,13 +396,13 @@ namespace mySystem
                         throw new Exception("获取服务器名称失败");
                     }
                     System.Net.IPHostEntry host = System.Net.Dns.GetHostEntry(ServerPCName);
-                    //MessageBox.Show(host.ToString());
                     String ip = "";
                     foreach (System.Net.IPAddress ipp in host.AddressList)
                     {
                         if (ipp.ToString().Contains(":")) continue;
                         else
                         {
+                            //taskbarNotifier1.Show("提示", String.Format("检测服务器地址为:{0}，再次尝试连接", ip), 500, 300, 500);
                             ip = ipp.ToString();
                             appSettings.Settings["ip"].Value = ip;
                             appSettings.CurrentConfiguration.Save();
@@ -414,6 +421,7 @@ namespace mySystem
                     strConn = "server=" + IP_port + ";database=user;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
                     isOk = false;
                     connUser = connToServer(strConn);
+                    
                     if (!isOk)
                     {
                         Connect2SqlForm con2sql = new Connect2SqlForm();
@@ -426,7 +434,6 @@ namespace mySystem
 
                     
                 }
-
             }
         }
 

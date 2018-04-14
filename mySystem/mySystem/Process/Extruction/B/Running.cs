@@ -156,6 +156,7 @@ namespace mySystem.Process.Extruction.B
             自动绘制表格();
             getPeople();
             setUserState();
+            
 
             getOtherData();
             addDataEventHandler();
@@ -175,12 +176,13 @@ namespace mySystem.Process.Extruction.B
             //add item in cmb
             cmb产品代码.Items.Add(dtOuter.Rows[0]["产品代码"].ToString());
             outerBind();
-
+            setFormState(false);
             
             //btn保存.Visible = false;
 
             //cmb产品代码.SelectedIndexChanged += new EventHandler(cmb产品代码_SelectedIndexChanged_without_Id);
             填写界面上被disable的部分为横线();
+            setEnableReadOnly();
         }
         /// <summary>
         /// get settings and so on
@@ -427,12 +429,7 @@ namespace mySystem.Process.Extruction.B
 
         private void btn保存_Click(object sender, EventArgs e)
         {
-            String n;
-            if (!checkOuterData(out n))
-            {
-                MessageBox.Show("请填写完整的信息: " + n, "提示");
-                return;
-            }
+            
 
 
 
@@ -1444,6 +1441,12 @@ namespace mySystem.Process.Extruction.B
 
         private void btn提交审核_Click(object sender, EventArgs e)
         {
+            String n;
+            if (!checkOuterData(out n))
+            {
+                MessageBox.Show("请填写完整的信息: " + n, "提示");
+                return;
+            }
             if (!inputJudge())
             {
                 MessageBox.Show("请填写完整再提交审核!");
@@ -1549,7 +1552,7 @@ namespace mySystem.Process.Extruction.B
                     //the _formState is to be checked
                     if (Parameter.FormState.待审核 == _formState)
                     {
-                        setControlTrue();
+                        setControlFalse();
                         btn审核.Enabled = true;
                         //one more button should be avtive here!
                     }

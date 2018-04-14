@@ -55,13 +55,13 @@
             this.add人员 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.tabPage库存预警 = new System.Windows.Forms.TabPage();
-            this.dgv预警 = new System.Windows.Forms.DataGridView();
-            this.btn查询_库存预警 = new System.Windows.Forms.Button();
-            this.lbl产品代码 = new System.Windows.Forms.Label();
-            this.tb产品代码 = new System.Windows.Forms.TextBox();
-            this.btn添加_库存预警 = new System.Windows.Forms.Button();
-            this.btn删除_库存预警 = new System.Windows.Forms.Button();
             this.btn保存_库存预警 = new System.Windows.Forms.Button();
+            this.btn删除_库存预警 = new System.Windows.Forms.Button();
+            this.btn添加_库存预警 = new System.Windows.Forms.Button();
+            this.tb产品代码 = new System.Windows.Forms.TextBox();
+            this.lbl产品代码 = new System.Windows.Forms.Label();
+            this.btn查询_库存预警 = new System.Windows.Forms.Button();
+            this.dgv预警 = new System.Windows.Forms.DataGridView();
             this.tabControl1.SuspendLayout();
             this.tabPage基本信息设置.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -160,7 +160,7 @@
             // Btn保存项目
             // 
             this.Btn保存项目.Font = new System.Drawing.Font("宋体", 12F);
-            this.Btn保存项目.Location = new System.Drawing.Point(968, 468);
+            this.Btn保存项目.Location = new System.Drawing.Point(883, 45);
             this.Btn保存项目.Name = "Btn保存项目";
             this.Btn保存项目.Size = new System.Drawing.Size(90, 33);
             this.Btn保存项目.TabIndex = 57;
@@ -238,7 +238,7 @@
             // Btn保存人员
             // 
             this.Btn保存人员.Font = new System.Drawing.Font("宋体", 12F);
-            this.Btn保存人员.Location = new System.Drawing.Point(937, 508);
+            this.Btn保存人员.Location = new System.Drawing.Point(856, 48);
             this.Btn保存人员.Name = "Btn保存人员";
             this.Btn保存人员.Size = new System.Drawing.Size(90, 33);
             this.Btn保存人员.TabIndex = 57;
@@ -373,50 +373,15 @@
             this.tabPage库存预警.Text = "库存预警";
             this.tabPage库存预警.UseVisualStyleBackColor = true;
             // 
-            // dgv预警
+            // btn保存_库存预警
             // 
-            this.dgv预警.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv预警.Location = new System.Drawing.Point(82, 69);
-            this.dgv预警.Name = "dgv预警";
-            this.dgv预警.RowTemplate.Height = 23;
-            this.dgv预警.Size = new System.Drawing.Size(516, 418);
-            this.dgv预警.TabIndex = 0;
-            // 
-            // btn查询_库存预警
-            // 
-            this.btn查询_库存预警.Location = new System.Drawing.Point(429, 34);
-            this.btn查询_库存预警.Name = "btn查询_库存预警";
-            this.btn查询_库存预警.Size = new System.Drawing.Size(75, 23);
-            this.btn查询_库存预警.TabIndex = 1;
-            this.btn查询_库存预警.Text = "查询";
-            this.btn查询_库存预警.UseVisualStyleBackColor = true;
-            this.btn查询_库存预警.Click += new System.EventHandler(this.btn查询_库存预警_Click);
-            // 
-            // lbl产品代码
-            // 
-            this.lbl产品代码.AutoSize = true;
-            this.lbl产品代码.Location = new System.Drawing.Point(90, 37);
-            this.lbl产品代码.Name = "lbl产品代码";
-            this.lbl产品代码.Size = new System.Drawing.Size(72, 16);
-            this.lbl产品代码.TabIndex = 2;
-            this.lbl产品代码.Text = "产品代码";
-            // 
-            // tb产品代码
-            // 
-            this.tb产品代码.Location = new System.Drawing.Point(201, 34);
-            this.tb产品代码.Name = "tb产品代码";
-            this.tb产品代码.Size = new System.Drawing.Size(166, 26);
-            this.tb产品代码.TabIndex = 3;
-            // 
-            // btn添加_库存预警
-            // 
-            this.btn添加_库存预警.Location = new System.Drawing.Point(642, 96);
-            this.btn添加_库存预警.Name = "btn添加_库存预警";
-            this.btn添加_库存预警.Size = new System.Drawing.Size(75, 23);
-            this.btn添加_库存预警.TabIndex = 4;
-            this.btn添加_库存预警.Text = "添加";
-            this.btn添加_库存预警.UseVisualStyleBackColor = true;
-            this.btn添加_库存预警.Click += new System.EventHandler(this.btn添加_库存预警_Click);
+            this.btn保存_库存预警.Location = new System.Drawing.Point(642, 359);
+            this.btn保存_库存预警.Name = "btn保存_库存预警";
+            this.btn保存_库存预警.Size = new System.Drawing.Size(75, 23);
+            this.btn保存_库存预警.TabIndex = 6;
+            this.btn保存_库存预警.Text = "保存";
+            this.btn保存_库存预警.UseVisualStyleBackColor = true;
+            this.btn保存_库存预警.Click += new System.EventHandler(this.btn保存_库存预警_Click);
             // 
             // btn删除_库存预警
             // 
@@ -428,15 +393,50 @@
             this.btn删除_库存预警.UseVisualStyleBackColor = true;
             this.btn删除_库存预警.Click += new System.EventHandler(this.btn删除_库存预警_Click);
             // 
-            // btn保存_库存预警
+            // btn添加_库存预警
             // 
-            this.btn保存_库存预警.Location = new System.Drawing.Point(642, 359);
-            this.btn保存_库存预警.Name = "btn保存_库存预警";
-            this.btn保存_库存预警.Size = new System.Drawing.Size(75, 23);
-            this.btn保存_库存预警.TabIndex = 6;
-            this.btn保存_库存预警.Text = "保存";
-            this.btn保存_库存预警.UseVisualStyleBackColor = true;
-            this.btn保存_库存预警.Click += new System.EventHandler(this.btn保存_库存预警_Click);
+            this.btn添加_库存预警.Location = new System.Drawing.Point(642, 96);
+            this.btn添加_库存预警.Name = "btn添加_库存预警";
+            this.btn添加_库存预警.Size = new System.Drawing.Size(75, 23);
+            this.btn添加_库存预警.TabIndex = 4;
+            this.btn添加_库存预警.Text = "添加";
+            this.btn添加_库存预警.UseVisualStyleBackColor = true;
+            this.btn添加_库存预警.Click += new System.EventHandler(this.btn添加_库存预警_Click);
+            // 
+            // tb产品代码
+            // 
+            this.tb产品代码.Location = new System.Drawing.Point(201, 34);
+            this.tb产品代码.Name = "tb产品代码";
+            this.tb产品代码.Size = new System.Drawing.Size(166, 26);
+            this.tb产品代码.TabIndex = 3;
+            // 
+            // lbl产品代码
+            // 
+            this.lbl产品代码.AutoSize = true;
+            this.lbl产品代码.Location = new System.Drawing.Point(90, 37);
+            this.lbl产品代码.Name = "lbl产品代码";
+            this.lbl产品代码.Size = new System.Drawing.Size(72, 16);
+            this.lbl产品代码.TabIndex = 2;
+            this.lbl产品代码.Text = "产品代码";
+            // 
+            // btn查询_库存预警
+            // 
+            this.btn查询_库存预警.Location = new System.Drawing.Point(429, 34);
+            this.btn查询_库存预警.Name = "btn查询_库存预警";
+            this.btn查询_库存预警.Size = new System.Drawing.Size(75, 23);
+            this.btn查询_库存预警.TabIndex = 1;
+            this.btn查询_库存预警.Text = "查询";
+            this.btn查询_库存预警.UseVisualStyleBackColor = true;
+            this.btn查询_库存预警.Click += new System.EventHandler(this.btn查询_库存预警_Click);
+            // 
+            // dgv预警
+            // 
+            this.dgv预警.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv预警.Location = new System.Drawing.Point(82, 69);
+            this.dgv预警.Name = "dgv预警";
+            this.dgv预警.RowTemplate.Height = 23;
+            this.dgv预警.Size = new System.Drawing.Size(516, 418);
+            this.dgv预警.TabIndex = 0;
             // 
             // 库存设置
             // 

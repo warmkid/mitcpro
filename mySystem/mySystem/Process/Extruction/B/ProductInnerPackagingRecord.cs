@@ -311,7 +311,7 @@ namespace mySystem.Extruction.Process
                 else //1待审核
                 {
                     //发送审核不可点，其他都可点
-                    setControlTrue();
+                    setControlFalse();
                     btn审核.Enabled = true;
                 }
             }
@@ -815,20 +815,7 @@ namespace mySystem.Extruction.Process
         //保存按钮
         private void SaveBtn_Click(object sender, EventArgs e)
         {
-            String n;
-            if (!checkOuterData(out n))
-            {
-                MessageBox.Show("请填写完整的信息: " + n, "提示");
-                return;
-            }
-
-
-
-            if (!checkInnerData(dataGridView1))
-            {
-                MessageBox.Show("请填写完整的表单信息", "提示");
-                return;
-            }
+            
             bool isSaved = Save();
             //控件可见性
             if (_userState == Parameter.UserState.操作员 && isSaved == true)
@@ -890,6 +877,20 @@ namespace mySystem.Extruction.Process
         //提交审核按钮
         private void btn提交审核_Click(object sender, EventArgs e)
         {
+            String n;
+            if (!checkOuterData(out n))
+            {
+                MessageBox.Show("请填写完整的信息: " + n, "提示");
+                return;
+            }
+
+
+
+            if (!checkInnerData(dataGridView1))
+            {
+                MessageBox.Show("请填写完整的表单信息", "提示");
+                return;
+            }
             //保存
             bool isSaved = Save();
             if (isSaved == false)

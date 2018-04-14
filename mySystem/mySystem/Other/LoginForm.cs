@@ -8,18 +8,78 @@ using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Data.OleDb;
 using System.Data.Common;
+using System.Threading;
 
 namespace mySystem
 {
     public partial class LoginForm : BaseForm
     {
         public int userID;
+        mySystem.Other.Connecting c;
+
+        //private void ThreadFunc()
+        //{
+        //    MethodInvoker mi = new MethodInvoker(this.ShowMsgForm);
+        //    this.BeginInvoke(mi);
+        //}
+
+        //private void ShowMsgForm()
+        //{
+            
+        //    c.Show();
+            //CustomUIControls.TaskbarNotifier taskbarNotifier1;
+            //taskbarNotifier1 = new CustomUIControls.TaskbarNotifier();
+            //taskbarNotifier1.SetBackgroundBitmap(new Bitmap(Image.FromFile(@"../../pic/skin_logo.bmp")), Color.FromArgb(255, 0, 255));
+            //taskbarNotifier1.SetCloseBitmap(new Bitmap(Image.FromFile(@"../../pic/close_logo.bmp")), Color.FromArgb(255, 0, 255), new Point(190, 12));
+            //taskbarNotifier1.TitleRectangle = new Rectangle(65, 25, 135, 60);
+            //taskbarNotifier1.ContentRectangle = new Rectangle(15, 65, 205, 150);
+            //taskbarNotifier1.CloseClickable = true;
+            //taskbarNotifier1.TitleClickable = false;
+            //taskbarNotifier1.ContentClickable = false;
+            //taskbarNotifier1.EnableSelectionRectangle = false;
+            //taskbarNotifier1.KeepVisibleOnMousOver = true;
+            //taskbarNotifier1.ReShowOnMouseOver = true;
+            //taskbarNotifier1.Show("提示", "正在连接服务器", 500, 2000, 500);
+            //System.Console.WriteLine("thread");
+        //}  
+
 
         public LoginForm(MainForm mainform):base(mainform)
         {
+            this.backgroundWorker1 = new BackgroundWorker();
+            this.backgroundWorker1.WorkerReportsProgress = true;
+            this.backgroundWorker1.DoWork += backgroundWorker1_DoWork;
+            this.backgroundWorker1.RunWorkerCompleted += backgroundWorker1_RunWorkerCompleted;
+            this.backgroundWorker1.RunWorkerAsync();
+            c = new mySystem.Other.Connecting(this.backgroundWorker1);
+            c.ShowDialog();
+            c.Close();
+            
+            
+
             InitializeComponent();
-            Parameter.InitConnUser();
+
+            //if (c.Show() != DialogResult.OK)
+            //{
+            //    this.Close();
+            //}
+            //Parameter.InitConnUser();
+            //c = new mySystem.Other.Connecting();
+            
             //Parameter.ConnUserInit();
+        }
+
+        void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            //c.Close();
+        }
+
+        void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+            Parameter.InitConnUser();
+            BackgroundWorker work = sender as BackgroundWorker;
+            work.ReportProgress(99);
+
         }
 
         private void LoginButton_Click(object sender, EventArgs e)
@@ -384,6 +444,18 @@ namespace mySystem
             {
                 LoginButton_Click(sender, e);
             }          
+        }
+
+        private void LoginForm_Shown(object sender, EventArgs e)
+        {
+            //Thread FormThread = new Thread(new ThreadStart(ThreadFunc));
+            //FormThread.Start();
+            //Parameter.InitConnUser();
+        }
+
+        private void LoginForm_Load(object sender, EventArgs e)
+        {
+            
         }
 
     }

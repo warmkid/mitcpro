@@ -20,13 +20,13 @@ namespace mySystem
             mainform = mForm;
             InitializeComponent();
             this.MaximizeBox = false;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            //this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
         }
 
         public BaseForm()
         {
             this.MaximizeBox = false;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            //this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
         }
 
         public virtual void CheckResult()
@@ -175,6 +175,7 @@ namespace mySystem
                     if (tb.Text.Trim() == "")
                     {
                         if (tb.Name.Contains("审")) continue;
+                        if (tb.Name.Contains("复核")) continue;
                         if (tb.Name.Contains("批准")) continue;
                         if (tb.Name.Contains("备注")) continue;
                         if (tb.Name.Contains("接班员")) continue;
@@ -185,9 +186,9 @@ namespace mySystem
                 if (c is ComboBox)
                 {
                     ComboBox cb = c as ComboBox;
-                    if (c.Text.Trim() == "")
+                    if (cb.Text.Trim() == "")
                     {
-                        name = cb.Name;
+                        name = regx.Replace(cb.Name, "");
                         return false;
                     }
                 }

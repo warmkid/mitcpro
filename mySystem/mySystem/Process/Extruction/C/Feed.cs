@@ -261,7 +261,7 @@ namespace mySystem.Process.Extruction.C
                     //the _formState is to be checked
                     if (Parameter.FormState.待审核 == _formState)
                     {
-                        setControlTrue();
+                        setControlFalse();
                         btn审核.Enabled = true;
                         //one more button should be avtive here!
                     }
@@ -695,6 +695,20 @@ namespace mySystem.Process.Extruction.C
 
         private void btn提交审核_Click(object sender, EventArgs e)
         {
+            String n;
+            if (!checkOuterData(out n))
+            {
+                MessageBox.Show("请填写完整的信息: " + n, "提示");
+                return;
+            }
+
+
+
+            if (!checkInnerData(dataGridView1))
+            {
+                MessageBox.Show("请填写完整的表单信息", "提示");
+                return;
+            }
             if (DialogResult.Yes == MessageBox.Show("确认本表已经填完吗？提交审核之后不可修改", "提示", MessageBoxButtons.YesNo))
             {
                 foreach (DataRow dr in dtInner.Rows)
@@ -799,25 +813,20 @@ namespace mySystem.Process.Extruction.C
 
         private void btn审核_Click(object sender, EventArgs e)
         {
+            foreach (DataRow dr in dtInner.Rows)
+            {
+                if (dr["审核员"] == DBNull.Value || dr["审核员"].ToString() == "" || dr["审核员"].ToString().Trim() == "__待审核")
+                {
+                    MessageBox.Show("请先完成数据审核");
+                    return;
+                }
+            }
             check = new CheckForm(this);
             check.ShowDialog();
         }
         private void btnSave_Click(object sender, EventArgs e)
         {
-            String n;
-            if (!checkOuterData(out n))
-            {
-                MessageBox.Show("请填写完整的信息: " + n, "提示");
-                return;
-            }
-
-
-
-            if (!checkInnerData(dataGridView1))
-            {
-                MessageBox.Show("请填写完整的表单信息", "提示");
-                return;
-            }
+            
             bsOuter.EndEdit();
             if (!mySystem.Parameter.isSqlOk)
             {

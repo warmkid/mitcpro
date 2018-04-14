@@ -308,7 +308,7 @@ namespace mySystem.Other
                 else //1待审核
                 {
                     //发送审核不可点，其他都可点
-                    setControlTrue();
+                    setControlFalse();
                     btn审核.Enabled = true;
                     btn数据审核.Enabled = true;
                     //遍历datagridview，如果有一行为待审核，则该行可以修改
@@ -706,7 +706,7 @@ namespace mySystem.Other
                 dt记录详情.Rows[deletenum].Delete();
 
                 // 保存
-                da记录详情.Update((DataTable)bs记录详情.DataSource);
+                da记录详情sql.Update((DataTable)bs记录详情.DataSource);
                 readInnerData(_id);
                 innerBind();
 
@@ -767,20 +767,7 @@ namespace mySystem.Other
         //保存按钮
         private void btn确认_Click(object sender, EventArgs e)
         {
-            String n;
-            if (!checkOuterData(out n))
-            {
-                MessageBox.Show("请填写完整的信息: " + n, "提示");
-                return;
-            }
-
-
-
-            if (!checkInnerData(dataGridView1))
-            {
-                MessageBox.Show("请填写完整的表单信息", "提示");
-                return;
-            }
+            
             isSaveClicked = true;
             bool isSaved = Save();
             //控件可见性
@@ -851,6 +838,31 @@ namespace mySystem.Other
         //提交审核按钮
         private void btn提交审核_Click(object sender, EventArgs e)
         {
+            String n;
+            if (!checkOuterData(out n))
+            {
+                MessageBox.Show("请填写完整的信息: " + n, "提示");
+                return;
+            }
+
+
+
+            if (!checkInnerData(dataGridView1))
+            {
+                MessageBox.Show("请填写完整的表单信息", "提示");
+                return;
+            }
+
+            foreach (DataRow dr in dt记录详情.Rows)
+            {
+                if (dr["审核员"] == DBNull.Value || dr["审核员"].ToString() == "")
+                {
+                    MessageBox.Show("请先提交数据审核");
+                    return;
+                }
+            }
+           
+
             //保存
             bool isSaved = Save();
             if (isSaved == false)
@@ -895,6 +907,14 @@ namespace mySystem.Other
         //审核功能
         private void btn审核_Click(object sender, EventArgs e)
         {
+            foreach (DataRow dr in dt记录详情.Rows)
+            {
+                if (dr["审核员"] == DBNull.Value || dr["审核员"].ToString() == "" || dr["审核员"].ToString().Trim() == "__待审核")
+                {
+                    MessageBox.Show("请先完成数据审核");
+                    return;
+                }
+            }
             if (mySystem.Parameter.userName == dt记录详情.Rows[0]["操作员"].ToString())
             {
                 MessageBox.Show("当前登录的审核员与操作员为同一人，不可进行审核！");
@@ -979,6 +999,13 @@ namespace mySystem.Other
             else
             { _formState = Parameter.FormState.审核未通过; }//审核未通过              
             setEnableReadOnly();
+
+
+            try
+            {
+                (this.Owner as mySystem.Query.QueryExtruForm).search();
+            }
+            catch (NullReferenceException exp) { }
         }
 
         //添加打印机

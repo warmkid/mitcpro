@@ -1821,23 +1821,7 @@ namespace BatchProductRecord
 
         private void btn保存_Click(object sender, EventArgs e)
         {
-            String n;
-            if (!checkOuterData(out n))
-            {
-                MessageBox.Show("请填写完整的信息: " + n, "提示");
-                return;
-            }
-
-            if (!checkInnerData(dataGridView1))
-            {
-                MessageBox.Show("请填写完整的表单信息", "提示");
-                return;
-            }
-            if (!checkInnerData(dataGridView2))
-            {
-                MessageBox.Show("请填写完整的表单信息", "提示");
-                return;
-            }
+            
 
             save();
         }
@@ -1980,7 +1964,7 @@ namespace BatchProductRecord
             {
                 if (mySystem.Parameter.FormState.待审核 == _formState)
                 {
-                    setControlTrue();
+                    setControlFalse();
                     btn审核.Enabled = true;
                 }
                 else setControlFalse();
@@ -1994,6 +1978,23 @@ namespace BatchProductRecord
 
         private void btn提交审核_Click(object sender, EventArgs e)
         {
+            String n;
+            if (!checkOuterData(out n))
+            {
+                MessageBox.Show("请填写完整的信息: " + n, "提示");
+                return;
+            }
+
+            if (!checkInnerData(dataGridView1))
+            {
+                MessageBox.Show("请填写完整的表单信息", "提示");
+                return;
+            }
+            if (!checkInnerData(dataGridView2))
+            {
+                MessageBox.Show("请填写完整的表单信息", "提示");
+                return;
+            }
             if (!mySystem.Parameter.isSqlOk)
             {
                 DataTable dt_temp = new DataTable("待审核");

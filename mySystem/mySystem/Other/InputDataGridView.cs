@@ -18,6 +18,7 @@ namespace mySystem.Other
         public InputDataGridView(String data, DataTable setting, bool multiSelect=true, Hashtable additional=null)
         {
             InitializeComponent();
+            
             _datatable = setting;
             _multiSelect = multiSelect;
             _additional = additional;
@@ -95,7 +96,11 @@ namespace mySystem.Other
             dataGridView1.Columns["选择"].DisplayIndex = 0;
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.RowHeadersVisible = false;
-
+            foreach (DataGridViewColumn dgvc in dataGridView1.Columns)
+            {
+                if(dgvc.Name=="选择") continue;
+                dgvc.ReadOnly = true;
+            }
             if (_additional != null)
             {
                 dataGridView1.ShowCellToolTips = true;

@@ -61,28 +61,28 @@
             this.dgv封边 = new System.Windows.Forms.DataGridView();
             this.del封边 = new System.Windows.Forms.Button();
             this.add封边 = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.Btn保存产品 = new System.Windows.Forms.Button();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.dgv产品规格 = new System.Windows.Forms.DataGridView();
             this.del产品规格 = new System.Windows.Forms.Button();
             this.add产品规格 = new System.Windows.Forms.Button();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.Btn保存产品 = new System.Windows.Forms.Button();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.dgv产品编码 = new System.Windows.Forms.DataGridView();
-            this.del产品编码 = new System.Windows.Forms.Button();
-            this.add产品编码 = new System.Windows.Forms.Button();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.dgv产品 = new System.Windows.Forms.DataGridView();
-            this.del产品 = new System.Windows.Forms.Button();
-            this.add产品 = new System.Windows.Forms.Button();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.dgv工艺 = new System.Windows.Forms.DataGridView();
             this.del工艺 = new System.Windows.Forms.Button();
             this.add工艺 = new System.Windows.Forms.Button();
+            this.label11 = new System.Windows.Forms.Label();
             this.CS制袋工艺设置 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.dgv产品编码 = new System.Windows.Forms.DataGridView();
+            this.del产品编码 = new System.Windows.Forms.Button();
+            this.add产品编码 = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.dgv产品 = new System.Windows.Forms.DataGridView();
+            this.del产品 = new System.Windows.Forms.Button();
+            this.add产品 = new System.Windows.Forms.Button();
             this.tabPage人员 = new System.Windows.Forms.TabPage();
             this.Btn保存人员 = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
@@ -111,12 +111,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgv封边)).BeginInit();
             this.groupBox9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv产品规格)).BeginInit();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv工艺)).BeginInit();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv产品编码)).BeginInit();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv产品)).BeginInit();
-            this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgv工艺)).BeginInit();
             this.tabPage人员.SuspendLayout();
             this.groupBox5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv权限)).BeginInit();
@@ -177,7 +177,7 @@
             // 
             // del交接班
             // 
-            this.del交接班.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.del交接班.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.del交接班.Location = new System.Drawing.Point(100, 14);
             this.del交接班.Name = "del交接班";
             this.del交接班.Size = new System.Drawing.Size(70, 30);
@@ -188,7 +188,7 @@
             // 
             // add交接班
             // 
-            this.add交接班.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.add交接班.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.add交接班.Location = new System.Drawing.Point(12, 14);
             this.add交接班.Name = "add交接班";
             this.add交接班.Size = new System.Drawing.Size(70, 30);
@@ -200,7 +200,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
+            this.label2.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold);
             this.label2.Location = new System.Drawing.Point(17, 285);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(240, 20);
@@ -246,7 +246,7 @@
             // 
             // button1
             // 
-            this.button1.Font = new System.Drawing.Font("SimSun", 12F);
+            this.button1.Font = new System.Drawing.Font("宋体", 12F);
             this.button1.Location = new System.Drawing.Point(975, 362);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(81, 33);
@@ -256,7 +256,7 @@
             // 
             // del清场
             // 
-            this.del清场.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.del清场.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.del清场.Location = new System.Drawing.Point(100, 14);
             this.del清场.Name = "del清场";
             this.del清场.Size = new System.Drawing.Size(70, 30);
@@ -267,7 +267,7 @@
             // 
             // button2
             // 
-            this.button2.Font = new System.Drawing.Font("SimSun", 12F);
+            this.button2.Font = new System.Drawing.Font("宋体", 12F);
             this.button2.Location = new System.Drawing.Point(1073, 362);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(82, 33);
@@ -277,7 +277,7 @@
             // 
             // add清场
             // 
-            this.add清场.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.add清场.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.add清场.Location = new System.Drawing.Point(12, 14);
             this.add清场.Name = "add清场";
             this.add清场.Size = new System.Drawing.Size(70, 30);
@@ -289,7 +289,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
+            this.label1.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold);
             this.label1.Location = new System.Drawing.Point(17, 561);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(135, 20);
@@ -298,8 +298,8 @@
             // 
             // Btn保存项目
             // 
-            this.Btn保存项目.Font = new System.Drawing.Font("SimSun", 12F);
-            this.Btn保存项目.Location = new System.Drawing.Point(936, 809);
+            this.Btn保存项目.Font = new System.Drawing.Font("宋体", 12F);
+            this.Btn保存项目.Location = new System.Drawing.Point(889, 753);
             this.Btn保存项目.Name = "Btn保存项目";
             this.Btn保存项目.Size = new System.Drawing.Size(90, 33);
             this.Btn保存项目.TabIndex = 53;
@@ -329,7 +329,7 @@
             // 
             // del开机
             // 
-            this.del开机.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.del开机.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.del开机.Location = new System.Drawing.Point(100, 14);
             this.del开机.Name = "del开机";
             this.del开机.Size = new System.Drawing.Size(70, 30);
@@ -340,7 +340,7 @@
             // 
             // add开机
             // 
-            this.add开机.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.add开机.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.add开机.Location = new System.Drawing.Point(12, 14);
             this.add开机.Name = "add开机";
             this.add开机.Size = new System.Drawing.Size(70, 30);
@@ -352,7 +352,7 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
+            this.label15.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold);
             this.label15.Location = new System.Drawing.Point(17, 15);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(198, 20);
@@ -407,7 +407,7 @@
             // 
             // del物料代码
             // 
-            this.del物料代码.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.del物料代码.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.del物料代码.Location = new System.Drawing.Point(100, 14);
             this.del物料代码.Name = "del物料代码";
             this.del物料代码.Size = new System.Drawing.Size(70, 30);
@@ -418,7 +418,7 @@
             // 
             // add物料代码
             // 
-            this.add物料代码.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.add物料代码.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.add物料代码.Location = new System.Drawing.Point(12, 14);
             this.add物料代码.Name = "add物料代码";
             this.add物料代码.Size = new System.Drawing.Size(70, 30);
@@ -430,7 +430,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
+            this.label7.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold);
             this.label7.Location = new System.Drawing.Point(631, 398);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(135, 20);
@@ -468,7 +468,7 @@
             // 
             // del封边
             // 
-            this.del封边.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.del封边.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.del封边.Location = new System.Drawing.Point(100, 14);
             this.del封边.Name = "del封边";
             this.del封边.Size = new System.Drawing.Size(70, 30);
@@ -479,7 +479,7 @@
             // 
             // add封边
             // 
-            this.add封边.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.add封边.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.add封边.Location = new System.Drawing.Point(12, 14);
             this.add封边.Name = "add封边";
             this.add封边.Size = new System.Drawing.Size(70, 30);
@@ -487,6 +487,27 @@
             this.add封边.Text = "添加";
             this.add封边.UseVisualStyleBackColor = true;
             this.add封边.Click += new System.EventHandler(this.add封边_Click);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold);
+            this.label5.Location = new System.Drawing.Point(572, 30);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(168, 20);
+            this.label5.TabIndex = 66;
+            this.label5.Text = "PTV制袋封边设置";
+            // 
+            // Btn保存产品
+            // 
+            this.Btn保存产品.Font = new System.Drawing.Font("宋体", 12F);
+            this.Btn保存产品.Location = new System.Drawing.Point(899, 318);
+            this.Btn保存产品.Name = "Btn保存产品";
+            this.Btn保存产品.Size = new System.Drawing.Size(90, 33);
+            this.Btn保存产品.TabIndex = 64;
+            this.Btn保存产品.Text = "保存设置";
+            this.Btn保存产品.UseVisualStyleBackColor = true;
+            this.Btn保存产品.Click += new System.EventHandler(this.Btn保存产品_Click);
             // 
             // groupBox9
             // 
@@ -511,7 +532,7 @@
             // 
             // del产品规格
             // 
-            this.del产品规格.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.del产品规格.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.del产品规格.Location = new System.Drawing.Point(100, 14);
             this.del产品规格.Name = "del产品规格";
             this.del产品规格.Size = new System.Drawing.Size(70, 30);
@@ -522,7 +543,7 @@
             // 
             // add产品规格
             // 
-            this.add产品规格.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.add产品规格.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.add产品规格.Location = new System.Drawing.Point(12, 14);
             this.add产品规格.Name = "add产品规格";
             this.add产品规格.Size = new System.Drawing.Size(70, 30);
@@ -531,37 +552,79 @@
             this.add产品规格.UseVisualStyleBackColor = true;
             this.add产品规格.Click += new System.EventHandler(this.add产品规格_Click);
             // 
-            // label5
+            // groupBox2
             // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
-            this.label5.Location = new System.Drawing.Point(572, 30);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(168, 20);
-            this.label5.TabIndex = 66;
-            this.label5.Text = "PTV制袋封边设置";
+            this.groupBox2.Controls.Add(this.dgv工艺);
+            this.groupBox2.Controls.Add(this.del工艺);
+            this.groupBox2.Controls.Add(this.add工艺);
+            this.groupBox2.Location = new System.Drawing.Point(11, 51);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(534, 225);
+            this.groupBox2.TabIndex = 59;
+            this.groupBox2.TabStop = false;
             // 
-            // label6
+            // dgv工艺
             // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
-            this.label6.Location = new System.Drawing.Point(375, 400);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(210, 20);
-            this.label6.TabIndex = 65;
-            this.label6.Text = "PTV制袋产品规格设置";
-            this.label6.Visible = false;
+            this.dgv工艺.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv工艺.Location = new System.Drawing.Point(12, 53);
+            this.dgv工艺.Name = "dgv工艺";
+            this.dgv工艺.RowTemplate.Height = 23;
+            this.dgv工艺.Size = new System.Drawing.Size(490, 165);
+            this.dgv工艺.TabIndex = 2;
             // 
-            // Btn保存产品
+            // del工艺
             // 
-            this.Btn保存产品.Font = new System.Drawing.Font("SimSun", 12F);
-            this.Btn保存产品.Location = new System.Drawing.Point(899, 318);
-            this.Btn保存产品.Name = "Btn保存产品";
-            this.Btn保存产品.Size = new System.Drawing.Size(90, 33);
-            this.Btn保存产品.TabIndex = 64;
-            this.Btn保存产品.Text = "保存设置";
-            this.Btn保存产品.UseVisualStyleBackColor = true;
-            this.Btn保存产品.Click += new System.EventHandler(this.Btn保存产品_Click);
+            this.del工艺.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.del工艺.Location = new System.Drawing.Point(100, 14);
+            this.del工艺.Name = "del工艺";
+            this.del工艺.Size = new System.Drawing.Size(70, 30);
+            this.del工艺.TabIndex = 1;
+            this.del工艺.Text = "删除";
+            this.del工艺.UseVisualStyleBackColor = true;
+            this.del工艺.Click += new System.EventHandler(this.del工艺_Click);
+            // 
+            // add工艺
+            // 
+            this.add工艺.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.add工艺.Location = new System.Drawing.Point(12, 14);
+            this.add工艺.Name = "add工艺";
+            this.add工艺.Size = new System.Drawing.Size(70, 30);
+            this.add工艺.TabIndex = 0;
+            this.add工艺.Text = "添加";
+            this.add工艺.UseVisualStyleBackColor = true;
+            this.add工艺.Click += new System.EventHandler(this.add工艺_Click);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold);
+            this.label11.Location = new System.Drawing.Point(15, 337);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(168, 20);
+            this.label11.TabIndex = 60;
+            this.label11.Text = "PTV制袋产品设置";
+            this.label11.Visible = false;
+            // 
+            // CS制袋工艺设置
+            // 
+            this.CS制袋工艺设置.AutoSize = true;
+            this.CS制袋工艺设置.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold);
+            this.CS制袋工艺设置.Location = new System.Drawing.Point(11, 30);
+            this.CS制袋工艺设置.Name = "CS制袋工艺设置";
+            this.CS制袋工艺设置.Size = new System.Drawing.Size(168, 20);
+            this.CS制袋工艺设置.TabIndex = 58;
+            this.CS制袋工艺设置.Text = "PTV制袋工艺设置";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold);
+            this.label12.Location = new System.Drawing.Point(572, 337);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(210, 20);
+            this.label12.TabIndex = 61;
+            this.label12.Text = "PTV制袋产品代码设置";
+            this.label12.Visible = false;
             // 
             // groupBox3
             // 
@@ -586,7 +649,7 @@
             // 
             // del产品编码
             // 
-            this.del产品编码.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.del产品编码.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.del产品编码.Location = new System.Drawing.Point(100, 14);
             this.del产品编码.Name = "del产品编码";
             this.del产品编码.Size = new System.Drawing.Size(70, 30);
@@ -597,7 +660,7 @@
             // 
             // add产品编码
             // 
-            this.add产品编码.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.add产品编码.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.add产品编码.Location = new System.Drawing.Point(12, 14);
             this.add产品编码.Name = "add产品编码";
             this.add产品编码.Size = new System.Drawing.Size(70, 30);
@@ -605,6 +668,17 @@
             this.add产品编码.Text = "添加";
             this.add产品编码.UseVisualStyleBackColor = true;
             this.add产品编码.Click += new System.EventHandler(this.add产品编码_Click);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold);
+            this.label6.Location = new System.Drawing.Point(375, 400);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(210, 20);
+            this.label6.TabIndex = 65;
+            this.label6.Text = "PTV制袋产品规格设置";
+            this.label6.Visible = false;
             // 
             // groupBox4
             // 
@@ -629,7 +703,7 @@
             // 
             // del产品
             // 
-            this.del产品.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.del产品.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.del产品.Location = new System.Drawing.Point(100, 14);
             this.del产品.Name = "del产品";
             this.del产品.Size = new System.Drawing.Size(70, 30);
@@ -640,7 +714,7 @@
             // 
             // add产品
             // 
-            this.add产品.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.add产品.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.add产品.Location = new System.Drawing.Point(12, 14);
             this.add产品.Name = "add产品";
             this.add产品.Size = new System.Drawing.Size(70, 30);
@@ -648,80 +722,6 @@
             this.add产品.Text = "添加";
             this.add产品.UseVisualStyleBackColor = true;
             this.add产品.Click += new System.EventHandler(this.add产品_Click);
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
-            this.label12.Location = new System.Drawing.Point(572, 337);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(210, 20);
-            this.label12.TabIndex = 61;
-            this.label12.Text = "PTV制袋产品代码设置";
-            this.label12.Visible = false;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
-            this.label11.Location = new System.Drawing.Point(15, 337);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(168, 20);
-            this.label11.TabIndex = 60;
-            this.label11.Text = "PTV制袋产品设置";
-            this.label11.Visible = false;
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.dgv工艺);
-            this.groupBox2.Controls.Add(this.del工艺);
-            this.groupBox2.Controls.Add(this.add工艺);
-            this.groupBox2.Location = new System.Drawing.Point(11, 51);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(534, 225);
-            this.groupBox2.TabIndex = 59;
-            this.groupBox2.TabStop = false;
-            // 
-            // dgv工艺
-            // 
-            this.dgv工艺.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv工艺.Location = new System.Drawing.Point(12, 53);
-            this.dgv工艺.Name = "dgv工艺";
-            this.dgv工艺.RowTemplate.Height = 23;
-            this.dgv工艺.Size = new System.Drawing.Size(490, 165);
-            this.dgv工艺.TabIndex = 2;
-            // 
-            // del工艺
-            // 
-            this.del工艺.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.del工艺.Location = new System.Drawing.Point(100, 14);
-            this.del工艺.Name = "del工艺";
-            this.del工艺.Size = new System.Drawing.Size(70, 30);
-            this.del工艺.TabIndex = 1;
-            this.del工艺.Text = "删除";
-            this.del工艺.UseVisualStyleBackColor = true;
-            this.del工艺.Click += new System.EventHandler(this.del工艺_Click);
-            // 
-            // add工艺
-            // 
-            this.add工艺.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.add工艺.Location = new System.Drawing.Point(12, 14);
-            this.add工艺.Name = "add工艺";
-            this.add工艺.Size = new System.Drawing.Size(70, 30);
-            this.add工艺.TabIndex = 0;
-            this.add工艺.Text = "添加";
-            this.add工艺.UseVisualStyleBackColor = true;
-            this.add工艺.Click += new System.EventHandler(this.add工艺_Click);
-            // 
-            // CS制袋工艺设置
-            // 
-            this.CS制袋工艺设置.AutoSize = true;
-            this.CS制袋工艺设置.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
-            this.CS制袋工艺设置.Location = new System.Drawing.Point(11, 30);
-            this.CS制袋工艺设置.Name = "CS制袋工艺设置";
-            this.CS制袋工艺设置.Size = new System.Drawing.Size(168, 20);
-            this.CS制袋工艺设置.TabIndex = 58;
-            this.CS制袋工艺设置.Text = "PTV制袋工艺设置";
             // 
             // tabPage人员
             // 
@@ -740,8 +740,8 @@
             // 
             // Btn保存人员
             // 
-            this.Btn保存人员.Font = new System.Drawing.Font("SimSun", 12F);
-            this.Btn保存人员.Location = new System.Drawing.Point(936, 526);
+            this.Btn保存人员.Font = new System.Drawing.Font("宋体", 12F);
+            this.Btn保存人员.Location = new System.Drawing.Point(850, 47);
             this.Btn保存人员.Name = "Btn保存人员";
             this.Btn保存人员.Size = new System.Drawing.Size(90, 33);
             this.Btn保存人员.TabIndex = 57;
@@ -779,7 +779,7 @@
             // 
             // button3
             // 
-            this.button3.Font = new System.Drawing.Font("SimSun", 12F);
+            this.button3.Font = new System.Drawing.Font("宋体", 12F);
             this.button3.Location = new System.Drawing.Point(975, 362);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(81, 33);
@@ -789,7 +789,7 @@
             // 
             // button5
             // 
-            this.button5.Font = new System.Drawing.Font("SimSun", 12F);
+            this.button5.Font = new System.Drawing.Font("宋体", 12F);
             this.button5.Location = new System.Drawing.Point(873, 362);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(82, 33);
@@ -800,7 +800,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
+            this.label3.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold);
             this.label3.Location = new System.Drawing.Point(17, 292);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(210, 20);
@@ -829,7 +829,7 @@
             // 
             // del人员
             // 
-            this.del人员.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.del人员.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.del人员.Location = new System.Drawing.Point(100, 14);
             this.del人员.Name = "del人员";
             this.del人员.Size = new System.Drawing.Size(70, 30);
@@ -840,7 +840,7 @@
             // 
             // add人员
             // 
-            this.add人员.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.add人员.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.add人员.Location = new System.Drawing.Point(12, 14);
             this.add人员.Name = "add人员";
             this.add人员.Size = new System.Drawing.Size(70, 30);
@@ -852,7 +852,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
+            this.label4.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold);
             this.label4.Location = new System.Drawing.Point(17, 15);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(168, 20);
@@ -865,7 +865,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1160, 615);
             this.Controls.Add(this.tabControl1);
-            this.Font = new System.Drawing.Font("SimSun", 12F);
+            this.Font = new System.Drawing.Font("宋体", 12F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "PTV制袋设置";
@@ -887,12 +887,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgv封边)).EndInit();
             this.groupBox9.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgv产品规格)).EndInit();
+            this.groupBox2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgv工艺)).EndInit();
             this.groupBox3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgv产品编码)).EndInit();
             this.groupBox4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgv产品)).EndInit();
-            this.groupBox2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgv工艺)).EndInit();
             this.tabPage人员.ResumeLayout(false);
             this.tabPage人员.PerformLayout();
             this.groupBox5.ResumeLayout(false);

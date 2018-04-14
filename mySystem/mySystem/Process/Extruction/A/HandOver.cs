@@ -690,18 +690,7 @@ namespace mySystem.Process.Extruction.A
         private void btn保存_Click(object sender, EventArgs e)
         {
 
-            String n;
-            if (!checkOuterData(out n))
-            {
-                MessageBox.Show("请填写完整的信息: " + n, "提示");
-                return;
-            }
-            if (!checkInnerData(dataGridView1))
-            {
-                MessageBox.Show("请填写完整的表单信息", "提示");
-                return;
-            }
-
+            
             
 
             save();
@@ -1069,6 +1058,18 @@ namespace mySystem.Process.Extruction.A
         }
         private void btn提交审核_Click(object sender, EventArgs e)
         {
+            String n;
+            if (!checkOuterData(out n))
+            {
+                MessageBox.Show("请填写完整的信息: " + n, "提示");
+                return;
+            }
+            if (!checkInnerData(dataGridView1))
+            {
+                MessageBox.Show("请填写完整的表单信息", "提示");
+                return;
+            }
+
             if (!mySystem.Parameter.isSqlOk)
             {
                 //read from database table and find current record
