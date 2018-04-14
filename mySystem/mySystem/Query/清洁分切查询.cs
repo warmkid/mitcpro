@@ -271,7 +271,7 @@ namespace mySystem.Query
                     {
                         case "清洁分切生产记录":
                             CleanCut_Productrecord form1 = new CleanCut_Productrecord(mainform, ID);
-                            form1.Show();
+                            form1.ShowDialog();
                             break;
                         case "清洁分切日报表":
                             //DailyRecord form2 = new DailyRecord(mainform, ID);
@@ -279,19 +279,19 @@ namespace mySystem.Query
                             break;
                         case "清洁分切开机前确认表":
                             CleanCut_CheckBeforePower form3 = new CleanCut_CheckBeforePower(mainform, ID);
-                            form3.Show();
+                            form3.ShowDialog();
                             break;
                         case "清洁分切运行记录":
                             CleanCut_RunRecord form4 = new CleanCut_RunRecord(mainform, ID);
-                            form4.Show();
+                            form4.ShowDialog();
                             break;
                         case "清场记录":
                             Record_cleansite_cut form5 = new Record_cleansite_cut(mainform, ID);
-                            form5.Show();
+                            form5.ShowDialog();
                             break;
                         case "清洁分切批生产记录":
                             CleanCut_Cover form6= new CleanCut_Cover(mainform, ID);
-                            form6.Show();
+                            form6.ShowDialog();
                             break;
                         case "生产领料申请单":
                             清洁分切生产领料申请单 form7 = new 清洁分切生产领料申请单(mainform, ID);

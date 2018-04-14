@@ -146,7 +146,7 @@ namespace mySystem.Process.Extruction.C
             dr["生产指令ID"] = Parameter.proInstruID;
             dr["生产日期"] = Convert.ToDateTime(dtp生产日期.Value.ToShortDateString());
             // 班次这一列实际已经没用了
-            dr["班次"] = true;
+            dr["班次"] = "__";
             dr["审核员"] = "";
             //this part to add log 
             //格式： 
@@ -686,6 +686,11 @@ namespace mySystem.Process.Extruction.C
                 setFormState();
                 setEnableReadOnly();
             }
+            try
+            {
+                (this.Owner as mySystem.Query.QueryExtruForm).search();
+            }
+            catch (NullReferenceException exp) { }
         }
 
         private void btn提交审核_Click(object sender, EventArgs e)
@@ -795,10 +800,24 @@ namespace mySystem.Process.Extruction.C
         private void btn审核_Click(object sender, EventArgs e)
         {
             check = new CheckForm(this);
-            check.Show();
+            check.ShowDialog();
         }
         private void btnSave_Click(object sender, EventArgs e)
-        {           
+        {
+            String n;
+            if (!checkOuterData(out n))
+            {
+                MessageBox.Show("请填写完整的信息: " + n, "提示");
+                return;
+            }
+
+
+
+            if (!checkInnerData(dataGridView1))
+            {
+                MessageBox.Show("请填写完整的表单信息", "提示");
+                return;
+            }
             bsOuter.EndEdit();
             if (!mySystem.Parameter.isSqlOk)
             {
@@ -824,7 +843,7 @@ namespace mySystem.Process.Extruction.C
             
             readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
             innerBind();
-            btnSave.Enabled = false;
+            //btnSave.Enabled = false;
             if (Parameter.UserState.操作员==_userState)
             {
                 btn提交审核.Enabled = true;
@@ -1129,6 +1148,11 @@ namespace mySystem.Process.Extruction.C
             {
                 writeDGVWidthToSetting(dataGridView1);
             }
+        }
+
+        private void Feed_Load(object sender, EventArgs e)
+        {
+
         }
     }
 	

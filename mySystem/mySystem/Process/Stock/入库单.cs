@@ -349,6 +349,7 @@ namespace mySystem.Process.Stock
 
         private void btn保存_Click(object sender, EventArgs e)
         {
+            
             save();
         }
 
@@ -367,8 +368,30 @@ namespace mySystem.Process.Stock
                 btn提交审核.Enabled = true;
         }
 
+        bool checkBeforeSave()
+        {
+            String sql = @"select sum(数量) from 入库单详细信息 where 入库单ID={0}";
+            SqlCommand comm = new SqlCommand(String.Format(sql,_id),mySystem.Parameter.conn);
+            object o = comm.ExecuteScalar();
+            double d;
+            double eps = 1e-4;
+            if (o == DBNull.Value) d = 0;
+            else d = Convert.ToDouble(o);
+
+            if (!(d - Convert.ToDouble(tb数量.Text) < eps))
+            {
+                MessageBox.Show("入库数量不匹配！","错误");
+                return false;
+            }
+            return true;
+        }
+
         private void btn提交审核_Click(object sender, EventArgs e)
         {
+            // 判断，二维码中的数量应该和总量一致
+            if (!checkBeforeSave())
+                return;
+            save();
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
             BindingSource bs_temp = new BindingSource();
@@ -401,7 +424,7 @@ namespace mySystem.Process.Stock
             dtOuter.Rows[0]["审核员"] = "__待审核";
             dtOuter.Rows[0]["审核日期"] = DateTime.Now;
 
-            save();
+            
 
             //空间都不能点
             setControlFalse();

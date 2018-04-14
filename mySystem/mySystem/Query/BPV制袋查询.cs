@@ -383,111 +383,111 @@ namespace mySystem.Query
                     {
                         case "生产领料使用记录":
                             BTVMaterialRecord mydlg1 = new BTVMaterialRecord(mainform, ID);
-                            mydlg1.Show();
+                            mydlg1.ShowDialog();
                             break;
                         case "制袋工序批生产记录":
                             BPV批生产记录 mydlg2 = new BPV批生产记录(mainform, ID);
-                            mydlg2.Show();
+                            mydlg2.ShowDialog();
                             break;
                         case "产品内包装记录":
                             BTVInnerPackage mydlg3 = new BTVInnerPackage(mainform, ID);
-                            mydlg3.Show();
+                            mydlg3.ShowDialog();
                             break;
                         case "清场记录":
                             BTVClearanceRecord mydlg4 = new BTVClearanceRecord(mainform, ID);
-                            mydlg4.Show();
+                            mydlg4.ShowDialog();
                             break;
                         case "BPV生产前确认记录":
                             BTVConfirmBefore mydlg5 = new BTVConfirmBefore(mainform, ID);
-                            mydlg5.Show();
+                            mydlg5.ShowDialog();
                             break;
                         case "BPV切管记录":
                             BTVCutPipeRecord mydlg6 = new BTVCutPipeRecord(mainform, ID);
-                            mydlg6.Show();
+                            mydlg6.ShowDialog();
                             break;
                         case "BPV装配确认记录":
                             BTVAssemblyConfirm mydlg7 = new BTVAssemblyConfirm(mainform, ID);
-                            mydlg7.Show();
+                            mydlg7.ShowDialog();
                             break;
                         case "2D袋体生产记录":
                             BTV2DProRecord mydlg8 = new BTV2DProRecord(mainform, ID);
-                            mydlg8.Show();
+                            mydlg8.ShowDialog();
                             break;
                         case "关键尺寸确认记录":
                             BTVKeySizeConfirm mydlg9 = new BTVKeySizeConfirm(mainform, ID);
-                            mydlg9.Show();
+                            mydlg9.ShowDialog();
                             break;
                         case "原材料分装记录":
                             BTVRawMaterialDispensing mydlg10 = new BTVRawMaterialDispensing(mainform, ID);
-                            mydlg10.Show();
+                            mydlg10.ShowDialog();
                             break;
                         case "底封机运行记录":
                             BTVRunningRecordDF mydlg11 = new BTVRunningRecordDF(mainform, ID);
-                            mydlg11.Show();
+                            mydlg11.ShowDialog();
                             break;
                         case "泄漏测试记录":
                             BTVLeakTest mydlg12 = new BTVLeakTest(mainform, ID);
-                            mydlg12.Show();
+                            mydlg12.ShowDialog();
                             break;
                         case "2D袋体与船型接口热合记录":
                             BTV2DShipHeat mydlg13 = new BTV2DShipHeat(mainform, ID);
-                            mydlg13.Show();
+                            mydlg13.ShowDialog();
                             break;
                         case "瓶口焊接机运行记录":
                             BTVRunningRecordPK mydlg14 = new BTVRunningRecordPK(mainform, ID);
-                            mydlg14.Show();
+                            mydlg14.ShowDialog();
                             break;
                         case "多功能热合机运行记录":
                             BTVRunningRecordRHJMulti mydlg15 = new BTVRunningRecordRHJMulti(mainform, ID);
-                            mydlg15.Show();
+                            mydlg15.ShowDialog();
                             break;
                         case "3D袋体生产记录":
                             BTV3DProRecord mydlg16 = new BTV3DProRecord(mainform, ID);
-                            mydlg16.Show();
+                            mydlg16.ShowDialog();
                             break;
                         case "单管口热合机运行记录":
                             BTVRunningRecordRHJsingle mydlg17 = new BTVRunningRecordRHJsingle(mainform, ID);
-                            mydlg17.Show();
+                            mydlg17.ShowDialog();
                             break;
                         case "90度热合机运行记录":
                             BTVRunningRecordRHJ90 mydlg18 = new BTVRunningRecordRHJ90(mainform, ID);
-                            mydlg18.Show();
+                            mydlg18.ShowDialog();
                             break;
                         case "封口热合机运行记录":
                             BTVRunningRecordRHJseal mydlg19 = new BTVRunningRecordRHJseal(mainform, ID);
-                            mydlg19.Show();
+                            mydlg19.ShowDialog();
                             break;
                         case "打孔及与图纸确认记录":
                             BTVPunchDrawingConfirm mydlg20 = new BTVPunchDrawingConfirm(mainform, ID);
-                            mydlg20.Show();
+                            mydlg20.ShowDialog();
                             break;
                         case "产品热合强度检验记录":
                             产品热合强度检验记录 mydlg21 = new 产品热合强度检验记录(mainform, ID);
-                            mydlg21.Show();
+                            mydlg21.ShowDialog();
                             break;
                         case "产品外观和尺寸检验记录":
                             产品外观和尺寸检验记录 mydlg22 = new 产品外观和尺寸检验记录(mainform, ID);
-                            mydlg22.Show();
+                            mydlg22.ShowDialog();
                             break;
                         case "BPV制袋日报表":
                             生产日报表 mydlg23 = new 生产日报表(mainform);
-                            mydlg23.Show();
+                            mydlg23.ShowDialog();
                             break;
                         case "产品外包装记录":
                             BPV产品外包装记录 mydlg24 = new BPV产品外包装记录(mainform, ID);
-                            mydlg24.Show();
+                            mydlg24.ShowDialog();
                             break;
                         case "生产退料记录":
                             BPV生产退料记录 mydlg25 = new BPV生产退料记录(mainform, ID);
-                            mydlg25.Show();
+                            mydlg25.ShowDialog();
                             break;
                         case "洁净区温湿度记录":
                             BPV洁净区温湿度记录 mydlg26 = new BPV洁净区温湿度记录(mainform, ID);
-                            mydlg26.Show();
+                            mydlg26.ShowDialog();
                             break;
                         case "岗位交接班记录":
                             HandOver mydlg27 = new HandOver(mainform, ID);
-                            mydlg27.Show();
+                            mydlg27.ShowDialog();
                             break;
                         case "生产领料申请单":
                             BPV生产领料申请单 mydlg28 = new BPV生产领料申请单(mainform, ID);

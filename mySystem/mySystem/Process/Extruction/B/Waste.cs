@@ -568,12 +568,17 @@ namespace mySystem.Process.Extruction.B
                 setFormState();
                 setEnableReadOnly();
             }
+            try
+            {
+                (this.Owner as mySystem.Query.QueryExtruForm).search();
+            }
+            catch (NullReferenceException exp) { }
         }
         
         private void btn审核_Click(object sender, EventArgs e)
         {
             check = new CheckForm(this);
-            check.Show();
+            check.ShowDialog();
         }
         //// 给外表的一行写入默认值，包括操作人，时间，班次等
         //DataRow writeOuterDefault(DataRow);
@@ -866,6 +871,21 @@ namespace mySystem.Process.Extruction.B
         //check the operator, make sure the operator exists in userlist
         private void btn保存_Click(object sender, EventArgs e)
         {
+            String n;
+            if (!checkOuterData(out n))
+            {
+                MessageBox.Show("请填写完整的信息: " + n, "提示");
+                return;
+            }
+
+
+
+            if (!checkInnerData(dataGridView1))
+            {
+                MessageBox.Show("请填写完整的表单信息", "提示");
+                return;
+            }
+            
             for (int i = 0; i < dtInner.Rows.Count; i++)
             {
                 if (usrList.IndexOf(dtInner.Rows[i]["记录员"].ToString().Trim()) < 0) 

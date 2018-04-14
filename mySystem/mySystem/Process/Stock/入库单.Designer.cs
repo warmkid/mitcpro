@@ -28,6 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.btn生成二维码 = new System.Windows.Forms.Button();
+            this.btn添加 = new System.Windows.Forms.Button();
+            this.btn删除 = new System.Windows.Forms.Button();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.btn审核 = new System.Windows.Forms.Button();
             this.btn提交审核 = new System.Windows.Forms.Button();
             this.btn保存 = new System.Windows.Forms.Button();
@@ -65,12 +69,50 @@
             this.label角色 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.Title = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.btn删除 = new System.Windows.Forms.Button();
-            this.btn添加 = new System.Windows.Forms.Button();
-            this.btn生成二维码 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
+            // 
+            // btn生成二维码
+            // 
+            this.btn生成二维码.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn生成二维码.Location = new System.Drawing.Point(169, 459);
+            this.btn生成二维码.Name = "btn生成二维码";
+            this.btn生成二维码.Size = new System.Drawing.Size(109, 23);
+            this.btn生成二维码.TabIndex = 87;
+            this.btn生成二维码.Text = "生成二维码";
+            this.btn生成二维码.UseVisualStyleBackColor = true;
+            this.btn生成二维码.Click += new System.EventHandler(this.btn生成二维码_Click);
+            // 
+            // btn添加
+            // 
+            this.btn添加.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn添加.Location = new System.Drawing.Point(852, 371);
+            this.btn添加.Name = "btn添加";
+            this.btn添加.Size = new System.Drawing.Size(75, 23);
+            this.btn添加.TabIndex = 86;
+            this.btn添加.Text = "添加";
+            this.btn添加.UseVisualStyleBackColor = true;
+            this.btn添加.Click += new System.EventHandler(this.btn添加_Click);
+            // 
+            // btn删除
+            // 
+            this.btn删除.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn删除.Location = new System.Drawing.Point(1017, 371);
+            this.btn删除.Name = "btn删除";
+            this.btn删除.Size = new System.Drawing.Size(75, 23);
+            this.btn删除.TabIndex = 85;
+            this.btn删除.Text = "删除";
+            this.btn删除.UseVisualStyleBackColor = true;
+            this.btn删除.Click += new System.EventHandler(this.btn删除_Click);
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(852, 66);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowTemplate.Height = 23;
+            this.dataGridView1.Size = new System.Drawing.Size(240, 280);
+            this.dataGridView1.TabIndex = 84;
             // 
             // btn审核
             // 
@@ -156,6 +198,7 @@
             this.tb数量.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tb数量.Location = new System.Drawing.Point(273, 327);
             this.tb数量.Name = "tb数量";
+            this.tb数量.ReadOnly = true;
             this.tb数量.Size = new System.Drawing.Size(100, 26);
             this.tb数量.TabIndex = 74;
             // 
@@ -421,48 +464,6 @@
             this.Title.Size = new System.Drawing.Size(69, 19);
             this.Title.TabIndex = 38;
             this.Title.Text = "入库单";
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(852, 66);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(240, 280);
-            this.dataGridView1.TabIndex = 84;
-            // 
-            // btn删除
-            // 
-            this.btn删除.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn删除.Location = new System.Drawing.Point(1017, 371);
-            this.btn删除.Name = "btn删除";
-            this.btn删除.Size = new System.Drawing.Size(75, 23);
-            this.btn删除.TabIndex = 85;
-            this.btn删除.Text = "删除";
-            this.btn删除.UseVisualStyleBackColor = true;
-            this.btn删除.Click += new System.EventHandler(this.btn删除_Click);
-            // 
-            // btn添加
-            // 
-            this.btn添加.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn添加.Location = new System.Drawing.Point(852, 371);
-            this.btn添加.Name = "btn添加";
-            this.btn添加.Size = new System.Drawing.Size(75, 23);
-            this.btn添加.TabIndex = 86;
-            this.btn添加.Text = "添加";
-            this.btn添加.UseVisualStyleBackColor = true;
-            this.btn添加.Click += new System.EventHandler(this.btn添加_Click);
-            // 
-            // btn生成二维码
-            // 
-            this.btn生成二维码.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn生成二维码.Location = new System.Drawing.Point(169, 459);
-            this.btn生成二维码.Name = "btn生成二维码";
-            this.btn生成二维码.Size = new System.Drawing.Size(109, 23);
-            this.btn生成二维码.TabIndex = 87;
-            this.btn生成二维码.Text = "生成二维码";
-            this.btn生成二维码.UseVisualStyleBackColor = true;
-            this.btn生成二维码.Click += new System.EventHandler(this.btn生成二维码_Click);
             // 
             // 入库单
             // 

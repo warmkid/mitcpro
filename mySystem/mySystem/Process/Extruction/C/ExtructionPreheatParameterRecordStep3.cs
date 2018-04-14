@@ -600,6 +600,13 @@ namespace mySystem.Extruction.Process
         //保存按钮
         private void SaveBtn_Click(object sender, EventArgs e)
         {
+          
+            String n;
+            if (!checkOuterData(out n))
+            {
+                MessageBox.Show("请填写完整的信息: " + n, "提示");
+                return;
+            }
             bool isSaved = Save();
             //控件可见性
             if (_userState == Parameter.UserState.操作员 && isSaved == true)
@@ -765,6 +772,11 @@ namespace mySystem.Extruction.Process
             else
             { _formState = Parameter.FormState.审核未通过; }//审核未通过            
             setEnableReadOnly();
+            try
+            {
+                (this.Owner as mySystem.Query.QueryExtruForm).search();
+            }
+            catch (NullReferenceException exp) { }
         }
 
         //添加打印机

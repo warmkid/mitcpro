@@ -689,6 +689,101 @@ namespace mySystem.Process.Extruction.A
 
         private void btn保存_Click(object sender, EventArgs e)
         {
+
+            String n;
+            if (!checkOuterData(out n))
+            {
+                MessageBox.Show("请填写完整的信息: " + n, "提示");
+                return;
+            }
+            if (!checkInnerData(dataGridView1))
+            {
+                MessageBox.Show("请填写完整的表单信息", "提示");
+                return;
+            }
+
+            
+
+            save();
+            
+            
+        }
+
+
+         protected bool checkOuterData(out String name)
+        {
+            System.Text.RegularExpressions.Regex regx = new System.Text.RegularExpressions.Regex("^[a-zA-Z]+");
+            // 获取所有控件
+            List<Control> cons = base.GetControls(this);
+            foreach (Control c in cons)
+            {
+                if (c is TextBox)
+                {
+                    TextBox tb = c as TextBox;
+                    if (tb.Text.Trim() == "")
+                    {
+                        if (tb.Name.Contains("审")) continue;
+                        if (tb.Name.Contains("批准")) continue;
+                        if (tb.Name.Contains("备注")) continue;
+                        if (tb.Name.Contains("接班员")) continue;
+                        if (mySystem.Parameter.userflight == "白班")
+                        {
+                            if (tb.Name.Contains("夜班")) continue;
+                        }
+                        if (mySystem.Parameter.userflight == "夜班")
+                        {
+                            if (tb.Name.Contains("白班")) continue;
+                        }
+                        name = regx.Replace(tb.Name, ""); ;
+                        return false;
+                    }
+                }
+                if (c is ComboBox)
+                {
+                    ComboBox cb = c as ComboBox;
+                    if (c.Text.Trim() == "")
+                    {
+                        name = cb.Name;
+                        return false;
+                    }
+                }
+            }
+            name = "";
+            return true;
+            // textbox, combobox, 
+        }
+
+
+         protected bool checkInnerData(DataGridView dgv)
+         {
+             foreach (DataGridViewRow dgvr in dgv.Rows)
+             {
+                 foreach (DataGridViewCell dgvc in dgvr.Cells)
+                 {
+                     if (dgvc.OwningColumn.Name == "ID")
+                     {
+                         continue;
+                     }
+                     if (dgvc.OwningColumn.Name.Contains("审")) continue;
+                     if (mySystem.Parameter.userflight == "白班")
+                     {
+                         if (dgvc.OwningColumn.Name.Contains("夜班")) continue;
+                     }
+                     if (mySystem.Parameter.userflight == "夜班")
+                     {
+                         if (dgvc.OwningColumn.Name.Contains("白班")) continue;
+                     }
+                     if (dgvc.Value.ToString() == "")
+                     {
+                         return false;
+                     }
+                 }
+             }
+             return true;
+         }
+
+        void save()
+        {
             if (未确认())
             {
                 MessageBox.Show("有未确认项目");
@@ -704,8 +799,8 @@ namespace mySystem.Process.Extruction.A
                 daInner_sql.Update((DataTable)bsInner.DataSource);
             }
             InnerBind();
-           
-            
+
+
 
             bsOuter.EndEdit();
             if (!mySystem.Parameter.isSqlOk)
@@ -713,13 +808,11 @@ namespace mySystem.Process.Extruction.A
             else
                 daOuter_sql.Update((DataTable)bsOuter.DataSource);
 
-            readOuterData(__生产指令编号,__生产日期);
+            readOuterData(__生产指令编号, __生产日期);
             removeOuterBind();
             outerBind();
 
             btn提交审核.Enabled = true;
-            
-            
         }
 
     
@@ -818,6 +911,11 @@ namespace mySystem.Process.Extruction.A
             {
                 MessageBox.Show("必须通过");
             }
+            try
+            {
+                (this.Owner as mySystem.Query.QueryExtruForm).search();
+            }
+            catch (NullReferenceException exp) { }
         }
         private void btn审核_Click(object sender, EventArgs e)
         {
@@ -832,7 +930,7 @@ namespace mySystem.Process.Extruction.A
                 
             }
             check = new CheckForm(this);
-            check.Show();
+            check.ShowDialog();
         }
 
 

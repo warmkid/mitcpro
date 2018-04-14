@@ -427,6 +427,16 @@ namespace mySystem.Process.Extruction.B
 
         private void btn保存_Click(object sender, EventArgs e)
         {
+            String n;
+            if (!checkOuterData(out n))
+            {
+                MessageBox.Show("请填写完整的信息: " + n, "提示");
+                return;
+            }
+
+
+
+           
             //pullData();
             isSaved = true;
             bsOuter.EndEdit();
@@ -1273,6 +1283,11 @@ namespace mySystem.Process.Extruction.B
                 setFormState();
                 setEnableReadOnly();
             }
+            try
+            {
+                (this.Owner as mySystem.Query.QueryExtruForm).search();
+            }
+            catch (NullReferenceException exp) { }
         }
         private void btn审核_Click(object sender, EventArgs e)
         {
@@ -1282,7 +1297,7 @@ namespace mySystem.Process.Extruction.B
                 return;
             }
             check = new CheckForm(this);
-            check.Show();
+            check.ShowDialog();
         }
         [DllImport("winspool.drv")]
         public static extern bool SetDefaultPrinter(string Name);

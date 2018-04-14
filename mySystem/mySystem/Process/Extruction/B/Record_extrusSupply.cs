@@ -533,6 +533,11 @@ namespace WindowsFormsApplication1
             
 
             base.CheckResult();
+            try
+            {
+                (this.Owner as mySystem.Query.QueryExtruForm).search();
+            }
+            catch (NullReferenceException exp) { }
 
         }
 
@@ -540,7 +545,7 @@ namespace WindowsFormsApplication1
         private void button4_Click(object sender, EventArgs e)
         {
             checkform = new mySystem.CheckForm(this);
-            checkform.Show();
+            checkform.ShowDialog();
         }
 
         //读取该生产指令下所有的产品代码，加入 生产代码的 items
@@ -1163,6 +1168,20 @@ namespace WindowsFormsApplication1
         }
         private void bt保存_Click(object sender, EventArgs e)
         {
+            String n;
+            if (!checkOuterData(out n))
+            {
+                MessageBox.Show("请填写完整的信息: " + n, "提示");
+                return;
+            }
+
+
+
+            if (!checkInnerData(dataGridView1))
+            {
+                MessageBox.Show("请填写完整的表单信息", "提示");
+                return;
+            }
             bool rt = save();
             //控件可见性
             if (rt && _userState == Parameter.UserState.操作员)

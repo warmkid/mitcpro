@@ -1027,6 +1027,7 @@ namespace mySystem.Process.灭菌
 
         private void bt查询插入_Click(object sender, EventArgs e)
         {
+            if (tb委托单号.Text.Trim() == "") return;
             str_委托单 = tb委托单号.Text;
             readOuterData(str_委托单);
             outerBind();

@@ -39,7 +39,7 @@ namespace mySystem
             InitializeComponent();
             userLabel.Text = Parameter.userName;
             InitTaskBar();
-            SearchUnchecked();
+            //SearchUnchecked();
             check库存预警();
             timer1.Interval = interval;
             timer1.Start();
@@ -138,7 +138,7 @@ namespace mySystem
         List<String> listBPV制袋;
         List<String> listPTV制袋;
 
-        private void SearchUnchecked()
+        private String SearchUnchecked()
         {
             if (!mySystem.Parameter.isSqlOk)
             {
@@ -178,7 +178,7 @@ namespace mySystem
                 listPTV制袋 = EachSearchUnchecked(strConPTV制袋);
             }
 
-            if (list吹膜.Count + list清洁分切.Count + listCS制袋.Count + listPE制袋.Count + listBPV制袋.Count + listPTV制袋.Count == 0) return;
+            if (list吹膜.Count + list清洁分切.Count + listCS制袋.Count + listPE制袋.Count + listBPV制袋.Count + listPTV制袋.Count == 0) return "";
 
             String message = "以下表单中有待审核记录：\n";
             if (list吹膜.Count != 0)
@@ -218,7 +218,8 @@ namespace mySystem
                 { message += "   " + table + "\n"; }
             }
 
-            MessageBox.Show(message, "提示");
+            //MessageBox.Show(message, "提示");
+            return message;
             //taskbarNotifier1.Show("提示", message, 500, 10000, 500);
         }
 
@@ -756,6 +757,198 @@ namespace mySystem
                 }
                 MessageBox.Show(sb.ToString(), "警告");
             }
+        }
+
+        private String Instru = null;
+        private void btnMyTask_Click(object sender, EventArgs e)
+        {
+            String instru = receiveInstr();
+            String msg = SearchUnchecked();
+            if (instru == null && msg.Equals("")) return;
+            if (instru == null )
+            {
+                MessageBox.Show(msg, "提示");
+            }
+            else
+            {
+                MessageBox.Show("请接收指令：\t " + instru + "\n\n" + msg, "提示");
+            }
+        }
+
+        String receiveInstr()
+        {
+            Instru = null;
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                String strConn吹膜 = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/extrusionnew.mdb;Persist Security Info=False";
+                OleDbConnection connOle吹膜 = new OleDbConnection(strConn吹膜);
+                connOle吹膜.Open();
+                InstruStateChange(connOle吹膜, "生产指令信息表");
+
+
+                String strConn清洁分切 = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/welding.mdb;Persist Security Info=False";
+                OleDbConnection connOle清洁分切 = new OleDbConnection(strConn清洁分切);
+                connOle清洁分切.Open();
+                InstruStateChange(connOle清洁分切, "清洁分切工序生产指令");
+
+
+                String strConnCS制袋 = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/csbag.mdb;Persist Security Info=False";
+                OleDbConnection connOleCS制袋 = new OleDbConnection(strConnCS制袋);
+                connOleCS制袋.Open();
+                InstruStateChange(connOleCS制袋, "生产指令");
+
+
+                String strConnPE制袋 = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/LDPE.mdb;Persist Security Info=False";
+                OleDbConnection connOlePE制袋 = new OleDbConnection(strConnPE制袋);
+                connOlePE制袋.Open();
+                InstruStateChange(connOlePE制袋, "生产指令");
+
+                String strConnBPV制袋 = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/BPV.mdb;Persist Security Info=False";
+                OleDbConnection connOleBPV制袋 = new OleDbConnection(strConnBPV制袋);
+                connOleBPV制袋.Open();
+                InstruStateChange(connOleBPV制袋, "生产指令");
+
+                String strConnPTV制袋 = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/PTV.mdb;Persist Security Info=False";
+                OleDbConnection connOlePTV制袋 = new OleDbConnection(strConnPTV制袋);
+                connOlePTV制袋.Open();
+                InstruStateChange(connOlePTV制袋, "生产指令");
+
+
+                //去掉最后一个"、"，弹框提示
+                if (Instru != null)
+                {
+                    Instru = Instru.Substring(0, Instru.Length - 1);
+                    MessageBox.Show(Parameter.userName + "请接收生产指令：" + Instru, "注意", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+
+                connOle吹膜.Dispose();
+                connOle清洁分切.Dispose();
+                connOleCS制袋.Dispose();
+                connOlePE制袋.Dispose();
+                connOleBPV制袋.Dispose();
+                connOlePTV制袋.Dispose();
+            }
+            else
+            {
+                String strConn吹膜 = "server=" + mySystem.Parameter.IP_port + ";database=extrusionnew;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
+                SqlConnection conn吹膜 = new SqlConnection(strConn吹膜);
+                conn吹膜.Open();
+                InstruStateChange(conn吹膜, "生产指令信息表");
+
+
+                String strConn清洁分切 = "server=" + mySystem.Parameter.IP_port + ";database=welding;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
+                SqlConnection conn清洁分切 = new SqlConnection(strConn清洁分切);
+                conn清洁分切.Open();
+                InstruStateChange(conn清洁分切, "清洁分切工序生产指令");
+
+
+                String strConnCS制袋 = "server=" + mySystem.Parameter.IP_port + ";database=csbag;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
+                SqlConnection connCS制袋 = new SqlConnection(strConnCS制袋);
+                connCS制袋.Open();
+                InstruStateChange(connCS制袋, "生产指令");
+
+
+                String strConnPE制袋 = "server=" + mySystem.Parameter.IP_port + ";database=LDPE;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
+                SqlConnection connPE制袋 = new SqlConnection(strConnPE制袋);
+                connPE制袋.Open();
+                InstruStateChange(connPE制袋, "生产指令");
+
+                String strConnBPV制袋 = "server=" + mySystem.Parameter.IP_port + ";database=BPV;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
+                SqlConnection connBPV制袋 = new SqlConnection(strConnBPV制袋);
+                connBPV制袋.Open();
+                InstruStateChange(connBPV制袋, "生产指令");
+
+                String strConnPTV制袋 = "server=" + mySystem.Parameter.IP_port + ";database=PTV;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
+                SqlConnection connPTV制袋 = new SqlConnection(strConnPTV制袋);
+                connPTV制袋.Open();
+                InstruStateChange(connPTV制袋, "生产指令");
+
+
+                //去掉最后一个"、"，弹框提示
+                if (Instru != null)
+                {
+                    Instru = Instru.Substring(0, Instru.Length - 1);
+                    //MessageBox.Show(Parameter.userName + "请接收生产指令：" + Instru, "注意", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+
+                conn吹膜.Dispose();
+                conn清洁分切.Dispose();
+                connCS制袋.Dispose();
+                connPE制袋.Dispose();
+                connBPV制袋.Dispose();
+                connPTV制袋.Dispose();
+            }
+            return Instru;
+        }
+
+        private void InstruStateChange(OleDbConnection connOle, String tblName)
+        {
+            //读取未接收的生产指令
+            OleDbCommand comm = new OleDbCommand();
+            comm.Connection = connOle;
+            comm.CommandText = "select * from " + tblName + " where 接收人 like  '%' + @接收人 + '%' and 状态=1";
+            comm.Parameters.AddWithValue("@接收人", Parameter.userName);
+
+            OleDbDataReader reader = comm.ExecuteReader();//执行查询
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    Instru += reader["生产指令编号"];
+                    Instru += "、";
+                }
+
+            }
+
+            //将状态变为已接收
+            OleDbCommand commnew = new OleDbCommand();
+            commnew.Connection = connOle;
+            commnew.CommandText = "UPDATE " + tblName + " SET 状态=2 where 接收人 = @接收人 and 状态=1";
+            commnew.Parameters.AddWithValue("@接收人", Parameter.userName);
+
+            commnew.ExecuteNonQuery();
+
+            reader.Dispose();
+            comm.Dispose();
+            commnew.Dispose();
+        }
+
+        private void InstruStateChange(SqlConnection conn, String tblName)
+        {
+            //读取未接收的生产指令
+            SqlCommand comm = new SqlCommand();
+            comm.Connection = conn;
+            comm.CommandText = "select * from " + tblName + " where 接收人 like  '%' + @接收人 + '%' and 状态=1";
+            comm.Parameters.AddWithValue("@接收人", Parameter.userName);
+
+            SqlDataReader reader = comm.ExecuteReader();//执行查询
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    Instru += reader["生产指令编号"];
+                    Instru += "、";
+                }
+
+            }
+
+            //将状态变为已接收
+            SqlCommand commnew = new SqlCommand();
+            commnew.Connection = conn;
+            commnew.CommandText = "UPDATE " + tblName + " SET 状态=2 where 接收人 = @接收人 and 状态=1";
+            commnew.Parameters.AddWithValue("@接收人", Parameter.userName);
+
+            commnew.ExecuteNonQuery();
+
+            reader.Dispose();
+            comm.Dispose();
+            commnew.Dispose();
         }
 
 

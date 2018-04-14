@@ -228,11 +228,11 @@ namespace mySystem.Query
                     {
                         case "Gamma 射线辐射灭菌委托单":
                             Gamma射线辐射灭菌委托单 mydlg1 = new Gamma射线辐射灭菌委托单(mainform, ID);
-                            mydlg1.Show();
+                            mydlg1.ShowDialog();
                             break;
                         case "Gamma 射线辐照灭菌产品验收记录":
                             辐照灭菌产品验收记录 mydlg2 = new 辐照灭菌产品验收记录(mainform, ID);
-                            mydlg2.Show();
+                            mydlg2.ShowDialog();
                             break;
                         case "辐照灭菌台帐":
 

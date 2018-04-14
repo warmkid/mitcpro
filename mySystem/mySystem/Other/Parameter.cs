@@ -371,6 +371,7 @@ namespace mySystem
                 //connUser = Init(connUser);
 
                 strConn = "server=" + IP_port + ";database=user;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
+                //MessageBox.Show(IP_port);
                 isOk = false;
                 connUser = connToServer(strConn);
                 if (!isOk)
@@ -388,6 +389,7 @@ namespace mySystem
                         throw new Exception("获取服务器名称失败");
                     }
                     System.Net.IPHostEntry host = System.Net.Dns.GetHostEntry(ServerPCName);
+                    //MessageBox.Show(host.ToString());
                     String ip = "";
                     foreach (System.Net.IPAddress ipp in host.AddressList)
                     {

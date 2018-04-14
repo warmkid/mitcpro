@@ -138,6 +138,7 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.button4 = new System.Windows.Forms.Button();
             this.bt查看人员信息 = new System.Windows.Forms.Button();
+            this.cb接收人 = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -593,9 +594,9 @@
             // 
             // splitContainer8.Panel2
             // 
+            this.splitContainer8.Panel2.Controls.Add(this.cb接收人);
             this.splitContainer8.Panel2.Controls.Add(this.dateTimePicker4);
             this.splitContainer8.Panel2.Controls.Add(this.label27);
-            this.splitContainer8.Panel2.Controls.Add(this.tb接收人);
             this.splitContainer8.Panel2.Controls.Add(this.label26);
             this.splitContainer8.Size = new System.Drawing.Size(528, 72);
             this.splitContainer8.SplitterDistance = 273;
@@ -659,10 +660,11 @@
             // tb接收人
             // 
             this.tb接收人.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb接收人.Location = new System.Drawing.Point(87, 8);
+            this.tb接收人.Location = new System.Drawing.Point(886, 12);
             this.tb接收人.Name = "tb接收人";
             this.tb接收人.Size = new System.Drawing.Size(110, 23);
             this.tb接收人.TabIndex = 19;
+            this.tb接收人.Visible = false;
             // 
             // label26
             // 
@@ -1328,6 +1330,14 @@
             this.bt查看人员信息.UseVisualStyleBackColor = true;
             this.bt查看人员信息.Click += new System.EventHandler(this.bt查看人员信息_Click);
             // 
+            // cb接收人
+            // 
+            this.cb接收人.FormattingEnabled = true;
+            this.cb接收人.Location = new System.Drawing.Point(78, 8);
+            this.cb接收人.Name = "cb接收人";
+            this.cb接收人.Size = new System.Drawing.Size(121, 20);
+            this.cb接收人.TabIndex = 22;
+            // 
             // ProcessProductInstru
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1335,6 +1345,7 @@
             this.ClientSize = new System.Drawing.Size(1009, 671);
             this.Controls.Add(this.bt查看人员信息);
             this.Controls.Add(this.button4);
+            this.Controls.Add(this.tb接收人);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.bt更改);
@@ -1536,5 +1547,6 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button bt查看人员信息;
+        private System.Windows.Forms.ComboBox cb接收人;
     }
 }

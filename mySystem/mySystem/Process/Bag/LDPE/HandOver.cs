@@ -98,13 +98,14 @@ namespace mySystem.Process.Bag.LDPE
             setDataGridViewRowNums();
             InnerBind();            
             是否覆盖原有项目();
-            填写交班员();
+            
 
             //update Outer
             daOuter.Update((DataTable)bsOuter.DataSource);
             readOuterData(__生产指令编号, __生产日期);
             removeOuterBind();
             outerBind();
+            填写交班员();
             setEnableReadOnly(true);
           
         }

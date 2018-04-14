@@ -194,31 +194,31 @@ namespace mySystem
                     {
                         case "吹膜":
                             BatchProductRecord.ProcessProductInstru form1 = new BatchProductRecord.ProcessProductInstru(base.mainform, ID);
-                            form1.Show();
+                            form1.ShowDialog();
 
                             break;
                         case "清洁分切":
                             mySystem.Process.CleanCut.Instru form2 = new Process.CleanCut.Instru(mainform, ID);
-                            form2.Show();
+                            form2.ShowDialog();
 
                             break;
                         case "CS制袋":
                             mySystem.Process.Bag.CS.CS制袋生产指令 form3 = new Process.Bag.CS.CS制袋生产指令(mainform, ID);
-                            form3.Show();
+                            form3.ShowDialog();
 
                             break;
                         case "PE制袋":
                             mySystem.Process.Bag.LDPE.LDPEBag_productioninstruction form4 = new Process.Bag.LDPE.LDPEBag_productioninstruction(mainform, ID);
-                            form4.Show();
+                            form4.ShowDialog();
 
                             break;
                         case "BPV制袋":
                             mySystem.Process.Bag.BTV.BPV制袋生产指令 form5 = new Process.Bag.BTV.BPV制袋生产指令(mainform, ID);
-                            form5.Show();
+                            form5.ShowDialog();
                             break;
                         case "PTV制袋":
                             mySystem.Process.Bag.PTV.PTVBag_productioninstruction form6 = new Process.Bag.PTV.PTVBag_productioninstruction(mainform, ID);
-                            form6.Show();
+                            form6.ShowDialog();
 
                             break;
 

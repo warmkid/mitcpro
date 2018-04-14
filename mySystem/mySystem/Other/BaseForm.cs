@@ -161,7 +161,84 @@ namespace mySystem
         }
         #endregion
 
+        # region
+        protected bool checkOuterData(out String name)
+        {
+            // 获取所有控件
+            System.Text.RegularExpressions.Regex regx = new System.Text.RegularExpressions.Regex("^[a-zA-Z]+");
+            List<Control> cons = GetControls(this);
+            foreach (Control c in cons)
+            {
+                if (c is TextBox)
+                {
+                    TextBox tb = c as TextBox;
+                    if (tb.Text.Trim() == "")
+                    {
+                        if (tb.Name.Contains("审")) continue;
+                        if (tb.Name.Contains("批准")) continue;
+                        if (tb.Name.Contains("备注")) continue;
+                        if (tb.Name.Contains("接班员")) continue;
+                        name = regx.Replace(tb.Name, "");
+                        return false;
+                    }
+                }
+                if (c is ComboBox)
+                {
+                    ComboBox cb = c as ComboBox;
+                    if (c.Text.Trim() == "")
+                    {
+                        name = cb.Name;
+                        return false;
+                    }
+                }
+            }
+            name = "";
+            return true;
+            // textbox, combobox, 
+        }
+
+        protected bool checkInnerData(DataGridView dgv)
+        {
+            foreach (DataGridViewRow dgvr in dgv.Rows)
+            {
+                foreach (DataGridViewCell dgvc in dgvr.Cells)
+                {
+                    if (dgvc.OwningColumn.Name == "ID")
+                    {
+                        continue;
+                    }
+                    if (dgvc.OwningColumn.Name.Contains("审")) continue;
+                    if (dgvc.OwningColumn.Name.Contains("备注")) continue;
+                    if (dgvc.Value.ToString() == "")
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        protected List<Control> GetControls(Control fatherControl)
+        {
+            List<Control> ret = new List<Control>();
+            Control.ControlCollection sonControls = fatherControl.Controls;
+            
+            //遍历所有控件  
+            foreach (Control control in sonControls)
+            {
+                ret.Add(control);
+                if (control.Controls != null)
+                {
+                    ret.AddRange(GetControls(control));
+                }
+               
+            }
+            return ret;
+        }  
+
+        # endregion
 
 
+        
     }
 }

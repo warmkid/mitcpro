@@ -20,6 +20,13 @@ namespace mySystem.Other
             dataGridView1.CellClick += dataGridView1_CellClick;
         }
 
+        public 存货编码类型(String data)
+        {
+            InitializeComponent();
+            initData(data);
+            dataGridView1.CellClick += dataGridView1_CellClick;
+        }
+
         void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             DataGridView dgv = (DataGridView)sender;
@@ -50,6 +57,28 @@ namespace mySystem.Other
            
         }
 
+        void initData(String data)
+        {
+            initData();
+            String[] leixing = data.Split(',');
+            foreach (String s in leixing)
+            {
+                switch (s)
+                {
+                    case "组件":
+                        this.dataGridView1.Rows[0].Cells[0].Value = true;
+                        break;
+                    case "半成品":
+                        this.dataGridView1.Rows[1].Cells[0].Value = true;
+                        break;
+                    case "成品":
+                        this.dataGridView1.Rows[2].Cells[0].Value = true;
+                        break;
+                }
+            }
+
+        }
+
         private void benDone_Click(object sender, EventArgs e)
         {
             List<String> ls = new List<string>();
@@ -67,6 +96,19 @@ namespace mySystem.Other
         public static string getData()
         {
             存货编码类型 form = new 存货编码类型();
+            if (DialogResult.OK == form.ShowDialog())
+            {
+                return form._data;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public static string getData(String data)
+        {
+            存货编码类型 form = new 存货编码类型(data);
             if (DialogResult.OK == form.ShowDialog())
             {
                 return form._data;

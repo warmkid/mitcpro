@@ -126,7 +126,7 @@ namespace mySystem.Setting
             {
                 if (dgv存货档案.Columns[e.ColumnIndex].Name == "属于工序")
                 {
-                    string data = mySystem.Other.属于工序.getData();
+                    string data = mySystem.Other.属于工序.getData(dgv存货档案[e.ColumnIndex, e.RowIndex].Value.ToString());
                     if (data != null)
                     {
                         dgv存货档案[e.ColumnIndex, e.RowIndex].Value = data;
@@ -134,7 +134,7 @@ namespace mySystem.Setting
                 }
                 if (dgv存货档案.Columns[e.ColumnIndex].Name == "类型")
                 {
-                    string data = mySystem.Other.存货编码类型.getData();
+                    string data = mySystem.Other.存货编码类型.getData(dgv存货档案[e.ColumnIndex, e.RowIndex].Value.ToString());
                     if (data != null)
                     {
                         dgv存货档案[e.ColumnIndex, e.RowIndex].Value = data;

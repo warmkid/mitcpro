@@ -1093,15 +1093,23 @@ namespace mySystem
         #region 按钮new窗口
         private void A1Btn_Click(object sender, EventArgs e)
         {
-            BatchProductRecord.BatchProductRecord form1 = new BatchProductRecord.BatchProductRecord(mainform);
-            form1.Owner = this;
-            form1.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "批生产记录表");            if (b)
+            {
+                BatchProductRecord.BatchProductRecord form1 = new BatchProductRecord.BatchProductRecord(mainform);
+                form1.Owner = this;
+                form1.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            } 
+            
         }
 
         private void A2Btn_Click(object sender, EventArgs e)
         {
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "吹膜工序生产指令");
-            b = true;
             if (b)
             {
                 BatchProductRecord.ProcessProductInstru form2 = new BatchProductRecord.ProcessProductInstru(mainform);
@@ -1409,14 +1417,24 @@ namespace mySystem
 
         private void btn生产领料申请单_Click(object sender, EventArgs e)
         {
-            吹膜生产领料申请单 form生产领料申请单 = new 吹膜生产领料申请单(mainform);
-            form生产领料申请单.Owner = this;
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "生产领料申请单表");
+            if (b)
+            {
+                吹膜生产领料申请单 form生产领料申请单 = new 吹膜生产领料申请单(mainform);
+                form生产领料申请单.Owner = this;
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            }  
+            
         }
 
         #endregion
 
         //判断是否能查看
-        private Boolean checkUser(String user, int role, String tblName)
+        static public Boolean checkUser(String user, int role, String tblName)
         {
             if (!mySystem.Parameter.isSqlOk)
             {

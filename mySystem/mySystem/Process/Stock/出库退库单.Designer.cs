@@ -91,6 +91,7 @@
             this.btn退库单读取.TabIndex = 2;
             this.btn退库单读取.Text = "读取";
             this.btn退库单读取.UseVisualStyleBackColor = true;
+            this.btn退库单读取.Visible = false;
             this.btn退库单读取.Click += new System.EventHandler(this.btn退库单读取_Click);
             // 
             // tp出库单

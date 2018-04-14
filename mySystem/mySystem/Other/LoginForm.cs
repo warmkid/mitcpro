@@ -25,7 +25,8 @@ namespace mySystem
         private void LoginButton_Click(object sender, EventArgs e)
         {
 
-            if (UserIDTextBox.Text.Trim() == "" || UserPWTextBox.Text.Trim() == "")
+            //if (UserIDTextBox.Text.Trim() == "" || UserPWTextBox.Text.Trim() == "")
+            if(false)
             {
                 MessageBox.Show("提示：请输入操作员ID和密码！", "警告");
                 UserIDTextBox.Focus();
@@ -76,7 +77,7 @@ namespace mySystem
 
 
 
-                        InstruReceive();
+                        //InstruReceive();
                     }
                 }
                 else
@@ -87,7 +88,7 @@ namespace mySystem
                         Parameter.userName = Parameter.IDtoName(Parameter.userID);
                         Parameter.userRole = Parameter.IDtoRole(Parameter.userID);
                         Parameter.userflight = Parameter.IDtoFlight(Parameter.userID);
-                        InstruReceive();
+                        //InstruReceive();
                     }
 
                 }

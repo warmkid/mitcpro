@@ -298,11 +298,11 @@ namespace mySystem.Query
                     {
                         case "制袋生产领料记录":
                             MaterialRecord form1 = new MaterialRecord(mainform, ID);
-                            form1.Show();
+                            form1.ShowDialog();
                             break;
                         case "产品内包装记录":
                             CSBag_InnerPackaging form2 = new CSBag_InnerPackaging(mainform, ID);
-                            form2.Show();
+                            form2.ShowDialog();
                             break;
                         case "CS制袋日报表":
                             //Chart_daily_cs form3 = new Chart_daily_cs(mainform, ID);
@@ -310,27 +310,27 @@ namespace mySystem.Query
                             break;
                         case "产品外观和尺寸检验记录":
                             产品外观和尺寸检验记录 form4 = new 产品外观和尺寸检验记录(mainform, ID);
-                            form4.Show();
+                            form4.ShowDialog();
                             break;
                         case "产品热合强度检验记录":
                             产品热合强度检验记录 form5 = new 产品热合强度检验记录(mainform, ID);
-                            form5.Show();
+                            form5.ShowDialog();
                             break;
                         case "2#制袋机开机前确认表":
                             CSBag_CheckBeforePower form6 = new CSBag_CheckBeforePower(mainform, ID);
-                            form6.Show();
+                            form6.ShowDialog();
                             break;
                         case "2#制袋机运行记录":
                             RunningRecord form7 = new RunningRecord(mainform, ID);
-                            form7.Show();
+                            form7.ShowDialog();
                             break;
                         case "清场记录":
                             清场记录 myform = new 清场记录(mainform, ID);
-                            myform.Show();
+                            myform.ShowDialog();
                             break;
                         case "制袋工序批生产记录":
                             Record_batch_bag form8 = new Record_batch_bag(mainform, ID);
-                            form8.Show();
+                            form8.ShowDialog();
                             break;
                         case "产品外包装记录":
                             CS产品外包装记录 form9 = new CS产品外包装记录(mainform, ID);

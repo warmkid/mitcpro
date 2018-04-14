@@ -473,6 +473,7 @@ namespace mySystem.Process.Stock
             dataGridView2.CellEndEdit += dataGridView2_CellEndEdit;
             if(label!=1)//出库
                 dataGridView2.AlternatingRowsDefaultCellStyle.BackColor = Color.Yellow;//设置奇数行颜色，从0开始，即：设置小包行的背景颜色为黄色
+            dataGridView3.ReadOnly = true;
         }
 
         // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged

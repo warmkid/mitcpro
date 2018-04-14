@@ -1821,7 +1821,30 @@ namespace BatchProductRecord
 
         private void btn保存_Click(object sender, EventArgs e)
         {
-            if(!mySystem.Parameter.isSqlOk)
+            String n;
+            if (!checkOuterData(out n))
+            {
+                MessageBox.Show("请填写完整的信息: " + n, "提示");
+                return;
+            }
+
+            if (!checkInnerData(dataGridView1))
+            {
+                MessageBox.Show("请填写完整的表单信息", "提示");
+                return;
+            }
+            if (!checkInnerData(dataGridView2))
+            {
+                MessageBox.Show("请填写完整的表单信息", "提示");
+                return;
+            }
+
+            save();
+        }
+
+        void save()
+        {
+            if (!mySystem.Parameter.isSqlOk)
                 daOuter.Update((DataTable)bsOuter.DataSource);
             else
                 daOuter_sql.Update((DataTable)bsOuter.DataSource);
@@ -2082,6 +2105,11 @@ namespace BatchProductRecord
             {
 
             }
+            try
+            {
+                (this.Owner as mySystem.Query.QueryExtruForm).search();
+            }
+            catch (NullReferenceException exp) { }
 
             base.CheckResult();
         }

@@ -83,11 +83,11 @@
             // 
             // bt提交审核
             // 
-            this.bt提交审核.Location = new System.Drawing.Point(763, 440);
+            this.bt提交审核.Location = new System.Drawing.Point(746, 440);
             this.bt提交审核.Name = "bt提交审核";
-            this.bt提交审核.Size = new System.Drawing.Size(75, 23);
+            this.bt提交审核.Size = new System.Drawing.Size(108, 23);
             this.bt提交审核.TabIndex = 36;
-            this.bt提交审核.Text = "最后审核";
+            this.bt提交审核.Text = "最后提交审核";
             this.bt提交审核.UseVisualStyleBackColor = true;
             this.bt提交审核.Click += new System.EventHandler(this.bt提交审核_Click);
             // 
@@ -301,7 +301,7 @@
             // 
             // bt保存
             // 
-            this.bt保存.Location = new System.Drawing.Point(672, 440);
+            this.bt保存.Location = new System.Drawing.Point(665, 440);
             this.bt保存.Name = "bt保存";
             this.bt保存.Size = new System.Drawing.Size(75, 23);
             this.bt保存.TabIndex = 12;
@@ -475,6 +475,7 @@
             this.Name = "Record_material_reqanddisg";
             this.Text = "吹膜工序领料退料记录";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Record_material_reqanddisg_FormClosing);
+            this.Load += new System.EventHandler(this.Record_material_reqanddisg_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);

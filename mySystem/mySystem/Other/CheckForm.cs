@@ -37,7 +37,11 @@ namespace mySystem
         }
 
         private void NotOKBtn_Click(object sender, EventArgs e)
-        {           
+        {
+            if (OpTextBox.Text == "合格。")
+            {
+                OpTextBox.Text = "不合格。";
+            }
             opinion = OpTextBox.Text;
             ischeckOk = false;
             time = DateTime.Now;

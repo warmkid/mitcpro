@@ -496,6 +496,7 @@ namespace mySystem.Process.Order
 
         private void btn新建_Click(object sender, EventArgs e)
         {
+            if (tb订单号.Text.Trim() == "") return;
             // 先看看订单号是否已经存在
             SqlDataAdapter da = new SqlDataAdapter("select 订单号 from 销售订单", mySystem.Parameter.conn);
             DataTable dt = new DataTable();
@@ -1103,6 +1104,11 @@ namespace mySystem.Process.Order
                     btn提交审核.Enabled = true;
                 }
             }
+        }
+
+        private void 销售订单_Load(object sender, EventArgs e)
+        {
+
         }
 
     }

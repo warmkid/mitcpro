@@ -314,7 +314,11 @@ namespace mySystem.Extruction.Process
         public Record_material_reqanddisg(MainForm mainform)
             : base(mainform)
         {
+          
             InitializeComponent();
+            // 如果本指令没有领料申请单，则提示
+            
+            // ----
             fill_printer();
             getPeople();
             setUserState();
@@ -537,6 +541,20 @@ namespace mySystem.Extruction.Process
 
         private void button1_Click(object sender, EventArgs e)
         {
+            String n;
+            if (!checkOuterData(out n))
+            {
+                MessageBox.Show("请填写完整的信息: " + n, "提示");
+                return;
+            }
+
+
+
+            if (!checkInnerData(dataGridView1))
+            {
+                MessageBox.Show("请填写完整的表单信息", "提示");
+                return;
+            }
             isSaved = true;
             bool rt = save();
             //控件可见性
@@ -859,6 +877,11 @@ namespace mySystem.Extruction.Process
             
 
             base.CheckResult();
+            try
+            {
+                (this.Owner as mySystem.Query.QueryExtruForm).search();
+            }
+            catch (NullReferenceException exp) { }
         }
 
         //this function main call the static method in  mySystem.Process.Stock.材料退库出库单.生成表单, which write database
@@ -933,7 +956,7 @@ namespace mySystem.Extruction.Process
             }
             
             checkform = new CheckForm(this);
-            checkform.Show();
+            checkform.ShowDialog();
         }
 
         // 给外表的一行写入默认值
@@ -1755,6 +1778,20 @@ namespace mySystem.Extruction.Process
                 MessageBox.Show(str人员信息);
             }
             
+        }
+
+        private void Record_material_reqanddisg_Load(object sender, EventArgs e)
+        {
+            String sql1 = "select * from 生产领料申请单表 where 生产指令ID ={0}";
+            SqlDataAdapter da = new SqlDataAdapter(String.Format(sql1, mySystem.Parameter.proInstruID), mySystem.Parameter.conn);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            if (dt.Rows.Count == 0)
+            {
+                MessageBox.Show("请先填写领料申请单！", "提示");
+                this.Close();
+                //return;
+            }
         }
     }
 }

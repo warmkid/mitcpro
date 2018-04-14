@@ -297,11 +297,11 @@ namespace mySystem.Query
                     {
                         case "生产领料使用记录":
                             LDPEBag_materialrecord material = new LDPEBag_materialrecord(mainform, ID);
-                            material.Show();
+                            material.ShowDialog();
                             break;
                         case "产品内包装记录":
                             LDPEBag_innerpackaging inner = new LDPEBag_innerpackaging(mainform, ID);
-                            inner.Show();
+                            inner.ShowDialog();
                             break;
                         case "LDPE生产日报表":
                             //LDPEBag_dailyreport daily = new LDPEBag_dailyreport(mainform, ID);
@@ -309,27 +309,27 @@ namespace mySystem.Query
                             break;
                         case "1#制袋机开机前确认表":
                             LDPEBag_checklist check = new LDPEBag_checklist(mainform, ID);
-                            check.Show();
+                            check.ShowDialog();
                             break;
                         case "1#制袋机运行记录":
                             LDPEBag_runningrecord run = new LDPEBag_runningrecord(mainform, ID);
-                            run.Show();
+                            run.ShowDialog();
                             break;
                         case "清场记录":
                             LDPEBag_cleanrance cleanrance = new LDPEBag_cleanrance(mainform, ID);
-                            cleanrance.Show();
+                            cleanrance.ShowDialog();
                             break;
                         case "制袋工序批生产记录":
                             LDPEBag_batchproduction batch = new LDPEBag_batchproduction(mainform, ID);
-                            batch.Show();
+                            batch.ShowDialog();
                             break;
                         case "产品热合强度检验记录":
                             产品热合强度检验记录 form7 = new 产品热合强度检验记录(mainform, ID);
-                            form7.Show();
+                            form7.ShowDialog();
                             break;
                         case "产品外观和尺寸检验记录":
                             产品外观和尺寸检验记录 form8 = new 产品外观和尺寸检验记录(mainform, ID);
-                            form8.Show();
+                            form8.ShowDialog();
                             break;
                         case "产品外包装记录":
                             LDPE产品外包装记录 form9 = new LDPE产品外包装记录(mainform, ID);
@@ -345,7 +345,7 @@ namespace mySystem.Query
                             break;
                         case "岗位交接班记录":
                             HandOver form12 = new HandOver(mainform, ID);
-                            form12.Show();
+                            form12.ShowDialog();
                             break;
                         case "生产领料申请单":
                             LDPE生产领料申请单 fomr13 = new LDPE生产领料申请单(mainform, ID);

@@ -321,11 +321,11 @@ namespace mySystem.Query
                     {
                         case "生产领料使用记录":
                             PTVBag_materialrecord material = new PTVBag_materialrecord(mainform, ID);
-                            material.Show();
+                            material.ShowDialog();
                             break;
                         case "产品内包装记录":
                             PTVBag_innerpackaging inner = new PTVBag_innerpackaging(mainform, ID);
-                            inner.Show();
+                            inner.ShowDialog();
                             break;
                         case "PTV生产日报表":
                             //PTVBag_dailyreport daily = new PTVBag_dailyreport(mainform, ID);
@@ -333,51 +333,51 @@ namespace mySystem.Query
                             break;
                         case "PTV生产开机确认表":
                             PTVBag_checklist check = new PTVBag_checklist(mainform, ID);
-                            check.Show();
+                            check.ShowDialog();
                             break;
                         case "底封机运行记录":
                             PTVBag_runningrecordofdf df = new PTVBag_runningrecordofdf(mainform, ID);
-                            df.Show();
+                            df.ShowDialog();
                             break;
                         case "圆口焊接机运行记录":
                             PTVBag_runningrecordofyk yk = new PTVBag_runningrecordofyk(mainform, ID);
-                            yk.Show();
+                            yk.ShowDialog();
                             break;
                         case "泄漏测试记录":
                             PTVBag_testrecordofdisclose xlDlg = new PTVBag_testrecordofdisclose(mainform, ID);
-                            xlDlg.Show();
+                            xlDlg.ShowDialog();
                             break;
                         case "超声波焊接记录":
                             PTVBag_weldingrecordofwave wave = new PTVBag_weldingrecordofwave(mainform, ID);
-                            wave.Show();
+                            wave.ShowDialog();
                             break;
                         case "瓶口焊接机运行记录":
                             PTVBag_runningrecordofpk pk = new PTVBag_runningrecordofpk(mainform, ID);
-                            pk.Show();
+                            pk.ShowDialog();
                             break;
                         case "清场记录":
                             PTVBag_clearance clearance = new PTVBag_clearance(mainform, ID);
-                            clearance.Show();
+                            clearance.ShowDialog();
                             break;
                         case "制袋工序批生产记录":
                             PTVBag_batchproduction batch = new PTVBag_batchproduction(mainform, ID);
-                            batch.Show();
+                            batch.ShowDialog();
                             break;
                         case "产品外包装记录":
                             PTV产品外包装记录 outer = new PTV产品外包装记录(mainform, ID);
-                            outer.Show();
+                            outer.ShowDialog();
                             break;
                         case "生产退料记录":
                             PTV生产退料记录 tuiliaoform = new PTV生产退料记录(mainform, ID);
-                            tuiliaoform.Show();
+                            tuiliaoform.ShowDialog();
                             break;
                         case "洁净区温湿度记录":
                             PTV洁净区温湿度记录 wenshiduform = new PTV洁净区温湿度记录(mainform, ID);
-                            wenshiduform.Show();
+                            wenshiduform.ShowDialog();
                             break;
                         case "岗位交接班记录":
                             HandOver ho = new HandOver(mainform, ID);
-                            ho.Show();
+                            ho.ShowDialog();
                             break;
                         case "生产领料申请单":
                             PTV生产领料申请单 shenqing = new PTV生产领料申请单(mainform, ID);
@@ -385,11 +385,11 @@ namespace mySystem.Query
                             break;
                         case "PTV产品热合强度检验记录":
                             PTV产品热合强度检验记录 reheform = new PTV产品热合强度检验记录(mainform, ID);
-                            reheform.Show();
+                            reheform.ShowDialog();
                             break;
                         case "PTV产品外观和尺寸检验记录":
                             PTV产品外观和尺寸检验记录 waiguanform = new PTV产品外观和尺寸检验记录(mainform, ID);
-                            waiguanform.Show();
+                            waiguanform.ShowDialog();
                             break;
 
                         default:

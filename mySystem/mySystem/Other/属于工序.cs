@@ -19,6 +19,13 @@ namespace mySystem.Other
             dataGridView1.CellClick += new DataGridViewCellEventHandler(dataGridView1_CellClick);
         }
 
+        public 属于工序(String data)
+        {
+            InitializeComponent();
+            initData(data);
+            dataGridView1.CellClick += new DataGridViewCellEventHandler(dataGridView1_CellClick);
+        }
+
         void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             DataGridView dgv = (DataGridView)sender;
@@ -64,6 +71,39 @@ namespace mySystem.Other
             this.dataGridView1.Rows[index].Cells[1].Value = "PTV制袋";
         }
 
+        void initData(String data)
+        {
+            initData();
+            string[] gongxu = data.Split(',');
+            foreach (String s in gongxu)
+            {
+                switch (s)
+                {
+                    case "吹膜":
+                        this.dataGridView1.Rows[0].Cells[0].Value = true;
+                        break;
+                    case "清洁分切":
+                        this.dataGridView1.Rows[1].Cells[0].Value = true;
+                        break;
+                    case "灭菌":
+                        this.dataGridView1.Rows[2].Cells[0].Value = true;
+                        break;
+                    case "CS制袋":
+                        this.dataGridView1.Rows[3].Cells[0].Value = true;
+                        break;
+                    case "PE制袋":
+                        this.dataGridView1.Rows[4].Cells[0].Value = true;
+                        break;
+                    case "BPV制袋":
+                        this.dataGridView1.Rows[5].Cells[0].Value = true;
+                        break;
+                    case "PTV制袋":
+                        this.dataGridView1.Rows[6].Cells[0].Value = true;
+                        break;
+                }
+            }
+        }
+
         private void benDone_Click(object sender, EventArgs e)
         {
             List<String> ls = new List<string>();
@@ -82,6 +122,19 @@ namespace mySystem.Other
         public static string getData()
         {
             属于工序 form = new 属于工序();
+            if (DialogResult.OK == form.ShowDialog())
+            {
+                return form._data;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public static string getData(String data)
+        {
+            属于工序 form = new 属于工序(data);
             if (DialogResult.OK == form.ShowDialog())
             {
                 return form._data;

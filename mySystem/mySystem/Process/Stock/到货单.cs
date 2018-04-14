@@ -427,6 +427,7 @@ namespace mySystem.Process.Stock
 
         private void btn新建_Click(object sender, EventArgs e)
         {
+            if (tb单据号.Text.Trim() == "") return;
             // 先看看订单号是否已经存在
             SqlDataAdapter da = new SqlDataAdapter("select 单据号 from 到货单", mySystem.Parameter.conn);
             DataTable dt = new DataTable();

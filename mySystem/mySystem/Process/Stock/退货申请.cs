@@ -275,6 +275,7 @@ namespace mySystem.Process.Stock
 
         private void btn查询_Click(object sender, EventArgs e)
         {
+            if (tb退货编号.Text.Trim() == "") return;
             // 读取数据
             _code = tb退货编号.Text;
             readOuterData(_code);

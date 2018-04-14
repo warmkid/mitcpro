@@ -889,6 +889,20 @@ namespace WindowsFormsApplication1
 
         private void button1_Click(object sender, EventArgs e)
         {
+            String n;
+            if (!checkOuterData(out n))
+            {
+                MessageBox.Show("请填写完整的信息: " + n, "提示");
+                return;
+            }
+
+
+
+            if (!checkInnerData(dataGridView1))
+            {
+                MessageBox.Show("请填写完整的表单信息", "提示");
+                return;
+            }
             bool rt = save();
             //控件可见性
             if (rt && _userState == Parameter.UserState.操作员)
@@ -978,14 +992,18 @@ namespace WindowsFormsApplication1
 
                 }
             }
-
+            try
+            {
+                (this.Owner as mySystem.Query.QueryExtruForm).search();
+            }
+            catch (NullReferenceException exp) { }
 
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             checkform = new mySystem.CheckForm(this);
-            checkform.Show();
+            checkform.ShowDialog();
         }
 
         private void label8_Click(object sender, EventArgs e)
