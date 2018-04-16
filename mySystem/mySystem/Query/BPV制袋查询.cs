@@ -490,7 +490,7 @@ namespace mySystem.Query
                             mydlg27.ShowDialog();
                             break;
                         case "生产领料申请单":
-                            BPV生产领料申请单 mydlg28 = new BPV生产领料申请单(mainform, ID);
+                            BPV生产领料申请单 mydlg28 = new BPV生产领料申请单(mainform, ID, this);
 
                             break;
 

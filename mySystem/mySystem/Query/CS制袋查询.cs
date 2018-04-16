@@ -349,7 +349,7 @@ namespace mySystem.Query
                             form12.ShowDialog();
                             break;
                         case "生产领料申请单":
-                            CS生产领料申请单 form13 = new CS生产领料申请单(mainform, ID);
+                            CS生产领料申请单 form13 = new CS生产领料申请单(mainform, ID,this);
 
                             break;
                         default:

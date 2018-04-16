@@ -408,7 +408,7 @@ namespace mySystem.Process.Bag.LDPE
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "生产领料申请单表");
             if (b)
             {
-                LDPE生产领料申请单 form生产领料申请单 = new LDPE生产领料申请单(mainform);
+                LDPE生产领料申请单 form生产领料申请单 = new LDPE生产领料申请单(mainform,this);
             }
             else
             {

@@ -294,7 +294,7 @@ namespace mySystem.Query
                             form6.ShowDialog();
                             break;
                         case "生产领料申请单":
-                            清洁分切生产领料申请单 form7 = new 清洁分切生产领料申请单(mainform, ID);
+                            清洁分切生产领料申请单 form7 = new 清洁分切生产领料申请单(mainform, ID,this);
 
                             break;
 

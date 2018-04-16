@@ -348,7 +348,7 @@ namespace mySystem.Query
                             form12.ShowDialog();
                             break;
                         case "生产领料申请单":
-                            LDPE生产领料申请单 fomr13 = new LDPE生产领料申请单(mainform, ID);
+                            LDPE生产领料申请单 fomr13 = new LDPE生产领料申请单(mainform, ID,this);
 
                             break;
 

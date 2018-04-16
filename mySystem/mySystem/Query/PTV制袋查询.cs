@@ -380,7 +380,7 @@ namespace mySystem.Query
                             ho.ShowDialog();
                             break;
                         case "生产领料申请单":
-                            PTV生产领料申请单 shenqing = new PTV生产领料申请单(mainform, ID);
+                            PTV生产领料申请单 shenqing = new PTV生产领料申请单(mainform, ID,this);
 
                             break;
                         case "PTV产品热合强度检验记录":

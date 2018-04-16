@@ -23,7 +23,7 @@ namespace mySystem.Process.CleanCut
 
         //TODO: 产品代码批号 和 物料代码批号 区分不开
 
-        public 清洁分切生产领料申请单(mySystem.MainForm mainform)
+        public 清洁分切生产领料申请单(mySystem.MainForm mainform,BaseForm owner)
             : base(mainform)
         {
             InitializeComponent();
@@ -37,10 +37,11 @@ namespace mySystem.Process.CleanCut
             getOtherData();//读取该指令下的物料代码，数量
 
             生产领料申请单 my生产领料申请单 = new mySystem.Other.生产领料申请单(base.mainform, dt生产指令信息, dt物料代码数量, conn, connOle);
+            my生产领料申请单.Owner = owner;
             my生产领料申请单.ShowDialog();
         }
 
-        public 清洁分切生产领料申请单(mySystem.MainForm mainform, Int32 ID)
+        public 清洁分切生产领料申请单(mySystem.MainForm mainform, Int32 ID,BaseForm owner)
             : base(mainform)
         {
             InitializeComponent();
@@ -52,6 +53,7 @@ namespace mySystem.Process.CleanCut
             getOtherData();//读取该指令下的物料代码，数量
 
             生产领料申请单 my生产领料申请单 = new mySystem.Other.生产领料申请单(base.mainform, ID, dt生产指令信息, dt物料代码数量, conn, connOle);
+            my生产领料申请单.Owner = owner;
             my生产领料申请单.ShowDialog();
         }
 

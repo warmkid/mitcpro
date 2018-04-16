@@ -598,7 +598,7 @@ namespace mySystem.Query
                             b = mySystem.ExtructionMainForm.checkUser(Parameter.userName, Parameter.userRole, "生产领料申请单表");
                             if (b)
                             {
-                                吹膜生产领料申请单 form生产领料申请单 = new 吹膜生产领料申请单(mainform, ID);
+                                吹膜生产领料申请单 form生产领料申请单 = new 吹膜生产领料申请单(mainform, ID, this);
                                 form生产领料申请单.Owner = this;
                             }
                             else

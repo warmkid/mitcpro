@@ -1627,14 +1627,14 @@ namespace mySystem.Extruction.Process
             }
 
             //判断内表审核人是否有空值
-            for (int i = 0; i < dataGridView1.Rows.Count; i++)
-            {
-                if (dataGridView1.Rows[i].Cells["审核人"].Value.ToString() == "" || dataGridView1.Rows[i].Cells["审核人"].Value.ToString() == "__待审核")
-                {
-                    MessageBox.Show("未完成领料审核");
-                    return;
-                }
-            }
+            //for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            //{
+            //    if (dataGridView1.Rows[i].Cells["审核人"].Value.ToString() == "" || dataGridView1.Rows[i].Cells["审核人"].Value.ToString() == "__待审核")
+            //    {
+            //        MessageBox.Show("未完成领料审核");
+            //        return;
+            //    }
+            //}
 
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
@@ -1733,6 +1733,11 @@ namespace mySystem.Extruction.Process
 
         private void bt领料提交审核_Click(object sender, EventArgs e)
         {
+            if (!checkInnerData(dataGridView1))
+            {
+                MessageBox.Show("请填写完整的表单信息", "提示");
+                return;
+            }
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
                 if (dataGridView1.Rows[i].Cells["审核人"].Value.ToString() == "")

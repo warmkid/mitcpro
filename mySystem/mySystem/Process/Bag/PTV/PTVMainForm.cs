@@ -458,7 +458,7 @@ namespace mySystem.Process.Bag.PTV
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "生产领料申请单表");
             if (b)
             {
-                PTV生产领料申请单 form生产领料申请单 = new PTV生产领料申请单(mainform);
+                PTV生产领料申请单 form生产领料申请单 = new PTV生产领料申请单(mainform,this);
             }
             else
             {

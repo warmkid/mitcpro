@@ -1420,7 +1420,7 @@ namespace mySystem
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "生产领料申请单表");
             if (b)
             {
-                吹膜生产领料申请单 form生产领料申请单 = new 吹膜生产领料申请单(mainform);
+                吹膜生产领料申请单 form生产领料申请单 = new 吹膜生产领料申请单(mainform,this);
                 form生产领料申请单.Owner = this;
             }
             else

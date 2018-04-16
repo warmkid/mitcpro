@@ -1638,14 +1638,14 @@ namespace WindowsFormsApplication1
             }
             if (DialogResult.Yes == MessageBox.Show("确认本表已经填完吗？提交审核之后不可修改", "提示", MessageBoxButtons.YesNo))
             {
-                foreach (DataRow dr in dt_prodlist.Rows)
-                {
-                    if (dr["审核员"].ToString() == "" || dr["审核员"].ToString() == "__待审核")
-                    {
-                        MessageBox.Show("请先完成数据审核!");
-                        return;
-                    }
-                }
+                //foreach (DataRow dr in dt_prodlist.Rows)
+                //{
+                //    if (dr["审核员"].ToString() == "" || dr["审核员"].ToString() == "__待审核")
+                //    {
+                //        MessageBox.Show("请先完成数据审核!");
+                //        return;
+                //    }
+                //}
                 for (int i = 0; i < dataGridView1.Rows.Count; i++)
                 {
                     if (dataGridView1.Rows[i].Cells[6].Value.ToString() == "不合格")
@@ -1820,6 +1820,12 @@ namespace WindowsFormsApplication1
 
         private void btn提交数据审核_Click(object sender, EventArgs e)
         {
+
+            if (!checkInnerData(dataGridView1))
+            {
+                MessageBox.Show("请填写完整的表单信息", "提示");
+                return;
+            }
             //find the uncheck item in inner list and tag the revoewer __待审核
             for (int i = 0; i < dt_prodlist.Rows.Count; i++)
             {

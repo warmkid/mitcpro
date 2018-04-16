@@ -296,7 +296,7 @@
             this.bt退料审核.Name = "bt退料审核";
             this.bt退料审核.Size = new System.Drawing.Size(75, 23);
             this.bt退料审核.TabIndex = 13;
-            this.bt退料审核.Text = "退料审核";
+            this.bt退料审核.Text = "审核";
             this.bt退料审核.UseVisualStyleBackColor = true;
             this.bt退料审核.Click += new System.EventHandler(this.button2_Click);
             // 

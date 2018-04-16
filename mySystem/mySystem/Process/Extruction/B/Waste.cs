@@ -938,14 +938,14 @@ namespace mySystem.Process.Extruction.B
             
             if (DialogResult.Yes == MessageBox.Show("确认本表已经填完吗？提交审核之后不可修改", "提示", MessageBoxButtons.YesNo))
             {
-                foreach (DataRow dr in dtInner.Rows)
-                {
-                    if (dr["审核员"].ToString() == "" || dr["审核员"].ToString() == __待审核)
-                    {
-                        MessageBox.Show("请先完成数据审核!");
-                        return;
-                    }
-                }
+                //foreach (DataRow dr in dtInner.Rows)
+                //{
+                //    if (dr["审核员"].ToString() == "" || dr["审核员"].ToString() == __待审核)
+                //    {
+                //        MessageBox.Show("请先完成数据审核!");
+                //        return;
+                //    }
+                //}
                 //after saving, inner item haven't changed but we update once more here
                 if (!mySystem.Parameter.isSqlOk)
                 {
@@ -1038,6 +1038,11 @@ namespace mySystem.Process.Extruction.B
 
         private void btn提交数据审核_Click(object sender, EventArgs e)
         {
+            if (!checkInnerData(dataGridView1))
+            {
+                MessageBox.Show("请填写完整的表单信息", "提示");
+                return;
+            }
             //find the uncheck item in inner list and tag the revoewer __待审核
             for (int i = 0; i < dtInner.Rows.Count; i++)
             {

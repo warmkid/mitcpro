@@ -572,7 +572,7 @@ namespace mySystem.Process.Bag.BTV
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "生产领料申请单表");
             if (b)
             {
-                BPV生产领料申请单 form生产领料申请单 = new BPV生产领料申请单(mainform);
+                BPV生产领料申请单 form生产领料申请单 = new BPV生产领料申请单(mainform, this);
             }
             else
             {

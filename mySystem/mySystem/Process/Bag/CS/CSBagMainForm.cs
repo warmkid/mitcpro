@@ -413,7 +413,7 @@ namespace mySystem.Process.Bag
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "生产领料申请单表");
             if (b)
             {
-                CS生产领料申请单 form生产领料申请单 = new CS生产领料申请单(mainform);
+                CS生产领料申请单 form生产领料申请单 = new CS生产领料申请单(mainform,this);
             }
             else
             {
