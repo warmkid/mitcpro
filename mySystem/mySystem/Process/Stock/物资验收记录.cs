@@ -244,6 +244,9 @@ namespace mySystem.Process.Stock
             dr["请验时间"] = DateTime.Now;
             dr["审核时间"] = DateTime.Now;
             dr["验收记录编号"] = create验收记录编号();
+            dr["厂家随附检验报告"] = "无";
+            dr["是否有样品"] = "无";
+            dr["无样品理由"] = "无";
             return dr;
         }
 
@@ -318,7 +321,7 @@ namespace mySystem.Process.Stock
             //    cmb供应商名称.Items.Add(s);
             //}
 
-            cmb供应商名称.DataBindings.Add("SelectedItem", bsOuter.DataSource, "供应商名称");
+            cmb供应商名称.DataBindings.Add("Text", bsOuter.DataSource, "供应商名称");
 
             dtp接收时间.DataBindings.Add("Value", bsOuter.DataSource, "接收时间");
             tb验收人.DataBindings.Add("Text", bsOuter.DataSource, "验收人");
@@ -327,14 +330,14 @@ namespace mySystem.Process.Stock
             cmb厂家随附检验报告.Items.Add("无");
             cmb厂家随附检验报告.Items.Add("不齐全");
             cmb厂家随附检验报告.Items.Add("齐全");
-            cmb厂家随附检验报告.DataBindings.Add("SelectedItem", bsOuter.DataSource, "厂家随附检验报告");
+            cmb厂家随附检验报告.DataBindings.Add("Text", bsOuter.DataSource, "厂家随附检验报告");
 
             tb检验报告理由.DataBindings.Add("Text", bsOuter.DataSource, "无检验报告理由");
 
             cmb是否有样品.Items.Clear();
             cmb是否有样品.Items.Add("有");
             cmb是否有样品.Items.Add("无");
-            cmb是否有样品.DataBindings.Add("SelectedItem", bsOuter.DataSource, "是否有样品");
+            cmb是否有样品.DataBindings.Add("Text", bsOuter.DataSource, "是否有样品");
 
             tb样品理由.DataBindings.Add("Text", bsOuter.DataSource, "无样品理由");
 
@@ -553,6 +556,7 @@ namespace mySystem.Process.Stock
             dataGridView1.Columns["换算率"].Visible = false;
             dataGridView1.Columns["物料名称"].ReadOnly = true;
             dataGridView1.Columns["物料代码"].ReadOnly = true;
+            dataGridView1.Columns["规格型号"].ReadOnly = true;
             dataGridView1.Columns["单位"].ReadOnly = true;
 
             if (isFirstBind)
@@ -680,6 +684,25 @@ namespace mySystem.Process.Stock
 
         private void btn提交审核_Click(object sender, EventArgs e)
         {
+            tb检验报告理由.Text = "1";
+            tb样品理由.Text = "1";
+            cmb是否有样品.Text = "无";
+            cmb厂家随附检验报告.Text = "无";
+            String n;
+            if (!checkOuterData(out n))
+            {
+                MessageBox.Show("请填写完整的信息: " + n, "提示");
+                return;
+            }
+
+
+
+            if (!checkInnerData(dataGridView1))
+            {
+                MessageBox.Show("请填写完整的表单信息", "提示");
+                return;
+            }
+            
             SqlDataAdapter da;
             SqlCommandBuilder cb;
             DataTable dt;

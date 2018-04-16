@@ -187,6 +187,8 @@ namespace mySystem
         List<String> listPE制袋;
         List<String> listBPV制袋;
         List<String> listPTV制袋;
+        List<String> list订单;
+        List<String> list库存;
 
         private String SearchUnchecked()
         {
@@ -226,9 +228,13 @@ namespace mySystem
                 listBPV制袋 = EachSearchUnchecked(strConBPV制袋);
                 String strConPTV制袋 = "server=" + mySystem.Parameter.IP_port + ";database=PTV;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
                 listPTV制袋 = EachSearchUnchecked(strConPTV制袋);
+                String strCon订单库存 = "server=" + mySystem.Parameter.IP_port + ";database=dingdan_kucun;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
+                list订单 = EachSearchUnchecked(strCon订单库存, "订单用户权限");
+                list库存 = EachSearchUnchecked(strCon订单库存, "库存用户权限");
+                
             }
 
-            if (list吹膜.Count + list清洁分切.Count + listCS制袋.Count + listPE制袋.Count + listBPV制袋.Count + listPTV制袋.Count == 0) return "";
+            if (list吹膜.Count + list清洁分切.Count + listCS制袋.Count + listPE制袋.Count + listBPV制袋.Count + listPTV制袋.Count + list订单.Count + list库存.Count == 0) return "";
 
             String message = "以下表单中有待审核记录：\n";
             if (list吹膜.Count != 0)
@@ -267,13 +273,25 @@ namespace mySystem
                 foreach (string table in listPTV制袋)
                 { message += "   " + table + "\n"; }
             }
+            if (list订单.Count != 0)
+            {
+                message += "订单：\n";
+                foreach (string table in list订单)
+                { message += "   " + table + "\n"; }
+            }
+            if (list库存.Count != 0)
+            {
+                message += "库存：\n";
+                foreach (string table in list库存)
+                { message += "   " + table + "\n"; }
+            }
 
             //MessageBox.Show(message, "提示");
             return message;
             //taskbarNotifier1.Show("提示", message, 500, 10000, 500);
         }
 
-        private List<String> EachSearchUnchecked(string strcon)
+        private List<String> EachSearchUnchecked(string strcon, string tblname = "用户权限")
         {
             if (!mySystem.Parameter.isSqlOk)
             {
@@ -283,7 +301,7 @@ namespace mySystem
                 Conn.Open();
                 comm = new OleDbCommand();
                 comm.Connection = Conn;
-                comm.CommandText = "SELECT * FROM 用户权限 WHERE 审核员 LIKE " + "'%" + Parameter.userName + "%'";
+                comm.CommandText = "SELECT * FROM "+tblname+" WHERE 审核员 LIKE " + "'%" + Parameter.userName + "%'";
                 OleDbDataReader reader1 = comm.ExecuteReader();
                 List<String> rightlist = new List<String>();
                 while (reader1.Read())
@@ -315,7 +333,7 @@ namespace mySystem
                 Conn.Open();
                 comm = new SqlCommand();
                 comm.Connection = Conn;
-                comm.CommandText = "SELECT * FROM 用户权限 WHERE 审核员 LIKE " + "'%" + Parameter.userName + "%'";
+                comm.CommandText = "SELECT * FROM " + tblname + " WHERE 审核员 LIKE " + "'%" + Parameter.userName + "%'";
                 SqlDataReader reader1 = comm.ExecuteReader();
                 List<String> rightlist = new List<String>();
                 while (reader1.Read())

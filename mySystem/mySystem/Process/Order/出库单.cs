@@ -638,6 +638,20 @@ namespace mySystem.Process.Order
 
         private void btn提交审核_Click(object sender, EventArgs e)
         {
+            String n;
+            if (!checkOuterData(out n))
+            {
+                MessageBox.Show("请填写完整的信息: " + n, "提示");
+                return;
+            }
+
+            if (!checkInnerData(dataGridView1))
+            {
+                MessageBox.Show("请填写完整的表单信息", "提示");
+                return;
+            }
+            
+            
             if (!check出库数量())
             {
                 return;

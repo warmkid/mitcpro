@@ -160,7 +160,7 @@ namespace WindowsFormsApplication1
                     if (result == DialogResult.Yes)//保留当前设置
                     {
                         while (dataGridView1.Rows.Count > 0)
-                            dataGridView1.Rows.RemoveAt(dataGridView1.Rows.Count - 1);
+                            dataGridView1.Rows.RemoveAt(dataGridView1.Rows.Count - 1);                        //ndr["审核人"] = "";
                         if (!mySystem.Parameter.isSqlOk)
                         {
                             da_in.Update((DataTable)bs_in.DataSource);
@@ -182,7 +182,7 @@ namespace WindowsFormsApplication1
                             // 这里添加检查是否合格、检查人、审核人等默认信息
                             ndr["合格"] = "合格";
                             ndr["清洁人"] = mySystem.Parameter.userName;
-                            ndr["检查人"] = "";
+                            //ndr["审核人"] = "";
                             ndr["清洁员备注"] = "";
                             dt_in.Rows.Add(ndr);
                         }
@@ -263,7 +263,7 @@ namespace WindowsFormsApplication1
                             // 这里添加检查是否合格、检查人、审核人等默认信息
                             ndr["合格"] = "合格";
                             ndr["清洁人"] = mySystem.Parameter.userName;
-                            ndr["检查人"] = "";
+                            //ndr["审核人"] = "";
                             ndr["清洁员备注"] = "";
                             dt_in.Rows.Add(ndr);
                         }
@@ -567,7 +567,7 @@ namespace WindowsFormsApplication1
                         // 这里添加检查是否合格、检查人、审核人等默认信息
                         ndr["合格"] = "合格";
                         ndr["清洁人"] = mySystem.Parameter.userName;
-                        ndr["检查人"] = "";
+                        //ndr["审核人"] = "";
                         ndr["清洁员备注"] = "";
                         dt_in.Rows.Add(ndr);
                     }
@@ -1096,7 +1096,7 @@ namespace WindowsFormsApplication1
                         // 这里添加检查是否合格、检查人、审核人等默认信息
                         ndr["合格"] = "合格";
                         ndr["清洁人"] = mySystem.Parameter.userName;
-                        ndr["检查人"] = "";
+                        //ndr["审核人"] = "";
                         ndr["清洁员备注"] = "无";
                         dt_in.Rows.Add(ndr);
                     }
@@ -1130,7 +1130,7 @@ namespace WindowsFormsApplication1
                         // 这里添加检查是否合格、检查人、审核人等默认信息
                         ndr["合格"] = "合格";
                         ndr["清洁人"] = mySystem.Parameter.userName;
-                        ndr["检查人"] = "";
+                        //ndr["审核人"] = "";
                         ndr["清洁员备注"] = "无";
                         dt_in.Rows.Add(ndr);
                     }

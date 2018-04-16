@@ -54,12 +54,13 @@ namespace mySystem.Extruction.Chart
 
         public outerpack(mySystem.MainForm mainform) : base(mainform)
         {
-            InitializeComponent();
+            
             
             conn = Parameter.conn;
             connOle = Parameter.connOle;
             isSqlOk = Parameter.isSqlOk;
             InstruID = Parameter.proInstruID;
+            InitializeComponent();
             Instruction = Parameter.proInstruction;
 
             fill_printer(); //添加打印机
@@ -82,11 +83,17 @@ namespace mySystem.Extruction.Chart
 
         public outerpack(mySystem.MainForm mainform, Int32 ID): base(mainform)
         {
-            InitializeComponent();
-
             conn = Parameter.conn;
             connOle = Parameter.connOle;
             isSqlOk = Parameter.isSqlOk;
+            SqlDataAdapter da = new SqlDataAdapter("select * from 产品外包装记录表 where ID=" + ID, conn);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            InstruID = Convert.ToInt32(dt.Rows[0]["生产指令ID"]);
+
+            InitializeComponent();
+
+            
 
             fill_printer(); //添加打印机
             getPeople();  // 获取操作员和审核员
@@ -1185,6 +1192,20 @@ namespace mySystem.Extruction.Chart
             if (dataGridView1.ColumnCount > 0)
             {
                 writeDGVWidthToSetting(dataGridView1);
+            }
+        }
+
+        private void outerpack_Load(object sender, EventArgs e)
+        {
+            String sql1 = "select * from 吹膜供料记录 where 生产指令ID ={0}";
+            SqlDataAdapter da = new SqlDataAdapter(String.Format(sql1, InstruID), mySystem.Parameter.conn);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            if (dt.Rows.Count == 0)
+            {
+                MessageBox.Show("请先填写吹膜供料记录！", "提示");
+                this.Close();
+                //return;
             }
         }
     

@@ -202,6 +202,7 @@
             this.btn打印.TabIndex = 76;
             this.btn打印.Text = "打印";
             this.btn打印.UseVisualStyleBackColor = true;
+            this.btn打印.Visible = false;
             this.btn打印.Click += new System.EventHandler(this.btn打印_Click);
             // 
             // label2
@@ -348,6 +349,7 @@
             this.cmb打印机选择.Name = "cmb打印机选择";
             this.cmb打印机选择.Size = new System.Drawing.Size(188, 24);
             this.cmb打印机选择.TabIndex = 159;
+            this.cmb打印机选择.Visible = false;
             // 
             // lbl生产开始时间
             // 

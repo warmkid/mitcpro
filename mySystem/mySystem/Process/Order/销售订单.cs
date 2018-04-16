@@ -150,6 +150,11 @@ namespace mySystem.Process.Order
                 ls币种.Add(dr["币种"].ToString());
             }
             cmb币种.Items.AddRange(ls币种.ToArray());
+            if (cmb币种.Items.Count > 0)
+            {
+                cmb币种.SelectedIndex = 0;
+            }
+
 
             ls付款条件 = new List<string>();
             da = new SqlDataAdapter("select * from 设置付款条件", mySystem.Parameter.conn);
@@ -647,6 +652,20 @@ namespace mySystem.Process.Order
 
         private void btn提交审核_Click(object sender, EventArgs e)
         {
+            String n;
+            if (!checkOuterData(out n))
+            {
+                MessageBox.Show("请填写完整的信息: " + n, "提示");
+                return;
+            }
+
+            if (!checkInnerData(dataGridView1))
+            {
+                MessageBox.Show("请填写完整的表单信息", "提示");
+                return;
+            }
+            
+            
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
             BindingSource bs_temp = new BindingSource();

@@ -100,7 +100,7 @@
             // label角色
             // 
             this.label角色.AutoSize = true;
-            this.label角色.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold);
+            this.label角色.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Bold);
             this.label角色.Location = new System.Drawing.Point(622, 15);
             this.label角色.Name = "label角色";
             this.label角色.Size = new System.Drawing.Size(49, 19);
@@ -109,7 +109,7 @@
             // 
             // btn审核
             // 
-            this.btn审核.Location = new System.Drawing.Point(24, 615);
+            this.btn审核.Location = new System.Drawing.Point(24, 591);
             this.btn审核.Name = "btn审核";
             this.btn审核.Size = new System.Drawing.Size(75, 23);
             this.btn审核.TabIndex = 75;
@@ -119,7 +119,7 @@
             // 
             // btn提交审核
             // 
-            this.btn提交审核.Location = new System.Drawing.Point(862, 615);
+            this.btn提交审核.Location = new System.Drawing.Point(862, 591);
             this.btn提交审核.Name = "btn提交审核";
             this.btn提交审核.Size = new System.Drawing.Size(75, 23);
             this.btn提交审核.TabIndex = 74;
@@ -434,7 +434,7 @@
             // 
             // tb现场应急处理措施审核员
             // 
-            this.tb现场应急处理措施审核员.Location = new System.Drawing.Point(729, 571);
+            this.tb现场应急处理措施审核员.Location = new System.Drawing.Point(932, 548);
             this.tb现场应急处理措施审核员.Name = "tb现场应急处理措施审核员";
             this.tb现场应急处理措施审核员.Size = new System.Drawing.Size(73, 21);
             this.tb现场应急处理措施审核员.TabIndex = 33;
@@ -442,7 +442,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(682, 574);
+            this.label12.Location = new System.Drawing.Point(885, 551);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(41, 12);
             this.label12.TabIndex = 32;
@@ -605,7 +605,7 @@
             // 
             // btn保存
             // 
-            this.btn保存.Location = new System.Drawing.Point(727, 615);
+            this.btn保存.Location = new System.Drawing.Point(727, 591);
             this.btn保存.Name = "btn保存";
             this.btn保存.Size = new System.Drawing.Size(75, 23);
             this.btn保存.TabIndex = 9;
@@ -639,7 +639,7 @@
             // Title
             // 
             this.Title.AutoSize = true;
-            this.Title.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold);
+            this.Title.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Bold);
             this.Title.Location = new System.Drawing.Point(407, 15);
             this.Title.Name = "Title";
             this.Title.Size = new System.Drawing.Size(169, 19);
@@ -650,7 +650,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1017, 662);
+            this.ClientSize = new System.Drawing.Size(1017, 628);
             this.Controls.Add(this.label角色);
             this.Controls.Add(this.btn审核);
             this.Controls.Add(this.btn提交审核);

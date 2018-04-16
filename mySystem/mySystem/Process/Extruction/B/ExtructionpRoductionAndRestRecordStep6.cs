@@ -55,9 +55,11 @@ namespace mySystem.Extruction.Process
         Int32 InstruID;
         String Instruction;
         bool isFirstBind = true;
+        int myid;
 
         public ExtructionpRoductionAndRestRecordStep6(MainForm mainform): base(mainform)
         {
+            InstruID = mySystem.Parameter.proInstruID;
             InitializeComponent();
 
             conn = Parameter.conn;
@@ -87,7 +89,7 @@ namespace mySystem.Extruction.Process
 
         public ExtructionpRoductionAndRestRecordStep6(MainForm mainform, Int32 ID) : base(mainform)
         {
-            InitializeComponent();
+            myid = ID;
             isSaveClicked = true;
             conn = Parameter.conn;
             connOle = Parameter.connOle;
@@ -116,7 +118,7 @@ namespace mySystem.Extruction.Process
                 da.Fill(dt);
                 Instruction = dt.Rows[0]["生产指令编号"].ToString();
             }
-
+            InitializeComponent();
 
 
             fill_printer(); //添加打印机
@@ -345,6 +347,7 @@ namespace mySystem.Extruction.Process
                 {
                     //控件都不能点
                     setControlFalse();
+                    btn新建.Enabled = true;
                 }
                 else //0未保存||3审核未通过
                 {
@@ -460,6 +463,7 @@ namespace mySystem.Extruction.Process
             //******************************外表 根据条件绑定******************************//  
             readOuterData(InstruID, productName, flight, searchTime);
             outerBind();
+            
             //MessageBox.Show("记录数目：" + dt记录.Rows.Count.ToString());
 
             //*******************************表格内部******************************// 
@@ -479,7 +483,7 @@ namespace mySystem.Extruction.Process
                 //外表重新绑定
                 readOuterData(InstruID, productName, flight, searchTime);
                 outerBind();
-
+                myid = Convert.ToInt32(dt记录.Rows[0]["ID"]);
                 //********* 内表新建、保存、重新绑定 *********//
 
                 //内表绑定
@@ -497,6 +501,7 @@ namespace mySystem.Extruction.Process
             }
             else
             {
+                myid = Convert.ToInt32(dt记录.Rows[0]["ID"]);
                 isSaveClicked = true;
             }
             //内表绑定
@@ -898,7 +903,7 @@ namespace mySystem.Extruction.Process
                     //外表保存
                     bs记录.EndEdit();
                     da记录.Update((DataTable)bs记录.DataSource);
-                    readOuterData(InstruID, cb产品名称.Text, cb白班.Checked, dtp生产日期.Value);
+                    readOuterData(myid);
                     outerBind();
                 }
                 else
@@ -911,7 +916,7 @@ namespace mySystem.Extruction.Process
                     //外表保存
                     bs记录.EndEdit();
                     da记录_sql.Update((DataTable)bs记录.DataSource);
-                    readOuterData(InstruID, cb产品名称.Text, cb白班.Checked, dtp生产日期.Value);
+                    readOuterData(myid);
                     outerBind();
                 }
 
@@ -939,9 +944,7 @@ namespace mySystem.Extruction.Process
             if (DialogResult.Yes == MessageBox.Show("确认本表已经填完吗？提交审核之后不可修改", "提示", MessageBoxButtons.YesNo))
             {
                 //保存
-                bool isSaved = Save();
-                if (isSaved == false)
-                    return;
+                
 
                 if (!isSqlOk)
                 {
@@ -1447,7 +1450,16 @@ namespace mySystem.Extruction.Process
 
         private void ExtructionpRoductionAndRestRecordStep6_Load(object sender, EventArgs e)
         {
-
+            String sql1 = "select * from 吹膜供料记录 where 生产指令ID ={0}";
+            SqlDataAdapter da = new SqlDataAdapter(String.Format(sql1, InstruID), mySystem.Parameter.conn);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            if (dt.Rows.Count == 0)
+            {
+                MessageBox.Show("请先填写吹膜供料记录！", "提示");
+                this.Close();
+                //return;
+            }
         }
 
     

@@ -1985,16 +1985,16 @@ namespace BatchProductRecord
                 return;
             }
 
-            if (!checkInnerData(dataGridView1))
-            {
-                MessageBox.Show("请填写完整的表单信息", "提示");
-                return;
-            }
-            if (!checkInnerData(dataGridView2))
-            {
-                MessageBox.Show("请填写完整的表单信息", "提示");
-                return;
-            }
+            //if (!checkInnerData(dataGridView1))
+            //{
+            //    MessageBox.Show("请填写完整的表单信息", "提示");
+            //    return;
+            //}
+            //if (!checkInnerData(dataGridView2))
+            //{
+            //    MessageBox.Show("请填写完整的表单信息", "提示");
+            //    return;
+            //}
             if (!mySystem.Parameter.isSqlOk)
             {
                 DataTable dt_temp = new DataTable("待审核");

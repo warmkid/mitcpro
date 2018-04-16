@@ -55,7 +55,7 @@ namespace mySystem.Process.Stock
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
             {
                 产品退货记录 form = new 产品退货记录(mainform, dgv退货记录["退货申请单编号", e.RowIndex].Value.ToString());
-                form.Show();
+                form.ShowDialog();
             }
         }
 
@@ -64,7 +64,7 @@ namespace mySystem.Process.Stock
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
             {
                 产品退货评审单2 form = new 产品退货评审单2(mainform, dgv评审单2["退货申请单编号", e.RowIndex].Value.ToString());
-                form.Show();
+                form.ShowDialog();
             }
         }
 
@@ -73,7 +73,7 @@ namespace mySystem.Process.Stock
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
             {
                 产品退货评审单1 form = new 产品退货评审单1(mainform, dgv评审单1["退货申请单编号", e.RowIndex].Value.ToString());
-                form.Show();
+                form.ShowDialog();
             }
         }
 
@@ -82,7 +82,7 @@ namespace mySystem.Process.Stock
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
             {
                 产品退货请验单 form = new 产品退货请验单(mainform, dgv退货请验单["退货申请单编号", e.RowIndex].Value.ToString());
-                form.Show();
+                form.ShowDialog();
             }
         }
 
@@ -91,7 +91,7 @@ namespace mySystem.Process.Stock
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
             {
                 产品退货接收单 form = new 产品退货接收单(mainform, dgv产品退货接收单["退货申请单编号", e.RowIndex].Value.ToString());
-                form.Show();
+                form.ShowDialog();
             }
         }
 
@@ -100,7 +100,7 @@ namespace mySystem.Process.Stock
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
             {
                 产品退货审批单2 form = new 产品退货审批单2(mainform, dgv审批单2["退货申请单编号", e.RowIndex].Value.ToString());
-                form.Show();
+                form.ShowDialog();
             }
         }
 
@@ -109,7 +109,7 @@ namespace mySystem.Process.Stock
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
             {
                 产品退货审批单1 form = new 产品退货审批单1(mainform, dgv审批单1["退货申请单编号", e.RowIndex].Value.ToString());
-                form.Show();
+                form.ShowDialog();
             }
         }
 
@@ -118,7 +118,7 @@ namespace mySystem.Process.Stock
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
             {
                 产品退货申请单 form = new 产品退货申请单(mainform, dgv产品退货申请单["退货申请单编号", e.RowIndex].Value.ToString());
-                form.Show();
+                form.ShowDialog();
             }
         }
 
@@ -177,7 +177,7 @@ namespace mySystem.Process.Stock
         {
             string sql = "select * from 产品退货申请单 where 申请日期 between '{0}' and '{1}' and 拟退货产品销售订单编号 like '%{2}%' and 客户名称 like '%{3}%'";
 
-            SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, start, end, oderNO, name), mySystem.Parameter.conn);
+            SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, start, end.AddDays(1), oderNO, name), mySystem.Parameter.conn);
             DataTable dt = new DataTable("产品退货申请单");
             da.Fill(dt);
             return dt;
@@ -225,7 +225,7 @@ namespace mySystem.Process.Stock
         {
             string sql = "select * from 产品退货审批单1 where 申请日期 between '{0}' and '{1}' and 拟退货产品销售订单编号 like '%{2}%' and 客户名称 like '%{3}%'";
 
-            SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, start, end, oderNO, name), mySystem.Parameter.conn);
+            SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, start, end.AddDays(1), oderNO, name), mySystem.Parameter.conn);
             DataTable dt = new DataTable("产品退货审批单1");
             da.Fill(dt);
             return dt;
@@ -268,7 +268,7 @@ namespace mySystem.Process.Stock
         {
             string sql = "select * from 产品退货审批单2 where 申请日期 between '{0}' and '{1}' and 拟退货产品销售订单编号 like '%{2}%' and 客户名称 like '%{3}%'";
 
-            SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, start, end, oderNO, name), mySystem.Parameter.conn);
+            SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, start, end.AddDays(1), oderNO, name), mySystem.Parameter.conn);
             DataTable dt = new DataTable("产品退货审批单2");
             da.Fill(dt);
             return dt;
@@ -312,7 +312,7 @@ namespace mySystem.Process.Stock
         {
             string sql = "select * from 产品退货接收单 where 接收日期 between '{0}' and '{1}' and 拟退货产品销售订单编号 like '%{2}%' and 客户名称 like '%{3}%'";
 
-            SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, start, end, oderNO, name), mySystem.Parameter.conn);
+            SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, start, end.AddDays(1), oderNO, name), mySystem.Parameter.conn);
             DataTable dt = new DataTable("产品退货接收单");
             da.Fill(dt);
             return dt;
@@ -372,7 +372,7 @@ namespace mySystem.Process.Stock
         {
             string sql = "select * from 产品退货请验单 where 请验日期 between '{0}' and '{1}' and 拟退货产品销售订单编号 like '%{2}%' and 客户名称 like '%{3}%'";
 
-            SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, start, end, oderNO, name), mySystem.Parameter.conn);
+            SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, start, end.AddDays(1), oderNO, name), mySystem.Parameter.conn);
             DataTable dt = new DataTable("产品退货请验单");
             da.Fill(dt);
             return dt;
@@ -414,7 +414,7 @@ namespace mySystem.Process.Stock
         {
             string sql = "select * from 产品退货评审单1 where 评审日期 between '{0}' and '{1}' and 拟退货产品销售订单编号 like '%{2}%' and 客户名称 like '%{3}%'";
 
-            SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, start, end, oderNO, name), mySystem.Parameter.conn);
+            SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, start, end.AddDays(1), oderNO, name), mySystem.Parameter.conn);
             DataTable dt = new DataTable("产品退货评审单1");
             da.Fill(dt);
             return dt;
@@ -456,7 +456,7 @@ namespace mySystem.Process.Stock
         {
             string sql = "select * from 产品退货评审单2 where 评审日期 between '{0}' and '{1}' and 拟退货产品销售订单编号 like '%{2}%' and 客户名称 like '%{3}%'";
 
-            SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, start, end, oderNO, name), mySystem.Parameter.conn);
+            SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, start, end.AddDays(1), oderNO, name), mySystem.Parameter.conn);
             DataTable dt = new DataTable("产品退货评审单2");
             da.Fill(dt);
             return dt;
@@ -499,7 +499,7 @@ namespace mySystem.Process.Stock
         {
             string sql = "select * from 产品退货记录 where 申请日期 between '{0}' and '{1}' and 拟退货产品销售订单编号 like '%{2}%' and 客户名称 like '%{3}%'";
 
-            SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, start, end, oderNO, name), mySystem.Parameter.conn);
+            SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, start, end.AddDays(1), oderNO, name), mySystem.Parameter.conn);
             DataTable dt = new DataTable("产品退货记录2");
             da.Fill(dt);
             return dt;

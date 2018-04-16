@@ -296,6 +296,17 @@ namespace mySystem.Process.Stock
 
         private void btn提交审核_Click(object sender, EventArgs e)
         {
+            String n;
+            if (!checkOuterData(out n))
+            {
+                MessageBox.Show("请填写完整的信息: " + n, "提示");
+                return;
+            }
+
+
+
+            
+
 
             SqlDataAdapter da;
             SqlCommandBuilder cb;

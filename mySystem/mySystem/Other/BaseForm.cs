@@ -175,6 +175,7 @@ namespace mySystem
                     if (tb.Text.Trim() == "")
                     {
                         if (tb.Name.Contains("审")) continue;
+                        if (tb.Name.Contains("检查")) continue;
                         if (tb.Name.Contains("复核")) continue;
                         if (tb.Name.Contains("批准")) continue;
                         if (tb.Name.Contains("备注")) continue;
@@ -210,7 +211,7 @@ namespace mySystem
                     }
                     if (dgvc.OwningColumn.Name.Contains("审")) continue;
                     if (dgvc.OwningColumn.Name.Contains("备注")) continue;
-                    if (dgvc.Value.ToString() == "")
+                    if (dgvc.Value==null|| dgvc.Value.ToString() == "")
                     {
                         return false;
                     }

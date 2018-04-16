@@ -142,6 +142,10 @@ namespace mySystem.Process.Order
                 ls币种.Add(dr["币种"].ToString());
             }
             cmb币种.Items.AddRange(ls币种.ToArray());
+            if (cmb币种.Items.Count > 0)
+            {
+                cmb币种.SelectedIndex = 0;
+            }
         }
 
         private void fillPrinter()
@@ -628,7 +632,18 @@ namespace mySystem.Process.Order
 
         private void btn提交审核_Click(object sender, EventArgs e)
         {
-            
+            String n;
+            if (!checkOuterData(out n))
+            {
+                MessageBox.Show("请填写完整的信息: " + n, "提示");
+                return;
+            }
+
+            if (!checkInnerData(dataGridView1))
+            {
+                MessageBox.Show("请填写完整的表单信息", "提示");
+                return;
+            }
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
             BindingSource bs_temp = new BindingSource();
@@ -660,6 +675,11 @@ namespace mySystem.Process.Order
 
         private void btn审核_Click(object sender, EventArgs e)
         {
+            if (mySystem.Parameter.userName == dtOuter.Rows[0]["申请人"].ToString())
+            {
+                MessageBox.Show("申请人和审核员不能是同一个人");
+                return;
+            }
             ckform = new mySystem.CheckForm(this);
             ckform.Show();  
         }

@@ -415,7 +415,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(219, 20);
             this.label3.TabIndex = 55;
-            this.label3.Text = "库存管理人员权限设置";
+            this.label3.Text = "订单管理人员权限设置";
             // 
             // groupBox7
             // 
@@ -467,7 +467,7 @@
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(177, 20);
             this.label4.TabIndex = 53;
-            this.label4.Text = "库存管理人员设置";
+            this.label4.Text = "订单管理人员设置";
             // 
             // tabPage基本信息设置
             // 

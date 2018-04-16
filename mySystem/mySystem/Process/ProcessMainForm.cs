@@ -51,13 +51,38 @@ namespace mySystem
                     break;
             }
         }
-       
+
+
+        bool checkRight(String tblName="用户")
+        {
+            String sql = "select * from {0} where 用户名='{1}'";
+            SqlDataAdapter da = new SqlDataAdapter(String.Format(sql, tblName, mySystem.Parameter.userName), mySystem.Parameter.conn);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            if (dt.Rows.Count == 0)
+            {
+                
+                return false;
+            }
+            return true;
+        }
 
         //吹膜
         private void ExtructionBtn_Click(object sender, EventArgs e)
         {
+           
             Parameter.selectCon = 1;
             Parameter.InitCon();
+
+            //--无权限不能打开
+            if (!checkRight())
+            {
+                MessageBox.Show("没有权限！");
+                return;
+            }
+            //--
+
+
             checkFlight(); //获取用户班次
             BtnColor();
             Btn吹膜.BackColor = Color.FromArgb(138, 158, 196);            
@@ -79,6 +104,15 @@ namespace mySystem
         {
             Parameter.selectCon = 2;
             Parameter.InitCon();
+
+            //--无权限不能打开
+            if (!checkRight())
+            {
+                MessageBox.Show("没有权限！");
+                return;
+            }
+            //--
+
             checkFlight();
             BtnColor();
             Btn清洁分切.BackColor = Color.FromArgb(138, 158, 196);
@@ -124,6 +158,16 @@ namespace mySystem
         {
             Parameter.selectCon = 3;
             Parameter.InitCon();
+
+            //--无权限不能打开
+            if (!checkRight())
+            {
+                MessageBox.Show("没有权限！");
+                return;
+            }
+            //--
+
+
             checkFlight();
             foreach (Control control in ProducePanelRight.Controls)
             { control.Dispose(); }
@@ -146,6 +190,15 @@ namespace mySystem
         {
             Parameter.selectCon = 7;
             Parameter.InitCon();
+
+            //--无权限不能打开
+            if (!checkRight())
+            {
+                MessageBox.Show("没有权限！");
+                return;
+            }
+            //--
+
             checkFlight();
             foreach (Control control in ProducePanelRight.Controls)
             { control.Dispose(); }
@@ -178,6 +231,15 @@ namespace mySystem
         {
             Parameter.selectCon = 8;
             Parameter.InitCon();
+
+            //--无权限不能打开
+            if (!checkRight())
+            {
+                MessageBox.Show("没有权限！");
+                return;
+            }
+            //--
+
             checkFlight();
             foreach (Control control in ProducePanelRight.Controls)
             { control.Dispose(); }
@@ -199,6 +261,16 @@ namespace mySystem
         {
             Parameter.selectCon = 6;
             Parameter.InitCon();
+
+            //--无权限不能打开
+            if (!checkRight())
+            {
+                MessageBox.Show("没有权限！");
+                return;
+            }
+            //--
+
+
             checkFlight();
             foreach (Control control in ProducePanelRight.Controls)
             { control.Dispose(); }
@@ -231,6 +303,16 @@ namespace mySystem
         {
             Parameter.selectCon = 5;
             Parameter.InitCon();
+
+            //--无权限不能打开
+            if (!checkRight())
+            {
+                MessageBox.Show("没有权限！");
+                return;
+            }
+            //--
+
+
             checkFlight();
             foreach (Control control in ProducePanelRight.Controls)
             { control.Dispose(); }
@@ -261,6 +343,16 @@ namespace mySystem
         {
             Parameter.selectCon = 4;
             Parameter.InitCon();
+
+            //--无权限不能打开
+            if (!checkRight("订单用户"))
+            {
+                MessageBox.Show("没有权限！");
+                return;
+            }
+            //--
+
+
             foreach (Control control in ProducePanelRight.Controls)
             { control.Dispose(); }
             ProducePanelRight.Controls.Clear();
@@ -280,6 +372,16 @@ namespace mySystem
         {
             Parameter.selectCon = 4;
             Parameter.InitCon();
+
+
+            //--无权限不能打开
+            if (!checkRight("库存用户"))
+            {
+                MessageBox.Show("没有权限！");
+                return;
+            }
+            //--
+
             foreach (Control control in ProducePanelRight.Controls)
             { control.Dispose(); }
             ProducePanelRight.Controls.Clear();

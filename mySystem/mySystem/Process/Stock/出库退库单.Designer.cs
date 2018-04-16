@@ -58,7 +58,7 @@
             this.tabControl1.Location = new System.Drawing.Point(19, 91);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(767, 461);
+            this.tabControl1.Size = new System.Drawing.Size(1051, 461);
             this.tabControl1.TabIndex = 0;
             // 
             // tp退库单
@@ -68,7 +68,7 @@
             this.tp退库单.Location = new System.Drawing.Point(4, 29);
             this.tp退库单.Name = "tp退库单";
             this.tp退库单.Padding = new System.Windows.Forms.Padding(3);
-            this.tp退库单.Size = new System.Drawing.Size(759, 428);
+            this.tp退库单.Size = new System.Drawing.Size(1043, 428);
             this.tp退库单.TabIndex = 5;
             this.tp退库单.Text = "退库单";
             this.tp退库单.UseVisualStyleBackColor = true;
@@ -76,16 +76,16 @@
             // dgv退库单
             // 
             this.dgv退库单.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv退库单.Location = new System.Drawing.Point(33, 62);
+            this.dgv退库单.Location = new System.Drawing.Point(33, 24);
             this.dgv退库单.Name = "dgv退库单";
             this.dgv退库单.RowTemplate.Height = 23;
-            this.dgv退库单.Size = new System.Drawing.Size(693, 348);
+            this.dgv退库单.Size = new System.Drawing.Size(980, 386);
             this.dgv退库单.TabIndex = 4;
             // 
             // btn退库单读取
             // 
             this.btn退库单读取.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn退库单读取.Location = new System.Drawing.Point(645, 16);
+            this.btn退库单读取.Location = new System.Drawing.Point(926, 12);
             this.btn退库单读取.Name = "btn退库单读取";
             this.btn退库单读取.Size = new System.Drawing.Size(75, 28);
             this.btn退库单读取.TabIndex = 2;
@@ -101,7 +101,7 @@
             this.tp出库单.Location = new System.Drawing.Point(4, 29);
             this.tp出库单.Name = "tp出库单";
             this.tp出库单.Padding = new System.Windows.Forms.Padding(3);
-            this.tp出库单.Size = new System.Drawing.Size(759, 428);
+            this.tp出库单.Size = new System.Drawing.Size(1043, 428);
             this.tp出库单.TabIndex = 0;
             this.tp出库单.Text = "出库单";
             this.tp出库单.UseVisualStyleBackColor = true;
@@ -109,21 +109,22 @@
             // dgv出库单
             // 
             this.dgv出库单.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv出库单.Location = new System.Drawing.Point(27, 60);
+            this.dgv出库单.Location = new System.Drawing.Point(27, 20);
             this.dgv出库单.Name = "dgv出库单";
             this.dgv出库单.RowTemplate.Height = 23;
-            this.dgv出库单.Size = new System.Drawing.Size(693, 348);
+            this.dgv出库单.Size = new System.Drawing.Size(974, 388);
             this.dgv出库单.TabIndex = 1;
             // 
             // btn出库单读取
             // 
             this.btn出库单读取.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn出库单读取.Location = new System.Drawing.Point(651, 18);
+            this.btn出库单读取.Location = new System.Drawing.Point(926, 6);
             this.btn出库单读取.Name = "btn出库单读取";
             this.btn出库单读取.Size = new System.Drawing.Size(75, 28);
             this.btn出库单读取.TabIndex = 5;
             this.btn出库单读取.Text = "读取";
             this.btn出库单读取.UseVisualStyleBackColor = true;
+            this.btn出库单读取.Visible = false;
             this.btn出库单读取.Click += new System.EventHandler(this.btn出库单读取_Click);
             // 
             // dateTimePicker开始
@@ -148,7 +149,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2.Location = new System.Drawing.Point(20, 52);
+            this.label2.Location = new System.Drawing.Point(409, 20);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(72, 16);
             this.label2.TabIndex = 6;
@@ -157,7 +158,7 @@
             // dateTimePicker结束
             // 
             this.dateTimePicker结束.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dateTimePicker结束.Location = new System.Drawing.Point(145, 45);
+            this.dateTimePicker结束.Location = new System.Drawing.Point(534, 13);
             this.dateTimePicker结束.Name = "dateTimePicker结束";
             this.dateTimePicker结束.Size = new System.Drawing.Size(240, 26);
             this.dateTimePicker结束.TabIndex = 5;
@@ -166,7 +167,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label3.Location = new System.Drawing.Point(490, 18);
+            this.label3.Location = new System.Drawing.Point(825, 16);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(72, 16);
             this.label3.TabIndex = 7;
@@ -176,7 +177,7 @@
             // 
             this.comboBox审核状态.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.comboBox审核状态.FormattingEnabled = true;
-            this.comboBox审核状态.Location = new System.Drawing.Point(595, 15);
+            this.comboBox审核状态.Location = new System.Drawing.Point(930, 13);
             this.comboBox审核状态.Name = "comboBox审核状态";
             this.comboBox审核状态.Size = new System.Drawing.Size(121, 24);
             this.comboBox审核状态.TabIndex = 8;
@@ -184,7 +185,7 @@
             // button查询
             // 
             this.button查询.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button查询.Location = new System.Drawing.Point(641, 57);
+            this.button查询.Location = new System.Drawing.Point(949, 57);
             this.button查询.Name = "button查询";
             this.button查询.Size = new System.Drawing.Size(75, 28);
             this.button查询.TabIndex = 3;
@@ -196,7 +197,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(810, 569);
+            this.ClientSize = new System.Drawing.Size(1093, 569);
             this.Controls.Add(this.button查询);
             this.Controls.Add(this.comboBox审核状态);
             this.Controls.Add(this.tabControl1);

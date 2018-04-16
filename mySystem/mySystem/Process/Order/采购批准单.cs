@@ -1732,6 +1732,26 @@ namespace mySystem.Process.Order
 
         private void btn提交审核_Click(object sender, EventArgs e)
         {
+            String n;
+            if (!checkOuterData(out n))
+            {
+                MessageBox.Show("请填写完整的信息: " + n, "提示");
+                return;
+            }
+
+            if (!checkInnerData(dataGridView3))
+            {
+                MessageBox.Show("请填写完整的表单信息", "提示");
+                return;
+            }
+            if (!checkInnerData(dataGridView4))
+            {
+                MessageBox.Show("请填写完整的表单信息", "提示");
+                return;
+            }
+            
+            
+            
             // 检查推荐供应商是否都写了
             if (!check供应商())
             {

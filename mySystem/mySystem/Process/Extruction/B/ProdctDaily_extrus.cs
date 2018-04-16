@@ -477,7 +477,7 @@ namespace mySystem
             }
             catch (Exception ee)
             {
-                MessageBox.Show(ee.Message + "\n" + ee.StackTrace);
+                MessageBox.Show("还没有生产！");
             }
             dt = dt_prodlist.Copy();
 

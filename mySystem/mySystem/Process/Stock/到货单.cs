@@ -119,6 +119,10 @@ namespace mySystem.Process.Stock
                 ls业务类型.Add(dr["业务类型"].ToString());
             }
             cmb业务类型.Items.AddRange(ls业务类型.ToArray());
+            if (cmb业务类型.Items.Count >= 1)
+            {
+                cmb业务类型.SelectedIndex = 0;
+            }
 
            
 
@@ -135,7 +139,10 @@ namespace mySystem.Process.Stock
                 ls币种.Add(dr["币种"].ToString());
             }
             cmb币种.Items.AddRange(ls币种.ToArray());
-
+            if (cmb币种.Items.Count >= 1)
+            {
+                cmb币种.SelectedIndex = 0;
+            }
             
 
 
@@ -367,6 +374,12 @@ namespace mySystem.Process.Stock
             dr["单据号"] = tb单据号.Text;
             dr["日期"] = DateTime.Now;
             dr["审核日期"] = DateTime.Now;
+            dr["汇率"] = 1;
+            if (cmb币种.Items.Count > 0) dr["币种"] = cmb币种.Items[0].ToString();
+            if (cmb业务类型.Items.Count > 0) dr["业务类型"] = cmb业务类型.Items[0].ToString();
+            dr["税率"] = 17;
+            dr["备注"] = "无";
+            dr["部门"] = "采购部";
             return dr;
         }
 
@@ -427,20 +440,24 @@ namespace mySystem.Process.Stock
 
         private void btn新建_Click(object sender, EventArgs e)
         {
-            if (tb单据号.Text.Trim() == "") return;
+            if (tb单据号.Text.Trim() == "")
+            {
+                MessageBox.Show("请填写单据号");
+                return;
+            }
             // 先看看订单号是否已经存在
             SqlDataAdapter da = new SqlDataAdapter("select 单据号 from 到货单", mySystem.Parameter.conn);
             DataTable dt = new DataTable();
             da.Fill(dt);
             DataRow[] drs = dt.Select("单据号='" + tb单据号.Text + "'");
-            if (drs.Length > 0)
-            {
-                if (DialogResult.No == MessageBox.Show("该单据号已存在，是否读取现有数据", "提示", MessageBoxButtons.YesNo))
-                {
-                    // 订单已经存在，不读取历史数据
-                    return;
-                }
-            }
+            //if (drs.Length > 0)
+            //{
+            //    if (DialogResult.No == MessageBox.Show("该单据号已存在，是否读取现有数据", "提示", MessageBoxButtons.YesNo))
+            //    {
+            //        // 订单已经存在，不读取历史数据
+            //        return;
+            //    }
+            //}
             // 进入这里就表示订单存在，但是读取历史数据，或者订单不存在
             readOuterData(tb单据号.Text);
             if (dtOuter.Rows.Count == 0)
@@ -491,6 +508,7 @@ namespace mySystem.Process.Stock
             dr["数量"] = 0;
             dr["原币含税单价"] = 0;
             dr["原币价税合计"] = 0;
+            dr["采购订单号"] = "__自由";
             return dr;
         }
 
@@ -575,6 +593,22 @@ namespace mySystem.Process.Stock
 
         private void btn提交审核_Click(object sender, EventArgs e)
         {
+            String n;
+            if (!checkOuterData(out n))
+            {
+                MessageBox.Show("请填写完整的信息: " + n, "提示");
+                return;
+            }
+
+
+
+            if (!checkInnerData(dataGridView1))
+            {
+                MessageBox.Show("请填写完整的表单信息", "提示");
+                return;
+            }
+            
+            
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
             BindingSource bs_temp = new BindingSource();
@@ -678,6 +712,10 @@ namespace mySystem.Process.Stock
                 dr["供应商名称"] = dtOuter.Rows[0]["供应商"];
                 dr["接收时间"] = DateTime.Now;
                 dr["验收人"] = mySystem.Parameter.userName;
+                dr["请验人"] = mySystem.Parameter.userName;
+                dr["厂家随附检验报告"] = "无";
+                dr["是否有样品"] = "无";
+                dr["无样品理由"] = "无";
                 dr["审核时间"] = DateTime.Now;
                 dr["请验时间"] = DateTime.Now;
                 dr["日志"] = "";

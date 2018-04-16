@@ -28,6 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.btn导入 = new System.Windows.Forms.Button();
+            this.btn浏览 = new System.Windows.Forms.Button();
             this.btn出库退库单 = new System.Windows.Forms.Button();
             this.btn读取 = new System.Windows.Forms.Button();
             this.btn文件上传 = new System.Windows.Forms.Button();
@@ -37,18 +40,49 @@
             this.btn退货 = new System.Windows.Forms.Button();
             this.btn出库 = new System.Windows.Forms.Button();
             this.btn入库 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.btn导入 = new System.Windows.Forms.Button();
-            this.btn浏览 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
+            // 
+            // textBox1
+            // 
+            this.textBox1.Font = new System.Drawing.Font("宋体", 12F);
+            this.textBox1.Location = new System.Drawing.Point(200, 261);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(277, 26);
+            this.textBox1.TabIndex = 14;
+            this.textBox1.Visible = false;
+            // 
+            // btn导入
+            // 
+            this.btn导入.Font = new System.Drawing.Font("宋体", 12F);
+            this.btn导入.Location = new System.Drawing.Point(590, 264);
+            this.btn导入.Name = "btn导入";
+            this.btn导入.Size = new System.Drawing.Size(138, 23);
+            this.btn导入.TabIndex = 13;
+            this.btn导入.Text = "导入存货档案";
+            this.btn导入.UseVisualStyleBackColor = true;
+            this.btn导入.Visible = false;
+            this.btn导入.Click += new System.EventHandler(this.btn导入_Click);
+            // 
+            // btn浏览
+            // 
+            this.btn浏览.Font = new System.Drawing.Font("宋体", 12F);
+            this.btn浏览.Location = new System.Drawing.Point(499, 264);
+            this.btn浏览.Name = "btn浏览";
+            this.btn浏览.Size = new System.Drawing.Size(75, 23);
+            this.btn浏览.TabIndex = 12;
+            this.btn浏览.Text = "浏览";
+            this.btn浏览.UseVisualStyleBackColor = true;
+            this.btn浏览.Visible = false;
+            this.btn浏览.Click += new System.EventHandler(this.btn浏览_Click);
             // 
             // btn出库退库单
             // 
             this.btn出库退库单.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn出库退库单.Location = new System.Drawing.Point(361, 289);
+            this.btn出库退库单.Location = new System.Drawing.Point(395, 88);
             this.btn出库退库单.Name = "btn出库退库单";
-            this.btn出库退库单.Size = new System.Drawing.Size(109, 32);
+            this.btn出库退库单.Size = new System.Drawing.Size(138, 69);
             this.btn出库退库单.TabIndex = 11;
             this.btn出库退库单.Text = "出库/退库单";
             this.btn出库退库单.UseVisualStyleBackColor = true;
@@ -90,9 +124,9 @@
             // btn原料入库
             // 
             this.btn原料入库.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn原料入库.Location = new System.Drawing.Point(361, 186);
+            this.btn原料入库.Location = new System.Drawing.Point(200, 88);
             this.btn原料入库.Name = "btn原料入库";
-            this.btn原料入库.Size = new System.Drawing.Size(109, 32);
+            this.btn原料入库.Size = new System.Drawing.Size(138, 69);
             this.btn原料入库.TabIndex = 4;
             this.btn原料入库.Text = "原料入库";
             this.btn原料入库.UseVisualStyleBackColor = true;
@@ -101,7 +135,7 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(45, 323);
+            this.dataGridView1.Location = new System.Drawing.Point(484, 356);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.Size = new System.Drawing.Size(101, 43);
@@ -111,9 +145,9 @@
             // btn退货
             // 
             this.btn退货.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn退货.Location = new System.Drawing.Point(361, 83);
+            this.btn退货.Location = new System.Drawing.Point(590, 88);
             this.btn退货.Name = "btn退货";
-            this.btn退货.Size = new System.Drawing.Size(109, 32);
+            this.btn退货.Size = new System.Drawing.Size(138, 69);
             this.btn退货.TabIndex = 2;
             this.btn退货.Text = "退货";
             this.btn退货.UseVisualStyleBackColor = true;
@@ -141,38 +175,22 @@
             this.btn入库.Visible = false;
             this.btn入库.Click += new System.EventHandler(this.btn入库_Click);
             // 
-            // textBox1
+            // button1
             // 
-            this.textBox1.Location = new System.Drawing.Point(204, 344);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(277, 21);
-            this.textBox1.TabIndex = 14;
-            // 
-            // btn导入
-            // 
-            this.btn导入.Location = new System.Drawing.Point(595, 343);
-            this.btn导入.Name = "btn导入";
-            this.btn导入.Size = new System.Drawing.Size(103, 23);
-            this.btn导入.TabIndex = 13;
-            this.btn导入.Text = "导入存货档案";
-            this.btn导入.UseVisualStyleBackColor = true;
-            this.btn导入.Click += new System.EventHandler(this.btn导入_Click);
-            // 
-            // btn浏览
-            // 
-            this.btn浏览.Location = new System.Drawing.Point(496, 343);
-            this.btn浏览.Name = "btn浏览";
-            this.btn浏览.Size = new System.Drawing.Size(75, 23);
-            this.btn浏览.TabIndex = 12;
-            this.btn浏览.Text = "浏览";
-            this.btn浏览.UseVisualStyleBackColor = true;
-            this.btn浏览.Click += new System.EventHandler(this.btn浏览_Click);
+            this.button1.Location = new System.Drawing.Point(12, 12);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 15;
+            this.button1.Text = "导入";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // 库存管理
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(878, 407);
+            this.ClientSize = new System.Drawing.Size(930, 444);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.btn导入);
             this.Controls.Add(this.btn浏览);
@@ -207,5 +225,6 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button btn导入;
         private System.Windows.Forms.Button btn浏览;
+        private System.Windows.Forms.Button button1;
     }
 }

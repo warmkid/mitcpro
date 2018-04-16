@@ -66,7 +66,7 @@
             // 
             // btn查看日志
             // 
-            this.btn查看日志.Location = new System.Drawing.Point(1021, 679);
+            this.btn查看日志.Location = new System.Drawing.Point(1021, 521);
             this.btn查看日志.Name = "btn查看日志";
             this.btn查看日志.Size = new System.Drawing.Size(86, 23);
             this.btn查看日志.TabIndex = 83;
@@ -76,7 +76,7 @@
             // 
             // btn提交审核
             // 
-            this.btn提交审核.Location = new System.Drawing.Point(929, 679);
+            this.btn提交审核.Location = new System.Drawing.Point(929, 521);
             this.btn提交审核.Name = "btn提交审核";
             this.btn提交审核.Size = new System.Drawing.Size(86, 23);
             this.btn提交审核.TabIndex = 82;
@@ -87,14 +87,14 @@
             // dtp夜班交接班时间
             // 
             this.dtp夜班交接班时间.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dtp夜班交接班时间.Location = new System.Drawing.Point(942, 578);
+            this.dtp夜班交接班时间.Location = new System.Drawing.Point(942, 472);
             this.dtp夜班交接班时间.Name = "dtp夜班交接班时间";
             this.dtp夜班交接班时间.Size = new System.Drawing.Size(165, 26);
             this.dtp夜班交接班时间.TabIndex = 77;
             // 
             // btn打印
             // 
-            this.btn打印.Location = new System.Drawing.Point(375, 678);
+            this.btn打印.Location = new System.Drawing.Point(375, 520);
             this.btn打印.Name = "btn打印";
             this.btn打印.Size = new System.Drawing.Size(81, 26);
             this.btn打印.TabIndex = 81;
@@ -105,7 +105,7 @@
             // 夜班交接班时间
             // 
             this.夜班交接班时间.AutoSize = true;
-            this.夜班交接班时间.Location = new System.Drawing.Point(816, 585);
+            this.夜班交接班时间.Location = new System.Drawing.Point(816, 479);
             this.夜班交接班时间.Name = "夜班交接班时间";
             this.夜班交接班时间.Size = new System.Drawing.Size(120, 16);
             this.夜班交接班时间.TabIndex = 76;
@@ -113,7 +113,7 @@
             // 
             // btn审核
             // 
-            this.btn审核.Location = new System.Drawing.Point(53, 679);
+            this.btn审核.Location = new System.Drawing.Point(53, 521);
             this.btn审核.Name = "btn审核";
             this.btn审核.Size = new System.Drawing.Size(75, 26);
             this.btn审核.TabIndex = 80;
@@ -123,14 +123,14 @@
             // 
             // txb夜班接班员
             // 
-            this.txb夜班接班员.Location = new System.Drawing.Point(910, 288);
+            this.txb夜班接班员.Location = new System.Drawing.Point(910, 222);
             this.txb夜班接班员.Name = "txb夜班接班员";
             this.txb夜班接班员.Size = new System.Drawing.Size(100, 26);
             this.txb夜班接班员.TabIndex = 75;
             // 
             // btn保存
             // 
-            this.btn保存.Location = new System.Drawing.Point(848, 679);
+            this.btn保存.Location = new System.Drawing.Point(848, 521);
             this.btn保存.Name = "btn保存";
             this.btn保存.Size = new System.Drawing.Size(75, 23);
             this.btn保存.TabIndex = 79;
@@ -141,7 +141,7 @@
             // lb夜班接班员
             // 
             this.lb夜班接班员.AutoSize = true;
-            this.lb夜班接班员.Location = new System.Drawing.Point(816, 291);
+            this.lb夜班接班员.Location = new System.Drawing.Point(816, 225);
             this.lb夜班接班员.Name = "lb夜班接班员";
             this.lb夜班接班员.Size = new System.Drawing.Size(88, 16);
             this.lb夜班接班员.TabIndex = 74;
@@ -149,7 +149,7 @@
             // 
             // txb夜班交班员
             // 
-            this.txb夜班交班员.Location = new System.Drawing.Point(910, 516);
+            this.txb夜班交班员.Location = new System.Drawing.Point(910, 410);
             this.txb夜班交班员.Name = "txb夜班交班员";
             this.txb夜班交班员.Size = new System.Drawing.Size(100, 26);
             this.txb夜班交班员.TabIndex = 73;
@@ -157,7 +157,7 @@
             // lb夜班交班员
             // 
             this.lb夜班交班员.AutoSize = true;
-            this.lb夜班交班员.Location = new System.Drawing.Point(816, 522);
+            this.lb夜班交班员.Location = new System.Drawing.Point(816, 416);
             this.lb夜班交班员.Name = "lb夜班交班员";
             this.lb夜班交班员.Size = new System.Drawing.Size(88, 16);
             this.lb夜班交班员.TabIndex = 72;
@@ -169,22 +169,22 @@
             this.dataGridView1.Location = new System.Drawing.Point(39, 130);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(707, 474);
+            this.dataGridView1.Size = new System.Drawing.Size(707, 361);
             this.dataGridView1.TabIndex = 56;
             this.dataGridView1.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dataGridView1_DataBindingComplete);
             // 
             // txb夜班异常情况处理
             // 
-            this.txb夜班异常情况处理.Location = new System.Drawing.Point(819, 390);
+            this.txb夜班异常情况处理.Location = new System.Drawing.Point(819, 311);
             this.txb夜班异常情况处理.Multiline = true;
             this.txb夜班异常情况处理.Name = "txb夜班异常情况处理";
-            this.txb夜班异常情况处理.Size = new System.Drawing.Size(288, 120);
+            this.txb夜班异常情况处理.Size = new System.Drawing.Size(288, 69);
             this.txb夜班异常情况处理.TabIndex = 71;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label7.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label7.Location = new System.Drawing.Point(421, 21);
             this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
@@ -195,7 +195,7 @@
             // lb夜班异常情况处理
             // 
             this.lb夜班异常情况处理.AutoSize = true;
-            this.lb夜班异常情况处理.Location = new System.Drawing.Point(816, 371);
+            this.lb夜班异常情况处理.Location = new System.Drawing.Point(816, 292);
             this.lb夜班异常情况处理.Name = "lb夜班异常情况处理";
             this.lb夜班异常情况处理.Size = new System.Drawing.Size(136, 16);
             this.lb夜班异常情况处理.TabIndex = 70;
@@ -203,7 +203,7 @@
             // 
             // dtp生产日期
             // 
-            this.dtp生产日期.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dtp生产日期.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.dtp生产日期.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtp生产日期.Location = new System.Drawing.Point(481, 85);
             this.dtp生产日期.Margin = new System.Windows.Forms.Padding(4);
@@ -214,7 +214,7 @@
             // dtp白班交接班时间
             // 
             this.dtp白班交接班时间.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dtp白班交接班时间.Location = new System.Drawing.Point(942, 321);
+            this.dtp白班交接班时间.Location = new System.Drawing.Point(942, 255);
             this.dtp白班交接班时间.Name = "dtp白班交接班时间";
             this.dtp白班交接班时间.Size = new System.Drawing.Size(165, 26);
             this.dtp白班交接班时间.TabIndex = 69;
@@ -222,7 +222,7 @@
             // lb生产日期
             // 
             this.lb生产日期.AutoSize = true;
-            this.lb生产日期.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lb生产日期.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.lb生产日期.Location = new System.Drawing.Point(403, 92);
             this.lb生产日期.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lb生产日期.Name = "lb生产日期";
@@ -233,7 +233,7 @@
             // lb白班交接班时间
             // 
             this.lb白班交接班时间.AutoSize = true;
-            this.lb白班交接班时间.Location = new System.Drawing.Point(816, 328);
+            this.lb白班交接班时间.Location = new System.Drawing.Point(816, 262);
             this.lb白班交接班时间.Name = "lb白班交接班时间";
             this.lb白班交接班时间.Size = new System.Drawing.Size(120, 16);
             this.lb白班交接班时间.TabIndex = 68;
@@ -241,7 +241,7 @@
             // 
             // txb白班接班员
             // 
-            this.txb白班接班员.Location = new System.Drawing.Point(910, 547);
+            this.txb白班接班员.Location = new System.Drawing.Point(910, 441);
             this.txb白班接班员.Name = "txb白班接班员";
             this.txb白班接班员.Size = new System.Drawing.Size(100, 26);
             this.txb白班接班员.TabIndex = 67;
@@ -249,7 +249,7 @@
             // lb生产指令编号
             // 
             this.lb生产指令编号.AutoSize = true;
-            this.lb生产指令编号.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lb生产指令编号.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.lb生产指令编号.Location = new System.Drawing.Point(83, 92);
             this.lb生产指令编号.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lb生产指令编号.Name = "lb生产指令编号";
@@ -260,7 +260,7 @@
             // lb白班接班员
             // 
             this.lb白班接班员.AutoSize = true;
-            this.lb白班接班员.Location = new System.Drawing.Point(816, 550);
+            this.lb白班接班员.Location = new System.Drawing.Point(816, 444);
             this.lb白班接班员.Name = "lb白班接班员";
             this.lb白班接班员.Size = new System.Drawing.Size(88, 16);
             this.lb白班接班员.TabIndex = 66;
@@ -269,7 +269,7 @@
             // lb白班异常情况处理
             // 
             this.lb白班异常情况处理.AutoSize = true;
-            this.lb白班异常情况处理.Location = new System.Drawing.Point(816, 111);
+            this.lb白班异常情况处理.Location = new System.Drawing.Point(816, 75);
             this.lb白班异常情况处理.Name = "lb白班异常情况处理";
             this.lb白班异常情况处理.Size = new System.Drawing.Size(136, 16);
             this.lb白班异常情况处理.TabIndex = 62;
@@ -277,23 +277,23 @@
             // 
             // txb白班交班员
             // 
-            this.txb白班交班员.Location = new System.Drawing.Point(910, 256);
+            this.txb白班交班员.Location = new System.Drawing.Point(910, 190);
             this.txb白班交班员.Name = "txb白班交班员";
             this.txb白班交班员.Size = new System.Drawing.Size(100, 26);
             this.txb白班交班员.TabIndex = 65;
             // 
             // txb白班异常情况处理
             // 
-            this.txb白班异常情况处理.Location = new System.Drawing.Point(819, 130);
+            this.txb白班异常情况处理.Location = new System.Drawing.Point(819, 94);
             this.txb白班异常情况处理.Multiline = true;
             this.txb白班异常情况处理.Name = "txb白班异常情况处理";
-            this.txb白班异常情况处理.Size = new System.Drawing.Size(288, 120);
+            this.txb白班异常情况处理.Size = new System.Drawing.Size(288, 80);
             this.txb白班异常情况处理.TabIndex = 63;
             // 
             // lb白班交班人
             // 
             this.lb白班交班人.AutoSize = true;
-            this.lb白班交班人.Location = new System.Drawing.Point(816, 264);
+            this.lb白班交班人.Location = new System.Drawing.Point(816, 198);
             this.lb白班交班人.Name = "lb白班交班人";
             this.lb白班交班人.Size = new System.Drawing.Size(88, 16);
             this.lb白班交班人.TabIndex = 64;
@@ -302,7 +302,7 @@
             // cmb打印机选择
             // 
             this.cmb打印机选择.FormattingEnabled = true;
-            this.cmb打印机选择.Location = new System.Drawing.Point(143, 678);
+            this.cmb打印机选择.Location = new System.Drawing.Point(143, 520);
             this.cmb打印机选择.Name = "cmb打印机选择";
             this.cmb打印机选择.Size = new System.Drawing.Size(211, 24);
             this.cmb打印机选择.TabIndex = 160;
@@ -320,7 +320,7 @@
             // label角色
             // 
             this.label角色.AutoSize = true;
-            this.label角色.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label角色.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label角色.Location = new System.Drawing.Point(654, 23);
             this.label角色.Name = "label角色";
             this.label角色.Size = new System.Drawing.Size(42, 16);
@@ -350,7 +350,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1162, 715);
+            this.ClientSize = new System.Drawing.Size(1143, 559);
             this.Controls.Add(this.btn上一条记录);
             this.Controls.Add(this.lbl生产指令编号);
             this.Controls.Add(this.label角色);
@@ -382,7 +382,7 @@
             this.Controls.Add(this.txb白班交班员);
             this.Controls.Add(this.txb白班异常情况处理);
             this.Controls.Add(this.lb白班交班人);
-            this.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "HandOver";
             this.Text = "吹膜岗位交接班记录";

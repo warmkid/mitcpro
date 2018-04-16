@@ -153,6 +153,7 @@ namespace 订单和库存管理
 
         void dgv销售订单_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
+            setDGVColor(sender, "审核员");
             setDGV销售订单格式();
             mySystem.Utility.setDataGridViewAutoSizeMode(dgv销售订单);
             if (isFirstBind销售订单)
@@ -206,6 +207,7 @@ namespace 订单和库存管理
 
         void dgv采购需求单_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
+            setDGVColor(sender, "审核人");
             setDGV采购需求单格式();
             mySystem.Utility.setDataGridViewAutoSizeMode(dgv采购需求单);
             if (isFirstBind采购需求单)
@@ -298,6 +300,7 @@ namespace 订单和库存管理
 
         void dgv采购批准单_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
+            setDGVColor(sender, "审核人");
             setDGV采购批准单格式();
             mySystem.Utility.setDataGridViewAutoSizeMode(dgv采购批准单);
             if (isFirstBind采购批准单)
@@ -411,6 +414,7 @@ namespace 订单和库存管理
 
         void dgv采购订单_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
+            setDGVColor(sender, "审核人");
             dgv采购订单.AllowUserToAddRows = false;
             dgv采购订单.Columns["ID"].Visible = false;
             mySystem.Utility.setDataGridViewAutoSizeMode(dgv采购订单);
@@ -544,6 +548,7 @@ namespace 订单和库存管理
 
         void dgv出库单_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
+            setDGVColor(sender, "审核人");
             dgv出库单.AllowUserToAddRows = false;
             dgv出库单.Columns["ID"].Visible = false;
             mySystem.Utility.setDataGridViewAutoSizeMode(dgv出库单);
@@ -627,5 +632,32 @@ namespace 订单和库存管理
                 writeDGVWidthToSetting(dgv销售订单);
             }
         }
+
+        private void setDataGridViewBackColor(DataGridView dgv, String checker)
+        {
+            for (int i = 0; i < dgv.Rows.Count; i++)
+            {
+                if (dgv.Rows[i].Cells[checker].Value == null)
+                {
+                    dgv.Rows[i].DefaultCellStyle.BackColor = Color.Gray;
+                }
+                else if (dgv.Rows[i].Cells[checker].Value.ToString() == "__待审核")
+                {
+                    dgv.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(255, 127, 0);
+                }
+                else if (dgv.Rows[i].Cells[checker].Value.ToString() == "")
+                {
+                    dgv.Rows[i].DefaultCellStyle.BackColor = Color.Gray;
+                }
+            }
+        }
+
+        private void setDGVColor(object sender, String checker)
+        {
+            DataGridView dgv = sender as DataGridView;
+            setDataGridViewBackColor(dgv, checker);
+        }
+
+
     }
 }

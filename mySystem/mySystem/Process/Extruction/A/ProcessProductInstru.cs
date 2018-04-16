@@ -51,6 +51,7 @@ namespace BatchProductRecord
         private string person_审核员;
         private List<string> list_操作员;
         private List<string> list_审核员;
+        private List<string> list_负责员;
         Hashtable ht代码面数;
 
         //用于带id参数构造函数，存储已存在记录的相关信息
@@ -165,7 +166,7 @@ namespace BatchProductRecord
             {
                 if (Parameter.FormState.待审核 == _formState)
                 {
-                    setControlTrue();
+                    setControlFalse();
                     bt审核.Enabled = true;
                 }
                 else if (Parameter.FormState.审核通过 == _formState)
@@ -237,12 +238,12 @@ namespace BatchProductRecord
 
             if (!mySystem.Parameter.isSqlOk)
             {
-                OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 用户权限 where 步骤='吹膜工序生产指令'", mySystem.Parameter.connOle);
+                OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 用户权限 where 步骤='生产指令信息表'", mySystem.Parameter.connOle);
                 da.Fill(dt);
             }
             else
             {
-                SqlDataAdapter da = new SqlDataAdapter(@"select * from 用户权限 where 步骤='吹膜工序生产指令'", mySystem.Parameter.conn);
+                SqlDataAdapter da = new SqlDataAdapter(@"select * from 用户权限 where 步骤='生产指令信息表'", mySystem.Parameter.conn);
                 da.Fill(dt);
             }
             if (dt.Rows.Count > 0)
@@ -464,6 +465,7 @@ namespace BatchProductRecord
         //读取负责人人员到下拉列表中
         private void fill_respons_user()
         {
+            list_负责员 = new List<string>();
             if (!mySystem.Parameter.isSqlOk)
             {
                 DataTable tempdt = new DataTable("users");
@@ -472,7 +474,9 @@ namespace BatchProductRecord
                 da.Dispose();
                 for (int i = 0; i < tempdt.Rows.Count; i++)
                 {
+                    list_负责员.Add(tempdt.Rows[i][1].ToString());
                     cb负责人.Items.Add(tempdt.Rows[i][1].ToString());//姓名
+                    cb接收人.Items.Add(tempdt.Rows[i][1].ToString());
                 }
             }
             else
@@ -483,7 +487,9 @@ namespace BatchProductRecord
                 da.Dispose();
                 for (int i = 0; i < tempdt.Rows.Count; i++)
                 {
+                    list_负责员.Add(tempdt.Rows[i][1].ToString());
                     cb负责人.Items.Add(tempdt.Rows[i][1].ToString());//姓名
+                    cb接收人.Items.Add(tempdt.Rows[i][1].ToString());
                 }
             }
 
@@ -560,6 +566,7 @@ namespace BatchProductRecord
 
         void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
+            //save();
             calc合计();
             if (isFirstBind)
             {
@@ -622,7 +629,7 @@ namespace BatchProductRecord
             }
             setFormState();
             setEnableReadOnly();
-
+            
             tb指令编号.Enabled = false;
             bt查询插入.Enabled = false;
             dataGridView1.DataBindingComplete += dataGridView1_DataBindingComplete;
@@ -668,10 +675,10 @@ namespace BatchProductRecord
             tb中层物料批号.DataBindings.Add("Text", bs_prodinstr.DataSource, "中层物料批号");
             tb中层包装规格.DataBindings.Add("Text", bs_prodinstr.DataSource, "中层包装规格");
             tb中层领料量.DataBindings.Add("Text", bs_prodinstr.DataSource, "中层领料量");
-            textBox12.DataBindings.Add("Text", bs_prodinstr.DataSource, "卷心管");
-            textBox13.DataBindings.Add("Text", bs_prodinstr.DataSource, "卷心管规格");
+            txb卷心管.DataBindings.Add("Text", bs_prodinstr.DataSource, "卷心管");
+            //textBox13.DataBindings.Add("Text", bs_prodinstr.DataSource, "卷心管规格");
             tb卷心管领料量.DataBindings.Add("Text", bs_prodinstr.DataSource, "卷心管领料量");
-            textBox9.DataBindings.Add("Text", bs_prodinstr.DataSource, "双层洁净包装包装规格");
+            //textBox9.DataBindings.Add("Text", bs_prodinstr.DataSource, "双层洁净包装包装规格");
             tb双层包装领料量.DataBindings.Add("Text", bs_prodinstr.DataSource, "双层洁净包装领料量");
             //tb负责人.DataBindings.Add("Text", bs_prodinstr.DataSource, "负责人");
             tb白班.DataBindings.Add("Text", bs_prodinstr.DataSource, "白班负责人");
@@ -680,14 +687,15 @@ namespace BatchProductRecord
 
             tb编制人.DataBindings.Add("Text", bs_prodinstr.DataSource, "编制人");
             tb审批人.DataBindings.Add("Text", bs_prodinstr.DataSource, "审批人");
-            tb接收人.DataBindings.Add("Text", bs_prodinstr.DataSource, "接收人");
+            //tb接收人.DataBindings.Add("Text", bs_prodinstr.DataSource, "接收人");
+            cb接收人.DataBindings.Add("Text", bs_prodinstr.DataSource, "接收人");
             dateTimePicker2.DataBindings.Add("Value", bs_prodinstr.DataSource, "编制时间");
             dateTimePicker3.DataBindings.Add("Value", bs_prodinstr.DataSource, "审批时间");
             dateTimePicker4.DataBindings.Add("Value", bs_prodinstr.DataSource, "接收时间");
 
-            textBox6.DataBindings.Add("Text", bs_prodinstr.DataSource, "计划产量合计米");
+            tb计划产量合计米.DataBindings.Add("Text", bs_prodinstr.DataSource, "计划产量合计米");
             tb用料重量合计.DataBindings.Add("Text", bs_prodinstr.DataSource, "用料重量合计");
-            textBox10.DataBindings.Add("Text", bs_prodinstr.DataSource, "计划产量合计卷");
+            tb计划产量合计卷.DataBindings.Add("Text", bs_prodinstr.DataSource, "计划产量合计卷");
             tb操作员备注.DataBindings.Add("Text", bs_prodinstr.DataSource, "操作员备注");
             tb内外层比例.DataBindings.Add("Text", bs_prodinstr.DataSource, "比例");
         }
@@ -877,7 +885,11 @@ namespace BatchProductRecord
 
                 }
             }
-
+            try
+            {
+                (this.Owner as mySystem.QueryInstruForm).search();
+            }
+            catch (NullReferenceException exp) { }
         }
         private void button2_Click(object sender, EventArgs e)
         {
@@ -887,13 +899,16 @@ namespace BatchProductRecord
                 return;
             }
             checkform = new mySystem.CheckForm(this);
-            checkform.Show();  
+            checkform.ShowDialog();  
             
         }
 
         //确认按钮
         private void button1_Click_1(object sender, EventArgs e)
         {
+
+            
+
             bool rt = save();
             //控件可见性
             if (rt && _userState == Parameter.UserState.操作员)
@@ -963,7 +978,7 @@ namespace BatchProductRecord
                         dataGridView1.Rows[e.RowIndex].Cells[3].Value = "";
                         return;
                     }
-                    string pattern = @"^[a-zA-Z0-9]+-[a-zA-Z]+-[0-9]+X[0-9]";//正则表达式
+                    string pattern = @"^[a-zA-Z0-9]+-[a-zA-Z]+-[0-9]+X[0-9]+$";//正则表达式
                     if (!Regex.IsMatch(str, pattern))
                     {
                         MessageBox.Show("产品代码格式不符合规定，重新输入，例如 PEQ-QE-500X100");
@@ -1135,15 +1150,15 @@ namespace BatchProductRecord
 
         void calc合计()
         {
-            float sum_mi = 0, sum_juan = 0, sum_weight = 0;
+            double sum_mi = 0, sum_juan = 0, sum_weight = 0;
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
                 if (dataGridView1.Rows[i].Cells[6].Value.ToString() != "")
-                    sum_mi += float.Parse(dataGridView1.Rows[i].Cells[6].Value.ToString());
+                    sum_mi += double.Parse(dataGridView1.Rows[i].Cells[6].Value.ToString());
                 if (dataGridView1.Rows[i].Cells[7].Value.ToString() != "")
-                    sum_weight += float.Parse(dataGridView1.Rows[i].Cells[7].Value.ToString());
+                    sum_weight += double.Parse(dataGridView1.Rows[i].Cells[7].Value.ToString());
                 if (dataGridView1.Rows[i].Cells[10].Value.ToString() != "")
-                    sum_juan += float.Parse(dataGridView1.Rows[i].Cells[10].Value.ToString());
+                    sum_juan += double.Parse(dataGridView1.Rows[i].Cells[10].Value.ToString());
             }
             dt_prodinstr.Rows[0]["计划产量合计米"] = sum_mi;
             dt_prodinstr.Rows[0]["用料重量合计"] = sum_weight;
@@ -1153,11 +1168,11 @@ namespace BatchProductRecord
             string bili = tb内外层比例.Text;
             if (bili == "")
                 return;
-            float fbili = float.Parse(bili);
+            double fbili = double.Parse(bili);
             if (fbili <= 100 && fbili >= 0)
             {
-                dt_prodinstr.Rows[0]["内外层领料量"] = sum_weight / 100 * fbili;
-                dt_prodinstr.Rows[0]["中层领料量"] = sum_weight / 100 * (100 - fbili);
+                dt_prodinstr.Rows[0]["内外层领料量"] =  Math.Ceiling( sum_weight / 100 * fbili);
+                dt_prodinstr.Rows[0]["中层领料量"] = Math.Ceiling(sum_weight / 100 * (100 - fbili));
             }
 
             bs_prodinstr.DataSource = dt_prodinstr;
@@ -1166,6 +1181,8 @@ namespace BatchProductRecord
                 da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
             else
                 da_prodinstr_sql.Update((DataTable)bs_prodinstr.DataSource);
+            removeOuterBinding();
+            outerBind();
         }
 
 
@@ -1218,7 +1235,7 @@ namespace BatchProductRecord
                 tb中层物料批号.Text = "";
                 tb中层包装规格.Text = "";
                 tb中层领料量.Text = "";
-                textBox12.Text = "";
+                txb卷心管.Text = "";
                 textBox13.Text = "";
                 tb卷心管领料量.Text = "";
                 textBox9.Text = "";
@@ -1229,7 +1246,8 @@ namespace BatchProductRecord
                 dateTimePicker2.Value = DateTime.Now;
                 tb审批人.Text = "";
                 dateTimePicker3.Value = DateTime.Now;
-                tb接收人.Text = "";
+                //tb接收人.Text = "";
+                cb接收人.Text = "";
                 dateTimePicker4.Value = DateTime.Now;
                 tb备注.Text = "";
             }
@@ -1249,7 +1267,7 @@ namespace BatchProductRecord
                 tb中层物料批号.Text = (string)tempdt.Rows[0][11];
                 tb中层包装规格.Text = (string)tempdt.Rows[0][12];
                 tb中层领料量.Text = ((double)tempdt.Rows[0][13]).ToString();
-                textBox12.Text = (string)tempdt.Rows[0][14]; 
+                txb卷心管.Text = (string)tempdt.Rows[0][14]; 
                 textBox13.Text = (string)tempdt.Rows[0][15];
                 tb卷心管领料量.Text = ((double)tempdt.Rows[0][16]).ToString();
                 textBox9.Text = (string)tempdt.Rows[0][17];
@@ -1260,7 +1278,16 @@ namespace BatchProductRecord
                 dateTimePicker2.Value = (DateTime)tempdt.Rows[0][21];
                 tb审批人.Text = (string)tempdt.Rows[0][22];
                 dateTimePicker3.Value = (DateTime)tempdt.Rows[0][23];
-                tb接收人.Text = (string)tempdt.Rows[0][24];
+                //tb接收人.Text = (string)tempdt.Rows[0][24];
+                try
+                {
+                    cb接收人.Text = (string)tempdt.Rows[0][24];
+                }
+                catch
+                {
+                    cb接收人.Items.Add((string)tempdt.Rows[0][24]);
+                    cb接收人.Text = (string)tempdt.Rows[0][24];
+                }
                 dateTimePicker4.Value = (DateTime)tempdt.Rows[0][25];
                 tb备注.Text = (string)tempdt.Rows[0][29];
 
@@ -1315,6 +1342,7 @@ namespace BatchProductRecord
         //查询/插入按钮
         private void button5_Click_1(object sender, System.EventArgs e)
         {
+            if (tb指令编号.Text.Trim() == "") return;
             setControlTrue();
             instrcode = tb指令编号.Text;
             readOuterData(tb指令编号.Text);
@@ -1484,10 +1512,10 @@ namespace BatchProductRecord
             tb中层物料批号.DataBindings.Clear();
             tb中层包装规格.DataBindings.Clear();
             tb中层领料量.DataBindings.Clear();
-            textBox12.DataBindings.Clear();
-            textBox13.DataBindings.Clear();
+            txb卷心管.DataBindings.Clear();
+            //textBox13.DataBindings.Clear();
             tb卷心管领料量.DataBindings.Clear();
-            textBox9.DataBindings.Clear();
+            //textBox9.DataBindings.Clear();
             tb双层包装领料量.DataBindings.Clear();
             //tb负责人.DataBindings.Clear();
             tb白班.DataBindings.Clear();
@@ -1496,14 +1524,15 @@ namespace BatchProductRecord
 
             tb编制人.DataBindings.Clear();
             tb审批人.DataBindings.Clear();
-            tb接收人.DataBindings.Clear();
+            //tb接收人.DataBindings.Clear();
+            cb接收人.DataBindings.Clear();
             dateTimePicker2.DataBindings.Clear();
             dateTimePicker3.DataBindings.Clear();
             dateTimePicker4.DataBindings.Clear();
 
-            textBox6.DataBindings.Clear();
+            tb计划产量合计米.DataBindings.Clear();
             tb用料重量合计.DataBindings.Clear();
-            textBox10.DataBindings.Clear();
+            tb计划产量合计卷.DataBindings.Clear();
             tb操作员备注.DataBindings.Clear();
             tb内外层比例.DataBindings.Clear();
         }
@@ -1683,17 +1712,17 @@ namespace BatchProductRecord
                 MessageBox.Show("编制人ID不存在");
                 return false;
             }
-            //接收人
-            if (mySystem.Parameter.NametoID(tb接收人.Text) <= 0)
-            {
-                MessageBox.Show("接受人ID不存在");
-                return false;
-            }
+ 
 
             //产品代码是否重复
             HashSet<string> hs_temp = new HashSet<string>();
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
+                if (dataGridView1.Rows[i].Cells["产品编码"].Value.ToString().Trim() == "")
+                {
+                    MessageBox.Show("产品编码不能为空");
+                    return false;
+                }
                 if (hs_temp.Contains(dataGridView1.Rows[i].Cells["产品编码"].Value.ToString()))//产品代码
                 {
                     MessageBox.Show("产品编码不能重复");
@@ -2340,6 +2369,33 @@ namespace BatchProductRecord
 
         private void bt提交审核_Click(object sender, System.EventArgs e)
         {
+            String n;
+            if (!checkOuterData(out n))
+            {
+                if (n != "负责人")
+                {
+                    MessageBox.Show("请填写完整的信息: " + n, "提示");
+                    return;
+                }
+            }
+
+
+
+            if (!checkInnerData(dataGridView1))
+            {
+                MessageBox.Show("请填写完整的表单信息", "提示");
+                return;
+            }
+
+            //接收人
+            if (mySystem.Parameter.NametoID(cb接收人.Text) <= 0)
+            {
+                MessageBox.Show("接收人不存在");
+                return;
+            }
+
+
+            if(!save()) return;
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
             if (!mySystem.Parameter.isSqlOk)
@@ -2388,8 +2444,8 @@ namespace BatchProductRecord
             dt_prodinstr.Rows[0]["审批人"] = "__待审核";
             dt_prodinstr.Rows[0]["审批时间"] = DateTime.Now;
 
-            save();
 
+            save();
             //空间都不能点
             setControlFalse();
         }
@@ -2404,7 +2460,8 @@ namespace BatchProductRecord
             DataRow dr = dt_prodinstr.NewRow();
             dr.ItemArray = dt_prodinstr.Rows[0].ItemArray.Clone() as object[];
             dt_prodinstr.Rows[0]["审批人"] = "";
-            string newcode = dr["生产指令编号"].ToString() + " 更改" + DateTime.Now.ToString("yyyyMMdd");
+            string newcode = dr["生产指令编号"].ToString() + " 更改 " + DateTime.Now.ToString("yyyyMMddHHmmss");
+            String oldcode = dr["生产指令编号"].ToString();
             dr["生产指令编号"] = newcode;
             dr["状态"] = 4;
             //写日志
@@ -2432,9 +2489,13 @@ namespace BatchProductRecord
                 da_prodlist.Update((DataTable)bs_prodlist.DataSource);
             else
                 da_prodlist_sql.Update((DataTable)bs_prodlist.DataSource);
+
+
+            readOuterData(oldcode);
+            //outerBind();
             readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
             innerBind();
-
+            tb审批人.Text = "";
             MessageBox.Show("更改成功");
             setFormState();
             setEnableReadOnly();
@@ -2455,7 +2516,7 @@ namespace BatchProductRecord
             {
                 OleDbDataAdapter da;
                 DataTable dt;
-                da = new OleDbDataAdapter("select * from 用户权限 where 步骤='吹膜工序生产指令'", mySystem.Parameter.connOle);
+                da = new OleDbDataAdapter("select * from 用户权限 where 步骤='生产指令信息表'", mySystem.Parameter.connOle);
                 dt = new DataTable("temp");
                 da.Fill(dt);
                 String str操作员 = dt.Rows[0]["操作员"].ToString();
@@ -2467,7 +2528,7 @@ namespace BatchProductRecord
             {
                 SqlDataAdapter da;
                 DataTable dt;
-                da = new SqlDataAdapter("select * from 用户权限 where 步骤='吹膜工序生产指令'", mySystem.Parameter.conn);
+                da = new SqlDataAdapter("select * from 用户权限 where 步骤='生产指令信息表'", mySystem.Parameter.conn);
                 dt = new DataTable("temp");
                 da.Fill(dt);
                 String str操作员 = dt.Rows[0]["操作员"].ToString();

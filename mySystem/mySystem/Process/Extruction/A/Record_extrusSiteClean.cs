@@ -867,8 +867,8 @@ namespace mySystem.Extruction.Process
         {
             //解除之前的绑定
             tb生产指令.DataBindings.Clear();
-            tb产品代码.DataBindings.Clear();
-            tb产品批号.DataBindings.Clear();
+            //tb产品代码.DataBindings.Clear();
+            //tb产品批号.DataBindings.Clear();
             dtp清场日期.DataBindings.Clear();
 
             tb清场人.DataBindings.Clear();
@@ -888,8 +888,8 @@ namespace mySystem.Extruction.Process
             bs_prodinstr.DataSource = dt_prodinstr;
 
             tb生产指令.DataBindings.Add("Text", bs_prodinstr.DataSource, "生产指令");
-            tb产品代码.DataBindings.Add("Text", bs_prodinstr.DataSource, "清场前产品代码");
-            tb产品批号.DataBindings.Add("Text", bs_prodinstr.DataSource, "清场前产品批号");
+            //tb产品代码.DataBindings.Add("Text", bs_prodinstr.DataSource, "清场前产品代码");
+            //tb产品批号.DataBindings.Add("Text", bs_prodinstr.DataSource, "清场前产品批号");
             tb清场人.DataBindings.Add("Text", bs_prodinstr.DataSource, "清场人");
             tb检查人.DataBindings.Add("Text", bs_prodinstr.DataSource, "检查人");
             dtp清场日期.DataBindings.Add("Value", bs_prodinstr.DataSource, "清场日期");
@@ -1175,7 +1175,7 @@ namespace mySystem.Extruction.Process
             
 
             my.Cells[3, 1].Value = "生产指令："+mySystem.Parameter.proInstruction;
-            my.Cells[3, 3].Value = "清场前产品代码及批号：" + tb产品代码.Text + "  " + tb产品批号.Text ;
+            //my.Cells[3, 3].Value = "清场前产品代码及批号：" + tb产品代码.Text + "  " + tb产品批号.Text ;
             my.Cells[3, 5].Value = "清场日期：" + dtp清场日期.Value.ToString("yyyy年MM月dd日");
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {

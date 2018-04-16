@@ -378,7 +378,7 @@ namespace mySystem.Process.Stock
             if (o == DBNull.Value) d = 0;
             else d = Convert.ToDouble(o);
 
-            if (!(d - Convert.ToDouble(tb数量.Text) < eps))
+            if (!(Math.Abs( d - Convert.ToDouble(tb数量.Text)) < eps))
             {
                 MessageBox.Show("入库数量不匹配！","错误");
                 return false;
@@ -388,10 +388,24 @@ namespace mySystem.Process.Stock
 
         private void btn提交审核_Click(object sender, EventArgs e)
         {
+            String n;
+            if (!checkOuterData(out n))
+            {
+                MessageBox.Show("请填写完整的信息: " + n, "提示");
+                return;
+            }
+
+            if (!checkInnerData(dataGridView1))
+            {
+                MessageBox.Show("请填写完整的表单信息", "提示");
+                return;
+            }
+            
+            
             // 判断，二维码中的数量应该和总量一致
             if (!checkBeforeSave())
                 return;
-            save();
+            
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
             BindingSource bs_temp = new BindingSource();
@@ -424,8 +438,8 @@ namespace mySystem.Process.Stock
             dtOuter.Rows[0]["审核员"] = "__待审核";
             dtOuter.Rows[0]["审核日期"] = DateTime.Now;
 
-            
 
+            save();
             //空间都不能点
             setControlFalse();
         }

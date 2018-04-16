@@ -168,30 +168,30 @@
             this.检验记录ToolStripMenuItem,
             this.取样记录ToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(149, 92);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(143, 92);
             // 
             // 物资验收记录ToolStripMenuItem
             // 
             this.物资验收记录ToolStripMenuItem.Name = "物资验收记录ToolStripMenuItem";
-            this.物资验收记录ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.物资验收记录ToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
             this.物资验收记录ToolStripMenuItem.Text = "物资验收记录";
             // 
             // 物资请验单ToolStripMenuItem
             // 
             this.物资请验单ToolStripMenuItem.Name = "物资请验单ToolStripMenuItem";
-            this.物资请验单ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.物资请验单ToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
             this.物资请验单ToolStripMenuItem.Text = "物资请验单";
             // 
             // 检验记录ToolStripMenuItem
             // 
             this.检验记录ToolStripMenuItem.Name = "检验记录ToolStripMenuItem";
-            this.检验记录ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.检验记录ToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
             this.检验记录ToolStripMenuItem.Text = "检验记录";
             // 
             // 取样记录ToolStripMenuItem
             // 
             this.取样记录ToolStripMenuItem.Name = "取样记录ToolStripMenuItem";
-            this.取样记录ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.取样记录ToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
             this.取样记录ToolStripMenuItem.Text = "取样记录";
             // 
             // lbl取样单号
@@ -217,7 +217,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(645, 528);
+            this.ClientSize = new System.Drawing.Size(645, 505);
             this.Controls.Add(this.lbl取样单号);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.btn取样证);

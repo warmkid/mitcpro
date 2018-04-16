@@ -556,13 +556,16 @@ namespace mySystem.Other
         //添加行代码
         private DataRow writeInnerDefault(Int32 ID, DataRow dr)
         {
+           
+
+
             dr["生产领料申请表单ID"] = ID;
             dr["序号"] = 0;
             dr["申请日期时间"] = Convert.ToDateTime(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
             dr["物料代码"] = _dt物料代码数量.Rows[0]["物料代码"].ToString();
             dr["物料批号"] = _dt物料代码数量.Rows[0]["物料批号"].ToString();
             dr["申请数量主计量"] = _dt物料代码数量.Rows[0]["数量"].ToString();
-            dr["申请数量辅计量"] = 0;
+            
             dr["操作员"] = mySystem.Parameter.userName;
             dr["审核员"] = "";
             return dr;
@@ -579,6 +582,26 @@ namespace mySystem.Other
                 dr["物料代码"] = dr物料代码数量["物料代码"].ToString();
                 dr["物料批号"] = dr物料代码数量["物料批号"].ToString();
                 dr["申请数量主计量"] = dr物料代码数量["数量"].ToString();
+
+                // 获取换算率
+                double eps = 1e-8;
+                String dm = dr物料代码数量["物料代码"].ToString();
+                string strCon = @"server=" + mySystem.Parameter.IP_port + ";database=dingdan_kucun;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
+                SqlConnection conn = new SqlConnection(strCon);
+                conn.Open();
+                String sql = "select * from 设置存货档案 where 存货代码='{0}'";
+                SqlDataAdapter da = new SqlDataAdapter(String.Format(sql, dm), conn);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                double huansuanlv = 0;
+                if (dt.Rows.Count > 0)
+                {
+                    huansuanlv = Convert.ToDouble(dt.Rows[0]["换算率"]);
+                }
+
+                //
+                dr["申请数量主计量"] = dr物料代码数量["数量"].ToString();
+                dr["申请数量辅计量"] = Math.Round(Convert.ToDouble(dr物料代码数量["数量"].ToString()) / (huansuanlv + eps), 2);
             }
             setDataGridViewRowNums();
             if (dataGridView1.Rows.Count > 0)
@@ -673,7 +696,7 @@ namespace mySystem.Other
             //隐藏
             dataGridView1.Columns["ID"].Visible = false;
             dataGridView1.Columns["生产领料申请表单ID"].Visible = false;
-            dataGridView1.Columns["物料批号"].Visible = false;
+            dataGridView1.Columns["物料批号"].Visible = true;
             //不可用
             dataGridView1.Columns["序号"].ReadOnly = true;
             //dataGridView1.Columns["申请数量主计量"].ReadOnly = true;
@@ -888,7 +911,7 @@ namespace mySystem.Other
             // =================================================
             // yyyy年MM月dd日，操作员：XXX 提交审核
             string log = "=====================================\n";
-            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 提交审核\n";
+            log += DateTime.Now.ToString("yyyy年MM月dd日 HH时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 提交审核\n";
             dt记录.Rows[0]["日志"] = dt记录.Rows[0]["日志"].ToString() + log;
             dt记录.Rows[0]["审核员"] = "__待审核";
 

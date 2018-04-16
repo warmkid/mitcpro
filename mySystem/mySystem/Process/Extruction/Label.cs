@@ -285,7 +285,7 @@ namespace mySystem.Process.Extruction
             //File.Copy(@"../../xls/Extrusion/吹膜标签.xlsx", path + @"/label.xlsx", true);
             Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(path + @"/../../xls/Extrusion/吹膜标签.xlsx");
             _Worksheet my = wb.Worksheets[wb.Worksheets.Count];
-
+            oXL.Visible = false;
             my.Cells[1, 2].Value = cmb膜代码.SelectedItem;
             my.Select();
             my.Cells[2, 2].Value = tc批号.Text;
@@ -318,7 +318,7 @@ namespace mySystem.Process.Extruction
 
             my = wb.Worksheets[c标签模板.SelectedIndex+1];
             my.Select();
-            oXL.Visible = true;
+            
             my.PrintOut();
 
             wb.Close(false);

@@ -277,6 +277,16 @@ namespace mySystem.Process.Stock
 
         private void btn批准_Click(object sender, EventArgs e)
         {
+            String n;
+            if (!checkOuterData(out n))
+            {
+                MessageBox.Show("请填写完整的信息: " + n, "提示");
+                return;
+            }
+
+            
+            
+            
             SqlDataAdapter da;
             SqlCommandBuilder cb;
             DataTable dt;
@@ -321,6 +331,15 @@ namespace mySystem.Process.Stock
 
         private void btn不批准_Click(object sender, EventArgs e)
         {
+            String n;
+            if (!checkOuterData(out n))
+            {
+                MessageBox.Show("请填写完整的信息: " + n, "提示");
+                return;
+            }
+
+            
+            
             dtOuter.Rows[0]["状态"] = "已批准";
             dtOuter.Rows[0]["批准人"] = mySystem.Parameter.userName;
             dtOuter.Rows[0]["批准日期"] = DateTime.Now;

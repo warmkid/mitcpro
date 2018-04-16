@@ -50,7 +50,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.tb生产指令 = new System.Windows.Forms.TextBox();
             this.tb产品批号 = new System.Windows.Forms.TextBox();
-            this.cb产品代码 = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
@@ -275,16 +274,6 @@
             this.tb产品批号.TabIndex = 1;
             this.tb产品批号.Text = "无";
             this.tb产品批号.Visible = false;
-            // 
-            // cb产品代码
-            // 
-            this.cb产品代码.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.cb产品代码.FormattingEnabled = true;
-            this.cb产品代码.Location = new System.Drawing.Point(327, 57);
-            this.cb产品代码.Name = "cb产品代码";
-            this.cb产品代码.Size = new System.Drawing.Size(145, 22);
-            this.cb产品代码.TabIndex = 1;
-            this.cb产品代码.Visible = false;
             // 
             // label2
             // 
@@ -787,7 +776,6 @@
             this.Controls.Add(this.tb生产指令);
             this.Controls.Add(this.label16);
             this.Controls.Add(this.tb产品批号);
-            this.Controls.Add(this.cb产品代码);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.tb中内层合计);
             this.Controls.Add(this.label2);
@@ -823,6 +811,7 @@
             this.Name = "Record_extrusSupply";
             this.Text = "吹膜工序供料记录";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Record_extrusSupply_FormClosing);
+            this.Load += new System.EventHandler(this.Record_extrusSupply_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
@@ -850,7 +839,6 @@
         private System.Windows.Forms.TextBox tb生产指令;
         private System.Windows.Forms.Button bt保存;
         private System.Windows.Forms.Button bt审核;
-        private System.Windows.Forms.ComboBox cb产品代码;
         private System.Windows.Forms.TextBox tb复核人;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Button bt打印;

@@ -68,13 +68,14 @@ namespace mySystem.Process.Extruction.B
         public Waste(mySystem.MainForm mainform)
             : base(mainform)
         {
+            __生产指令ID = Parameter.proInstruID;
             InitializeComponent();
             conOle = Parameter.connOle;
             fill_printer();
             getPeople();
             setUserState();
             __生产指令 = Parameter.proInstruction;
-            __生产指令ID = Parameter.proInstruID;
+            
             lbl生产指令.Text = __生产指令;
             getProductCode();
             getStartTime();
@@ -130,7 +131,7 @@ namespace mySystem.Process.Extruction.B
         {
            
 
-            InitializeComponent();
+            
             conOle = Parameter.connOle;
             fill_printer();
             getPeople();
@@ -139,6 +140,7 @@ namespace mySystem.Process.Extruction.B
             readOuterData(searchId);
             __生产指令 = Convert.ToString(dtOuter.Rows[0]["生产指令"]);
             __生产指令ID = Convert.ToInt32(dtOuter.Rows[0]["生产指令ID"]);
+            InitializeComponent();
             getProductCode();
             getStartTime();
             getUsrList();
@@ -1424,7 +1426,16 @@ namespace mySystem.Process.Extruction.B
 
         private void Waste_Load(object sender, EventArgs e)
         {
-
+            String sql1 = "select * from 吹膜供料记录 where 生产指令ID ={0}";
+            SqlDataAdapter da = new SqlDataAdapter(String.Format(sql1, __生产指令ID), mySystem.Parameter.conn);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            if (dt.Rows.Count == 0)
+            {
+                MessageBox.Show("请先填写吹膜供料记录！", "提示");
+                this.Close();
+                //return;
+            }
         }
 
         private void bt查看人员信息_Click(object sender, EventArgs e)

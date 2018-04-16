@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.OleDb;
 using System.Data.SqlClient;
+using System.Configuration;
 
 namespace 订单和库存管理
 {
@@ -130,6 +131,7 @@ namespace 订单和库存管理
         private void btn浏览_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "Excel文件(2003以前)|*.xls|Excel文件|*.xlsx";
             if (DialogResult.OK == ofd.ShowDialog())
             {
                 textBox1.Text = ofd.FileName;
@@ -138,9 +140,17 @@ namespace 订单和库存管理
 
         private void btn导入_Click(object sender, EventArgs e)
         {
-            //import供应商();
-            //import存货档案();
-            import库存台账();
+            try
+            {
+                //import供应商();
+                //import存货档案();
+                import库存台账();
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show("导入失败，请选择合适的文件！");
+                //MessageBox.Show("错误：\n" + ee.Message + "\n" + ee.StackTrace);
+            }
         }
 
 
@@ -171,7 +181,7 @@ namespace 订单和库存管理
             SqlDataAdapter da = new SqlDataAdapter("select * from 设置存货档案", conn);
             DataTable dt存货档案 = new DataTable();
             da.Fill(dt存货档案);
-            da = new SqlDataAdapter("select * from 库存台帐 where", conn);
+            da = new SqlDataAdapter("select * from 库存台帐", conn);
             SqlCommandBuilder cb = new SqlCommandBuilder(da);
             DataTable dt = new DataTable();
             da.Fill(dt);
@@ -394,6 +404,24 @@ namespace 订单和库存管理
                 MessageBox.Show("导入存货档案成功");
             }
 
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            AppSettingsSection appSettings = ConfigurationManager.OpenExeConfiguration(System.Windows.Forms.Application.ExecutablePath).AppSettings;
+            String key = "daorumima";
+            String pwd = "";
+            if (appSettings.Settings[key] != null)
+            {
+                pwd = appSettings.Settings[key].Value;
+            }
+
+            if (mySystem.Other.InputTextWindow.getString("密码") == pwd)
+            {
+                textBox1.Visible = true;
+                btn浏览.Visible = true;
+                btn导入.Visible = true;
+            }
         }
 
     }

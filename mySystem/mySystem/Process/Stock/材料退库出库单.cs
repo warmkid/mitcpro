@@ -153,6 +153,16 @@ namespace mySystem.Process.Stock
                 {
                     for (int i = 0; i < dtInner.Rows.Count; i++)
                     {
+                        // 去重
+                        String daima = dtInner.Rows[i]["物料代码"].ToString();
+                        string pihao = dtInner.Rows[i]["物料批号"].ToString();
+                        DataRow[] existing = dt_temp2.Select(String.Format("物料代码='{0}' and 物料批号='{1}'", daima, pihao));
+                        if (existing.Count() > 0)
+                        {
+                            existing[0]["发料数量"] = Convert.ToDouble(existing[0]["发料数量"]) + Convert.ToDouble(dtInner.Rows[i]["发料数量"]);
+                            continue;
+                        }
+                        //  -----
                         DataRow dr = dt_temp2.NewRow();
                         if(1==label)//退库单
                         {
@@ -623,7 +633,7 @@ namespace mySystem.Process.Stock
             {
                 string code,code_外;
                 string num = "";
-                int num_int;//数量
+                double num_int;//数量
                 if (1 == label)//退库
                 {
                     code = dataGridView2.Rows[i].Cells["二维码"].Value.ToString();
@@ -631,7 +641,7 @@ namespace mySystem.Process.Stock
                     if (num == "")
                         num_int = 0;
                     else
-                        num_int = int.Parse(num);
+                        num_int = double.Parse(num);
                     addrow(code,num_int);        
                 }
                     
@@ -649,7 +659,7 @@ namespace mySystem.Process.Stock
                     if (num == "")
                         num_int = 0;
                     else
-                        num_int = int.Parse(num);
+                        num_int = double.Parse(num);
 
                     if (code_外 == "")
                     {
@@ -661,22 +671,22 @@ namespace mySystem.Process.Stock
                     {
                         List<string> li_外 = parse_二维码(code_外);
                         List<string> li_内 = parse_二维码(code);
-                        if (dt记录.Rows[0]["属于工序"].ToString() != "吹膜")
+                        //if (dt记录.Rows[0]["属于工序"].ToString() != "吹膜")
+                        //{
+                        if (li_内[0] != li_外[0] || li_内[1] != li_外[1])
                         {
-                            if (li_内[0] != li_外[0] || li_内[1] != li_外[1])
-                            {
-                                MessageBox.Show("第 " + (i + 1).ToString() + " 行二维码有误");
-                                continue;
-                            }
+                            MessageBox.Show("第 " + (i + 1).ToString() + " 行二维码有误");
+                            continue;
                         }
-                        else//吹膜的情况下只比较代码
-                        {
-                            if (li_内[0] != li_外[0])
-                            {
-                                MessageBox.Show("第 " + (i + 1).ToString() + " 行二维码有误");
-                                continue;
-                            }
-                        }
+                        //}
+                        //else//吹膜的情况下只比较代码
+                        //{
+                        //    if (li_内[0] != li_外[0])
+                        //    {
+                        //        MessageBox.Show("第 " + (i + 1).ToString() + " 行二维码有误");
+                        //        continue;
+                        //    }
+                        //}
                     }
                     //以二维码内为准
                     addrow(code_外,num_int,code);
@@ -751,7 +761,7 @@ namespace mySystem.Process.Stock
             {
                 dataGridView1.Columns["T材料出库单ID"].Visible = false;
                 dataGridView1.Columns["出库日期时间"].ReadOnly = true;
-                dataGridView1.Columns["发料数量"].ReadOnly = true;
+                dataGridView1.Columns["发料数量"].ReadOnly = false;
 
                 dataGridView2.Columns["T材料出库单ID"].Visible = false;
                 //dataGridView2.Columns["二维码外"].HeaderText = "二维码";
@@ -767,12 +777,12 @@ namespace mySystem.Process.Stock
             //HeaderText
             dataGridView1.Columns["审核员"].HeaderText = "复核人";
 
-            if (dt记录.Rows[0]["属于工序"].ToString() == "吹膜")
-            {
-                dataGridView1.Columns["物料批号"].Visible = false;
-                dataGridView3.Columns[2].Visible = false;
+            //if (dt记录.Rows[0]["属于工序"].ToString() == "吹膜")
+            //{
+            //    dataGridView1.Columns["物料批号"].Visible = false;
+            //    dataGridView3.Columns[2].Visible = false;
 
-            }
+            //}
 
         }
 
@@ -956,64 +966,64 @@ namespace mySystem.Process.Stock
                 MessageBox.Show("物料代码 种类个数 不匹配");
                 return false;
             }
-            if (dt记录.Rows[0]["属于工序"].ToString() != "吹膜")
+            //if (dt记录.Rows[0]["属于工序"].ToString() != "吹膜")
+            //{
+            for (int i = 0; i < dataGridView3.Rows.Count; i++)
             {
-                for (int i = 0; i < dataGridView3.Rows.Count; i++)
+                DataRow[] dr = dt记录详情.Select(string.Format("物料代码='{0}' and 物料批号='{1}'", dataGridView3.Rows[i].Cells["物料代码"].Value.ToString(), dataGridView3.Rows[i].Cells["物料批号"].Value.ToString()));
+                if (dr.Length == 0)
                 {
-                    DataRow[] dr = dt记录详情.Select(string.Format("物料代码='{0}' and 物料批号='{1}'", dataGridView3.Rows[i].Cells["物料代码"].Value.ToString(), dataGridView3.Rows[i].Cells["物料批号"].Value.ToString()));
-                    if (dr.Length == 0)
+                    MessageBox.Show("物料代码" + dataGridView3.Rows[i].Cells["物料代码"].Value.ToString() + "不匹配");
+                    return false;
+                }
+                if (label != 1)//出库
+                {
+                    if (double.Parse(dr[0][7].ToString()) > double.Parse(dataGridView3.Rows[i].Cells["数量"].Value.ToString()))//应该出库量>实际出库量
                     {
-                        MessageBox.Show("物料代码" + dataGridView3.Rows[i].Cells["物料代码"].Value.ToString() + "不匹配");
+                        MessageBox.Show("物料代码" + dataGridView3.Rows[i].Cells["物料代码"].Value.ToString() + "出库量应该大于" + dr[0][7].ToString());
                         return false;
                     }
-                    if (label != 1)//出库
-                    {
-                        if (int.Parse(dr[0][7].ToString()) > int.Parse(dataGridView3.Rows[i].Cells["数量"].Value.ToString()))//应该出库量>实际出库量
-                        {
-                            MessageBox.Show("物料代码" + dataGridView3.Rows[i].Cells["物料代码"].Value.ToString() + "出库量应该大于" + dr[0][7].ToString());
-                            return false;
-                        }
-                    }
-                    else//退库
-                    {
-                        if (dr[0][7].ToString() != dataGridView3.Rows[i].Cells["数量"].Value.ToString())//退库数量不等
-                        {
-                            MessageBox.Show("物料代码" + dataGridView3.Rows[i].Cells["物料代码"].Value.ToString() + "对应数量不匹配");
-                            return false;
-                        }
-                    }
-
                 }
-            }
-            else
-            {
-                for (int i = 0; i < dataGridView3.Rows.Count; i++)
+                else//退库
                 {
-                    DataRow[] dr = dt记录详情.Select(string.Format("物料代码='{0}'", dataGridView3.Rows[i].Cells["物料代码"].Value.ToString()));
-                    if (dr.Length == 0)
+                    if (dr[0][7].ToString() != dataGridView3.Rows[i].Cells["数量"].Value.ToString())//退库数量不等
                     {
-                        MessageBox.Show("物料代码" + dataGridView3.Rows[i].Cells["物料代码"].Value.ToString() + "不匹配");
+                        MessageBox.Show("物料代码" + dataGridView3.Rows[i].Cells["物料代码"].Value.ToString() + "对应数量不匹配");
                         return false;
                     }
-                    if (label != 1)//出库
-                    {
-                        if (int.Parse(dr[0][7].ToString()) > int.Parse(dataGridView3.Rows[i].Cells["数量"].Value.ToString()))//应该出库量>实际出库量
-                        {
-                            MessageBox.Show("物料代码" + dataGridView3.Rows[i].Cells["物料代码"].Value.ToString() + "出库量应该大于" + dr[0][7].ToString());
-                            return false;
-                        }
-                    }
-                    else//退库
-                    {
-                        if (dr[0][7].ToString() != dataGridView3.Rows[i].Cells["数量"].Value.ToString())//退库数量不等
-                        {
-                            MessageBox.Show("物料代码" + dataGridView3.Rows[i].Cells["物料代码"].Value.ToString() + "对应数量不匹配");
-                            return false;
-                        }
-                    }
-
                 }
+
             }
+            //}
+            //else
+            //{
+            //    for (int i = 0; i < dataGridView3.Rows.Count; i++)
+            //    {
+            //        DataRow[] dr = dt记录详情.Select(string.Format("物料代码='{0}'", dataGridView3.Rows[i].Cells["物料代码"].Value.ToString()));
+            //        if (dr.Length == 0)
+            //        {
+            //            MessageBox.Show("物料代码" + dataGridView3.Rows[i].Cells["物料代码"].Value.ToString() + "不匹配");
+            //            return false;
+            //        }
+            //        if (label != 1)//出库
+            //        {
+            //            if (int.Parse(dr[0][7].ToString()) > int.Parse(dataGridView3.Rows[i].Cells["数量"].Value.ToString()))//应该出库量>实际出库量
+            //            {
+            //                MessageBox.Show("物料代码" + dataGridView3.Rows[i].Cells["物料代码"].Value.ToString() + "出库量应该大于" + dr[0][7].ToString());
+            //                return false;
+            //            }
+            //        }
+            //        else//退库
+            //        {
+            //            if (dr[0][7].ToString() != dataGridView3.Rows[i].Cells["数量"].Value.ToString())//退库数量不等
+            //            {
+            //                MessageBox.Show("物料代码" + dataGridView3.Rows[i].Cells["物料代码"].Value.ToString() + "对应数量不匹配");
+            //                return false;
+            //            }
+            //        }
+
+            //    }
+            //}
 
             return true;
         }
@@ -1067,6 +1077,31 @@ namespace mySystem.Process.Stock
         //提交审核按钮
         private void btn提交审核_Click(object sender, EventArgs e)
         {
+            String n;
+            if (!checkOuterData(out n))
+            {
+                MessageBox.Show("请填写完整的信息: " + n, "提示");
+                return;
+            }
+
+
+
+            if (!checkInnerData(dataGridView1))
+            {
+                MessageBox.Show("请填写完整的表单信息", "提示");
+                return;
+            }
+            if (!checkInnerData(dataGridView2))
+            {
+                MessageBox.Show("请填写完整的表单信息", "提示");
+                return;
+            }
+            //if (!checkInnerData(dataGridView3))
+            //{
+            //    MessageBox.Show("请填写完整的表单信息", "提示");
+            //    return;
+            //}
+            
             //保存
             bool isSaved = Save();
             if (isSaved == false)
@@ -1545,14 +1580,14 @@ namespace mySystem.Process.Stock
         }
 
         //讲根据二维码添加行
-        private void addrow(string code,int num)
+        private void addrow(string code,double num)
         {
             if (code != "" && !hs_二维码.Contains(code))
             {
                 //添加并解析
                 hs_二维码.Add(code);
                 List<string> li = parse_二维码(code);
-                if (!dic_材料代码.ContainsKey(li[0].ToString()))//不包括该物料代码
+                if (!dic_材料代码.ContainsKey(li[0]+"@"+li[1]))//不包括该物料代码
                 {
                     int rownum = dataGridView3.Rows.Add();
                     dataGridView3.Rows[rownum].Cells["序号"].Value = rownum + 1;//序号
@@ -1560,23 +1595,23 @@ namespace mySystem.Process.Stock
                     dataGridView3.Rows[rownum].Cells["物料批号"].Value = li[1];//物料批号
                     dataGridView3.Rows[rownum].Cells["数量"].Value = num;//出库/退库数量
 
-                    dic_材料代码.Add(li[0].ToString(), rownum);
+                    dic_材料代码.Add(li[0] + "@" + li[1], rownum);
                 }
                 else//物料代码已经存在，只需要更新数量
                 {
-                    dataGridView3.Rows[dic_材料代码[li[0].ToString()]].Cells["数量"].Value = int.Parse(dataGridView3.Rows[dic_材料代码[li[0].ToString()]].Cells["数量"].Value.ToString()) + num;//出库/退库数量
+                    dataGridView3.Rows[dic_材料代码[li[0] + "@" + li[1]]].Cells["数量"].Value = double.Parse(dataGridView3.Rows[dic_材料代码[li[0] + "@" + li[1]]].Cells["数量"].Value.ToString()) + num;//出库/退库数量
                 }
 
             }
         }
-        private void addrow(string code, int num,string code2)//code是二维码外，code2是二维码内
+        private void addrow(string code, double num,string code2)//code是二维码外，code2是二维码内
         {
             if (code != "" && !hs_二维码.Contains(code2))
             {
                 //添加并解析
                 hs_二维码.Add(code2);
                 List<string> li = parse_二维码(code);
-                if (!dic_材料代码.ContainsKey(li[0].ToString()))//不包括该物料代码
+                if (!dic_材料代码.ContainsKey(li[0]+"@"+li[1]))//不包括该物料代码
                 {
                     int rownum = dataGridView3.Rows.Add();
                     dataGridView3.Rows[rownum].Cells["序号"].Value = rownum + 1;//序号
@@ -1584,11 +1619,11 @@ namespace mySystem.Process.Stock
                     dataGridView3.Rows[rownum].Cells["物料批号"].Value = li[1];//物料批号
                     dataGridView3.Rows[rownum].Cells["数量"].Value = num;//出库/退库数量
 
-                    dic_材料代码.Add(li[0].ToString(), rownum);
+                    dic_材料代码.Add(li[0] + "@" + li[1], rownum);
                 }
                 else//物料代码已经存在，只需要更新数量
                 {
-                    dataGridView3.Rows[dic_材料代码[li[0].ToString()]].Cells["数量"].Value = int.Parse(dataGridView3.Rows[dic_材料代码[li[0].ToString()]].Cells["数量"].Value.ToString()) + num;//出库/退库数量
+                    dataGridView3.Rows[dic_材料代码[li[0] + "@" + li[1]]].Cells["数量"].Value = double.Parse(dataGridView3.Rows[dic_材料代码[li[0] + "@" + li[1]]].Cells["数量"].Value.ToString()) + num;//出库/退库数量
                 }
 
             }
@@ -1744,16 +1779,33 @@ namespace mySystem.Process.Stock
         }
         private void dataGridView2_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.ColumnIndex >= 0 && e.RowIndex >= 0)
+            {
+                if (dataGridView2.Columns[e.ColumnIndex].Name == "二维码")
+                {
+                    List<String> l = parse_二维码(dataGridView2.Rows[e.RowIndex].Cells["二维码"].Value.ToString());
+                    if (l.Count != 3)
+                    {
+                        MessageBox.Show("二维码格式有误");
+                        dataGridView2.Rows[e.RowIndex].Cells["二维码"].Value = "";
+                        return;
+                    }
+                }
+            }
             if (1 != label)//出库
             {
                 if (e.ColumnIndex >= 0 && e.RowIndex >= 0)
                 {
+                    
+
                     if (e.RowIndex % 2 == 0 && dataGridView2.Columns[e.ColumnIndex].Name == "二维码")
                     {
+                        
                         //杜数据库填数量
                         //先获得库存id
                         if (dataGridView2.Rows[e.RowIndex].Cells["二维码"].Value.ToString() != "")
                         {
+                            
                             SqlCommand cmd = new SqlCommand();
                             cmd.Connection = mySystem.Parameter.conn;
                             string strcmd = string.Format("SELECT * from 二维码信息 where 二维码='{0}'", dataGridView2.Rows[e.RowIndex].Cells["二维码"].Value.ToString());
@@ -1770,25 +1822,35 @@ namespace mySystem.Process.Stock
                         }
 
                     }
-                    if (e.RowIndex % 2 == 1 && dataGridView2.Columns[e.ColumnIndex].Name == "二维码")
-                    {
-                        if (dataGridView2.Rows[e.RowIndex].Cells["二维码"].Value ==
-                            dataGridView2.Rows[e.RowIndex - 1].Cells["二维码"].Value)
-                        {
-                            dataGridView2.Rows[e.RowIndex].Cells["数量"].Value =
-                                dataGridView2.Rows[e.RowIndex - 1].Cells["数量"].Value;
-                        }
-                        else
-                        {
-                            double u = Convert.ToDouble( dataGridView2.Rows[e.RowIndex].Cells["数量"].Value);
-                              double d =Convert.ToDouble(  dataGridView2.Rows[e.RowIndex - 1].Cells["数量"].Value);
-                              if (d >= u)
-                              {
-                                  dataGridView2.Rows[e.RowIndex - 1].Cells["数量"].Value =
-                                      dataGridView2.Rows[e.RowIndex].Cells["数量"].Value;
-                              }
-                        }
-                    }
+                    
+                     if (e.RowIndex % 2 == 1 && dataGridView2.Columns[e.ColumnIndex].Name == "数量"){
+                         if (dataGridView2.Rows[e.RowIndex].Cells["二维码"].Value.ToString() ==
+                            dataGridView2.Rows[e.RowIndex - 1].Cells["二维码"].Value.ToString())
+                         {
+                             dataGridView2.Rows[e.RowIndex].Cells["数量"].Value =
+                                 dataGridView2.Rows[e.RowIndex - 1].Cells["数量"].Value;
+                         }
+                         else
+                         {
+                             double u;
+                             double d;
+                             try
+                             {
+                                 u = Convert.ToDouble(dataGridView2.Rows[e.RowIndex - 1].Cells["数量"].Value);
+                                 d = Convert.ToDouble(dataGridView2.Rows[e.RowIndex].Cells["数量"].Value);
+                             }
+                             catch (Exception eee)
+                             {
+                                 u = 0;
+                                 d = 0;
+                             }
+                             if (d >= u)
+                             {
+                                 dataGridView2.Rows[e.RowIndex].Cells["数量"].Value =
+                                     dataGridView2.Rows[e.RowIndex - 1].Cells["数量"].Value;
+                             }
+                         }
+                     }
                 }
             }
 
@@ -1817,26 +1879,29 @@ namespace mySystem.Process.Stock
 
         void check库存()
         {
-            SqlCommand comm;
-            String sql = "select sum(现存数量) from 库存台帐 where 产品代码='{0}'";
-            foreach (DataRow dr in dt记录详情.Rows)
+            if (label == 2)
             {
-                String daima = dr["物料代码"].ToString();
-                double shuliang = Convert.ToDouble(dr["发料数量"]);
-                comm = new SqlCommand(String.Format(sql, daima), conn);
-                Object res = comm.ExecuteScalar();
-                double a = 0;
-                if (res != DBNull.Value)
+                SqlCommand comm;
+                String sql = "select sum(现存数量) from 库存台帐 where 产品代码='{0}'";
+                foreach (DataRow dr in dt记录详情.Rows)
                 {
-                    a = Convert.ToDouble(comm.ExecuteScalar());
-                }
+                    String daima = dr["物料代码"].ToString();
+                    double shuliang = Convert.ToDouble(dr["发料数量"]);
+                    comm = new SqlCommand(String.Format(sql, daima), conn);
+                    Object res = comm.ExecuteScalar();
+                    double a = 0;
+                    if (res != DBNull.Value)
+                    {
+                        a = Convert.ToDouble(comm.ExecuteScalar());
+                    }
 
-                if (a <= shuliang)
-                {
-                    MessageBox.Show("产品: " + daima + " 的库存数量不足以发货", "警告");
-                    return;
+                    if (a <= shuliang)
+                    {
+                        MessageBox.Show("产品: " + daima + " 的库存数量不足以发货", "警告");
+                        return;
+                    }
+
                 }
-                
             }
         }
         

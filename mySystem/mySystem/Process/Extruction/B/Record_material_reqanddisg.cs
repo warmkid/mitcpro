@@ -35,6 +35,7 @@ namespace mySystem.Extruction.Process
         int instrid;
         string matcode;
         string current物料代码;
+        int _id;
         // 需要保存的状态
         /// <summary>
         /// 1:操作员，2：审核员，4：管理员
@@ -314,7 +315,7 @@ namespace mySystem.Extruction.Process
         public Record_material_reqanddisg(MainForm mainform)
             : base(mainform)
         {
-          
+            _id = mySystem.Parameter.proInstruID;
             InitializeComponent();
             // 如果本指令没有领料申请单，则提示
             
@@ -388,6 +389,13 @@ namespace mySystem.Extruction.Process
         public Record_material_reqanddisg(MainForm mainform,int id)
             : base(mainform)
         {
+            string asql = "select * from 吹膜工序领料退料记录 where ID=" + id;
+            SqlCommand comm = new SqlCommand(asql, mySystem.Parameter.conn);
+            SqlDataAdapter da = new SqlDataAdapter(comm);
+
+            DataTable tempdt = new DataTable();
+            da.Fill(tempdt);
+            _id = Convert.ToInt32(tempdt.Rows[0]["生产指令ID"]);
             InitializeComponent();
             isSaved = true;
             fill_printer();
@@ -396,12 +404,7 @@ namespace mySystem.Extruction.Process
 
             setControlFalse();
 
-            string asql = "select * from 吹膜工序领料退料记录 where ID=" + id;
-            SqlCommand comm = new SqlCommand(asql, mySystem.Parameter.conn);
-            SqlDataAdapter da = new SqlDataAdapter(comm);
-
-            DataTable tempdt = new DataTable();
-            da.Fill(tempdt);
+            
 
             //TODO instrid matcode可以放在读外表函数内************************
             //cB物料代码.Text = tempdt.Rows[0]["物料代码"].ToString();
@@ -690,6 +693,19 @@ namespace mySystem.Extruction.Process
         {
             if (dataGridView1.Columns[e.ColumnIndex].Name == "二维码")
             {
+                // 不准重复
+                string dm = dataGridView1[e.ColumnIndex, e.RowIndex].Value.ToString();
+                foreach (DataGridViewRow dgvr in dataGridView1.Rows)
+                {
+                    if (dgvr.Index == e.RowIndex) continue;
+                    if (dgvr.Cells["二维码"].Value.ToString() == dm)
+                    {
+                        MessageBox.Show("二维码重复！请检查");
+                        dataGridView1[e.ColumnIndex, e.RowIndex].Value = "";
+                        return;
+                    }
+                }
+                // ---
                 try
                 {
                     string[] info = Regex.Split(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), "@");
@@ -740,18 +756,21 @@ namespace mySystem.Extruction.Process
             }
 
             //计算合计
-            float sum_num = 0, sum_weight = 0;
+            float sum_num = 0, sum_weight = 0,sm_tuliao=0;
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
                 if (dataGridView1.Rows[i].Cells["数量"].Value.ToString() != "")
                     sum_num += float.Parse(dataGridView1.Rows[i].Cells["数量"].Value.ToString());
                 if (dataGridView1.Rows[i].Cells["重量"].Value.ToString() != "")
                     sum_weight += float.Parse(dataGridView1.Rows[i].Cells["重量"].Value.ToString());
+                if (dataGridView1.Rows[i].Cells["退料数量"].Value.ToString() != "")
+                    sm_tuliao += float.Parse(dataGridView1.Rows[i].Cells["退料数量"].Value.ToString());
             }
             //tb重量.Text = sum_num.ToString();
             //tb数量.Text = sum_weight.ToString();
             dt_prodinstr.Rows[0]["重量合计"] = sum_weight;
             dt_prodinstr.Rows[0]["数量合计"] = sum_num;
+            dt_prodinstr.Rows[0]["退料"] = sm_tuliao;
 
             bs_prodinstr.EndEdit();
             if (!mySystem.Parameter.isSqlOk)
@@ -886,19 +905,25 @@ namespace mySystem.Extruction.Process
             dr["生产指令编号"]=getInsFromID(Convert.ToInt32(dr["生产指令ID"]));
             dr["产品代码"]="";
             dr["产品批号"]="";
-            
+            Outer1.Rows.Add(dr);
+
             Inner1.Columns.Add("退库日期时间", Type.GetType("System.DateTime"));
             Inner1.Columns.Add("退库数量",Type.GetType("System.Int32"));
             Inner1.Columns.Add("物料代码",Type.GetType("System.String"));
             Inner1.Columns.Add("物料批号",Type.GetType("System.String"));
-            DataRow dr1 =Inner1.NewRow();
-            dr1["退库日期时间"] = DateTime.Now;
-            dr1["退库数量"]=dt_prodinstr.Rows[0]["退料"];
-            dr1["物料代码"]=dt_prodinstr.Rows[0]["物料代码"];
-            dr1["物料批号"]="";
+            foreach (DataRow dr2 in dt_prodlist.Rows)
+            {
+                DataRow dr1 = Inner1.NewRow();
+                dr1["退库日期时间"] = DateTime.Now;
+                dr1["退库数量"] = dr2["退料数量"];
+                dr1["物料代码"] = dt_prodinstr.Rows[0]["物料代码"];
+                dr1["物料批号"] = dr2["物料批号"];
+                Inner1.Rows.Add(dr1);
+            }
+            
 
-            Outer1.Rows.Add(dr);
-            Inner1.Rows.Add(dr1);
+            
+            
             string str工序 = "吹膜";
             try
             {
@@ -981,6 +1006,7 @@ namespace mySystem.Extruction.Process
             dr["清洁合格"] = "合格";
             dr["操作人"] = mySystem.Parameter.userName;
             dr["操作员备注"] = "无";
+            dr["退料数量"] = 0;
             dr["二维码"] = "";
             return dr;
         }
@@ -1162,6 +1188,7 @@ namespace mySystem.Extruction.Process
                 dataGridView1.Columns["T吹膜工序领料退料记录ID"].Visible = false;//T吹膜工序领料退料记录ID
                 dataGridView1.Columns["重量"].ReadOnly = true;//重量
                 dataGridView1.Columns["审核人"].ReadOnly = true;//领料审核人
+                dataGridView1.Columns["数量"].ReadOnly = true;//领料审核人
             }
 
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
@@ -1784,7 +1811,7 @@ namespace mySystem.Extruction.Process
         private void Record_material_reqanddisg_Load(object sender, EventArgs e)
         {
             String sql1 = "select * from 生产领料申请单表 where 生产指令ID ={0}";
-            SqlDataAdapter da = new SqlDataAdapter(String.Format(sql1, mySystem.Parameter.proInstruID), mySystem.Parameter.conn);
+            SqlDataAdapter da = new SqlDataAdapter(String.Format(sql1, _id), mySystem.Parameter.conn);
             DataTable dt = new DataTable();
             da.Fill(dt);
             if (dt.Rows.Count == 0)

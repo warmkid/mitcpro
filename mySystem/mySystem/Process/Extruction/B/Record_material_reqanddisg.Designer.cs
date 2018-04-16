@@ -234,6 +234,7 @@
             // 
             this.tb退料量.Location = new System.Drawing.Point(75, 394);
             this.tb退料量.Name = "tb退料量";
+            this.tb退料量.ReadOnly = true;
             this.tb退料量.Size = new System.Drawing.Size(100, 23);
             this.tb退料量.TabIndex = 20;
             // 

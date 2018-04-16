@@ -55,12 +55,13 @@ namespace mySystem.Extruction.Process
 
         public ProductInnerPackagingRecord(MainForm mainform): base(mainform)
         {
-            InitializeComponent();
+            
 
             conn = Parameter.conn;
             connOle = Parameter.connOle;
             isSqlOk = Parameter.isSqlOk;
             InstruID = Parameter.proInstruID;
+            InitializeComponent();
             Instruction = Parameter.proInstruction;
 
             fill_printer(); //添加打印机
@@ -83,7 +84,7 @@ namespace mySystem.Extruction.Process
 
         public ProductInnerPackagingRecord(MainForm mainform, Int32 ID) : base(mainform)
         {
-            InitializeComponent();
+            
 
             conn = Parameter.conn;
             connOle = Parameter.connOle;
@@ -92,6 +93,7 @@ namespace mySystem.Extruction.Process
             DataTable dt = new DataTable();
             da.Fill(dt);
             InstruID = Convert.ToInt32(dt.Rows[0]["生产指令ID"]);
+            InitializeComponent();
             da = new SqlDataAdapter("select * from 生产指令信息表 where ID=" + InstruID, conn);
             dt = new DataTable();
             da.Fill(dt);
@@ -1345,6 +1347,20 @@ namespace mySystem.Extruction.Process
             if (dataGridView1.ColumnCount > 0)
             {
                 writeDGVWidthToSetting(dataGridView1);
+            }
+        }
+
+        private void ProductInnerPackagingRecord_Load(object sender, EventArgs e)
+        {
+            String sql1 = "select * from 吹膜供料记录 where 生产指令ID ={0}";
+            SqlDataAdapter da = new SqlDataAdapter(String.Format(sql1, InstruID), mySystem.Parameter.conn);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            if (dt.Rows.Count == 0)
+            {
+                MessageBox.Show("请先填写吹膜供料记录！", "提示");
+                this.Close();
+                //return;
             }
         }
 

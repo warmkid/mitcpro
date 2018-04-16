@@ -137,6 +137,12 @@
     <Compile Include="Other\属于工序.Designer.cs">
       <DependentUpon>属于工序.cs</DependentUpon>
     </Compile>
+    <Compile Include="Other\我的任务.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Other\我的任务.Designer.cs">
+      <DependentUpon>我的任务.cs</DependentUpon>
+    </Compile>
     <Compile Include="Other\生产领料申请单.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1374,6 +1380,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Other\属于工序.resx">
       <DependentUpon>属于工序.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Other\我的任务.resx">
+      <DependentUpon>我的任务.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Other\生产领料申请单.resx">
       <DependentUpon>生产领料申请单.cs</DependentUpon>

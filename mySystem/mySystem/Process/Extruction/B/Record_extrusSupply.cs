@@ -295,7 +295,7 @@ namespace WindowsFormsApplication1
             addDataEventHandler();
 
             dtp供料日期.Enabled = false;
-            cb产品代码.Enabled = false;
+            //cb产品代码.Enabled = false;
             bt插入查询.Enabled = false;
             
             //setControlFalse();
@@ -337,7 +337,7 @@ namespace WindowsFormsApplication1
             readOuterData(instrid);
             removeOuterBinding();
             outerBind();
-            cb产品代码.Text = prodcode;
+            //cb产品代码.Text = prodcode;
             cb原料代码ab1c.Text = dt_prodinstr.Rows[0]["外中内层原料代码"].ToString();
             cb原料代码b2.Text = dt_prodinstr.Rows[0]["中层原料代码"].ToString();
             ckb白班.Checked = (bool)dt_prodinstr.Rows[0]["班次"];
@@ -361,7 +361,7 @@ namespace WindowsFormsApplication1
             setEnableReadOnly();
             addDataEventHandler();
 
-            cb产品代码.Enabled = false;
+            //cb产品代码.Enabled = false;
             dtp供料日期.Enabled = false;
             bt插入查询.Enabled = false;
         }
@@ -565,7 +565,7 @@ namespace WindowsFormsApplication1
                 {
                     if (tempdt.Rows[i]["产品编码"] != null && tempdt.Rows[i]["产品批号"] != null)
                     {
-                        cb产品代码.Items.Add((string)tempdt.Rows[i]["产品编码"]);
+                        //cb产品代码.Items.Add((string)tempdt.Rows[i]["产品编码"]);
                         dict_procode_batch.Add((string)tempdt.Rows[i]["产品编码"], (string)tempdt.Rows[i]["产品批号"]);
                     }
                 }
@@ -586,7 +586,7 @@ namespace WindowsFormsApplication1
                 {
                     if (tempdt.Rows[i]["产品编码"] != null && tempdt.Rows[i]["产品批号"] != null)
                     {
-                        cb产品代码.Items.Add((string)tempdt.Rows[i]["产品编码"]);
+                        //cb产品代码.Items.Add((string)tempdt.Rows[i]["产品编码"]);
                         dict_procode_batch.Add((string)tempdt.Rows[i]["产品编码"], (string)tempdt.Rows[i]["产品批号"]);
                     }
                 }
@@ -701,6 +701,7 @@ namespace WindowsFormsApplication1
             dr["供料日期"] = DateTime.Parse(dtp供料日期.Value.ToShortDateString());
             dr["班次"] = mySystem.Parameter.userflight == "白班";
             dr["审核日期"] = DateTime.Now;
+            dr["产品批号"] = "无";
             ckb白班.Checked = (bool)dr["班次"] ;
             ckb夜班.Checked = !ckb白班.Checked;
 
@@ -795,7 +796,7 @@ namespace WindowsFormsApplication1
             //解除之前的绑定
             dtp供料日期.DataBindings.Clear();
             //ckb白班.DataBindings.Clear();
-            cb产品代码.DataBindings.Clear();
+            //cb产品代码.DataBindings.Clear();
             tb产品批号.DataBindings.Clear();
             tb生产指令.DataBindings.Clear();
             cb原料代码ab1c.DataBindings.Clear();
@@ -820,7 +821,7 @@ namespace WindowsFormsApplication1
             bs_prodinstr.DataSource = dt_prodinstr;
             dtp供料日期.DataBindings.Add("Value", bs_prodinstr.DataSource, "供料日期");
             //ckb白班.DataBindings.Add("Checked", bs_prodinstr.DataSource, "班次");
-            cb产品代码.DataBindings.Add("Text", bs_prodinstr.DataSource, "产品代码");
+            //cb产品代码.DataBindings.Add("Text", bs_prodinstr.DataSource, "产品代码");
             tb产品批号.DataBindings.Add("Text", bs_prodinstr.DataSource, "产品批号");
             tb生产指令.DataBindings.Add("Text", bs_prodinstr.DataSource, "生产指令编号");
             cb原料代码ab1c.DataBindings.Add("Text", bs_prodinstr.DataSource, "外中内层原料代码");
@@ -1120,7 +1121,7 @@ namespace WindowsFormsApplication1
                 else
                 {
                     setControlFalse();
-                    cb产品代码.Enabled = true;
+                    //cb产品代码.Enabled = true;
                     dtp供料日期.Enabled = true;
                 }
                 btn数据审核.Enabled = false;
@@ -1620,6 +1621,7 @@ namespace WindowsFormsApplication1
 
         private void bt提交审核_Click(object sender, EventArgs e)
         {
+            tb产品批号.Text = "无";
             String n;
             if (!checkOuterData(out n))
             {
@@ -1763,12 +1765,12 @@ namespace WindowsFormsApplication1
 
         private void bt插入查询_Click(object sender, EventArgs e)
         {
-            if (cb产品代码.Text == "")
-            {
-                MessageBox.Show("选择一条产品代码");
-                return;
-            }
-            readOuterData(mySystem.Parameter.proInstruID, cb产品代码.Text, DateTime.Parse(dtp供料日期.Value.ToShortDateString()), mySystem.Parameter.userflight == "白班");
+            //if (cb产品代码.Text == "")
+            //{
+            //    MessageBox.Show("选择一条产品代码");
+            //    return;
+            //}
+            //readOuterData(mySystem.Parameter.proInstruID, cb产品代码.Text, DateTime.Parse(dtp供料日期.Value.ToShortDateString()), mySystem.Parameter.userflight == "白班");
             removeOuterBinding();
             outerBind();
 
@@ -1791,7 +1793,7 @@ namespace WindowsFormsApplication1
                     da_prodinstrsql.Update((DataTable)bs_prodinstr.DataSource);
                 }
                 
-                readOuterData(mySystem.Parameter.proInstruID, cb产品代码.Text, DateTime.Parse(dtp供料日期.Value.ToShortDateString()), mySystem.Parameter.userflight == "白班");
+                //readOuterData(mySystem.Parameter.proInstruID, cb产品代码.Text, DateTime.Parse(dtp供料日期.Value.ToShortDateString()), mySystem.Parameter.userflight == "白班");
                 removeOuterBinding();
                 outerBind();
             }
@@ -1799,7 +1801,7 @@ namespace WindowsFormsApplication1
             ckb夜班.Checked = !ckb白班.Checked;
 
             instrid = mySystem.Parameter.proInstruID;
-            prodcode = cb产品代码.Text;
+            //prodcode = cb产品代码.Text;
             time = DateTime.Parse(dtp供料日期.Value.ToShortDateString());
             flight = mySystem.Parameter.userflight == "白班";
 
@@ -1812,7 +1814,7 @@ namespace WindowsFormsApplication1
             addDataEventHandler();
 
             dtp供料日期.Enabled = false;
-            cb产品代码.Enabled = false;
+            //cb产品代码.Enabled = false;
             bt插入查询.Enabled = false;
         }
 
@@ -1922,6 +1924,20 @@ namespace WindowsFormsApplication1
             if (dataGridView1.ColumnCount > 0)
             {
                 writeDGVWidthToSetting(dataGridView1);
+            }
+        }
+
+        private void Record_extrusSupply_Load(object sender, EventArgs e)
+        {
+            String sql1 = "select * from 吹膜工序领料退料记录 where 生产指令ID ={0}";
+            SqlDataAdapter da = new SqlDataAdapter(String.Format(sql1, mySystem.Parameter.proInstruID), mySystem.Parameter.conn);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            if (dt.Rows.Count == 0)
+            {
+                MessageBox.Show("请先填写吹膜工序领料退料记录！", "提示");
+                this.Close();
+                //return;
             }
         }
     }

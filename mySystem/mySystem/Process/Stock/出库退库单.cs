@@ -90,7 +90,7 @@ namespace mySystem.Process.Stock
                 int id = Convert.ToInt32(dgv退库单.Rows[e.RowIndex].Cells[0].Value);
                 
                 材料退库出库单 form = new 材料退库出库单(mainform, id, 1);
-                form.Show();
+                form.ShowDialog();
             }
         }
 
@@ -101,7 +101,7 @@ namespace mySystem.Process.Stock
             {
                 int id = Convert.ToInt32(dgv出库单.Rows[e.RowIndex].Cells[1].Value);
                 材料退库出库单 form = new 材料退库出库单(mainform, id, 2);
-                form.Show();
+                form.ShowDialog();
             }
         }
 
@@ -112,7 +112,7 @@ namespace mySystem.Process.Stock
             //MessageBox.Show(tabControl1.SelectedIndex.ToString()+"\n"+comboBox审核状态.Text);
             String shr = comboBox审核状态.Text;
             DateTime startT = dateTimePicker开始.Value.Date;
-            DateTime endT = dateTimePicker结束.Value;
+            DateTime endT = dateTimePicker结束.Value.AddDays(1);
             SqlDataAdapter da;
             String sql;
             switch (tabControl1.SelectedIndex)
@@ -167,8 +167,13 @@ namespace mySystem.Process.Stock
         void 退库单Bind()
         {
             dgv退库单.DataSource = dt退库单;
-
+            dgv退库单.DataBindingComplete += dgv退库单_DataBindingComplete;
             Utility.setDataGridViewAutoSizeMode(dgv退库单);
+        }
+
+        void dgv退库单_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            setDGVColor(sender, "审核员");
         }
 
         private void read出库单Date()
@@ -183,8 +188,13 @@ namespace mySystem.Process.Stock
         private void 出库单Bind()
         {
             dgv出库单.DataSource = dt出库单;
-
+            dgv出库单.DataBindingComplete += dgv出库单_DataBindingComplete;
             Utility.setDataGridViewAutoSizeMode(dgv出库单);
+        }
+
+        void dgv出库单_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            setDGVColor(sender, "审核员");
         }
                
         private void btn退库单读取_Click(object sender, EventArgs e)
@@ -199,8 +209,27 @@ namespace mySystem.Process.Stock
             出库单Bind();
         }
 
-        
 
+        private void setDataGridViewBackColor(DataGridView dgv, String checker)
+        {
+            for (int i = 0; i < dgv.Rows.Count; i++)
+            {
+                if (dgv.Rows[i].Cells[checker].Value.ToString() == "__待审核")
+                {
+                    dgv.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(255, 127, 0);
+                }
+                else if (dgv.Rows[i].Cells[checker].Value.ToString() == "")
+                {
+                    dgv.Rows[i].DefaultCellStyle.BackColor = Color.Gray;
+                }
+            }
+        }
+
+        private void setDGVColor(object sender, String checker)
+        {
+            DataGridView dgv = sender as DataGridView;
+            setDataGridViewBackColor(dgv, checker);
+        }
 
     }
 }
