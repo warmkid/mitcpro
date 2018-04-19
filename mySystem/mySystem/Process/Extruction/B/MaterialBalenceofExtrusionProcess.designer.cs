@@ -179,6 +179,7 @@
             this.btnSave.TabIndex = 42;
             this.btnSave.Text = "保存";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Visible = false;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // dtp审核日期

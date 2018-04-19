@@ -28,6 +28,8 @@ namespace mySystem
         int timer2Interval = 60000;
         mySystem.Other.Connecting c;
 
+        ProcessMainForm processForm;
+
         private void ThreadFunc()
         {
             MethodInvoker mi = new MethodInvoker(this.ShowMsgForm);
@@ -86,10 +88,35 @@ namespace mySystem
             LoginForm login = new LoginForm(this);
             login.ShowDialog();
             
+
+
+
             InitializeComponent();
             userLabel.Text = Parameter.userName;
             InitTaskBar();
             //SearchUnchecked();
+
+
+            // 接收指令
+            mySystem.Other.我的任务 f = new Other.我的任务();
+
+            //f.set指令(test);
+            //f.Show();
+            String instru = receiveInstr();
+            if (instru != null )
+            {
+                f.set指令(instru);
+                f.ShowDialog();
+                if (instru != null && instru.Contains("吹膜"))
+                {
+                    MainProduceBtn.PerformClick();
+                    processForm.Btn吹膜.PerformClick();
+                }
+            }
+           
+
+
+
             check库存预警();
             timer1.Interval = interval;
             timer1.Start();
@@ -130,7 +157,6 @@ namespace mySystem
                 MessageBox.Show("数据库异常！");
                 this.Close();
             }
-
         }
 
         void readSQLConfig()
@@ -219,19 +245,24 @@ namespace mySystem
                 String strCon吹膜 = "server=" + mySystem.Parameter.IP_port + ";database=extrusionnew;MultipleActiveResultSets=true;Uid="+Parameter.sql_user+";Pwd="+Parameter.sql_pwd;
                 list吹膜 = EachSearchUnchecked(strCon吹膜);
                 String strCon清洁分切 = "server=" + mySystem.Parameter.IP_port + ";database=welding;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
-                list清洁分切 = EachSearchUnchecked(strCon清洁分切);
-                String strConCS制袋 = "server=" + mySystem.Parameter.IP_port + ";database=csbag;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
-                listCS制袋 = EachSearchUnchecked(strConCS制袋);
-                String strConPE制袋 = "server=" + mySystem.Parameter.IP_port + ";database=LDPE;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
-                listPE制袋 = EachSearchUnchecked(strConPE制袋);
-                String strConBPV制袋 = "server=" + mySystem.Parameter.IP_port + ";database=BPV;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
-                listBPV制袋 = EachSearchUnchecked(strConBPV制袋);
-                String strConPTV制袋 = "server=" + mySystem.Parameter.IP_port + ";database=PTV;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
-                listPTV制袋 = EachSearchUnchecked(strConPTV制袋);
+                //list清洁分切 = EachSearchUnchecked(strCon清洁分切);
+                //String strConCS制袋 = "server=" + mySystem.Parameter.IP_port + ";database=csbag;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
+                //listCS制袋 = EachSearchUnchecked(strConCS制袋);
+                //String strConPE制袋 = "server=" + mySystem.Parameter.IP_port + ";database=LDPE;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
+                //listPE制袋 = EachSearchUnchecked(strConPE制袋);
+                //String strConBPV制袋 = "server=" + mySystem.Parameter.IP_port + ";database=BPV;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
+                //listBPV制袋 = EachSearchUnchecked(strConBPV制袋);
+                //String strConPTV制袋 = "server=" + mySystem.Parameter.IP_port + ";database=PTV;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
+                //listPTV制袋 = EachSearchUnchecked(strConPTV制袋);
                 String strCon订单库存 = "server=" + mySystem.Parameter.IP_port + ";database=dingdan_kucun;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
                 list订单 = EachSearchUnchecked(strCon订单库存, "订单用户权限");
                 list库存 = EachSearchUnchecked(strCon订单库存, "库存用户权限");
-                
+
+                list清洁分切 = new List<string>();
+                listCS制袋 = new List<string>();
+                listPE制袋 = new List<string>();
+                listBPV制袋 = new List<string>();
+                listPTV制袋 = new List<string>();
             }
 
             if (list吹膜.Count + list清洁分切.Count + listCS制袋.Count + listPE制袋.Count + listBPV制袋.Count + listPTV制袋.Count + list订单.Count + list库存.Count == 0) return "";
@@ -371,12 +402,12 @@ namespace mySystem
             MainProduceBtn.BackColor = Color.FromArgb(138, 158, 196);
             MainSettingBtn.BackColor = Color.FromName("Control");
             MainQueryBtn.BackColor = Color.FromName("Control");
-            ProcessMainForm myDlg = new ProcessMainForm(this);
-            myDlg.TopLevel = false;
-            myDlg.FormBorderStyle = FormBorderStyle.None;
-            myDlg.Size = MainPanel.Size;
-            MainPanel.Controls.Add(myDlg);
-            myDlg.Show();
+            processForm = new ProcessMainForm(this);
+            processForm.TopLevel = false;
+            processForm.FormBorderStyle = FormBorderStyle.None;
+            processForm.Size = MainPanel.Size;
+            MainPanel.Controls.Add(processForm);
+            processForm.Show();
         }
 
         //设置按钮
@@ -447,7 +478,21 @@ namespace mySystem
             MainPanel.Controls.Clear();
             LoginForm login = new LoginForm(this);
             login.ShowDialog();
+            // 接收指令
 
+            mySystem.Other.我的任务 f = new Other.我的任务();
+
+            //f.set指令(test);
+            //f.Show();
+            String instru = receiveInstr();
+            if (instru != null)
+            {
+                
+                f.set指令(instru);
+                f.set表单("");
+                f.ShowDialog();
+            }
+            //
             
             
             if (Parameter.userName != null)
@@ -831,7 +876,7 @@ namespace mySystem
         private String Instru = null;
         private void btnMyTask_Click(object sender, EventArgs e)
         {
-
+            
 
             //
             //string file = System.Windows.Forms.Application.ExecutablePath;
@@ -867,8 +912,13 @@ namespace mySystem
             {
                 f.set指令(instru);
                 f.set表单(msg);
-                f.ShowDialog(); ;
+                f.ShowDialog();
                 //MessageBox.Show("请接收指令：\t " + instru + "\n\n" + msg, "提示");
+                if (instru!=null && instru.Contains("吹膜"))
+                {
+                    MainProduceBtn.PerformClick();
+                    processForm.Btn吹膜.PerformClick();
+                }
             }
         }
 
@@ -936,35 +986,35 @@ namespace mySystem
                 String strConn吹膜 = "server=" + mySystem.Parameter.IP_port + ";database=extrusionnew;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
                 SqlConnection conn吹膜 = new SqlConnection(strConn吹膜);
                 conn吹膜.Open();
-                InstruStateChange(conn吹膜, "生产指令信息表");
+                InstruStateChange(conn吹膜, "生产指令信息表",1);
 
 
                 String strConn清洁分切 = "server=" + mySystem.Parameter.IP_port + ";database=welding;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
                 SqlConnection conn清洁分切 = new SqlConnection(strConn清洁分切);
                 conn清洁分切.Open();
-                InstruStateChange(conn清洁分切, "清洁分切工序生产指令");
+                InstruStateChange(conn清洁分切, "清洁分切工序生产指令",2);
 
 
                 String strConnCS制袋 = "server=" + mySystem.Parameter.IP_port + ";database=csbag;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
                 SqlConnection connCS制袋 = new SqlConnection(strConnCS制袋);
                 connCS制袋.Open();
-                InstruStateChange(connCS制袋, "生产指令");
+                InstruStateChange(connCS制袋, "生产指令",4);
 
 
                 String strConnPE制袋 = "server=" + mySystem.Parameter.IP_port + ";database=LDPE;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
                 SqlConnection connPE制袋 = new SqlConnection(strConnPE制袋);
                 connPE制袋.Open();
-                InstruStateChange(connPE制袋, "生产指令");
+                InstruStateChange(connPE制袋, "生产指令",5);
 
                 String strConnBPV制袋 = "server=" + mySystem.Parameter.IP_port + ";database=BPV;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
                 SqlConnection connBPV制袋 = new SqlConnection(strConnBPV制袋);
                 connBPV制袋.Open();
-                InstruStateChange(connBPV制袋, "生产指令");
+                InstruStateChange(connBPV制袋, "生产指令",6);
 
                 String strConnPTV制袋 = "server=" + mySystem.Parameter.IP_port + ";database=PTV;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
                 SqlConnection connPTV制袋 = new SqlConnection(strConnPTV制袋);
                 connPTV制袋.Open();
-                InstruStateChange(connPTV制袋, "生产指令");
+                InstruStateChange(connPTV制袋, "生产指令",7);
 
 
                 //去掉最后一个"、"，弹框提示
@@ -1016,7 +1066,14 @@ namespace mySystem
             commnew.Dispose();
         }
 
-        private void InstruStateChange(SqlConnection conn, String tblName)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="conn"></param>
+        /// <param name="tblName"></param>
+        /// <param name="gongxu">gongxu:1，吹膜；2，清洁分切；3，灭菌；4，CS制袋；5，PE制袋；6，BPV制袋；7，PTV制袋</param>
+        ///gongxu:1，吹膜；2，清洁分切；3，灭菌；4，CS制袋；5，PE制袋；6，BPV制袋；7，PTV制袋
+        private void InstruStateChange(SqlConnection conn, String tblName, int gongxu)
         {
             //读取未接收的生产指令
             SqlCommand comm = new SqlCommand();
@@ -1027,6 +1084,30 @@ namespace mySystem
             SqlDataReader reader = comm.ExecuteReader();//执行查询
             if (reader.HasRows)
             {
+                switch(gongxu){
+                    case 1:
+                        Instru += "吹膜：\n";
+                        break;
+                    case 2:
+                        Instru += "清洁分切：\n";
+                        break;
+                    case 3:
+                        Instru += "灭菌：\n";
+                        break;
+                    case 4:
+                        Instru += "CS制袋：\n";
+                        break;
+                    case 5:
+                        Instru += "PE制袋：\n";
+                        break;
+                    case 6:
+                        Instru += "BPV制袋：\n";
+                        break;
+                    case 7:
+                        Instru += "PTV制袋：\n";
+                        break;
+                }
+                
                 while (reader.Read())
                 {
                     Instru += reader["生产指令编号"];

@@ -395,7 +395,7 @@ namespace mySystem.Extruction.Process
             tb累计同规格膜卷长度R.ReadOnly = true;
             tb累计同规格膜卷重量T.ReadOnly = true;
             //查询条件始终不可编辑
-            cb产品名称.Enabled = false;
+            //cb产品名称.Enabled = false;
             dtp生产日期.Enabled = false;
             btn查询新建.Enabled = false;
         }
@@ -426,6 +426,7 @@ namespace mySystem.Extruction.Process
             btn打印.Enabled = true;
             cb打印机.Enabled = true;
             bt查看人员信息.Enabled = true;
+            cb产品名称.Enabled = true;
         }
 
         // 其他事件，datagridview：DataError、CellEndEdit、DataBindingComplete
@@ -1497,6 +1498,12 @@ namespace mySystem.Extruction.Process
                 this.Close();
                 //return;
             }
+        }
+
+        private void cb产品名称_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btn新建.Enabled = false;
+            btn查询新建.Enabled = true;
         }
 
     

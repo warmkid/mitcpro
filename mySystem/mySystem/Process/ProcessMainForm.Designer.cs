@@ -325,7 +325,7 @@
         private System.Windows.Forms.Button Btn清洁分切;
         private System.Windows.Forms.Button Btn制袋;
         private System.Windows.Forms.Panel ProducePanelLeft;
-        private System.Windows.Forms.Button Btn吹膜;
+        public System.Windows.Forms.Button Btn吹膜;
         private System.Windows.Forms.Button Btn库存管理;
         private System.Windows.Forms.Button Btn订单管理;
         private System.Windows.Forms.Button Btn生产指令;

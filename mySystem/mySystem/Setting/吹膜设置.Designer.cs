@@ -64,16 +64,6 @@
             this.label15 = new System.Windows.Forms.Label();
             this.tabPage参数设置 = new System.Windows.Forms.TabPage();
             this.Btn保存参数设置 = new System.Windows.Forms.Button();
-            this.label19 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.label22 = new System.Windows.Forms.Label();
-            this.label21 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
-            this.label24 = new System.Windows.Forms.Label();
-            this.label25 = new System.Windows.Forms.Label();
-            this.label26 = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
             this.label28 = new System.Windows.Forms.Label();
             this.label29 = new System.Windows.Forms.Label();
@@ -115,6 +105,16 @@
             this.hw1 = new System.Windows.Forms.TextBox();
             this.panel4 = new System.Windows.Forms.Panel();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.label26 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label25 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -461,7 +461,7 @@
             // Btn保存区域设置
             // 
             this.Btn保存区域设置.Font = new System.Drawing.Font("宋体", 12F);
-            this.Btn保存区域设置.Location = new System.Drawing.Point(828, 217);
+            this.Btn保存区域设置.Location = new System.Drawing.Point(754, 226);
             this.Btn保存区域设置.Name = "Btn保存区域设置";
             this.Btn保存区域设置.Size = new System.Drawing.Size(90, 33);
             this.Btn保存区域设置.TabIndex = 59;
@@ -488,7 +488,7 @@
             // Btn保存项目设置
             // 
             this.Btn保存项目设置.Font = new System.Drawing.Font("宋体", 12F);
-            this.Btn保存项目设置.Location = new System.Drawing.Point(999, 476);
+            this.Btn保存项目设置.Location = new System.Drawing.Point(838, 226);
             this.Btn保存项目设置.Name = "Btn保存项目设置";
             this.Btn保存项目设置.Size = new System.Drawing.Size(90, 33);
             this.Btn保存项目设置.TabIndex = 62;
@@ -503,7 +503,7 @@
             this.groupBox3.Controls.Add(this.add交接班);
             this.groupBox3.Location = new System.Drawing.Point(17, 284);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(904, 225);
+            this.groupBox3.Size = new System.Drawing.Size(815, 225);
             this.groupBox3.TabIndex = 60;
             this.groupBox3.TabStop = false;
             // 
@@ -513,7 +513,7 @@
             this.dgv交接班.Location = new System.Drawing.Point(12, 51);
             this.dgv交接班.Name = "dgv交接班";
             this.dgv交接班.RowTemplate.Height = 23;
-            this.dgv交接班.Size = new System.Drawing.Size(858, 165);
+            this.dgv交接班.Size = new System.Drawing.Size(784, 165);
             this.dgv交接班.TabIndex = 2;
             this.dgv交接班.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgv交接班_DataBindingComplete);
             // 
@@ -556,7 +556,7 @@
             this.groupBox6.Controls.Add(this.add开机);
             this.groupBox6.Location = new System.Drawing.Point(17, 34);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(904, 225);
+            this.groupBox6.Size = new System.Drawing.Size(815, 225);
             this.groupBox6.TabIndex = 58;
             this.groupBox6.TabStop = false;
             // 
@@ -566,7 +566,7 @@
             this.dgv开机.Location = new System.Drawing.Point(12, 51);
             this.dgv开机.Name = "dgv开机";
             this.dgv开机.RowTemplate.Height = 23;
-            this.dgv开机.Size = new System.Drawing.Size(858, 165);
+            this.dgv开机.Size = new System.Drawing.Size(784, 165);
             this.dgv开机.TabIndex = 2;
             this.dgv开机.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgv开机_DataBindingComplete);
             // 
@@ -627,113 +627,13 @@
             // Btn保存参数设置
             // 
             this.Btn保存参数设置.Font = new System.Drawing.Font("宋体", 12F);
-            this.Btn保存参数设置.Location = new System.Drawing.Point(865, 418);
+            this.Btn保存参数设置.Location = new System.Drawing.Point(790, 285);
             this.Btn保存参数设置.Name = "Btn保存参数设置";
             this.Btn保存参数设置.Size = new System.Drawing.Size(90, 33);
             this.Btn保存参数设置.TabIndex = 149;
             this.Btn保存参数设置.Text = "保存设置";
             this.Btn保存参数设置.UseVisualStyleBackColor = true;
             this.Btn保存参数设置.Click += new System.EventHandler(this.Btn保存参数设置_Click);
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Font = new System.Drawing.Font("宋体", 12F);
-            this.label19.Location = new System.Drawing.Point(474, 16);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(40, 16);
-            this.label19.TabIndex = 144;
-            this.label19.Text = "模颈";
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Font = new System.Drawing.Font("宋体", 12F);
-            this.label18.Location = new System.Drawing.Point(423, 16);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(40, 16);
-            this.label18.TabIndex = 143;
-            this.label18.Text = "流道";
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Font = new System.Drawing.Font("宋体", 12F);
-            this.label17.Location = new System.Drawing.Point(368, 16);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(40, 16);
-            this.label17.TabIndex = 142;
-            this.label17.Text = "换网";
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Font = new System.Drawing.Font("宋体", 12F);
-            this.label16.Location = new System.Drawing.Point(312, 16);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(40, 16);
-            this.label16.TabIndex = 141;
-            this.label16.Text = "IV区";
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Font = new System.Drawing.Font("宋体", 12F);
-            this.label22.Location = new System.Drawing.Point(667, 16);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(40, 16);
-            this.label22.TabIndex = 147;
-            this.label22.Text = "口模";
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Font = new System.Drawing.Font("宋体", 12F);
-            this.label21.Location = new System.Drawing.Point(592, 16);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(56, 16);
-            this.label21.TabIndex = 146;
-            this.label21.Text = "机头II";
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Font = new System.Drawing.Font("宋体", 12F);
-            this.label20.Location = new System.Drawing.Point(529, 16);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(48, 16);
-            this.label20.TabIndex = 145;
-            this.label20.Text = "机头I";
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.Font = new System.Drawing.Font("宋体", 12F);
-            this.label24.Location = new System.Drawing.Point(233, 16);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(48, 16);
-            this.label24.TabIndex = 140;
-            this.label24.Text = "III区";
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Font = new System.Drawing.Font("宋体", 12F);
-            this.label25.Location = new System.Drawing.Point(179, 16);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(40, 16);
-            this.label25.TabIndex = 139;
-            this.label25.Text = "II区";
-            // 
-            // label26
-            // 
-            this.label26.AutoSize = true;
-            this.label26.Font = new System.Drawing.Font("宋体", 12F);
-            this.label26.Location = new System.Drawing.Point(132, 16);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(32, 16);
-            this.label26.TabIndex = 138;
-            this.label26.Text = "I区";
             // 
             // label27
             // 
@@ -1154,6 +1054,106 @@
             this.groupBox5.Size = new System.Drawing.Size(1118, 42);
             this.groupBox5.TabIndex = 0;
             this.groupBox5.TabStop = false;
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Font = new System.Drawing.Font("宋体", 12F);
+            this.label26.Location = new System.Drawing.Point(132, 16);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(32, 16);
+            this.label26.TabIndex = 138;
+            this.label26.Text = "I区";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Font = new System.Drawing.Font("宋体", 12F);
+            this.label22.Location = new System.Drawing.Point(667, 16);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(40, 16);
+            this.label22.TabIndex = 147;
+            this.label22.Text = "口模";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("宋体", 12F);
+            this.label19.Location = new System.Drawing.Point(474, 16);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(40, 16);
+            this.label19.TabIndex = 144;
+            this.label19.Text = "模颈";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Font = new System.Drawing.Font("宋体", 12F);
+            this.label21.Location = new System.Drawing.Point(592, 16);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(56, 16);
+            this.label21.TabIndex = 146;
+            this.label21.Text = "机头II";
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Font = new System.Drawing.Font("宋体", 12F);
+            this.label25.Location = new System.Drawing.Point(179, 16);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(40, 16);
+            this.label25.TabIndex = 139;
+            this.label25.Text = "II区";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Font = new System.Drawing.Font("宋体", 12F);
+            this.label20.Location = new System.Drawing.Point(529, 16);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(48, 16);
+            this.label20.TabIndex = 145;
+            this.label20.Text = "机头I";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("宋体", 12F);
+            this.label18.Location = new System.Drawing.Point(423, 16);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(40, 16);
+            this.label18.TabIndex = 143;
+            this.label18.Text = "流道";
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Font = new System.Drawing.Font("宋体", 12F);
+            this.label24.Location = new System.Drawing.Point(233, 16);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(48, 16);
+            this.label24.TabIndex = 140;
+            this.label24.Text = "III区";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("宋体", 12F);
+            this.label17.Location = new System.Drawing.Point(368, 16);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(40, 16);
+            this.label17.TabIndex = 142;
+            this.label17.Text = "换网";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("宋体", 12F);
+            this.label16.Location = new System.Drawing.Point(312, 16);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(40, 16);
+            this.label16.TabIndex = 141;
+            this.label16.Text = "IV区";
             // 
             // label4
             // 
@@ -1603,7 +1603,7 @@
             // Btn保存产品设置
             // 
             this.Btn保存产品设置.Font = new System.Drawing.Font("宋体", 12F);
-            this.Btn保存产品设置.Location = new System.Drawing.Point(753, 413);
+            this.Btn保存产品设置.Location = new System.Drawing.Point(703, 287);
             this.Btn保存产品设置.Name = "Btn保存产品设置";
             this.Btn保存产品设置.Size = new System.Drawing.Size(90, 33);
             this.Btn保存产品设置.TabIndex = 47;
@@ -1629,7 +1629,7 @@
             // Btn保存人员
             // 
             this.Btn保存人员.Font = new System.Drawing.Font("宋体", 12F);
-            this.Btn保存人员.Location = new System.Drawing.Point(924, 443);
+            this.Btn保存人员.Location = new System.Drawing.Point(752, 241);
             this.Btn保存人员.Name = "Btn保存人员";
             this.Btn保存人员.Size = new System.Drawing.Size(90, 33);
             this.Btn保存人员.TabIndex = 62;
@@ -1645,7 +1645,7 @@
             this.groupBox14.Controls.Add(this.button5);
             this.groupBox14.Location = new System.Drawing.Point(17, 312);
             this.groupBox14.Name = "groupBox14";
-            this.groupBox14.Size = new System.Drawing.Size(802, 213);
+            this.groupBox14.Size = new System.Drawing.Size(719, 213);
             this.groupBox14.TabIndex = 61;
             this.groupBox14.TabStop = false;
             // 
@@ -1662,7 +1662,7 @@
             this.dgv权限.Location = new System.Drawing.Point(12, 17);
             this.dgv权限.Name = "dgv权限";
             this.dgv权限.RowTemplate.Height = 23;
-            this.dgv权限.Size = new System.Drawing.Size(772, 187);
+            this.dgv权限.Size = new System.Drawing.Size(678, 187);
             this.dgv权限.TabIndex = 2;
             this.dgv权限.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgv权限_DataBindingComplete);
             // 
@@ -1703,7 +1703,7 @@
             this.groupBox15.Controls.Add(this.add人员);
             this.groupBox15.Location = new System.Drawing.Point(17, 33);
             this.groupBox15.Name = "groupBox15";
-            this.groupBox15.Size = new System.Drawing.Size(802, 241);
+            this.groupBox15.Size = new System.Drawing.Size(719, 241);
             this.groupBox15.TabIndex = 59;
             this.groupBox15.TabStop = false;
             // 
@@ -1713,7 +1713,7 @@
             this.dgv人员.Location = new System.Drawing.Point(12, 51);
             this.dgv人员.Name = "dgv人员";
             this.dgv人员.RowTemplate.Height = 23;
-            this.dgv人员.Size = new System.Drawing.Size(772, 184);
+            this.dgv人员.Size = new System.Drawing.Size(678, 184);
             this.dgv人员.TabIndex = 2;
             this.dgv人员.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgv人员_DataBindingComplete);
             // 
@@ -1766,7 +1766,7 @@
             // del代码批号
             // 
             this.del代码批号.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.del代码批号.Location = new System.Drawing.Point(431, 53);
+            this.del代码批号.Location = new System.Drawing.Point(518, 53);
             this.del代码批号.Name = "del代码批号";
             this.del代码批号.Size = new System.Drawing.Size(70, 30);
             this.del代码批号.TabIndex = 64;
@@ -1788,7 +1788,7 @@
             // save代码批号
             // 
             this.save代码批号.Font = new System.Drawing.Font("宋体", 12F);
-            this.save代码批号.Location = new System.Drawing.Point(632, 435);
+            this.save代码批号.Location = new System.Drawing.Point(620, 105);
             this.save代码批号.Name = "save代码批号";
             this.save代码批号.Size = new System.Drawing.Size(90, 33);
             this.save代码批号.TabIndex = 65;
@@ -1802,7 +1802,7 @@
             this.dgv代码批号.Location = new System.Drawing.Point(26, 105);
             this.dgv代码批号.Name = "dgv代码批号";
             this.dgv代码批号.RowTemplate.Height = 23;
-            this.dgv代码批号.Size = new System.Drawing.Size(475, 363);
+            this.dgv代码批号.Size = new System.Drawing.Size(562, 363);
             this.dgv代码批号.TabIndex = 0;
             // 
             // 吹膜设置

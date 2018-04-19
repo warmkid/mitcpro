@@ -892,7 +892,13 @@ namespace WindowsFormsApplication1
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
+            // 记录列宽
+            if (dataGridView1.ColumnCount > 0)
+            {
+                writeDGVWidthToSetting(dataGridView1);
+            }
+            //
+
             bool rt = save();
             //控件可见性
             if (rt && _userState == Parameter.UserState.操作员)
@@ -1168,8 +1174,8 @@ namespace WindowsFormsApplication1
         void innerBind()
         {
             ////移除所有列
-            //while (dataGridView1.Columns.Count > 0)
-            //    dataGridView1.Columns.RemoveAt(dataGridView1.Columns.Count - 1);
+            while (dataGridView1.Columns.Count > 0)
+                dataGridView1.Columns.RemoveAt(dataGridView1.Columns.Count - 1);
             //setDataGridViewCombox();
             //bs_in.DataSource = dt_in;
             //dataGridView1.DataSource = bs_in.DataSource;
@@ -1207,13 +1213,39 @@ namespace WindowsFormsApplication1
                         break;
 
                     case "清洁人":
-                        DataGridViewTextBoxColumn c3 = new DataGridViewTextBoxColumn();
+                        //DataGridViewTextBoxColumn c3 = new DataGridViewTextBoxColumn();
+                        //c3.DataPropertyName = dc.ColumnName;
+                        //c3.HeaderText = "清洁员";
+                        //c3.Name = dc.ColumnName;
+                        //c3.SortMode = DataGridViewColumnSortMode.NotSortable;
+                        //c3.ValueType = dc.DataType;
+                        //dataGridView1.Columns.Add(c3);
+                        //break;
+                        DataGridViewComboBoxColumn c3 = new DataGridViewComboBoxColumn();
                         c3.DataPropertyName = dc.ColumnName;
-                        c3.HeaderText = "清洁员";
+                        c3.HeaderText = dc.ColumnName;
                         c3.Name = dc.ColumnName;
                         c3.SortMode = DataGridViewColumnSortMode.NotSortable;
                         c3.ValueType = dc.DataType;
+                        // 如果换了名字会报错，把当前值也加上就好了
+                        
+                        if (!list_操作员.Contains(mySystem.Parameter.userName)) c3.Items.Add(mySystem.Parameter.userName);
+                        foreach (String name in list_操作员)
+                        {
+                            c3.Items.Add(name);
+                        }
+                        foreach (DataRow dr in dt_in.Rows)
+                        {
+                            if (dr["清洁人"].ToString() != null && dr["清洁人"].ToString().Trim() != "" &&
+                                dr["清洁人"].ToString() != mySystem.Parameter.userName &&
+                                  !list_操作员.Contains(dr["清洁人"].ToString()))
+                            {
+                                c3.Items.Add(dr["清洁人"].ToString());
+                            }
+
+                        }
                         dataGridView1.Columns.Add(c3);
+                        // 重写cell value changed 事件，自动填写id
                         break;
 
                     default:
@@ -1570,7 +1602,7 @@ namespace WindowsFormsApplication1
 
         private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
-            if (isFirstBind)
+            if (true)
             {
                 readDGVWidthFromSettingAndSet(dataGridView1);
                 isFirstBind = false;
