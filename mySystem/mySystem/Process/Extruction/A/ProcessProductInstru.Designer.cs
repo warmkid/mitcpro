@@ -29,6 +29,10 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProcessProductInstru));
+            this.textBox13 = new System.Windows.Forms.TextBox();
+            this.tb双层包装领料量 = new System.Windows.Forms.TextBox();
+            this.textBox9 = new System.Windows.Forms.TextBox();
+            this.textBox7 = new System.Windows.Forms.TextBox();
             this.bt查看人员信息 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.tb接收人 = new System.Windows.Forms.TextBox();
@@ -125,10 +129,6 @@
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.cb负责人 = new System.Windows.Forms.ComboBox();
-            this.textBox13 = new System.Windows.Forms.TextBox();
-            this.tb双层包装领料量 = new System.Windows.Forms.TextBox();
-            this.textBox9 = new System.Windows.Forms.TextBox();
-            this.textBox7 = new System.Windows.Forms.TextBox();
             this.dtp开始生产日期 = new System.Windows.Forms.DateTimePicker();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -139,6 +139,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.cb需要开机清洁 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -176,6 +177,39 @@
             this.splitContainer5.SuspendLayout();
             this.SuspendLayout();
             // 
+            // textBox13
+            // 
+            this.textBox13.Location = new System.Drawing.Point(478, 71);
+            this.textBox13.Name = "textBox13";
+            this.textBox13.Size = new System.Drawing.Size(66, 21);
+            this.textBox13.TabIndex = 13;
+            this.textBox13.Text = "1";
+            // 
+            // tb双层包装领料量
+            // 
+            this.tb双层包装领料量.Location = new System.Drawing.Point(569, 3);
+            this.tb双层包装领料量.Name = "tb双层包装领料量";
+            this.tb双层包装领料量.Size = new System.Drawing.Size(70, 21);
+            this.tb双层包装领料量.TabIndex = 16;
+            this.tb双层包装领料量.Visible = false;
+            // 
+            // textBox9
+            // 
+            this.textBox9.Location = new System.Drawing.Point(476, 2);
+            this.textBox9.Name = "textBox9";
+            this.textBox9.Size = new System.Drawing.Size(68, 21);
+            this.textBox9.TabIndex = 14;
+            this.textBox9.Visible = false;
+            // 
+            // textBox7
+            // 
+            this.textBox7.Location = new System.Drawing.Point(150, 4);
+            this.textBox7.Name = "textBox7";
+            this.textBox7.ReadOnly = true;
+            this.textBox7.Size = new System.Drawing.Size(231, 21);
+            this.textBox7.TabIndex = 12;
+            this.textBox7.Text = "双层洁净包装";
+            // 
             // bt查看人员信息
             // 
             this.bt查看人员信息.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -190,7 +224,7 @@
             // button4
             // 
             this.button4.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button4.Location = new System.Drawing.Point(329, 28);
+            this.button4.Location = new System.Drawing.Point(200, 28);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(75, 23);
             this.button4.TabIndex = 36;
@@ -212,7 +246,7 @@
             // textBox1
             // 
             this.textBox1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox1.Location = new System.Drawing.Point(188, 29);
+            this.textBox1.Location = new System.Drawing.Point(177, 19);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(135, 23);
             this.textBox1.TabIndex = 35;
@@ -304,7 +338,7 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button1.Location = new System.Drawing.Point(410, 28);
+            this.button1.Location = new System.Drawing.Point(284, 28);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 26;
@@ -326,7 +360,7 @@
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Location = new System.Drawing.Point(107, 82);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 20);
+            this.comboBox1.Size = new System.Drawing.Size(187, 20);
             this.comboBox1.TabIndex = 24;
             // 
             // bt查询插入
@@ -342,7 +376,7 @@
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(238, 18);
+            this.button7.Location = new System.Drawing.Point(227, 8);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(37, 23);
             this.button7.TabIndex = 22;
@@ -353,7 +387,7 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(190, 17);
+            this.button6.Location = new System.Drawing.Point(179, 7);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(38, 23);
             this.button6.TabIndex = 21;
@@ -1209,39 +1243,6 @@
             this.cb负责人.Size = new System.Drawing.Size(90, 22);
             this.cb负责人.TabIndex = 24;
             // 
-            // textBox13
-            // 
-            this.textBox13.Location = new System.Drawing.Point(478, 71);
-            this.textBox13.Name = "textBox13";
-            this.textBox13.Size = new System.Drawing.Size(66, 21);
-            this.textBox13.TabIndex = 13;
-            this.textBox13.Text = "1";
-            // 
-            // tb双层包装领料量
-            // 
-            this.tb双层包装领料量.Location = new System.Drawing.Point(569, 3);
-            this.tb双层包装领料量.Name = "tb双层包装领料量";
-            this.tb双层包装领料量.Size = new System.Drawing.Size(70, 21);
-            this.tb双层包装领料量.TabIndex = 16;
-            this.tb双层包装领料量.Visible = false;
-            // 
-            // textBox9
-            // 
-            this.textBox9.Location = new System.Drawing.Point(476, 2);
-            this.textBox9.Name = "textBox9";
-            this.textBox9.Size = new System.Drawing.Size(68, 21);
-            this.textBox9.TabIndex = 14;
-            this.textBox9.Visible = false;
-            // 
-            // textBox7
-            // 
-            this.textBox7.Location = new System.Drawing.Point(150, 4);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.ReadOnly = true;
-            this.textBox7.Size = new System.Drawing.Size(231, 21);
-            this.textBox7.TabIndex = 12;
-            this.textBox7.Text = "双层洁净包装";
-            // 
             // dtp开始生产日期
             // 
             this.dtp开始生产日期.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -1336,12 +1337,26 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "吹膜工序生产指令";
             // 
+            // cb需要开机清洁
+            // 
+            this.cb需要开机清洁.AutoSize = true;
+            this.cb需要开机清洁.Checked = true;
+            this.cb需要开机清洁.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cb需要开机清洁.Font = new System.Drawing.Font("宋体", 12F);
+            this.cb需要开机清洁.Location = new System.Drawing.Point(429, 52);
+            this.cb需要开机清洁.Name = "cb需要开机清洁";
+            this.cb需要开机清洁.Size = new System.Drawing.Size(123, 20);
+            this.cb需要开机清洁.TabIndex = 38;
+            this.cb需要开机清洁.Text = "需要开机清洁";
+            this.cb需要开机清洁.UseVisualStyleBackColor = true;
+            // 
             // ProcessProductInstru
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1016, 643);
+            this.Controls.Add(this.cb需要开机清洁);
             this.Controls.Add(this.bt查看人员信息);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.tb接收人);
@@ -1547,5 +1562,6 @@
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button bt查看人员信息;
         private System.Windows.Forms.ComboBox cb接收人;
+        private System.Windows.Forms.CheckBox cb需要开机清洁;
     }
 }

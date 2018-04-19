@@ -694,22 +694,29 @@ namespace mySystem.Extruction.Process
                 }
                 else
                 { dr["膜卷编号"] = ""; }
+                dr["膜卷长度"] = dt记录详情.Rows[dt记录详情.Rows.Count - 1]["膜卷长度"];
+                dr["膜卷重量"] = dt记录详情.Rows[dt记录详情.Rows.Count - 1]["膜卷重量"];
+                dr["宽度"] = dt记录详情.Rows[dt记录详情.Rows.Count - 1]["宽度"];
+                dr["最大厚度"] = dt记录详情.Rows[dt记录详情.Rows.Count - 1]["最大厚度"];
+                dr["最小厚度"] = dt记录详情.Rows[dt记录详情.Rows.Count - 1]["最小厚度"];
+                dr["平均厚度"] = dt记录详情.Rows[dt记录详情.Rows.Count - 1]["平均厚度"];
+                dr["厚度公差"] = dt记录详情.Rows[dt记录详情.Rows.Count - 1]["厚度公差"];
             }
             else
             {
                 //新建第一行
                 dr["开始时间"] = DateTime.Now;
                 dr["膜卷编号"] = "01";
+                dr["宽度"] = 0;
+                dr["膜卷长度"] = 0;
+                dr["膜卷重量"] = 0;
+                dr["最大厚度"] = 0;
+                dr["最小厚度"] = 0;
+                dr["平均厚度"] = 0;
+                dr["厚度公差"] = 0;
             }            
             dr["结束时间"] = DateTime.Now;
-            dr["膜卷长度"] = 0;
-            dr["膜卷重量"] = 0;
             dr["外观"] = "Yes";
-            dr["宽度"] = 0;
-            dr["最大厚度"] = 0;
-            dr["最小厚度"] = 0;
-            dr["平均厚度"] = 0;
-            dr["厚度公差"] = 0;
             dr["判定"] = "Yes";
             dr["操作员"] = mySystem.Parameter.userName;
 
@@ -878,6 +885,22 @@ namespace mySystem.Extruction.Process
             {  }            
         }
 
+        bool dgvchek()
+        {
+            foreach (DataGridViewRow dgvr in dataGridView1.Rows)
+            {
+                double maxh = Convert.ToDouble(dgvr.Cells["最大厚度"].Value);
+                double minh = Convert.ToDouble(dgvr.Cells["最小厚度"].Value);
+                double avgh = Convert.ToDouble(dgvr.Cells["平均厚度"].Value);
+                if (maxh < minh || avgh > maxh || avgh < minh)
+                {
+                    //MessageBox.Show("平均厚度应该位于最大厚度和最小厚度之间");
+                    return false;
+                }
+            }
+            return true;
+        }
+
         //保存功能
         private bool Save()
         {
@@ -889,6 +912,11 @@ namespace mySystem.Extruction.Process
             else if (TextBox_check() == false)
             {
                 /*环境温度、环境湿度不合格*/
+                return false;
+            }
+            else if (!dgvchek())
+            {
+                MessageBox.Show("厚度填写有误！");
                 return false;
             }
             else
@@ -1338,6 +1366,15 @@ namespace mySystem.Extruction.Process
                 {
                     getTotal();
                 }
+                //else if (dataGridView1.Columns[e.ColumnIndex].Name == "最大厚度" ||
+                //    dataGridView1.Columns[e.ColumnIndex].Name == "最小厚度" ||
+                //    dataGridView1.Columns[e.ColumnIndex].Name == "平均厚度")
+                //{
+                //    double maxh = Convert.ToDouble( dataGridView1.Rows[e.RowIndex].Cells["最大厚度"].Value);
+                //    double minh = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells["最小厚度"].Value);
+                //    double avgh = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells["平均厚度"].Value);
+                //    if (maxh<minh ||avgh > maxh || avgh < minh) MessageBox.Show("平均厚度应该位于最大厚度和最小厚度之间");
+                //}
                 else if (dataGridView1.Columns[e.ColumnIndex].Name == "操作员")
                 {
                     if (mySystem.Parameter.NametoID(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString()) == 0)

@@ -1950,6 +1950,7 @@ namespace BatchProductRecord
             btn打印.Enabled = true;
             cmb打印.Enabled = true;
             bt查看人员信息.Enabled = true;
+            dataGridView1.ReadOnly = false;
         }
 
 

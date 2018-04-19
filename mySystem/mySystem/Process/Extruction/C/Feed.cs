@@ -719,6 +719,7 @@ namespace mySystem.Process.Extruction.C
                 //        return;
                 //    }
                 //}
+                btn提交数据审核.PerformClick();
                 //read from database table and find current record
                 string checkName = "待审核";
                 DataTable dtCheck = new DataTable(checkName);

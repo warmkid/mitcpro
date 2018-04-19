@@ -129,51 +129,74 @@ namespace mySystem
             }
             else
             {
-                bool checkBeforePower;
-                bool extrusClean;
-                bool preheat;
-                // 开机前确认表
-                String tblName1 = "吹膜机组开机前确认表";
-                List<String> queryCols1 = new List<String>(new String[] { "审核人" });
-                List<String> whereCols1 = new List<String>(new String[] { "生产指令ID" });
-                List<Object> whereVals1 = new List<Object>(new Object[] { Parameter.proInstruID });
-                List<List<Object>> res1 = Utility.selectAccess(Parameter.conn, tblName1, queryCols1, whereCols1, whereVals1, null, null, null, null, null);
-                if (res1.Count != 0)
+                bool checkBeforePower = false;
+                bool extrusClean = false;
+                bool preheat = false;
+                
+                string sql = @"select 需要开机清洁 from 生产指令信息表 where ID='{0}'";
+                SqlDataAdapter da11 = new SqlDataAdapter(string.Format(sql, Parameter.proInstruID), Parameter.conn);
+                DataTable dt11 = new DataTable();
+                da11.Fill(dt11);
+                if (dt11.Rows.Count > 0)
                 {
-                    checkBeforePower = true;
+                    // 加特殊情况，如果指令中制定不要，则可以直接进入
+                    if (!Convert.ToBoolean(dt11.Rows[0]["需要开机清洁"]))
+                    {
+                        checkBeforePower = true;
+                        extrusClean = true;
+                        preheat = true;
+                    }
+                    else
+                    {
+                        // 开机前确认表
+                        String tblName1 = "吹膜机组开机前确认表";
+                        List<String> queryCols1 = new List<String>(new String[] { "审核人" });
+                        List<String> whereCols1 = new List<String>(new String[] { "生产指令ID" });
+                        List<Object> whereVals1 = new List<Object>(new Object[] { Parameter.proInstruID });
+                        List<List<Object>> res1 = Utility.selectAccess(Parameter.conn, tblName1, queryCols1, whereCols1, whereVals1, null, null, null, null, null);
+                        if (res1.Count != 0)
+                        {
+                            checkBeforePower = true;
+                        }
+                        else
+                        {
+                            checkBeforePower = false;
+                        }
+                        //吹膜机组清洁记录
+                        String tblName2 = "吹膜机组清洁记录表";
+                        List<String> queryCols2 = new List<String>(new String[] { "审核人" });
+                        List<String> whereCols2 = new List<String>(new String[] { "生产指令ID" });
+                        List<Object> whereVals2 = new List<Object>(new Object[] { Parameter.proInstruID });
+                        List<List<Object>> res2 = Utility.selectAccess(Parameter.conn, tblName2, queryCols2, whereCols2, whereVals2, null, null, null, null, null);
+                        if (res2.Count != 0)
+                        {
+                            extrusClean = true;
+                        }
+                        else
+                        {
+                            extrusClean = false;
+                        }
+                        //吹膜机组预热参数记录表
+                        String tblName3 = "吹膜机组预热参数记录表";
+                        List<String> queryCols3 = new List<String>(new String[] { "审核人" });
+                        List<String> whereCols3 = new List<String>(new String[] { "生产指令id" });
+                        List<Object> whereVals3 = new List<Object>(new Object[] { Parameter.proInstruID });
+                        List<List<Object>> res3 = Utility.selectAccess(Parameter.conn, tblName3, queryCols3, whereCols3, whereVals3, null, null, null, null, null);
+                        if (res3.Count != 0)
+                        {
+                            preheat = true;
+                        }
+                        else
+                        {
+                            preheat = false;
+                        }
+                    }
                 }
-                else
-                {
-                    checkBeforePower = false;
-                }
-                //吹膜机组清洁记录
-                String tblName2 = "吹膜机组清洁记录表";
-                List<String> queryCols2 = new List<String>(new String[] { "审核人" });
-                List<String> whereCols2 = new List<String>(new String[] { "生产指令ID" });
-                List<Object> whereVals2 = new List<Object>(new Object[] { Parameter.proInstruID });
-                List<List<Object>> res2 = Utility.selectAccess(Parameter.conn, tblName2, queryCols2, whereCols2, whereVals2, null, null, null, null, null);
-                if (res2.Count != 0)
-                {
-                    extrusClean = true;
-                }
-                else
-                {
-                    extrusClean = false;
-                }
-                //吹膜机组预热参数记录表
-                String tblName3 = "吹膜机组预热参数记录表";
-                List<String> queryCols3 = new List<String>(new String[] { "审核人" });
-                List<String> whereCols3 = new List<String>(new String[] { "生产指令id" });
-                List<Object> whereVals3 = new List<Object>(new Object[] { Parameter.proInstruID });
-                List<List<Object>> res3 = Utility.selectAccess(Parameter.conn, tblName3, queryCols3, whereCols3, whereVals3, null, null, null, null, null);
-                if (res3.Count != 0)
-                {
-                    preheat = true;
-                }
-                else
-                {
-                    preheat = false;
-                }
+
+
+                // --
+                
+               
 
 
                 //按钮状态

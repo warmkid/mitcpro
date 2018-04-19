@@ -230,6 +230,7 @@ namespace mySystem.Process.Stock
             {
                 int id = Convert.ToInt32(dataGridView5.Rows[e.RowIndex].Cells[0].Value);
                 取样记录 form = new 取样记录(mainform, id);
+                form.Owner = this;
                 form.ShowDialog();
             }
         }
@@ -240,6 +241,7 @@ namespace mySystem.Process.Stock
             {
                 int id = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[0].Value);
                 物资验收记录 form = new 物资验收记录(mainform, id);
+                form.Owner = this;
                 form.ShowDialog();
             }
         }
@@ -250,6 +252,7 @@ namespace mySystem.Process.Stock
             {
                 int id = Convert.ToInt32(dataGridView4.Rows[e.RowIndex].Cells[0].Value);
                 不合格品处理记录 form = new 不合格品处理记录(mainform, id);
+                form.Owner = this;
                 form.ShowDialog();
             }
         }
@@ -260,6 +263,7 @@ namespace mySystem.Process.Stock
             {
                 int id = Convert.ToInt32(dataGridView3.Rows[e.RowIndex].Cells[0].Value);
                 复验记录 form = new 复验记录(mainform, id);
+                form.Owner = this;
                 form.ShowDialog();
             }
         }
@@ -271,6 +275,7 @@ namespace mySystem.Process.Stock
                 //双击 显示请验单
                 int id = Convert.ToInt32(dataGridView2.Rows[e.RowIndex].Cells[0].Value);
                 物资请验单 form = new 物资请验单(mainform, id);
+                form.Owner = this;
                 form.ShowDialog();
             }
         }
@@ -393,7 +398,7 @@ namespace mySystem.Process.Stock
             search();
         }
 
-        void search()
+        public void search()
         {
             //MessageBox.Show(tabControl1.SelectedIndex.ToString()+"\n"+comboBox审核状态.Text);
             String shr = comboBox审核状态.Text;

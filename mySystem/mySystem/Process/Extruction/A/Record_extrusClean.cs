@@ -38,6 +38,7 @@ namespace WindowsFormsApplication1
         private string person_审核员;
         private List<string> list_操作员;
         private List<string> list_审核员;
+        bool canBeShow = true;
 
         //用于带id参数构造函数，存储已存在记录的相关信息
         int instrid;
@@ -93,6 +94,7 @@ namespace WindowsFormsApplication1
                 getOtherData();
 
                 begin();
+                if (dt_out.Rows.Count < 0) this.Close();
                 instrid = Convert.ToInt32(dt_out.Rows[0]["生产指令ID"]);
                 String asql = "select * from 生产指令信息表 where ID=" + instrid;
 
@@ -501,12 +503,13 @@ namespace WindowsFormsApplication1
             outerBind();
             if (dt_out.Rows.Count <= 0 && _userState != Parameter.UserState.操作员)
             {
+                canBeShow = false;
                 MessageBox.Show("只有操作员可以新建记录");
                 foreach (Control c in this.Controls)
                     c.Enabled = false;
                 dataGridView1.Enabled = true;
                 dataGridView1.ReadOnly = true;
-                return;
+                return ;
             }
 
             if (dt_out.Rows.Count <= 0)
@@ -1173,10 +1176,11 @@ namespace WindowsFormsApplication1
             //setDataGridViewColumns();
             ////Utility.setDataGridViewAutoSizeMode(dataGridView1);
 
-
+            setDataGridViewCombox();
             bs_in.DataSource = dt_in;
             dataGridView1.DataSource = bs_in.DataSource;
             setDataGridViewColumns();
+            
             Utility.setDataGridViewAutoSizeMode(dataGridView1);
 
         }
@@ -1581,5 +1585,25 @@ namespace WindowsFormsApplication1
                 writeDGVWidthToSetting(dataGridView1);
             }
         }
+
+        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex > 0 && e.RowIndex > 0)
+            {
+                if (dataGridView1.Columns[e.ColumnIndex].Name == "清洁人")
+                {
+                    dataGridView1[e.ColumnIndex, e.RowIndex].Value = mySystem.Parameter.userName;
+                }
+            }
+        }
+
+        private void Record_extrusClean_Shown(object sender, EventArgs e)
+        {
+            if (!canBeShow)
+            {
+                this.Close();
+            }
+        }
+
     }
 }

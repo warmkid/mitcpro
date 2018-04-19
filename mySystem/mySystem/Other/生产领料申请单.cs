@@ -875,15 +875,15 @@ namespace mySystem.Other
                 MessageBox.Show("请填写完整的表单信息", "提示");
                 return;
             }
-
-            foreach (DataRow dr in dt记录详情.Rows)
-            {
-                if (dr["审核员"] == DBNull.Value || dr["审核员"].ToString() == "")
-                {
-                    MessageBox.Show("请先提交数据审核");
-                    return;
-                }
-            }
+            btn提交数据审核.PerformClick();
+            //foreach (DataRow dr in dt记录详情.Rows)
+            //{
+            //    if (dr["审核员"] == DBNull.Value || dr["审核员"].ToString() == "")
+            //    {
+            //        MessageBox.Show("请先提交数据审核");
+            //        return;
+            //    }
+            //}
            
 
             //保存

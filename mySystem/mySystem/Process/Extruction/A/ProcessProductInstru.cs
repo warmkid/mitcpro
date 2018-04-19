@@ -227,6 +227,8 @@ namespace BatchProductRecord
             button4.Enabled = true;
             textBox1.Enabled = true;
             bt查看人员信息.Enabled = true;
+            tb指令编号.Enabled = true;
+            bt查询插入.Enabled = true;
         }
 
         //// 获取操作员和审核员
@@ -551,6 +553,8 @@ namespace BatchProductRecord
         void dataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
             AutoCompleteStringCollection acsc = new AutoCompleteStringCollection();
+            TextBox tt = e.Control as TextBox;
+            if (tt != null) tt.AutoCompleteCustomSource = null;
             if (dataGridView1.CurrentCell.OwningColumn.Name == "产品编码")
             {
                 TextBox tb = e.Control as TextBox;
@@ -654,6 +658,16 @@ namespace BatchProductRecord
 
             dict_白班 = new Dictionary<string, string>();
             dict_夜班 = new Dictionary<string, string>();
+
+            tb指令编号.PreviewKeyDown += bt查询插入_PreviewKeyDown;
+        }
+
+        void bt查询插入_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                bt查询插入.PerformClick();
+            }
         }
 
         private void bind_bs_contr()    
@@ -698,6 +712,7 @@ namespace BatchProductRecord
             tb计划产量合计卷.DataBindings.Add("Text", bs_prodinstr.DataSource, "计划产量合计卷");
             tb操作员备注.DataBindings.Add("Text", bs_prodinstr.DataSource, "操作员备注");
             tb内外层比例.DataBindings.Add("Text", bs_prodinstr.DataSource, "比例");
+            cb需要开机清洁.DataBindings.Add("Checked",bs_prodinstr.DataSource,"需要开机清洁");
         }
         
         //根据筛选条件得到指令id,没有返回-1
@@ -776,7 +791,8 @@ namespace BatchProductRecord
 
             if (checkform.ischeckOk)//审核通过
             {
-                dt_prodinstr.Rows[0]["状态"] = 1;//待接收
+                if (Convert.ToInt32(dt_prodinstr.Rows[0]["状态"]) != 2)
+                    dt_prodinstr.Rows[0]["状态"] = 1;//待接收
             }
             else
             {
@@ -1398,8 +1414,8 @@ namespace BatchProductRecord
             setFormState();
             setEnableReadOnly();
 
-            tb指令编号.Enabled = false;
-            bt查询插入.Enabled = false;
+            //tb指令编号.Enabled = false;
+            //bt查询插入.Enabled = false;
         }
 
         // 给外表的一行写入默认值
@@ -1429,6 +1445,7 @@ namespace BatchProductRecord
             string log = "=====================================\n";
             log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + ":" + mySystem.Parameter.userName + " 新建记录\n";
             dr["日志"] = log;
+            dr["需要开机清洁"] = true;
             return dr;
 
         }
@@ -1535,6 +1552,7 @@ namespace BatchProductRecord
             tb计划产量合计卷.DataBindings.Clear();
             tb操作员备注.DataBindings.Clear();
             tb内外层比例.DataBindings.Clear();
+            cb需要开机清洁.DataBindings.Clear();
         }
         // 移除内表和控件的绑定，如果只是一个DataGridView可以不用实现
         void removeInnerBinding()

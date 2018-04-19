@@ -374,6 +374,13 @@ namespace mySystem.Process.Stock
 
             btn审核.Enabled = false;
             base.CheckResult();
+            try
+            {
+                (this.Owner as mySystem.Process.Stock.原料入库管理).search();
+            }
+            catch (Exception ee)
+            {
+            }
         }
     }
 }

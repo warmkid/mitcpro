@@ -133,7 +133,7 @@ namespace mySystem.Process.Extruction.B
 
             
             conOle = Parameter.connOle;
-            fill_printer();
+            
             getPeople();
             setUserState();
             searchId = Id;
@@ -141,6 +141,7 @@ namespace mySystem.Process.Extruction.B
             __生产指令 = Convert.ToString(dtOuter.Rows[0]["生产指令"]);
             __生产指令ID = Convert.ToInt32(dtOuter.Rows[0]["生产指令ID"]);
             InitializeComponent();
+            fill_printer();
             getProductCode();
             getStartTime();
             getUsrList();
@@ -946,6 +947,7 @@ namespace mySystem.Process.Extruction.B
                 //        return;
                 //    }
                 //}
+                btn提交数据审核.PerformClick();
                 //after saving, inner item haven't changed but we update once more here
                 if (!mySystem.Parameter.isSqlOk)
                 {

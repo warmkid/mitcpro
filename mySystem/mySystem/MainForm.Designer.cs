@@ -35,6 +35,8 @@
             this.MainQueryBtn = new System.Windows.Forms.Button();
             this.MainPanel = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.btn导入 = new System.Windows.Forms.Button();
             this.btn浏览 = new System.Windows.Forms.Button();
@@ -43,8 +45,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.timer2 = new System.Windows.Forms.Timer(this.components);
-            this.button1 = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -93,7 +93,7 @@
             this.MainQueryBtn.Name = "MainQueryBtn";
             this.MainQueryBtn.Size = new System.Drawing.Size(114, 63);
             this.MainQueryBtn.TabIndex = 3;
-            this.MainQueryBtn.Text = "台帐/查询";
+            this.MainQueryBtn.Text = "查询/审核";
             this.MainQueryBtn.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.MainQueryBtn.UseVisualStyleBackColor = true;
             this.MainQueryBtn.Click += new System.EventHandler(this.MainQueryBtn_Click);
@@ -125,6 +125,32 @@
             this.groupBox1.Size = new System.Drawing.Size(1248, 74);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
+            // 
+            // label2
+            // 
+            this.label2.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.label2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label2.ForeColor = System.Drawing.Color.Transparent;
+            this.label2.Location = new System.Drawing.Point(128, 8);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(4, 70);
+            this.label2.TabIndex = 12;
+            // 
+            // button1
+            // 
+            this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
+            this.button1.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.button1.Location = new System.Drawing.Point(4, 9);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(114, 63);
+            this.button1.TabIndex = 11;
+            this.button1.Text = "我的任务";
+            this.button1.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.btnMyTask_Click);
             // 
             // textBox1
             // 
@@ -194,32 +220,6 @@
             // 
             this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
             // 
-            // button1
-            // 
-            this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
-            this.button1.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.button1.Location = new System.Drawing.Point(4, 9);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(114, 63);
-            this.button1.TabIndex = 11;
-            this.button1.Text = "我的任务";
-            this.button1.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.btnMyTask_Click);
-            // 
-            // label2
-            // 
-            this.label2.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.label2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label2.ForeColor = System.Drawing.Color.Transparent;
-            this.label2.Location = new System.Drawing.Point(128, 8);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(4, 70);
-            this.label2.TabIndex = 12;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
@@ -234,7 +234,7 @@
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "欢迎使用颇尔奥星管理系统    v0.9.11";
+            this.Text = "欢迎使用颇尔奥星管理系统    v0.9.12";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

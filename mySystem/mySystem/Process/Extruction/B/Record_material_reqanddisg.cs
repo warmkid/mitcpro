@@ -1188,7 +1188,7 @@ namespace mySystem.Extruction.Process
                 dataGridView1.Columns["T吹膜工序领料退料记录ID"].Visible = false;//T吹膜工序领料退料记录ID
                 dataGridView1.Columns["重量"].ReadOnly = true;//重量
                 dataGridView1.Columns["审核人"].ReadOnly = true;//领料审核人
-                dataGridView1.Columns["数量"].ReadOnly = true;//领料审核人
+                dataGridView1.Columns["数量"].ReadOnly = false;//领料审核人
             }
 
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
@@ -1635,7 +1635,7 @@ namespace mySystem.Extruction.Process
             //        return;
             //    }
             //}
-
+            bt领料提交审核.PerformClick();
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
             BindingSource bs_temp = new BindingSource();

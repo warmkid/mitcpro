@@ -779,6 +779,7 @@ namespace mySystem
                 }
                 else if (localUUID != remoteUUID)
                 {
+                    timer2.Stop();
                     MessageBox.Show("该账号已在别处登陆，您已下线","下线提醒",MessageBoxButtons.OK);
                     ExitBtn.PerformClick();
                 }
@@ -830,16 +831,44 @@ namespace mySystem
         private String Instru = null;
         private void btnMyTask_Click(object sender, EventArgs e)
         {
+
+
+            //
+            //string file = System.Windows.Forms.Application.ExecutablePath;
+            //Configuration config = ConfigurationManager.OpenExeConfiguration(file);
+
+            //ConfigurationManager.RefreshSection("appSettings");
+            //string test;
+            //try
+            //{
+            //    test = config.AppSettings.Settings["test"].Value;
+                
+
+            //}catch(Exception ee){
+            //    test = ee.Message + "\n" + ee.StackTrace;
+            //}
+            //
+            mySystem.Other.我的任务 f = new Other.我的任务();
+
+            //f.set指令(test);
+            //f.Show();
             String instru = receiveInstr();
             String msg = SearchUnchecked();
-            if (instru == null && msg.Equals("")) return;
-            if (instru == null )
+            if (instru == null && msg.Equals(""))
             {
-                MessageBox.Show(msg, "提示");
+                MessageBox.Show("暂时没有新任务", "提示");
+                return;
             }
+            //if (instru == null)
+            //{
+            //    MessageBox.Show(msg, "提示");
+            //}
             else
             {
-                MessageBox.Show("请接收指令：\t " + instru + "\n\n" + msg, "提示");
+                f.set指令(instru);
+                f.set表单(msg);
+                f.ShowDialog(); ;
+                //MessageBox.Show("请接收指令：\t " + instru + "\n\n" + msg, "提示");
             }
         }
 

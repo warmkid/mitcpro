@@ -824,10 +824,10 @@ namespace WindowsFormsApplication1
             //cb产品代码.DataBindings.Add("Text", bs_prodinstr.DataSource, "产品代码");
             tb产品批号.DataBindings.Add("Text", bs_prodinstr.DataSource, "产品批号");
             tb生产指令.DataBindings.Add("Text", bs_prodinstr.DataSource, "生产指令编号");
-            cb原料代码ab1c.DataBindings.Add("Text", bs_prodinstr.DataSource, "外中内层原料代码");
-            cb原料代码b2.DataBindings.Add("Text", bs_prodinstr.DataSource, "中层原料代码");
-            tb原料批号ab1c.DataBindings.Add("Text", bs_prodinstr.DataSource, "外中内层原料批号");
-            tb原料批号b2.DataBindings.Add("Text", bs_prodinstr.DataSource, "中层原料批号");
+            //cb原料代码ab1c.DataBindings.Add("Text", bs_prodinstr.DataSource, "外中内层原料代码");
+            //cb原料代码b2.DataBindings.Add("Text", bs_prodinstr.DataSource, "中层原料代码");
+            //tb原料批号ab1c.DataBindings.Add("Text", bs_prodinstr.DataSource, "外中内层原料批号");
+            //tb原料批号b2.DataBindings.Add("Text", bs_prodinstr.DataSource, "中层原料批号");
             tb用料ab1c.DataBindings.Add("Text", bs_prodinstr.DataSource, "外中内层原料余量");
             tb余料ab1c.DataBindings.Add("Text", bs_prodinstr.DataSource, "外中内层原料用量");
             tb用料b2.DataBindings.Add("Text", bs_prodinstr.DataSource, "中层原料余量");
@@ -954,26 +954,27 @@ namespace WindowsFormsApplication1
             string[] s1 = s.Split(',');
             string[] str_inout = dict_inoutmatcode_batch.Values.ToArray();
             string[] strlist_inout = str_inout[0].Split(',');
-            for (int i = 0; i < s1.Length; i++)
-            {
-                if (Array.IndexOf(strlist_inout,s1[i]) < 0)
-                {
-                    MessageBox.Show(cb原料代码ab1c.Text+"中没有对应的批号:"+s1[i]);
-                    return false;
-                }
-            }
+            // 不再判断批号了。
+            //for (int i = 0; i < s1.Length; i++)
+            //{
+            //    if (Array.IndexOf(strlist_inout,s1[i]) < 0)
+            //    {
+            //        MessageBox.Show(cb原料代码ab1c.Text+"中没有对应的批号:"+s1[i]);
+            //        return false;
+            //    }
+            //}
             s = tb原料批号b2.Text;
             s = ToDBC(s);
             s1 = s.Split(',');         
             string[] strlist_mid = dict_midmatcode_batch.Values.ToArray()[0].Split(',');
-            for (int i = 0; i < s1.Length; i++)
-            {
-                if (Array.IndexOf(strlist_mid, s1[i]) < 0)
-                {
-                    MessageBox.Show(cb原料代码b2.Text+"中没有对应的批号:"+s1[i]);
-                    return false;
-                }
-            }
+            //for (int i = 0; i < s1.Length; i++)
+            //{
+            //    if (Array.IndexOf(strlist_mid, s1[i]) < 0)
+            //    {
+            //        MessageBox.Show(cb原料代码b2.Text+"中没有对应的批号:"+s1[i]);
+            //        return false;
+            //    }
+            //}
             return true;
         }
 
@@ -1646,6 +1647,7 @@ namespace WindowsFormsApplication1
                 //        return;
                 //    }
                 //}
+                btn提交数据审核.PerformClick();
                 for (int i = 0; i < dataGridView1.Rows.Count; i++)
                 {
                     if (dataGridView1.Rows[i].Cells[6].Value.ToString() == "不合格")

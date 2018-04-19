@@ -318,6 +318,7 @@ namespace mySystem
 
         private void btn复制_Click(object sender, EventArgs e)
         {
+            if (dgv.SelectedCells.Count == 0) return;
             // TODO 复制内表
             String newCode = mySystem.Other.InputTextWindow.getString("新的生产指令编码：");
             if (newCode == "")
@@ -326,7 +327,7 @@ namespace mySystem
             }
 
 
-            if (dgv.SelectedCells.Count == 0) return;
+            
             DataRow dr;
             SqlDataAdapter daT;
             DataTable dtT;
@@ -341,7 +342,18 @@ namespace mySystem
             switch (processName)
             {
                 case "吹膜":
-                    int pid = Convert.ToInt32(dt.Rows[dgv.SelectedCells[0].RowIndex]["ID"]);
+                    // 检查指令
+                    daT = new SqlDataAdapter("select * from 生产指令信息表 where 生产指令编号='" + newCode+"'", mySystem.Parameter.conn);
+                    cbT = new SqlCommandBuilder(daT);
+                    dtT = new DataTable();
+                    daT.Fill(dtT);
+                    if (dtT.Rows.Count > 0)
+                    {
+                        MessageBox.Show("吹膜中已经有了生产指令:" + newCode);
+                        return;
+                    }
+                    // 复制外表
+                    int pid = Convert.ToInt32(dgv.SelectedRows[0].Cells["ID"].Value);
                     dr = dt.NewRow();
                     dr.ItemArray = dt.Rows[dgv.SelectedCells[0].RowIndex].ItemArray.Clone() as object[];
                     dr["生产指令编号"] = newCode;
@@ -353,6 +365,8 @@ namespace mySystem
                     dr["日志"] = log;
                     dt.Rows.Add(dr);
                     da.Update((DataTable)bs.DataSource);
+                    
+                    // 更新界面
                     da = new SqlDataAdapter(da.SelectCommand);
                     cb = new SqlCommandBuilder(da);
                     dt = new DataTable(dt.TableName);
@@ -362,16 +376,30 @@ namespace mySystem
                     bs.DataSource = dt;
                     dgv.DataSource = bs.DataSource;
                     setDataGridViewRowNums();
+
+                    // 获取原内表数据
                     daT = new SqlDataAdapter("select * from 生产指令产品列表 where 生产指令ID=" + pid, mySystem.Parameter.conn);
                     cbT = new SqlCommandBuilder(daT);
                     dtT = new DataTable();
                     daT.Fill(dtT);
+                    DataTable dtTOrig = dtT.Copy();
+
+
+                    daT = new SqlDataAdapter("select * from 生产指令信息表 where 生产指令编号='" + newCode+"'", mySystem.Parameter.conn);
+                    cbT = new SqlCommandBuilder(daT);
+                    dtT = new DataTable();
+                    daT.Fill(dtT);
+                    int newid = Convert.ToInt32(dtT.Rows[0]["ID"]);
+                    daT = new SqlDataAdapter("select * from 生产指令产品列表 where 生产指令ID=" + newid, mySystem.Parameter.conn);
+                    cbT = new SqlCommandBuilder(daT);
+                    dtT = new DataTable();
+                    daT.Fill(dtT);
                     List<DataRow> ndrs = new List<DataRow>();
-                    foreach (DataRow tdr in dtT.Rows)
+                    foreach (DataRow tdr in dtTOrig.Rows)
                     {
                         DataRow t = dtT.NewRow();
                         t.ItemArray = tdr.ItemArray.Clone() as object[];
-                        t["生产指令ID"] = Convert.ToInt32(dt.Rows[dt.Rows.Count - 1]["ID"]);
+                        t["生产指令ID"] = newid;
                         ndrs.Add(t);
                     }
                     foreach (DataRow tdr in ndrs)

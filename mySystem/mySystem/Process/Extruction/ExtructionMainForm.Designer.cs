@@ -36,15 +36,15 @@
             this.D4Btn = new System.Windows.Forms.Button();
             this.D3Btn = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.btn生产领料申请单 = new System.Windows.Forms.Button();
             this.C4Btn = new System.Windows.Forms.Button();
             this.C3Btn = new System.Windows.Forms.Button();
+            this.B1Btn = new System.Windows.Forms.Button();
+            this.btn生产领料申请单 = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.B8Btn = new System.Windows.Forms.Button();
             this.B6Btn = new System.Windows.Forms.Button();
             this.B9Btn = new System.Windows.Forms.Button();
             this.B7Btn = new System.Windows.Forms.Button();
-            this.B1Btn = new System.Windows.Forms.Button();
             this.B5Btn = new System.Windows.Forms.Button();
             this.B4Btn = new System.Windows.Forms.Button();
             this.B2Btn = new System.Windows.Forms.Button();
@@ -145,17 +145,6 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "设备运行";
             // 
-            // btn生产领料申请单
-            // 
-            this.btn生产领料申请单.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn生产领料申请单.Location = new System.Drawing.Point(8, 48);
-            this.btn生产领料申请单.Name = "btn生产领料申请单";
-            this.btn生产领料申请单.Size = new System.Drawing.Size(223, 38);
-            this.btn生产领料申请单.TabIndex = 22;
-            this.btn生产领料申请单.Text = "生产领料申请单";
-            this.btn生产领料申请单.UseVisualStyleBackColor = true;
-            this.btn生产领料申请单.Click += new System.EventHandler(this.btn生产领料申请单_Click);
-            // 
             // C4Btn
             // 
             this.C4Btn.Font = new System.Drawing.Font("宋体", 12F);
@@ -179,6 +168,30 @@
             this.C3Btn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.C3Btn.UseVisualStyleBackColor = true;
             this.C3Btn.Click += new System.EventHandler(this.C3Btn_Click);
+            // 
+            // B1Btn
+            // 
+            this.B1Btn.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.B1Btn.Location = new System.Drawing.Point(9, 149);
+            this.B1Btn.Name = "B1Btn";
+            this.B1Btn.Size = new System.Drawing.Size(220, 38);
+            this.B1Btn.TabIndex = 12;
+            this.B1Btn.Text = "吹膜工序传料记录";
+            this.B1Btn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.B1Btn.UseVisualStyleBackColor = true;
+            this.B1Btn.Visible = false;
+            this.B1Btn.Click += new System.EventHandler(this.B1Btn_Click);
+            // 
+            // btn生产领料申请单
+            // 
+            this.btn生产领料申请单.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn生产领料申请单.Location = new System.Drawing.Point(8, 48);
+            this.btn生产领料申请单.Name = "btn生产领料申请单";
+            this.btn生产领料申请单.Size = new System.Drawing.Size(223, 38);
+            this.btn生产领料申请单.TabIndex = 22;
+            this.btn生产领料申请单.Text = "生产领料申请单";
+            this.btn生产领料申请单.UseVisualStyleBackColor = true;
+            this.btn生产领料申请单.Click += new System.EventHandler(this.btn生产领料申请单_Click);
             // 
             // groupBox2
             // 
@@ -247,19 +260,6 @@
             this.B7Btn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.B7Btn.UseVisualStyleBackColor = true;
             this.B7Btn.Click += new System.EventHandler(this.B7Btn_Click);
-            // 
-            // B1Btn
-            // 
-            this.B1Btn.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.B1Btn.Location = new System.Drawing.Point(9, 149);
-            this.B1Btn.Name = "B1Btn";
-            this.B1Btn.Size = new System.Drawing.Size(220, 38);
-            this.B1Btn.TabIndex = 12;
-            this.B1Btn.Text = "吹膜工序传料记录";
-            this.B1Btn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.B1Btn.UseVisualStyleBackColor = true;
-            this.B1Btn.Visible = false;
-            this.B1Btn.Click += new System.EventHandler(this.B1Btn_Click);
             // 
             // B5Btn
             // 
@@ -426,6 +426,7 @@
             // 
             // comboBox1
             // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Location = new System.Drawing.Point(97, 22);

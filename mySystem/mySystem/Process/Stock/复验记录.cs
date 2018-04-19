@@ -604,6 +604,14 @@ namespace mySystem.Process.Stock
             readOuterData(_id);
             outerBind();
             base.CheckResult();
+
+            try
+            {
+                (this.Owner as mySystem.Process.Stock.原料入库管理).search();
+            }
+            catch (Exception ee)
+            {
+            }
         }
 
 

@@ -1001,22 +1001,24 @@ namespace mySystem.Process.Stock
                 //    MessageBox.Show("已自动生产" + RowToCheck.Count + "张检验记录");
 
                 //}
+                String msg = "";
                 foreach (DataRow tdr in dtInner.Rows)
                 {
                     if (tdr["外包装验收情况"].ToString() == "合格")
                     {
                         // 生成入库单
-                        生成入库单(tdr);
+                        msg += 生成入库单(tdr);
                     }
                     else if (tdr["外包装验收情况"].ToString() == "不合格")
                     {
                         // 合格部分生成入库单
-                        生成入库单(tdr);
+                        msg += 生成入库单(tdr);
 
                         // 生成复验记录
-                        生成复验记录(tdr);
+                        msg += 生成复验记录(tdr);
                     }
                 }
+                MessageBox.Show(msg);
           
             }
 
@@ -1034,9 +1036,16 @@ namespace mySystem.Process.Stock
 
             btn审核.Enabled = false;
             base.CheckResult();
+            try
+            {
+                (this.Owner as mySystem.Process.Stock.原料入库管理).search();
+            }
+            catch (Exception ee)
+            {
+            }
         }
 
-        void 生成复验记录(DataRow dr)
+        String 生成复验记录(DataRow dr)
         {
             SqlDataAdapter da;
             DataTable dt;
@@ -1063,10 +1072,10 @@ namespace mySystem.Process.Stock
             ndr["审核结果"] = false;//默认值
             dt.Rows.Add(ndr);
             da.Update(dt);
-            MessageBox.Show("已为物料：" + dr["物料名称"] + "生成复验记录");
+            return "已为物料：" + dr["物料名称"] + "生成复验记录\n";
         }
 
-        void 生成入库单(DataRow dr)
+        String 生成入库单(DataRow dr)
         {
             SqlDataAdapter da;
             DataTable dt;
@@ -1095,7 +1104,7 @@ namespace mySystem.Process.Stock
             ndr["审核结果"] = false;//默认值
             dt.Rows.Add(ndr);
             da.Update(dt);
-            MessageBox.Show("已为物料：" + dr["物料名称"] + "生成入库单");
+            return "已为物料：" + dr["物料名称"] + "生成入库单\n";
         }
 
         void setDataGridViewColumn()

@@ -158,7 +158,7 @@ namespace mySystem.Extruction.Process
 
         void checkform_FormClosed(object sender, FormClosedEventArgs e)
         {
-            fresh_otherform();
+            //fresh_otherform();
             //throw new NotImplementedException();        
         }
 
@@ -646,6 +646,11 @@ namespace mySystem.Extruction.Process
 
             base.CheckResult();
             checkform.Close();
+            try
+            {
+                (this.Owner as mySystem.ExtructionMainForm).comboInit();
+            }
+            catch (NullReferenceException exp) { }
             try
             {
                 (this.Owner as mySystem.Query.QueryExtruForm).search();
