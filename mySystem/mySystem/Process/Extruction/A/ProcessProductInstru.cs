@@ -2231,16 +2231,16 @@ namespace BatchProductRecord
         private void fill_excel(Microsoft.Office.Interop.Excel._Worksheet my)
         {
             int ind = 0;
-            if (dataGridView1.Rows.Count > 7)
+            if (dataGridView1.Rows.Count > 1)
             {
                 //在第8行插入
-                for (int i = 0; i < dataGridView1.Rows.Count - 7; i++)
+                for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
                 {
-                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[8, Type.Missing];
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[7, Type.Missing];
                     range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
                     Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
                 }
-                ind = dataGridView1.Rows.Count - 7;
+                ind = dataGridView1.Rows.Count - 1;
             }
 
             my.Cells[2, 1].Value = "PEF 吹膜工序生产指令";
