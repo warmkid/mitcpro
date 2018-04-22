@@ -30,6 +30,10 @@ namespace mySystem
             textBox1.PreviewKeyDown += new PreviewKeyDownEventHandler(textBox1_PreviewKeyDown);
             dgv.CellDoubleClick += new DataGridViewCellEventHandler(dgv_CellDoubleClick);
             comboBox1.PreviewKeyDown += new PreviewKeyDownEventHandler(comboBox1_PreviewKeyDown);
+            if (Parameter.c查询_生产指令 != "")
+            {
+                comboBox1.Text = Parameter.c查询_生产指令;
+            }
         }
 
         void comboBox1_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
@@ -64,6 +68,7 @@ namespace mySystem
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             processName = comboBox1.SelectedItem.ToString();
+            Parameter.c查询_生产指令 = comboBox1.Text;
             switch (processName)
             {
                 case "吹膜":

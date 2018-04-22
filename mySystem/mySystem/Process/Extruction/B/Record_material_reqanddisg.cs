@@ -64,7 +64,7 @@ namespace mySystem.Extruction.Process
             if (Parameter.UserState.NoBody == _userState)
             {
                 _userState = Parameter.UserState.管理员;
-                label角色.Text = "管理员";
+                label角色.Text = mySystem.Parameter.userName+"(管理员)";
             }
             // 让用户选择操作员还是审核员，选“是”表示操作员
             if (Parameter.UserState.Both == _userState)
@@ -73,8 +73,8 @@ namespace mySystem.Extruction.Process
                 else _userState = Parameter.UserState.审核员;
 
             }
-            if (Parameter.UserState.操作员 == _userState) label角色.Text = "操作员";
-            if (Parameter.UserState.审核员 == _userState) label角色.Text = "审核员";
+            if (Parameter.UserState.操作员 == _userState) label角色.Text = mySystem.Parameter.userName+"(操作员)";
+            if (Parameter.UserState.审核员 == _userState) label角色.Text = mySystem.Parameter.userName+"(审核员)";
         }
 
         //设置窗口状态
@@ -1186,9 +1186,10 @@ namespace mySystem.Extruction.Process
             {
                 dataGridView1.Columns["ID"].Visible = false;//ID
                 dataGridView1.Columns["T吹膜工序领料退料记录ID"].Visible = false;//T吹膜工序领料退料记录ID
-                dataGridView1.Columns["重量"].ReadOnly = true;//重量
+                dataGridView1.Columns["重量"].ReadOnly = false;//重量
                 dataGridView1.Columns["审核人"].ReadOnly = true;//领料审核人
                 dataGridView1.Columns["数量"].ReadOnly = false;//领料审核人
+                dataGridView1.Columns["二维码"].Visible = false;
             }
 
             for (int i = 0; i < dataGridView1.Rows.Count; i++)

@@ -61,6 +61,8 @@
             this.txb成品重量合计 = new System.Windows.Forms.TextBox();
             this.lbTitle = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.lbl生产结束时间 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -87,7 +89,7 @@
             // lbl生产开始时间
             // 
             this.lbl生产开始时间.AutoSize = true;
-            this.lbl生产开始时间.Location = new System.Drawing.Point(441, 101);
+            this.lbl生产开始时间.Location = new System.Drawing.Point(397, 102);
             this.lbl生产开始时间.Name = "lbl生产开始时间";
             this.lbl生产开始时间.Size = new System.Drawing.Size(104, 16);
             this.lbl生产开始时间.TabIndex = 160;
@@ -228,7 +230,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(362, 100);
+            this.label2.Location = new System.Drawing.Point(318, 101);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(72, 16);
@@ -389,11 +391,31 @@
             this.label3.TabIndex = 5;
             this.label3.Text = "成品重量合计(Kg)";
             // 
+            // lbl生产结束时间
+            // 
+            this.lbl生产结束时间.AutoSize = true;
+            this.lbl生产结束时间.Location = new System.Drawing.Point(699, 102);
+            this.lbl生产结束时间.Name = "lbl生产结束时间";
+            this.lbl生产结束时间.Size = new System.Drawing.Size(104, 16);
+            this.lbl生产结束时间.TabIndex = 163;
+            this.lbl生产结束时间.Text = "生产结束时间";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(594, 102);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(24, 16);
+            this.label5.TabIndex = 164;
+            this.label5.Text = "--";
+            // 
             // MaterialBalenceofExtrusionProcess
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(846, 406);
+            this.ClientSize = new System.Drawing.Size(839, 406);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.lbl生产结束时间);
             this.Controls.Add(this.bt查看人员信息);
             this.Controls.Add(this.lbl生产指令);
             this.Controls.Add(this.lbl生产开始时间);
@@ -431,6 +453,7 @@
             this.MinimizeBox = false;
             this.Name = "MaterialBalenceofExtrusionProcess";
             this.Text = "吹膜工序物料平衡记录";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MaterialBalenceofExtrusionProcess_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -471,5 +494,7 @@
         private System.Windows.Forms.Label lbl生产指令;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button bt查看人员信息;
+        private System.Windows.Forms.Label lbl生产结束时间;
+        private System.Windows.Forms.Label label5;
     }
 }

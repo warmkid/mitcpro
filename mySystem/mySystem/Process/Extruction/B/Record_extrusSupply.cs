@@ -151,7 +151,7 @@ namespace WindowsFormsApplication1
             if (Parameter.UserState.NoBody == _userState)
             {
                 _userState = Parameter.UserState.管理员;
-                label角色.Text = "管理员";
+                label角色.Text = mySystem.Parameter.userName+"(管理员)";
             }
             // 让用户选择操作员还是审核员，选“是”表示操作员
             if (Parameter.UserState.Both == _userState)
@@ -160,8 +160,8 @@ namespace WindowsFormsApplication1
                 else _userState = Parameter.UserState.审核员;
 
             }
-            if (Parameter.UserState.操作员 == _userState) label角色.Text = "操作员";
-            if (Parameter.UserState.审核员 == _userState) label角色.Text = "审核员";
+            if (Parameter.UserState.操作员 == _userState) label角色.Text = mySystem.Parameter.userName+"(操作员)";
+            if (Parameter.UserState.审核员 == _userState) label角色.Text = mySystem.Parameter.userName+"(审核员)";
         }
 
         //// 获取操作员和审核员
@@ -541,9 +541,32 @@ namespace WindowsFormsApplication1
 
         }
 
+        bool is_inner_checked()
+        {
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (dataGridView1.Rows[i].Cells["审核员"].Value.ToString() == "" || dataGridView1.Rows[i].Cells["审核员"].Value.ToString() == "__待审核")
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         //审核按钮
         private void button4_Click(object sender, EventArgs e)
         {
+            //判断内表是否完全审核
+            if (!is_inner_checked())
+            {
+                MessageBox.Show("领料没有完全审核，请先审核领料");
+                return;
+            }
+
+          
+            
+
+
             checkform = new mySystem.CheckForm(this);
             checkform.ShowDialog();
         }
@@ -918,6 +941,8 @@ namespace WindowsFormsApplication1
             dataGridView1.Columns[0].Visible = false;//ID
             dataGridView1.Columns[1].Visible = false;//T吹膜供料记录ID
             dataGridView1.Columns[6].Visible = false;//中内层供料量
+            dataGridView1.Columns["外层供料量"].HeaderText = "外中内层 A+B1+C";
+            dataGridView1.Columns["中内层供料量"].HeaderText = "中层 B2";
         }
         //设置datagridview序号
         void setDataGridViewRowNums()
@@ -951,7 +976,7 @@ namespace WindowsFormsApplication1
             //ab1c原料批号和b2原料批号
             string s = tb原料批号ab1c.Text;
             s = ToDBC(s);
-            string[] s1 = s.Split(',');
+            string[] s1 = s.Split(';');
             string[] str_inout = dict_inoutmatcode_batch.Values.ToArray();
             string[] strlist_inout = str_inout[0].Split(',');
             // 不再判断批号了。
@@ -1938,7 +1963,7 @@ namespace WindowsFormsApplication1
         private void Record_extrusSupply_Load(object sender, EventArgs e)
         {
             String sql1 = "select * from 吹膜工序领料退料记录 where 生产指令ID ={0}";
-            SqlDataAdapter da = new SqlDataAdapter(String.Format(sql1, mySystem.Parameter.proInstruID), mySystem.Parameter.conn);
+            SqlDataAdapter da = new SqlDataAdapter(String.Format(sql1, instrid), mySystem.Parameter.conn);
             DataTable dt = new DataTable();
             da.Fill(dt);
             if (dt.Rows.Count == 0)

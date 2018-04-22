@@ -186,7 +186,7 @@ namespace mySystem.Other
             if (Parameter.UserState.NoBody == _userState)
             {
                 _userState = Parameter.UserState.管理员;
-                label角色.Text = "管理员";
+                label角色.Text = mySystem.Parameter.userName+"(管理员)";
             }
             // 让用户选择操作员还是审核员，选“是”表示操作员
             if (Parameter.UserState.Both == _userState)
@@ -194,8 +194,8 @@ namespace mySystem.Other
                 if (DialogResult.Yes == MessageBox.Show("您是否要以操作员身份进入", "提示", MessageBoxButtons.YesNo)) _userState = Parameter.UserState.操作员;
                 else _userState = Parameter.UserState.审核员;
             }
-            if (Parameter.UserState.操作员 == _userState) label角色.Text = "操作员";
-            if (Parameter.UserState.审核员 == _userState) label角色.Text = "审核员";
+            if (Parameter.UserState.操作员 == _userState) label角色.Text = mySystem.Parameter.userName+"(操作员)";
+            if (Parameter.UserState.审核员 == _userState) label角色.Text = mySystem.Parameter.userName+"(审核员)";
         }
 
         // 获取当前窗体状态：窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过

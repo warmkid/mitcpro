@@ -111,7 +111,7 @@
             // 
             this.label27.AutoSize = true;
             this.label27.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label27.Location = new System.Drawing.Point(907, 36);
+            this.label27.Location = new System.Drawing.Point(834, 36);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(93, 16);
             this.label27.TabIndex = 217;
@@ -121,7 +121,7 @@
             // 
             this.label角色.AutoSize = true;
             this.label角色.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label角色.Location = new System.Drawing.Point(1020, 36);
+            this.label角色.Location = new System.Drawing.Point(947, 36);
             this.label角色.Name = "label角色";
             this.label角色.Size = new System.Drawing.Size(42, 16);
             this.label角色.TabIndex = 216;
@@ -323,7 +323,7 @@
             this.label4.Size = new System.Drawing.Size(456, 48);
             this.label4.TabIndex = 194;
             this.label4.Text = "注：1. 外观不良填写数量，不良品处理方式-报废，称重记录。\r\n    2. 包装项中符合填写“√”，不符合取消勾选。\r\n    3. 每次填写间隔不超过2小时。" +
-                "";
+    "";
             // 
             // btn删除记录
             // 

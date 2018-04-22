@@ -371,7 +371,7 @@ namespace WindowsFormsApplication1
             if (Parameter.UserState.NoBody == _userState)
             {
                 _userState = Parameter.UserState.管理员;
-                label角色.Text = "管理员";
+                label角色.Text = mySystem.Parameter.userName+"(管理员)";
             }
             // 让用户选择操作员还是审核员，选“是”表示操作员
             if (Parameter.UserState.Both == _userState)
@@ -380,8 +380,8 @@ namespace WindowsFormsApplication1
                 else _userState = Parameter.UserState.审核员;
 
             }
-            if (Parameter.UserState.操作员 == _userState) label角色.Text = "操作员";
-            if (Parameter.UserState.审核员 == _userState) label角色.Text = "审核员";
+            if (Parameter.UserState.操作员 == _userState) label角色.Text = mySystem.Parameter.userName+"(操作员)";
+            if (Parameter.UserState.审核员 == _userState) label角色.Text = mySystem.Parameter.userName+"(审核员)";
         }
 
         // 如果给了一个参数为true，则表示处于无数据状态
@@ -1266,7 +1266,7 @@ namespace WindowsFormsApplication1
         {
             dataGridView1.Columns[0].Visible = false;
             dataGridView1.Columns[1].Visible = false;
-            dataGridView1.Columns[6].Visible = false;
+            dataGridView1.Columns[6].Visible = true;
         }
         //设置datagridview序号
         

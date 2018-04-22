@@ -35,6 +35,15 @@ namespace mySystem.Query
             comboBox1.PreviewKeyDown += new PreviewKeyDownEventHandler(comboBox1_PreviewKeyDown);
             comboBox2.PreviewKeyDown += new PreviewKeyDownEventHandler(comboBox2_PreviewKeyDown);
             dgv.CellDoubleClick += new DataGridViewCellEventHandler(dgv_CellDoubleClick);
+
+            if (Parameter.c查询_灭菌_生产指令 != "")
+            {
+                comboBox1.Text = Parameter.c查询_灭菌_生产指令;
+            }
+            if (Parameter.c查询_灭菌_表单 != "")
+            {
+                comboBox2.Text = Parameter.c查询_灭菌_表单;
+            }
         }
 
         void comboBox2_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
@@ -82,6 +91,7 @@ namespace mySystem.Query
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            Parameter.c查询_灭菌_生产指令 = comboBox1.Text;
             Instruction = comboBox1.SelectedItem.ToString();
             SqlCommand comm = new SqlCommand();
             comm.Connection = mySystem.Parameter.conn;
@@ -96,6 +106,7 @@ namespace mySystem.Query
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
+            Parameter.c查询_灭菌_表单 = comboBox2.Text;
             tableName = comboBox2.SelectedItem.ToString();
         }
 

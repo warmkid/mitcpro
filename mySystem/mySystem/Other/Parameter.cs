@@ -74,6 +74,30 @@ namespace mySystem
         public static mySystem.Process.Bag.BTV.BTVMainForm parentBPV; //BPV制袋mainform
 
 
+        public static string c查询_生产指令="";
+
+        public static string c查询_吹膜_生产指令="";
+        public static string c查询_吹膜_表单="";
+
+        public static string c查询_清洁分切_生产指令 = "";
+        public static string c查询_清洁分切_表单 = "";
+
+        public static string c查询_灭菌_生产指令 = "";
+        public static string c查询_灭菌_表单 = "";
+
+        public static string c查询_CS制袋_生产指令 = "";
+        public static string c查询_CS制袋_表单 = "";
+
+        public static string c查询_PE制袋_生产指令 = "";
+        public static string c查询_PE制袋_表单 = "";
+
+        public static string c查询_BPV制袋_生产指令 = "";
+        public static string c查询_BPV制袋_表单 = "";
+
+        public static string c查询_PTV制袋_生产指令 = "";
+        public static string c查询_PTV制袋_表单 = "";
+
+
         #region 公用函数
         //通过id查名字
         public static string IDtoName(int id)

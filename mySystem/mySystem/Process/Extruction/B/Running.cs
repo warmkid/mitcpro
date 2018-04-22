@@ -1604,6 +1604,8 @@ namespace mySystem.Process.Extruction.B
             cmb产品代码.Enabled = false;
             txb产品批号.Enabled = false;
             txb审核员.ReadOnly = true;
+            dtp记录时间.Enabled = false;
+            dtp生产日期.Enabled = false;
         }
 
         
@@ -1675,7 +1677,7 @@ namespace mySystem.Process.Extruction.B
             if (Parameter.UserState.NoBody == _userState)
             {
                 _userState = Parameter.UserState.管理员;
-                label角色.Text = "管理员";
+                label角色.Text = mySystem.Parameter.userName+"(管理员)";
             }
             // 让用户选择操作员还是审核员，选“是”表示操作员
             if (Parameter.UserState.Both == _userState)
@@ -1684,8 +1686,8 @@ namespace mySystem.Process.Extruction.B
                 else _userState = Parameter.UserState.审核员;
 
             }
-            if (Parameter.UserState.操作员 == _userState) label角色.Text = "操作员";
-            if (Parameter.UserState.审核员 == _userState) label角色.Text = "审核员";
+            if (Parameter.UserState.操作员 == _userState) label角色.Text = mySystem.Parameter.userName+"(操作员)";
+            if (Parameter.UserState.审核员 == _userState) label角色.Text = mySystem.Parameter.userName+"(审核员)";
         }
         private void setFormState(bool newForm = false)
         {
@@ -1835,7 +1837,7 @@ namespace mySystem.Process.Extruction.B
             }
             catch (Exception exp)
             {
-                MessageBox.Show(exp.Message + "\n" + exp.StackTrace);
+                MessageBox.Show("请先打开一条记录");
             }
         }
 

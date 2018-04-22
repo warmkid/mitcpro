@@ -1075,6 +1075,7 @@ namespace mySystem
         ///gongxu:1，吹膜；2，清洁分切；3，灭菌；4，CS制袋；5，PE制袋；6，BPV制袋；7，PTV制袋
         private void InstruStateChange(SqlConnection conn, String tblName, int gongxu)
         {
+            if (Parameter.userName == null) return;
             //读取未接收的生产指令
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;

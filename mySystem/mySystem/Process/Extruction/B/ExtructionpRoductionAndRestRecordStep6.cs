@@ -35,6 +35,7 @@ namespace mySystem.Extruction.Process
 
         private SqlDataAdapter da记录_sql, da记录详情_sql;
         private SqlCommandBuilder cb记录_sql, cb记录详情_sql;
+        int pre_no = 0;
 
         #region
         //private string person_操作员;
@@ -185,7 +186,7 @@ namespace mySystem.Extruction.Process
             if (Parameter.UserState.NoBody == _userState)
             {
                 _userState = Parameter.UserState.管理员;
-                label角色.Text = "管理员";
+                label角色.Text = mySystem.Parameter.userName+"(管理员)";
             }
             // 让用户选择操作员还是审核员，选“是”表示操作员
             if (Parameter.UserState.Both == _userState)
@@ -194,8 +195,8 @@ namespace mySystem.Extruction.Process
                 else _userState = Parameter.UserState.审核员;
 
             }
-            if (Parameter.UserState.操作员 == _userState) label角色.Text = "操作员";
-            if (Parameter.UserState.审核员 == _userState) label角色.Text = "审核员";
+            if (Parameter.UserState.操作员 == _userState) label角色.Text = mySystem.Parameter.userName+"(操作员)";
+            if (Parameter.UserState.审核员 == _userState) label角色.Text = mySystem.Parameter.userName+"(审核员)";
         }
 
         // 获取当前窗体状态：窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过
@@ -691,7 +692,7 @@ namespace mySystem.Extruction.Process
                 int numtemp = 0;
                 if (Int32.TryParse(dt记录详情.Rows[dt记录详情.Rows.Count - 1]["膜卷编号"].ToString(), out numtemp) == true)
                 {
-                    dr["膜卷编号"] = (numtemp + 1).ToString("D2");
+                    dr["膜卷编号"] = (pre_no + 1).ToString("D2");
                 }
                 else
                 { dr["膜卷编号"] = ""; }
@@ -707,7 +708,7 @@ namespace mySystem.Extruction.Process
             {
                 //新建第一行
                 dr["开始时间"] = DateTime.Now;
-                dr["膜卷编号"] = "01";
+                dr["膜卷编号"] = (pre_no + 1).ToString("D2");
                 dr["宽度"] = 0;
                 dr["膜卷长度"] = 0;
                 dr["膜卷重量"] = 0;
@@ -715,7 +716,8 @@ namespace mySystem.Extruction.Process
                 dr["最小厚度"] = 0;
                 dr["平均厚度"] = 0;
                 dr["厚度公差"] = 0;
-            }            
+            }
+            pre_no++;
             dr["结束时间"] = DateTime.Now;
             dr["外观"] = "Yes";
             dr["判定"] = "Yes";
@@ -811,8 +813,30 @@ namespace mySystem.Extruction.Process
         //用于显示/新建数据
         private void btn查询新建_Click(object sender, EventArgs e)
         {
+            // 查询历史编号
+
+
+
             if (cb产品名称.SelectedIndex >= 0)
-            { DataShow(InstruID, cb产品名称.Text, cb白班.Checked, dtp生产日期.Value); }
+            {
+                DataShow(InstruID, cb产品名称.Text, cb白班.Checked, dtp生产日期.Value);
+                pre_no = getPrevNO(cb产品名称.Text, Convert.ToInt32(dt记录.Rows[0]["生产指令ID"].ToString()));
+            }
+
+        }
+
+        int getPrevNO(String cpdm, int instrID)
+        {
+            int ret;
+            String sql = "select top 1 吹膜工序生产和检验记录详细信息.膜卷编号 as 膜卷编号 from 吹膜工序生产和检验记录,吹膜工序生产和检验记录详细信息 where 吹膜工序生产和检验记录.产品名称='{0}' and 吹膜工序生产和检验记录.生产指令ID={1} and 吹膜工序生产和检验记录详细信息.T吹膜工序生产和检验记录ID=吹膜工序生产和检验记录.ID order by 吹膜工序生产和检验记录详细信息.ID desc";
+            SqlDataAdapter da = new SqlDataAdapter(String.Format(sql,cpdm, instrID),mySystem.Parameter.conn);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            if (dt.Rows.Count == 0)
+                return 0;
+            else
+                return Convert.ToInt32(dt.Rows[0]["膜卷编号"].ToString());
+            
         }
 
         //添加行按钮
@@ -847,8 +871,21 @@ namespace mySystem.Extruction.Process
             //        //MessageBox.Show("您选择的是【取消】");
             //    }
             //}               
+            //if (dataGridView1.Rows.Count > 0)
+            //    dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.Rows.Count - 1;
             if (dataGridView1.Rows.Count > 0)
+            {
                 dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.Rows.Count - 1;
+                foreach (DataGridViewCell dgvc in dataGridView1.SelectedCells)
+                {
+                    dgvc.Selected = false;
+                }
+                dataGridView1.Rows[dataGridView1.Rows.Count - 1].Selected = true;
+            }
+            else
+            {
+                dataGridView1.Rows[0].Selected = true;
+            }
         }
         
         //删除行按钮
@@ -1453,37 +1490,58 @@ namespace mySystem.Extruction.Process
 
         private void btn新建_Click(object sender, EventArgs e)
         {
-            if (DialogResult.OK == MessageBox.Show("确认新建吗?", "确认", MessageBoxButtons.OKCancel))
-            {
-                bs记录 = new BindingSource();
-                dt记录 = new DataTable(table);
-                dtp生产日期.Value = DateTime.Now;
-                if (!mySystem.Parameter.isSqlOk)
-                {
-                    da记录 = new OleDbDataAdapter("select * from " + table + " where 0=1", connOle);
-                    cb记录 = new OleDbCommandBuilder(da记录);
-                    da记录.Fill(dt记录);
-                    DataRow dr = dt记录.NewRow();
-                    dr = writeOuterDefault(dr);
-                    dt记录.Rows.Add(dr);
+            //if (DialogResult.OK == MessageBox.Show("确认新建吗?", "确认", MessageBoxButtons.OKCancel))
+            //{
 
-                    da记录.Update(dt记录);
+
+
+
+
+            bs记录 = new BindingSource();
+            //dt记录 = new DataTable(table);
+            dtp生产日期.Value = DateTime.Now;
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                da记录 = new OleDbDataAdapter("select * from " + table + " where 0=1", connOle);
+                cb记录 = new OleDbCommandBuilder(da记录);
+                da记录.Fill(dt记录);
+                DataRow dr = dt记录.NewRow();
+                dr = writeOuterDefault(dr);
+                dt记录.Rows.Add(dr);
+
+                da记录.Update(dt记录);
+            }
+            else
+            {
+                // 判断是否可以新建
+                String sql = "select * from 是否可以新建生产检验记录 where 生产指令ID={0} and 产品代码='{1}'";
+
+                SqlDataAdapter da = new SqlDataAdapter(String.Format(sql, InstruID, cb产品名称.Text), mySystem.Parameter.conn);
+                SqlCommandBuilder cb = new SqlCommandBuilder(da);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                if (Convert.ToInt32(dt.Rows[0]["是否可以新建"]) == 0)
+                {
+                    MessageBox.Show("该班次已有记录，无法新建");
                 }
                 else
                 {
-                    da记录_sql = new SqlDataAdapter("select * from " + table + " where 0=1", mySystem.Parameter.conn);
-                    cb记录_sql = new SqlCommandBuilder(da记录_sql);
-                    da记录_sql.Fill(dt记录);
                     DataRow dr = dt记录.NewRow();
                     dr = writeOuterDefault(dr);
                     dt记录.Rows.Add(dr);
 
                     da记录_sql.Update(dt记录);
+
+                    dt.Rows[0]["是否可以新建"] = 0;
+                    da.Update(dt);
+
                 }
-               
-                //da记录 = new OleDbDataAdapter("select top 1 * from " + table + " where 生产指令ID = " + InstruID.ToString() + " and 产品名称 = '" + productName + "' and 班次 = " + flight.ToString() + "order by ID DESC", connOle);
-                DataShow(InstruID, cb产品名称.Text, cb白班.Checked, dtp生产日期.Value);
+
             }
+
+            //da记录 = new OleDbDataAdapter("select top 1 * from " + table + " where 生产指令ID = " + InstruID.ToString() + " and 产品名称 = '" + productName + "' and 班次 = " + flight.ToString() + "order by ID DESC", connOle);
+            DataShow(InstruID, cb产品名称.Text, cb白班.Checked, dtp生产日期.Value);
+
         }
 
         private void ExtructionpRoductionAndRestRecordStep6_Load(object sender, EventArgs e)

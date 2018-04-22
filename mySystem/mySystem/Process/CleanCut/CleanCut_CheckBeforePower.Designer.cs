@@ -386,7 +386,7 @@
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label11.Location = new System.Drawing.Point(898, 20);
+            this.label11.Location = new System.Drawing.Point(839, 20);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(93, 16);
             this.label11.TabIndex = 154;
@@ -415,7 +415,7 @@
             // 
             this.label角色.AutoSize = true;
             this.label角色.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label角色.Location = new System.Drawing.Point(1003, 20);
+            this.label角色.Location = new System.Drawing.Point(944, 20);
             this.label角色.Name = "label角色";
             this.label角色.Size = new System.Drawing.Size(42, 16);
             this.label角色.TabIndex = 151;

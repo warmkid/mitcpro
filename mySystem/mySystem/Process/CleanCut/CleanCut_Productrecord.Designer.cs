@@ -253,7 +253,7 @@
             this.label5.Size = new System.Drawing.Size(744, 32);
             this.label5.TabIndex = 109;
             this.label5.Text = "1.外观：内层包装应完整干净，膜面应平整、干净、光滑、无毛边、无明显黑点异物、无褶皱、无污染、\r\n        无破损。检查结果填写于上表中，合格划√，不合格取" +
-                "消勾选，并说明不良项。\t\t\t\t\t\t";
+    "消勾选，并说明不良项。\t\t\t\t\t\t";
             // 
             // dataGridView1
             // 
@@ -499,7 +499,7 @@
             // 
             this.label27.AutoSize = true;
             this.label27.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label27.Location = new System.Drawing.Point(1047, 23);
+            this.label27.Location = new System.Drawing.Point(908, 23);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(93, 16);
             this.label27.TabIndex = 177;
@@ -509,7 +509,7 @@
             // 
             this.label角色.AutoSize = true;
             this.label角色.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label角色.Location = new System.Drawing.Point(1152, 23);
+            this.label角色.Location = new System.Drawing.Point(1013, 23);
             this.label角色.Name = "label角色";
             this.label角色.Size = new System.Drawing.Size(42, 16);
             this.label角色.TabIndex = 176;

@@ -249,7 +249,8 @@ namespace mySystem
         private void ExitButton_Click(object sender, EventArgs e)
         {
             this.Close();
-            Application.ExitThread();
+            //Application.ExitThread();
+            Application.Exit();
         }
 
 

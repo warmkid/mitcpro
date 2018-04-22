@@ -85,7 +85,7 @@ namespace BatchProductRecord
             if (Parameter.UserState.NoBody == _userState)
             {
                 _userState = Parameter.UserState.管理员;
-                label角色.Text = "管理员";
+                label角色.Text = mySystem.Parameter.userName+"(管理员)";
             }
             // 让用户选择操作员还是审核员，选“是”表示操作员
             if (Parameter.UserState.Both == _userState)
@@ -94,8 +94,8 @@ namespace BatchProductRecord
                 else _userState = Parameter.UserState.审核员;
 
             }
-            if (Parameter.UserState.操作员 == _userState) label角色.Text = "操作员";
-            if (Parameter.UserState.审核员 == _userState) label角色.Text = "审核员";
+            if (Parameter.UserState.操作员 == _userState) label角色.Text = mySystem.Parameter.userName+"(操作员)";
+            if (Parameter.UserState.审核员 == _userState) label角色.Text = mySystem.Parameter.userName+"(审核员)";
         }
 
         //设置窗口状态
@@ -922,13 +922,15 @@ namespace BatchProductRecord
         //确认按钮
         private void button1_Click_1(object sender, EventArgs e)
         {
-
+           
             
 
             bool rt = save();
             //控件可见性
             if (rt && _userState == Parameter.UserState.操作员)
                 bt提交审核.Enabled = true;
+            
+            
         }
 
         private bool save()
@@ -2411,6 +2413,33 @@ namespace BatchProductRecord
                 MessageBox.Show("接收人不存在");
                 return;
             }
+
+            // 写入 是否可以新建 表
+            List<String> ls产品代码 = new List<string>();
+            foreach (DataRow dr in dt_prodlist.Rows)
+            {
+                ls产品代码.Add(dr["产品编码"].ToString());
+            }
+            String sql = "select * from 是否可以新建生产检验记录 where 生产指令ID={0} and 产品代码='{1}'";
+            SqlDataAdapter da;
+            SqlCommandBuilder cb; 
+            DataTable dt;
+            foreach(string dm in ls产品代码){
+                da = new SqlDataAdapter(String.Format(sql, Convert.ToInt32(dt_prodinstr.Rows[0]["ID"]), dm), mySystem.Parameter.conn);
+                  cb = new SqlCommandBuilder(da);
+                  dt = new DataTable();
+                  da.Fill(dt);
+                  if (dt.Rows.Count == 0)
+                  {
+                      DataRow dr = dt.NewRow();
+                      dr["生产指令ID"] = dt_prodinstr.Rows[0]["ID"];
+                      dr["产品代码"] = dm;
+                      dr["是否可以新建"] = 1;
+                      dt.Rows.Add(dr);
+                      da.Update(dt);
+                  }
+            }
+            
 
 
             if(!save()) return;

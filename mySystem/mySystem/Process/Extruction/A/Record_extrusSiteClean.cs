@@ -158,7 +158,7 @@ namespace mySystem.Extruction.Process
 
         void checkform_FormClosed(object sender, FormClosedEventArgs e)
         {
-            //fresh_otherform();
+            fresh_otherform();
             //throw new NotImplementedException();        
         }
 
@@ -423,7 +423,7 @@ namespace mySystem.Extruction.Process
             if (Parameter.UserState.NoBody == _userState)
             {
                 _userState = Parameter.UserState.管理员;
-                label角色.Text = "管理员";
+                label角色.Text = mySystem.Parameter.userName+"(管理员)";
             }
             // 让用户选择操作员还是审核员，选“是”表示操作员
             if (Parameter.UserState.Both == _userState)
@@ -432,8 +432,8 @@ namespace mySystem.Extruction.Process
                 else _userState = Parameter.UserState.审核员;
 
             }
-            if (Parameter.UserState.操作员 == _userState) label角色.Text = "操作员";
-            if (Parameter.UserState.审核员 == _userState) label角色.Text = "审核员";
+            if (Parameter.UserState.操作员 == _userState) label角色.Text = mySystem.Parameter.userName+"(操作员)";
+            if (Parameter.UserState.审核员 == _userState) label角色.Text = mySystem.Parameter.userName+"(审核员)";
         }
 
         //设置窗口状态
@@ -666,41 +666,41 @@ namespace mySystem.Extruction.Process
             if ((bool)dt_prodinstr.Rows[0]["审核是否通过"])
             {
                 //日报表调用带ID的
-                DataTable dt_日报表 = new DataTable("吹膜生产日报表");
-                if (!mySystem.Parameter.isSqlOk)
-                {
-                    OleDbDataAdapter da_日报表 = new OleDbDataAdapter("select * from 吹膜生产日报表 where 生产指令ID=" + instrid, mySystem.Parameter.connOle);
-                    OleDbCommandBuilder cb_日报表 = new OleDbCommandBuilder(da_日报表);
-                    da_日报表.Fill(dt_日报表);
-                }
-                else
-                {
-                    SqlDataAdapter da_日报表 = new SqlDataAdapter("select * from 吹膜生产日报表 where 生产指令ID=" + instrid, mySystem.Parameter.conn);
-                    SqlCommandBuilder cb_日报表 = new SqlCommandBuilder(da_日报表);
-                    da_日报表.Fill(dt_日报表);
-                }
+                //DataTable dt_日报表 = new DataTable("吹膜生产日报表");
+                //if (!mySystem.Parameter.isSqlOk)
+                //{
+                //    OleDbDataAdapter da_日报表 = new OleDbDataAdapter("select * from 吹膜生产日报表 where 生产指令ID=" + instrid, mySystem.Parameter.connOle);
+                //    OleDbCommandBuilder cb_日报表 = new OleDbCommandBuilder(da_日报表);
+                //    da_日报表.Fill(dt_日报表);
+                //}
+                //else
+                //{
+                //    SqlDataAdapter da_日报表 = new SqlDataAdapter("select * from 吹膜生产日报表 where 生产指令ID=" + instrid, mySystem.Parameter.conn);
+                //    SqlCommandBuilder cb_日报表 = new SqlCommandBuilder(da_日报表);
+                //    da_日报表.Fill(dt_日报表);
+                //}
 
-                int id_日报表 = (int)dt_日报表.Rows[0]["ID"];
-                new mySystem.ProdctDaily_extrus(mainform,id_日报表);
+                //int id_日报表 = (int)dt_日报表.Rows[0]["ID"];
+                //new mySystem.ProdctDaily_extrus(mainform,id_日报表);
 
                 //查找该生产指令ID下对应的物料平衡表记录的ID
-                DataTable dt_物料 = new DataTable("吹膜工序物料平衡记录");
-                if (!mySystem.Parameter.isSqlOk)
-                {
-                    OleDbDataAdapter da_物料 = new OleDbDataAdapter("select * from 吹膜工序物料平衡记录 where 生产指令ID=" + instrid, mySystem.Parameter.connOle);
-                    OleDbCommandBuilder cb_物料 = new OleDbCommandBuilder(da_物料);
-                    da_物料.Fill(dt_物料);
-                }
-                else
-                {
-                    SqlDataAdapter da_物料 = new SqlDataAdapter("select * from 吹膜工序物料平衡记录 where 生产指令ID=" + instrid, mySystem.Parameter.conn);
-                    SqlCommandBuilder cb_物料 = new SqlCommandBuilder(da_物料);
-                    da_物料.Fill(dt_物料);
-                }
+                //DataTable dt_物料 = new DataTable("吹膜工序物料平衡记录");
+                //if (!mySystem.Parameter.isSqlOk)
+                //{
+                //    OleDbDataAdapter da_物料 = new OleDbDataAdapter("select * from 吹膜工序物料平衡记录 where 生产指令ID=" + instrid, mySystem.Parameter.connOle);
+                //    OleDbCommandBuilder cb_物料 = new OleDbCommandBuilder(da_物料);
+                //    da_物料.Fill(dt_物料);
+                //}
+                //else
+                //{
+                //    SqlDataAdapter da_物料 = new SqlDataAdapter("select * from 吹膜工序物料平衡记录 where 生产指令ID=" + instrid, mySystem.Parameter.conn);
+                //    SqlCommandBuilder cb_物料 = new SqlCommandBuilder(da_物料);
+                //    da_物料.Fill(dt_物料);
+                //}
 
-                int id_物料 = (int)dt_物料.Rows[0]["ID"];
+                //int id_物料 = (int)dt_物料.Rows[0]["ID"];
 
-                new mySystem.Extruction.Process.MaterialBalenceofExtrusionProcess(mainform, id_物料);
+                //new mySystem.Extruction.Process.MaterialBalenceofExtrusionProcess(mainform, id_物料);
 
                 DialogResult result;
                 //result = MessageBox.Show("是否确定完成当前生产指令", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -1269,6 +1269,26 @@ namespace mySystem.Extruction.Process
             (new mySystem.Other.LogForm()).setLog(dt_prodinstr.Rows[0]["日志"].ToString()).Show();
         }
 
+
+        bool check审核完成(out String msg)
+        {
+            String sql;
+            SqlDataAdapter da;
+            DataTable dt;
+            // 供料系统运行记录，交接班记录，供料记录，领料退料记录，废品记录
+            sql = "select distinct 表名 from 待审核 where 表名='吹膜供料系统运行记录' or 表名='吹膜岗位交接班记录' or 表名='吹膜供料记录' or 表名='吹膜工序领料退料记录' or 表名='吹膜工序废品记录'";
+            da = new SqlDataAdapter(sql, Parameter.conn);
+            dt = new DataTable();
+            da.Fill(dt);
+            msg = "";
+            if (dt.Rows.Count > 0)
+            {
+                foreach (DataRow dr in dt.Rows) msg += dr["表名"].ToString() + "\n";
+                return false;
+            }
+            return true;
+        }
+
         private void bt提交审核_Click(object sender, EventArgs e)
         {
             String n;
@@ -1298,6 +1318,13 @@ namespace mySystem.Extruction.Process
                     MessageBox.Show("有条目待确认");
                     return;
                 }
+            }
+            // 检查是否有待审核的
+            String msg;
+            if (!check审核完成(out msg))
+            {
+                MessageBox.Show("请先完成审核：\n"+msg);
+                return;
             }
 
             //写待审核表

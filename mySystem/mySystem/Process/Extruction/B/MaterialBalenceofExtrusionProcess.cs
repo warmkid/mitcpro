@@ -13,6 +13,9 @@ using System.Data.OleDb;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 
+
+
+
 //this form is about the 12th picture of the extrusion step
 //READ ME :
 //this form need to insult many tables, please make sure that all these tablw below contains certain records 
@@ -50,6 +53,7 @@ namespace mySystem.Extruction.Process
         string __生产指令;
         int __生产指令ID;
         string __生产开始时间;
+        string __生产结束时间;
         string tablename1 = "吹膜工序物料平衡记录";
         /// <summary>
         /// 0--操作员，1--审核员，2--管理员
@@ -163,6 +167,7 @@ namespace mySystem.Extruction.Process
             //current instruction information
             //get the instruction start time in table "production instruction"
             getStartTime();
+            getEndTime();
 
         }
         private void getInstructionInfo()
@@ -213,7 +218,7 @@ namespace mySystem.Extruction.Process
             if (Parameter.UserState.NoBody == _userState)
             {
                 _userState = Parameter.UserState.管理员;
-                label角色.Text = "管理员";
+                label角色.Text = mySystem.Parameter.userName+"(管理员)";
             }
             // 让用户选择操作员还是审核员，选“是”表示操作员
             if (Parameter.UserState.Both == _userState)
@@ -222,8 +227,8 @@ namespace mySystem.Extruction.Process
                 else _userState = Parameter.UserState.审核员;
 
             }
-            if (Parameter.UserState.操作员 == _userState) label角色.Text = "操作员";
-            if (Parameter.UserState.审核员 == _userState) label角色.Text = "审核员";
+            if (Parameter.UserState.操作员 == _userState) label角色.Text = mySystem.Parameter.userName+"(操作员)";
+            if (Parameter.UserState.审核员 == _userState) label角色.Text = mySystem.Parameter.userName+"(审核员)";
         }
         private void setFormState(bool newForm = false)
         {
@@ -355,10 +360,40 @@ namespace mySystem.Extruction.Process
             bt查看人员信息.Enabled = true;
         }
 
-        
 
 
 
+        private void getEndTime()
+        {
+            // 读数据库，没有的话就是当前时间
+
+            String sql;
+            
+
+
+            try
+            {
+                string sqlStr = "SELECT top 1 生产日期 FROM 吹膜工序生产和检验记录 WHERE 生产指令ID = " + __生产指令ID.ToString() + "ORDER BY ID DESC";
+                if (!mySystem.Parameter.isSqlOk)
+                {
+                    OleDbCommand sqlCmd = new OleDbCommand(sqlStr, connOle);
+                    __生产结束时间 = Convert.ToDateTime(sqlCmd.ExecuteScalar().ToString()).ToString("yyyy年MM月dd日");
+                }
+                else
+                {
+                    SqlCommand sqlCmd = new SqlCommand(sqlStr, mySystem.Parameter.conn);
+                    __生产结束时间 = Convert.ToDateTime(sqlCmd.ExecuteScalar().ToString()).ToString("yyyy年MM月dd日");
+                }
+
+                lbl生产结束时间.Text = __生产结束时间;
+            }
+            catch (Exception ee)
+            {
+                __生产结束时间 = DateTime.Now.ToString("yyyy年MM月dd日");
+                lbl生产结束时间.Text = __生产结束时间;
+            }
+            // 关闭时，看生产指令是否已经完成，如果还没有完成，保存时间
+        }
         
 
         
@@ -402,82 +437,89 @@ namespace mySystem.Extruction.Process
 
          private void 重新读取并计算()
          {
-             string Tname = "吹膜工序生产和检验记录";
-             string Tcol = "累计同规格膜卷重量T";
-
-             string Aname = "吹膜供料记录";
-             string Acol1 = "外层供料量合计a";
-             string Acol2 = "中内层供料量合计b";
-             string Acol3 = "中层供料量合计c";
-             string where = "生产指令ID";
-
-             string Uname = "吹膜工序废品记录";
-             string Ucol = "合计不良品数量";
-             string Tsqlcmd = "SELECT sum(" + Tcol + ") FROM " + Tname + " WHERE " + where + " = " + __生产指令ID + ";";
-             string Asqlcmd1 = "SELECT " + Acol1 + " FROM " + Aname + " WHERE " + where + " = " + __生产指令ID + ";";
-             string Asqlcmd2 = "SELECT " + Acol2 + " FROM " + Aname + " WHERE " + where + " = " + __生产指令ID + ";";
-             string Asqlcmd3 = "SELECT " + Acol3 + " FROM " + Aname + " WHERE " + where + " = " + __生产指令ID + ";";
-             string Usqlcmd = "SELECT " + Ucol + " FROM " + Uname + " WHERE " + where + " = " + __生产指令ID + ";";
-             if (!mySystem.Parameter.isSqlOk)
+             double eps = 1e-5;
+             try
              {
-                 OleDbCommand Tcmd = new OleDbCommand(Tsqlcmd, connOle);
-                 OleDbCommand Acmd1 = new OleDbCommand(Asqlcmd1, connOle);
-                 OleDbCommand Acmd2 = new OleDbCommand(Asqlcmd2, connOle);
-                 OleDbCommand Acmd3 = new OleDbCommand(Asqlcmd3, connOle);
-                 OleDbCommand Ucmd = new OleDbCommand(Usqlcmd, connOle);
-                 double t = Convert.ToDouble(Tcmd.ExecuteScalar());
-                 double a1 = Convert.ToDouble(Acmd1.ExecuteScalar());
-                 double a2 = Convert.ToDouble(Acmd2.ExecuteScalar());
-                 double a3 = Convert.ToDouble(Acmd3.ExecuteScalar());
-                 double a = a1 + a2 + a3;
-                 double u = Convert.ToDouble(Ucmd.ExecuteScalar());
-                 double rate = t / (t + u) * 100;
-                 rate = Convert.ToDouble(rate.ToString("0.00"));
-                 double balance = (t + u) / a * 100;
-                 balance = Convert.ToDouble(balance.ToString("0.00"));
+                 string Tname = "吹膜工序生产和检验记录";
+                 string Tcol = "累计同规格膜卷重量T";
 
-                 if (Math.Abs(balance - 100) > 2)
+                 string Aname = "吹膜供料记录";
+                 string Acol1 = "外层供料量合计a";
+                 string Acol2 = "中内层供料量合计b";
+                 string Acol3 = "中层供料量合计c";
+                 string where = "生产指令ID";
+
+                 string Uname = "吹膜工序废品记录";
+                 string Ucol = "合计不良品数量";
+                 string Tsqlcmd = "SELECT sum(" + Tcol + ") FROM " + Tname + " WHERE " + where + " = " + __生产指令ID + ";";
+                 string Asqlcmd1 = "SELECT " + Acol1 + " FROM " + Aname + " WHERE " + where + " = " + __生产指令ID + ";";
+                 string Asqlcmd2 = "SELECT " + Acol2 + " FROM " + Aname + " WHERE " + where + " = " + __生产指令ID + ";";
+                 string Asqlcmd3 = "SELECT " + Acol3 + " FROM " + Aname + " WHERE " + where + " = " + __生产指令ID + ";";
+                 string Usqlcmd = "SELECT " + Ucol + " FROM " + Uname + " WHERE " + where + " = " + __生产指令ID + ";";
+                 if (!mySystem.Parameter.isSqlOk)
                  {
-                     MessageBox.Show("物料平衡超出98%--102%!");
+                     OleDbCommand Tcmd = new OleDbCommand(Tsqlcmd, connOle);
+                     OleDbCommand Acmd1 = new OleDbCommand(Asqlcmd1, connOle);
+                     OleDbCommand Acmd2 = new OleDbCommand(Asqlcmd2, connOle);
+                     OleDbCommand Acmd3 = new OleDbCommand(Asqlcmd3, connOle);
+                     OleDbCommand Ucmd = new OleDbCommand(Usqlcmd, connOle);
+                     double t = Convert.ToDouble(Tcmd.ExecuteScalar());
+                     double a1 = Convert.ToDouble(Acmd1.ExecuteScalar());
+                     double a2 = Convert.ToDouble(Acmd2.ExecuteScalar());
+                     double a3 = Convert.ToDouble(Acmd3.ExecuteScalar());
+                     double a = a1 + a2 + a3;
+                     double u = Convert.ToDouble(Ucmd.ExecuteScalar());
+                     double rate = t / (t + u) * 100;
+                     rate = Convert.ToDouble(rate.ToString("0.00"));
+                     double balance = (t + u) / a * 100;
+                     balance = Convert.ToDouble(balance.ToString("0.00"));
+
+                     if (Math.Abs(balance - 100) > 2)
+                     {
+                         MessageBox.Show("物料平衡超出98%--102%!");
+                     }
+                     dtOuter.Rows[0]["成品重量合计"] = t;
+                     dtOuter.Rows[0]["废品量合计"] = u;
+                     dtOuter.Rows[0]["领料量"] = a;
+                     dtOuter.Rows[0]["重量比成品率"] = rate;
+                     dtOuter.Rows[0]["物料平衡"] = balance;
                  }
-                 dtOuter.Rows[0]["成品重量合计"] = t;
-                 dtOuter.Rows[0]["废品量合计"] = u;
-                 dtOuter.Rows[0]["领料量"] = a;
-                 dtOuter.Rows[0]["重量比成品率"] = rate;
-                 dtOuter.Rows[0]["物料平衡"] = balance;
+                 else
+                 {
+                     // 生产检验记录不止一张表
+                     SqlCommand Tcmd = new SqlCommand(Tsqlcmd, mySystem.Parameter.conn);
+                     SqlCommand Acmd1 = new SqlCommand(Asqlcmd1, mySystem.Parameter.conn);
+                     SqlCommand Acmd2 = new SqlCommand(Asqlcmd2, mySystem.Parameter.conn);
+                     SqlCommand Acmd3 = new SqlCommand(Asqlcmd3, mySystem.Parameter.conn);
+                     SqlCommand Ucmd = new SqlCommand(Usqlcmd, mySystem.Parameter.conn);
+                     double t = Convert.ToDouble(Tcmd.ExecuteScalar());
+                     double a1 = Convert.ToDouble(Acmd1.ExecuteScalar());
+                     double a2 = Convert.ToDouble(Acmd2.ExecuteScalar());
+                     double a3 = Convert.ToDouble(Acmd3.ExecuteScalar());
+                     double a = a1 + a2 + a3;
+                     double u = Convert.ToDouble(Ucmd.ExecuteScalar());
+                     double rate = t / (t + u+eps) * 100;
+                     rate = Convert.ToDouble(rate.ToString("0.00"));
+                     double balance = (t + u) / (a+eps) * 100;
+                     balance = Convert.ToDouble(balance.ToString("0.00"));
+
+                     if (Math.Abs(balance - 100) > 2)
+                     {
+                         MessageBox.Show("物料平衡超出98%--102%!");
+                     }
+                     dtOuter.Rows[0]["成品重量合计"] = t;
+                     dtOuter.Rows[0]["废品量合计"] = u;
+                     dtOuter.Rows[0]["领料量"] = a;
+                     dtOuter.Rows[0]["重量比成品率"] = rate;
+                     dtOuter.Rows[0]["物料平衡"] = balance;
+                 }
+
+
              }
-             else
+             catch (Exception ee)
              {
-                 // 生产检验记录不止一张表
-                 SqlCommand Tcmd = new SqlCommand(Tsqlcmd, mySystem.Parameter.conn);
-                 SqlCommand Acmd1 = new SqlCommand(Asqlcmd1, mySystem.Parameter.conn);
-                 SqlCommand Acmd2 = new SqlCommand(Asqlcmd2, mySystem.Parameter.conn);
-                 SqlCommand Acmd3 = new SqlCommand(Asqlcmd3, mySystem.Parameter.conn);
-                 SqlCommand Ucmd = new SqlCommand(Usqlcmd, mySystem.Parameter.conn);
-                 double t = Convert.ToDouble(Tcmd.ExecuteScalar());
-                 double a1 = Convert.ToDouble(Acmd1.ExecuteScalar());
-                 double a2 = Convert.ToDouble(Acmd2.ExecuteScalar());
-                 double a3 = Convert.ToDouble(Acmd3.ExecuteScalar());
-                 double a = a1 + a2 + a3;
-                 double u = Convert.ToDouble(Ucmd.ExecuteScalar());
-                 double rate = t / (t + u) * 100;
-                 rate = Convert.ToDouble(rate.ToString("0.00"));
-                 double balance = (t + u) / a * 100;
-                 balance = Convert.ToDouble(balance.ToString("0.00"));
-
-                 if (Math.Abs(balance - 100) > 2)
-                 {
-                     MessageBox.Show("物料平衡超出98%--102%!");
-                 }
-                 dtOuter.Rows[0]["成品重量合计"] = t;
-                 dtOuter.Rows[0]["废品量合计"] = u;
-                 dtOuter.Rows[0]["领料量"] = a;
-                 dtOuter.Rows[0]["重量比成品率"] = rate;
-                 dtOuter.Rows[0]["物料平衡"] = balance;
+                 MessageBox.Show("还没开始生产");
              }
-             
-
-             
 
          }
 
@@ -530,7 +572,7 @@ namespace mySystem.Extruction.Process
              bsOuter.DataSource = dtOuter;
 
              lbl生产指令.DataBindings.Add("Text", bsOuter.DataSource, "生产指令");
-             lbl生产开始时间.DataBindings.Add("Text", bsOuter.DataSource, "生产日期");
+             //lbl生产开始时间.DataBindings.Add("Text", bsOuter.DataSource, "生产日期");
              txb成品重量合计.DataBindings.Add("Text", bsOuter.DataSource, "成品重量合计");
              txb废品量合计.DataBindings.Add("Text", bsOuter.DataSource, "废品量合计");
              txb领料量.DataBindings.Add("Text", bsOuter.DataSource, "领料量");
@@ -547,7 +589,7 @@ namespace mySystem.Extruction.Process
          private void removeOuterBind()
          {
              lbl生产指令.DataBindings.Clear();
-             lbl生产开始时间.DataBindings.Clear();
+             //lbl生产开始时间.DataBindings.Clear();
              txb成品重量合计.DataBindings.Clear();
              txb废品量合计.DataBindings.Clear();
              txb领料量.DataBindings.Clear();
@@ -697,6 +739,28 @@ namespace mySystem.Extruction.Process
                  MessageBox.Show(str人员信息);
              }
              
+         }
+
+         private void MaterialBalenceofExtrusionProcess_FormClosing(object sender, FormClosingEventArgs e)
+         {
+             // 如果生产指令已经完成，保存结束时间
+             //String sql;
+             //SqlDataAdapter da;
+             //DataTable dt;
+             //sql = "select 状态 from 生产指令信息表 where ID=" + __生产指令ID;
+             //da = new SqlDataAdapter(sql, mySystem.Parameter.conn);
+             //dt = new DataTable();
+             //da.Fill(dt);
+             //if (dt.Rows.Count > 0)
+             //{
+             //    if (Convert.ToInt32(dt.Rows[0]["状态"]) != 4)
+             //    {
+             //        sql = "update 吹膜工序物料平衡记录 set 生产日期='" + DateTime.Now.ToString("yyyy年MM月dd日") + "' where 生产指令ID=" + __生产指令ID;
+             //        SqlCommand comm = new SqlCommand(sql, mySystem.Parameter.conn);
+             //        comm.ExecuteNonQuery();
+             //    }
+             //}
+
          }
 
         

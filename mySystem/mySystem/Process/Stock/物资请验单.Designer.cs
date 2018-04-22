@@ -231,7 +231,7 @@
             // 
             this.label角色.AutoSize = true;
             this.label角色.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Bold);
-            this.label角色.Location = new System.Drawing.Point(1012, 16);
+            this.label角色.Location = new System.Drawing.Point(955, 16);
             this.label角色.Name = "label角色";
             this.label角色.Size = new System.Drawing.Size(49, 19);
             this.label角色.TabIndex = 69;
@@ -245,30 +245,30 @@
             this.检验记录ToolStripMenuItem,
             this.取样记录ToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(149, 92);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(143, 92);
             // 
             // 物资验收记录ToolStripMenuItem
             // 
             this.物资验收记录ToolStripMenuItem.Name = "物资验收记录ToolStripMenuItem";
-            this.物资验收记录ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.物资验收记录ToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
             this.物资验收记录ToolStripMenuItem.Text = "物资验收记录";
             // 
             // 物资请验单ToolStripMenuItem
             // 
             this.物资请验单ToolStripMenuItem.Name = "物资请验单ToolStripMenuItem";
-            this.物资请验单ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.物资请验单ToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
             this.物资请验单ToolStripMenuItem.Text = "物资请验单";
             // 
             // 检验记录ToolStripMenuItem
             // 
             this.检验记录ToolStripMenuItem.Name = "检验记录ToolStripMenuItem";
-            this.检验记录ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.检验记录ToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
             this.检验记录ToolStripMenuItem.Text = "检验记录";
             // 
             // 取样记录ToolStripMenuItem
             // 
             this.取样记录ToolStripMenuItem.Name = "取样记录ToolStripMenuItem";
-            this.取样记录ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.取样记录ToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
             this.取样记录ToolStripMenuItem.Text = "取样记录";
             // 
             // 物资请验单

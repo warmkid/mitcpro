@@ -440,6 +440,7 @@ namespace BatchProductRecord
         private void init()
         {
             record = new List<string>();
+            //record.Add("SOP-MFG-301-R00 吹膜批处理生产记录");
             record.Add("SOP-MFG-301-R01 吹膜工序生产指令");
             record.Add("SOP-MFG-301-R02 吹膜生产日报表");
             record.Add("SOP-MFG-301-R03 吹膜机组清洁记录");
@@ -456,6 +457,8 @@ namespace BatchProductRecord
             record.Add("SOP-MFG-301-R14 吹膜岗位交接班记录");
             record.Add("SOP-MFG-109-R01A 产品内包装记录");
             record.Add("SOP-MFG-111-R01A 产品外包装记录");
+
+
             record.Add("吹膜标签");
             initrecord();
         }
@@ -831,6 +834,9 @@ namespace BatchProductRecord
                 //dataGridView1.Rows[0].ReadOnly = true;
                 dataGridView1.CellDoubleClick += dataGridView1_CellDoubleClick;
                 dataGridView1.CellValueChanged += dataGridView1_CellValueChanged;
+
+                //dataGridView1.Rows[0].Cells[totalPage].Value = 1;
+
                 // 生产指令
                 int temp;
                 int idx = 0;
@@ -1276,6 +1282,10 @@ namespace BatchProductRecord
                 }
                 dr.Cells[2].Value = i+1;
                 dr.Cells[3].Value = record[i];
+                //if (record[i] == "SOP-MFG-301-R00 吹膜批处理生产记录")
+                //{
+                //    //dr.Cells["总页数"].Value = 1;
+                //}
                 dataGridView1.Rows.Add(dr);
             }
         }
@@ -1600,6 +1610,9 @@ namespace BatchProductRecord
                     List<Int32> pages = getIntList(dataGridView1.Rows[r].Cells[1].Value.ToString());
                     switch (r)
                     {
+                        //case 0:// 批处理
+                        //    printSelf();
+                        //    break;
                         case 0: // 生产指令
                             da = new SqlDataAdapter("select * from 生产指令信息表 where  ID=" + _instrctID, mySystem.Parameter.conn);
                             dt = new DataTable("吹膜工序生产和检验记录");
@@ -1890,7 +1903,7 @@ namespace BatchProductRecord
             if (mySystem.Parameter.UserState.NoBody == _userState)
             {
                 _userState = mySystem.Parameter.UserState.管理员;
-                label角色.Text = "管理员";
+                label角色.Text = mySystem.Parameter.userName+"(管理员)";
             }
             // 让用户选择操作员还是审核员，选“是”表示操作员
             if (mySystem.Parameter.UserState.Both == _userState)
@@ -1899,8 +1912,8 @@ namespace BatchProductRecord
                 else _userState = mySystem.Parameter.UserState.审核员;
 
             }
-            if (mySystem.Parameter.UserState.操作员 == _userState) label角色.Text = "操作员";
-            if (mySystem.Parameter.UserState.审核员 == _userState) label角色.Text = "审核员";
+            if (mySystem.Parameter.UserState.操作员 == _userState) label角色.Text = mySystem.Parameter.userName+"(操作员)";
+            if (mySystem.Parameter.UserState.审核员 == _userState) label角色.Text = mySystem.Parameter.userName+"(审核员)";
         }
 
         void setFormState()
@@ -1950,6 +1963,10 @@ namespace BatchProductRecord
             btn打印.Enabled = true;
             cmb打印.Enabled = true;
             bt查看人员信息.Enabled = true;
+            splitContainer1.Enabled = true;
+            splitContainer1.Panel1.Enabled = true;
+            tb备注.ReadOnly = true;
+            splitContainer1.Panel2.Enabled = false;
             dataGridView1.ReadOnly = false;
         }
 

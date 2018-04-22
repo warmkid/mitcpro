@@ -300,7 +300,8 @@ namespace mySystem
                 b11 = reader11.HasRows == true ? true : false;
                 b12 = reader12.HasRows == true ? true : false;
                 b13 = reader13.HasRows == true ? true : false;
-                if (b2 && b3 && b4 && b5 && b6 && b8 && b10 && b11 && b12 && b13)
+                if (b2 && b10 && b11 )
+                    //if (b2 && b3 && b4 && b5 && b6 && b8 && b10 && b11 && b12 && b13)
                 { A5Btn.Enabled = true; }
                 else
                 { A5Btn.Enabled = false; }
@@ -374,7 +375,8 @@ namespace mySystem
                 b11 = reader11.HasRows == true ? true : false;
                 b12 = reader12.HasRows == true ? true : false;
                 b13 = reader13.HasRows == true ? true : false;
-                if (b2 && b3 && b4 && b5 && b6 && b8 && b10 && b11 && b12 && b13)
+                if (true )
+                //if (b2 && b3 && b4 && b5 && b6 && b8 && b10 && b11 && b12 && b13)
                 { A5Btn.Enabled = true; }
                 else
                 { A5Btn.Enabled = false; }
@@ -1168,9 +1170,12 @@ namespace mySystem
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "吹膜工序清场记录");
             if (b)
             {
-                Record_extrusSiteClean form4 = new Record_extrusSiteClean(mainform);
-                form4.Owner = this;
-                form4.ShowDialog();
+                if (DialogResult.OK == MessageBox.Show("清场后工序将结束，是否继续", "提示",MessageBoxButtons.OKCancel))
+                {
+                    Record_extrusSiteClean form4 = new Record_extrusSiteClean(mainform);
+                    form4.Owner = this;
+                    form4.ShowDialog();
+                }
             }
             else
             {

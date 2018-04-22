@@ -383,7 +383,7 @@ namespace mySystem.Process.Extruction.C
             if (Parameter.UserState.NoBody == _userState)
             {
                 _userState = Parameter.UserState.管理员;
-                label角色.Text = "管理员";
+                label角色.Text = mySystem.Parameter.userName+"(管理员)";
             }
             // 让用户选择操作员还是审核员，选“是”表示操作员
             if (Parameter.UserState.Both == _userState)
@@ -392,8 +392,8 @@ namespace mySystem.Process.Extruction.C
                 else _userState = Parameter.UserState.审核员;
 
             }
-            if (Parameter.UserState.操作员 == _userState) label角色.Text = "操作员";
-            if (Parameter.UserState.审核员 == _userState) label角色.Text = "审核员";
+            if (Parameter.UserState.操作员 == _userState) label角色.Text = mySystem.Parameter.userName+"(操作员)";
+            if (Parameter.UserState.审核员 == _userState) label角色.Text = mySystem.Parameter.userName+"(审核员)";
         }
         private void setFormState(bool newForm = false)
         {
@@ -888,7 +888,18 @@ namespace mySystem.Process.Extruction.C
             btnSave.Enabled = true;
             btn审核.Enabled = false;
             if (dataGridView1.Rows.Count > 0)
+            {
                 dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.Rows.Count - 1;
+                foreach (DataGridViewCell dgvc in dataGridView1.SelectedCells)
+                {
+                    dgvc.Selected = false;
+                }
+                dataGridView1.Rows[dataGridView1.Rows.Count - 1].Selected = true;
+            }
+            else
+            {
+                dataGridView1.Rows[0].Selected = true;
+            }
         }
         private void btn删除_Click(object sender, EventArgs e)
         {
