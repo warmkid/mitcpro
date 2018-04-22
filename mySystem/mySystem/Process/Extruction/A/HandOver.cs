@@ -64,6 +64,8 @@ namespace mySystem.Process.Extruction.A
         string __待审核 = "__待审核";
 
 
+        bool isNewShown = false;
+
        
         int searchId;
         int status;
@@ -106,6 +108,33 @@ namespace mySystem.Process.Extruction.A
             return false;
         }
 
+        bool check夜班交班(out int id)
+        {
+            id = 0;
+            if (mySystem.Parameter.userflight == "夜班")
+            {
+                String sql = "select top 1 * from 吹膜岗位交接班记录 where 生产指令ID={0} order by ID desc";
+                SqlDataAdapter da;
+                da = new SqlDataAdapter(String.Format(sql, mySystem.Parameter.proInstruID), mySystem.Parameter.conn);
+                DataTable dt;
+                dt = new DataTable();
+                da.Fill(dt);
+                if (dt.Rows.Count == 0)
+                {
+                    
+                    return false;
+                }
+                if (dt.Rows[0]["夜班交班员"].ToString() != "" &&
+                    (dt.Rows[0]["夜班接班员"].ToString() != "" || dt.Rows[0]["夜班接班员"].ToString() != __待审核))
+                {
+                    return false;
+                }
+                id = Convert.ToInt32(dt.Rows[0]["ID"].ToString());
+                return true;
+            }
+            return false;
+        }
+
         public HandOver(mySystem.MainForm mainform)
             : base(mainform)
         {
@@ -113,11 +142,12 @@ namespace mySystem.Process.Extruction.A
             // 如果是要接班，则调用待ID的函数
             // 如果是交班，则往下走
             int tmpid;
-            if (check需要接班(out tmpid))
+            if (check需要接班(out tmpid) || check夜班交班(out tmpid))
             {
                 HandOver h = new HandOver(mainform, tmpid);
-                this.Hide();
                 h.ShowDialog();
+                isNewShown = true;
+                InitializeComponent();
             } 
             else
             {
@@ -1008,6 +1038,7 @@ namespace mySystem.Process.Extruction.A
             }
             check = new CheckForm(this);
             check.ShowDialog();
+            this.Close();
         }
 
 
@@ -1636,6 +1667,21 @@ namespace mySystem.Process.Extruction.A
         private void HandOver_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void HandOver_Shown(object sender, EventArgs e)
+        {
+            if (isNewShown) this.Close();
+        }
+
+        private void HandOver_Enter(object sender, EventArgs e)
+        {
+            if (isNewShown) this.Close();
+        }
+
+        private void HandOver_Activated(object sender, EventArgs e)
+        {
+            if (isNewShown) this.Close();
         }
 
         //leave datagridview check the right things

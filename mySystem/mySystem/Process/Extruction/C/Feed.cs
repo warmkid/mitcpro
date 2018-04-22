@@ -709,7 +709,7 @@ namespace mySystem.Process.Extruction.C
                 MessageBox.Show("请填写完整的表单信息", "提示");
                 return;
             }
-            if (DialogResult.Yes == MessageBox.Show("确认本表已经填完吗？提交审核之后不可修改", "提示", MessageBoxButtons.YesNo))
+            if (DialogResult.Yes == MessageBox.Show("确认本指令已经全部完成了吗？提交审核之后不可修改", "提示", MessageBoxButtons.YesNo))
             {
                 //foreach (DataRow dr in dtInner.Rows)
                 //{

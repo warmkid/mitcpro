@@ -135,12 +135,13 @@ namespace mySystem.Process.Extruction.B
             conOle = Parameter.connOle;
             
             getPeople();
-            setUserState();
+            
             searchId = Id;
             readOuterData(searchId);
             __生产指令 = Convert.ToString(dtOuter.Rows[0]["生产指令"]);
             __生产指令ID = Convert.ToInt32(dtOuter.Rows[0]["生产指令ID"]);
             InitializeComponent();
+            setUserState();
             fill_printer();
             getProductCode();
             getStartTime();
@@ -577,9 +578,25 @@ namespace mySystem.Process.Extruction.B
             }
             catch (NullReferenceException exp) { }
         }
-        
+        bool is_inner_checked()
+        {
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (dataGridView1.Rows[i].Cells["审核员"].Value.ToString() == "" || dataGridView1.Rows[i].Cells["审核员"].Value.ToString() == "__待审核")
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
         private void btn审核_Click(object sender, EventArgs e)
         {
+            //判断内表是否完全审核
+            if (!is_inner_checked())
+            {
+                MessageBox.Show("废品记录没有完成数据审核！");
+                return;
+            }
             check = new CheckForm(this);
             check.ShowDialog();
         }
@@ -937,7 +954,7 @@ namespace mySystem.Process.Extruction.B
                 return;
             }
             
-            if (DialogResult.Yes == MessageBox.Show("确认本表已经填完吗？提交审核之后不可修改", "提示", MessageBoxButtons.YesNo))
+            if (DialogResult.Yes == MessageBox.Show("确认本指令废品记录已经填完吗？提交审核之后不可修改", "提示", MessageBoxButtons.YesNo))
             {
                 //foreach (DataRow dr in dtInner.Rows)
                 //{

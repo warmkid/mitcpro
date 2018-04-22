@@ -57,7 +57,7 @@
             // tb审核员
             // 
             this.tb审核员.Font = new System.Drawing.Font("宋体", 12F);
-            this.tb审核员.Location = new System.Drawing.Point(819, 465);
+            this.tb审核员.Location = new System.Drawing.Point(982, 465);
             this.tb审核员.Name = "tb审核员";
             this.tb审核员.Size = new System.Drawing.Size(100, 26);
             this.tb审核员.TabIndex = 335;
@@ -66,7 +66,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("宋体", 12F);
-            this.label3.Location = new System.Drawing.Point(757, 469);
+            this.label3.Location = new System.Drawing.Point(920, 469);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(72, 16);
             this.label3.TabIndex = 334;
@@ -75,7 +75,7 @@
             // btn提交数据审核
             // 
             this.btn提交数据审核.Font = new System.Drawing.Font("宋体", 12F);
-            this.btn提交数据审核.Location = new System.Drawing.Point(803, 429);
+            this.btn提交数据审核.Location = new System.Drawing.Point(966, 429);
             this.btn提交数据审核.Name = "btn提交数据审核";
             this.btn提交数据审核.Size = new System.Drawing.Size(116, 30);
             this.btn提交数据审核.TabIndex = 333;
@@ -86,7 +86,7 @@
             // btn数据审核
             // 
             this.btn数据审核.Font = new System.Drawing.Font("宋体", 12F);
-            this.btn数据审核.Location = new System.Drawing.Point(700, 429);
+            this.btn数据审核.Location = new System.Drawing.Point(863, 429);
             this.btn数据审核.Name = "btn数据审核";
             this.btn数据审核.Size = new System.Drawing.Size(97, 30);
             this.btn数据审核.TabIndex = 332;
@@ -116,7 +116,7 @@
             // btn查看日志
             // 
             this.btn查看日志.Font = new System.Drawing.Font("宋体", 12F);
-            this.btn查看日志.Location = new System.Drawing.Point(839, 504);
+            this.btn查看日志.Location = new System.Drawing.Point(1002, 504);
             this.btn查看日志.Name = "btn查看日志";
             this.btn查看日志.Size = new System.Drawing.Size(80, 30);
             this.btn查看日志.TabIndex = 329;
@@ -127,7 +127,7 @@
             // btn提交审核
             // 
             this.btn提交审核.Font = new System.Drawing.Font("宋体", 12F);
-            this.btn提交审核.Location = new System.Drawing.Point(747, 504);
+            this.btn提交审核.Location = new System.Drawing.Point(910, 504);
             this.btn提交审核.Name = "btn提交审核";
             this.btn提交审核.Size = new System.Drawing.Size(80, 30);
             this.btn提交审核.TabIndex = 328;
@@ -138,7 +138,7 @@
             // btn删除
             // 
             this.btn删除.Font = new System.Drawing.Font("宋体", 12F);
-            this.btn删除.Location = new System.Drawing.Point(614, 429);
+            this.btn删除.Location = new System.Drawing.Point(777, 429);
             this.btn删除.Name = "btn删除";
             this.btn删除.Size = new System.Drawing.Size(80, 30);
             this.btn删除.TabIndex = 327;
@@ -149,7 +149,7 @@
             // btn添加
             // 
             this.btn添加.Font = new System.Drawing.Font("宋体", 12F);
-            this.btn添加.Location = new System.Drawing.Point(528, 429);
+            this.btn添加.Location = new System.Drawing.Point(691, 429);
             this.btn添加.Name = "btn添加";
             this.btn添加.Size = new System.Drawing.Size(80, 30);
             this.btn添加.TabIndex = 326;
@@ -182,7 +182,7 @@
             // btn确认
             // 
             this.btn确认.Font = new System.Drawing.Font("宋体", 12F);
-            this.btn确认.Location = new System.Drawing.Point(653, 504);
+            this.btn确认.Location = new System.Drawing.Point(816, 504);
             this.btn确认.Name = "btn确认";
             this.btn确认.Size = new System.Drawing.Size(80, 30);
             this.btn确认.TabIndex = 323;
@@ -256,7 +256,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(36, 101);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(883, 314);
+            this.dataGridView1.Size = new System.Drawing.Size(1046, 314);
             this.dataGridView1.TabIndex = 316;
             // 
             // label44
@@ -293,7 +293,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(954, 561);
+            this.ClientSize = new System.Drawing.Size(1113, 561);
             this.Controls.Add(this.tb审核员);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.btn提交数据审核);

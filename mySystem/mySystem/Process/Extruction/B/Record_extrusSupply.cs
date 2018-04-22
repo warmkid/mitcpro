@@ -1662,7 +1662,7 @@ namespace WindowsFormsApplication1
                 MessageBox.Show("请填写完整的表单信息", "提示");
                 return;
             }
-            if (DialogResult.Yes == MessageBox.Show("确认本表已经填完吗？提交审核之后不可修改", "提示", MessageBoxButtons.YesNo))
+            if (DialogResult.Yes == MessageBox.Show("确认本指令不需要再供料了吗？提交审核之后不可修改", "提示", MessageBoxButtons.YesNo))
             {
                 //foreach (DataRow dr in dt_prodlist.Rows)
                 //{

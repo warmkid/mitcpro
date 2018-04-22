@@ -1205,6 +1205,11 @@ namespace mySystem.Extruction.Process
         //判断数据合法性
         bool input_Judge()
         {
+            if (dt_prodinstr.Rows.Count == 0) return false;
+            if (dt_prodinstr.Rows[0]["物料代码"].ToString() == "")
+            {
+                return false;
+            }
             //判断合法性
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
@@ -1626,72 +1631,74 @@ namespace mySystem.Extruction.Process
                     return;
                 }
             }
-
-            //判断内表审核人是否有空值
-            //for (int i = 0; i < dataGridView1.Rows.Count; i++)
-            //{
-            //    if (dataGridView1.Rows[i].Cells["审核人"].Value.ToString() == "" || dataGridView1.Rows[i].Cells["审核人"].Value.ToString() == "__待审核")
-            //    {
-            //        MessageBox.Show("未完成领料审核");
-            //        return;
-            //    }
-            //}
-            bt领料提交审核.PerformClick();
-            //写待审核表
-            DataTable dt_temp = new DataTable("待审核");
-            BindingSource bs_temp = new BindingSource();
-            if (!mySystem.Parameter.isSqlOk)
+            if (DialogResult.Yes == MessageBox.Show("确认本指令不需要再领料了吗？提交审核之后不可修改", "提示", MessageBoxButtons.YesNo))
             {
-                OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='吹膜工序领料退料记录' and 对应ID=" + (int)dt_prodinstr.Rows[0]["ID"], mySystem.Parameter.connOle);
-                OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
-                da_temp.Fill(dt_temp);
-
-                if (dt_temp.Rows.Count == 0)
+                //判断内表审核人是否有空值
+                //for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                //{
+                //    if (dataGridView1.Rows[i].Cells["审核人"].Value.ToString() == "" || dataGridView1.Rows[i].Cells["审核人"].Value.ToString() == "__待审核")
+                //    {
+                //        MessageBox.Show("未完成领料审核");
+                //        return;
+                //    }
+                //}
+                bt领料提交审核.PerformClick();
+                //写待审核表
+                DataTable dt_temp = new DataTable("待审核");
+                BindingSource bs_temp = new BindingSource();
+                if (!mySystem.Parameter.isSqlOk)
                 {
-                    DataRow dr = dt_temp.NewRow();
-                    dr["表名"] = "吹膜工序领料退料记录";
-                    dr["对应ID"] = (int)dt_prodinstr.Rows[0]["ID"];
-                    dt_temp.Rows.Add(dr);
-                }
-                bs_temp.DataSource = dt_temp;
-                da_temp.Update((DataTable)bs_temp.DataSource);
-            }
-            else
-            {
-                SqlDataAdapter da_temp = new SqlDataAdapter(@"select * from 待审核 where 表名='吹膜工序领料退料记录' and 对应ID=" + (int)dt_prodinstr.Rows[0]["ID"], mySystem.Parameter.conn);
-                SqlCommandBuilder cb_temp = new SqlCommandBuilder(da_temp);
-                da_temp.Fill(dt_temp);
+                    OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='吹膜工序领料退料记录' and 对应ID=" + (int)dt_prodinstr.Rows[0]["ID"], mySystem.Parameter.connOle);
+                    OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+                    da_temp.Fill(dt_temp);
 
-                if (dt_temp.Rows.Count == 0)
+                    if (dt_temp.Rows.Count == 0)
+                    {
+                        DataRow dr = dt_temp.NewRow();
+                        dr["表名"] = "吹膜工序领料退料记录";
+                        dr["对应ID"] = (int)dt_prodinstr.Rows[0]["ID"];
+                        dt_temp.Rows.Add(dr);
+                    }
+                    bs_temp.DataSource = dt_temp;
+                    da_temp.Update((DataTable)bs_temp.DataSource);
+                }
+                else
                 {
-                    DataRow dr = dt_temp.NewRow();
-                    dr["表名"] = "吹膜工序领料退料记录";
-                    dr["对应ID"] = (int)dt_prodinstr.Rows[0]["ID"];
-                    dt_temp.Rows.Add(dr);
+                    SqlDataAdapter da_temp = new SqlDataAdapter(@"select * from 待审核 where 表名='吹膜工序领料退料记录' and 对应ID=" + (int)dt_prodinstr.Rows[0]["ID"], mySystem.Parameter.conn);
+                    SqlCommandBuilder cb_temp = new SqlCommandBuilder(da_temp);
+                    da_temp.Fill(dt_temp);
+
+                    if (dt_temp.Rows.Count == 0)
+                    {
+                        DataRow dr = dt_temp.NewRow();
+                        dr["表名"] = "吹膜工序领料退料记录";
+                        dr["对应ID"] = (int)dt_prodinstr.Rows[0]["ID"];
+                        dt_temp.Rows.Add(dr);
+                    }
+                    bs_temp.DataSource = dt_temp;
+                    da_temp.Update((DataTable)bs_temp.DataSource);
                 }
-                bs_temp.DataSource = dt_temp;
-                da_temp.Update((DataTable)bs_temp.DataSource);
+
+
+                //写日志 
+                //格式： 
+                // =================================================
+                // yyyy年MM月dd日，操作员：XXX 提交审核
+                string log = "\n=====================================\n";
+                log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n操作员：" + mySystem.Parameter.userName + " 提交审核\n";
+                dt_prodinstr.Rows[0]["日志"] = dt_prodinstr.Rows[0]["日志"].ToString() + log;
+
+                dt_prodinstr.Rows[0]["审核人"] = "__待审核";
+                dt_prodinstr.Rows[0]["审核日期"] = DateTime.Now;
+
+                save();
+
+                //空间都不能点
+                setControlFalse();
+
+                //可以处理其他物料情况
+                cB物料代码.Enabled = true;
             }
-            
-
-            //写日志 
-            //格式： 
-            // =================================================
-            // yyyy年MM月dd日，操作员：XXX 提交审核
-            string log = "\n=====================================\n";
-            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n操作员：" + mySystem.Parameter.userName + " 提交审核\n";
-            dt_prodinstr.Rows[0]["日志"] = dt_prodinstr.Rows[0]["日志"].ToString() + log;
-
-            dt_prodinstr.Rows[0]["审核人"] = "__待审核";
-            dt_prodinstr.Rows[0]["审核日期"] = DateTime.Now;
-
-            save();
-
-            //空间都不能点
-            setControlFalse();
-
-            //可以处理其他物料情况
-            cB物料代码.Enabled = true;
         }
 
         //遍历DataGridView的行：只要审核人不为空，则该行ReadOnly

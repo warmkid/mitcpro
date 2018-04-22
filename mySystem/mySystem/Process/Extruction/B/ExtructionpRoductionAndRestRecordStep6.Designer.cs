@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ExtructionpRoductionAndRestRecordStep6));
+            this.btn新建 = new System.Windows.Forms.Button();
             this.bt查看人员信息 = new System.Windows.Forms.Button();
             this.cb打印机 = new System.Windows.Forms.ComboBox();
             this.label40 = new System.Windows.Forms.Label();
@@ -70,10 +71,21 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.Title = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.btn新建 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
+            // 
+            // btn新建
+            // 
+            this.btn新建.Font = new System.Drawing.Font("宋体", 12F);
+            this.btn新建.Location = new System.Drawing.Point(1151, 93);
+            this.btn新建.Name = "btn新建";
+            this.btn新建.Size = new System.Drawing.Size(62, 30);
+            this.btn新建.TabIndex = 176;
+            this.btn新建.Text = "新建";
+            this.btn新建.UseVisualStyleBackColor = true;
+            this.btn新建.Visible = false;
+            this.btn新建.Click += new System.EventHandler(this.btn新建_Click);
             // 
             // bt查看人员信息
             // 
@@ -140,9 +152,9 @@
             this.btn查询新建.Font = new System.Drawing.Font("宋体", 12F);
             this.btn查询新建.Location = new System.Drawing.Point(1068, 93);
             this.btn查询新建.Name = "btn查询新建";
-            this.btn查询新建.Size = new System.Drawing.Size(66, 30);
+            this.btn查询新建.Size = new System.Drawing.Size(90, 30);
             this.btn查询新建.TabIndex = 129;
-            this.btn查询新建.Text = "查询";
+            this.btn查询新建.Text = "查询/新建";
             this.btn查询新建.UseVisualStyleBackColor = true;
             this.btn查询新建.Click += new System.EventHandler(this.btn查询新建_Click);
             // 
@@ -478,17 +490,6 @@
             this.label1.Size = new System.Drawing.Size(56, 16);
             this.label1.TabIndex = 6;
             this.label1.Text = "班次：";
-            // 
-            // btn新建
-            // 
-            this.btn新建.Font = new System.Drawing.Font("宋体", 12F);
-            this.btn新建.Location = new System.Drawing.Point(1151, 93);
-            this.btn新建.Name = "btn新建";
-            this.btn新建.Size = new System.Drawing.Size(62, 30);
-            this.btn新建.TabIndex = 176;
-            this.btn新建.Text = "新建";
-            this.btn新建.UseVisualStyleBackColor = true;
-            this.btn新建.Click += new System.EventHandler(this.btn新建_Click);
             // 
             // ExtructionpRoductionAndRestRecordStep6
             // 

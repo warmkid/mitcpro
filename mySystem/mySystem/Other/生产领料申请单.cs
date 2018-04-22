@@ -87,6 +87,7 @@ namespace mySystem.Other
             addComputerEventHandler();  // 设置自动计算类事件
             setFormState();  // 获取当前窗体状态：窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过
             setEnableReadOnly();  //根据状态设置可读写性  
+            btn数据审核.Enabled = false;
         }
 
         public 生产领料申请单(mySystem.MainForm mainform, Int32 ID, DataTable dt生产指令构造, DataTable dt物料代码数量构造, SqlConnection conn构造, OleDbConnection connOle构造)
