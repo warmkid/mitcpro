@@ -263,15 +263,12 @@ namespace mySystem.Process.Stock
                     setControlTrue();
                     btn审核.Enabled = true;
                 }
-                else if (Parameter.FormState.审核通过 == _formState)
+                else 
                 {
                     setControlFalse();
                     
                 }
-                else
-                {
-                    
-                }
+                
 
 
             }

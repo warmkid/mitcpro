@@ -1645,7 +1645,7 @@
             this.groupBox14.Controls.Add(this.button5);
             this.groupBox14.Location = new System.Drawing.Point(17, 312);
             this.groupBox14.Name = "groupBox14";
-            this.groupBox14.Size = new System.Drawing.Size(719, 213);
+            this.groupBox14.Size = new System.Drawing.Size(1012, 213);
             this.groupBox14.TabIndex = 61;
             this.groupBox14.TabStop = false;
             // 
@@ -1662,7 +1662,7 @@
             this.dgv权限.Location = new System.Drawing.Point(12, 17);
             this.dgv权限.Name = "dgv权限";
             this.dgv权限.RowTemplate.Height = 23;
-            this.dgv权限.Size = new System.Drawing.Size(678, 187);
+            this.dgv权限.Size = new System.Drawing.Size(968, 187);
             this.dgv权限.TabIndex = 2;
             this.dgv权限.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgv权限_DataBindingComplete);
             // 
@@ -1703,7 +1703,7 @@
             this.groupBox15.Controls.Add(this.add人员);
             this.groupBox15.Location = new System.Drawing.Point(17, 33);
             this.groupBox15.Name = "groupBox15";
-            this.groupBox15.Size = new System.Drawing.Size(719, 241);
+            this.groupBox15.Size = new System.Drawing.Size(575, 241);
             this.groupBox15.TabIndex = 59;
             this.groupBox15.TabStop = false;
             // 
@@ -1713,7 +1713,7 @@
             this.dgv人员.Location = new System.Drawing.Point(12, 51);
             this.dgv人员.Name = "dgv人员";
             this.dgv人员.RowTemplate.Height = 23;
-            this.dgv人员.Size = new System.Drawing.Size(678, 184);
+            this.dgv人员.Size = new System.Drawing.Size(534, 184);
             this.dgv人员.TabIndex = 2;
             this.dgv人员.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgv人员_DataBindingComplete);
             // 

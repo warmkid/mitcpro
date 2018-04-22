@@ -249,7 +249,7 @@
             this.btn确认.Name = "btn确认";
             this.btn确认.Size = new System.Drawing.Size(80, 30);
             this.btn确认.TabIndex = 268;
-            this.btn确认.Text = "确认";
+            this.btn确认.Text = "保存";
             this.btn确认.UseVisualStyleBackColor = true;
             this.btn确认.Click += new System.EventHandler(this.btn确认_Click);
             // 
@@ -663,7 +663,6 @@
             // 
             // dataGridView1
             // 
-            
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,

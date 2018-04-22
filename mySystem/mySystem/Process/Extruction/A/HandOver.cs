@@ -82,6 +82,11 @@ namespace mySystem.Process.Extruction.A
             dt = new DataTable();
             da.Fill(dt);
             id = 0;
+            if (dt.Rows.Count == 0)
+            {
+                return false;
+            }
+            
             if (Parameter.userflight == "白班")
             {
                 if (dt.Rows[0]["白班接班员"].ToString() == "__待审核")
@@ -112,7 +117,7 @@ namespace mySystem.Process.Extruction.A
             {
                 HandOver h = new HandOver(mainform, tmpid);
                 h.ShowDialog();
-            }
+            } 
             else
             {
                 InitializeComponent();
@@ -1142,7 +1147,7 @@ namespace mySystem.Process.Extruction.A
             String sql;
             SqlDataAdapter da;
             DataTable dt;
-
+            // TODO 以下表单还要判断那些没有点提交审核的
             sql = "select distinct 表名 from 待审核 where 表名='生产领料申请单表' or 表名='吹膜生产和检验记录表' or 表名='吹膜机组运行记录' or 表名='吹膜机组清洁记录表' or 表名='吹膜开机前确认表' or 表名='吹膜预热参数记录表'";
             da = new SqlDataAdapter(sql, Parameter.conn);
             dt = new DataTable();
@@ -1155,7 +1160,7 @@ namespace mySystem.Process.Extruction.A
             }
 
             // {0} 内表名字 {1} 外表名字  {2}生产指令表,{3}外表ID,{4}生产指令ID列名,{5}生产指令ID，{6}审核员列名
-            sql = "select distinct {0}.ID as ID from {0},{1},{2} where {0}.{3}={1}.ID and {1}.{4}={5} and {0}.{6}='__待审核'";
+            sql = "select distinct {0}.ID as ID from {0},{1},{2} where {0}.{3}={1}.ID and {1}.{4}={5} and ({0}.{6}='__待审核' or {0}.{6}='')";
             // 供料系统运行记录
             da = new SqlDataAdapter(String.Format(sql, "吹膜供料系统运行记录详细信息","吹膜供料系统运行记录",
                 "生产指令信息表", "T吹膜供料系统运行记录ID", "生产指令ID", __生产指令ID, "审核员"), mySystem.Parameter.conn);

@@ -14,6 +14,15 @@ namespace mySystem.Other
         public InputTextWindow()
         {
             InitializeComponent();
+            textBox1.PreviewKeyDown += textBox1_PreviewKeyDown;
+        }
+
+        void textBox1_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                button1.PerformClick();
+            }
         }
 
         void setLabel(String lbl)

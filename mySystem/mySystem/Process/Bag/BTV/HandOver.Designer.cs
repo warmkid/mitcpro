@@ -80,7 +80,7 @@
             this.btn提交审核.Name = "btn提交审核";
             this.btn提交审核.Size = new System.Drawing.Size(86, 23);
             this.btn提交审核.TabIndex = 82;
-            this.btn提交审核.Text = "提交审核";
+            this.btn提交审核.Text = "交班";
             this.btn提交审核.UseVisualStyleBackColor = true;
             this.btn提交审核.Click += new System.EventHandler(this.btn提交审核_Click);
             // 
@@ -117,7 +117,7 @@
             this.btn审核.Name = "btn审核";
             this.btn审核.Size = new System.Drawing.Size(75, 26);
             this.btn审核.TabIndex = 80;
-            this.btn审核.Text = "审核";
+            this.btn审核.Text = "接班";
             this.btn审核.UseVisualStyleBackColor = true;
             this.btn审核.Click += new System.EventHandler(this.btn审核_Click);
             // 

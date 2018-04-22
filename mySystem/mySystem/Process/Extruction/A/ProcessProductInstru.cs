@@ -572,7 +572,7 @@ namespace BatchProductRecord
         {
             //save();
             calc合计();
-            if (isFirstBind)
+            if (true)
             {
                 readDGVWidthFromSettingAndSet(dataGridView1);
                 isFirstBind = false;
@@ -922,7 +922,10 @@ namespace BatchProductRecord
         //确认按钮
         private void button1_Click_1(object sender, EventArgs e)
         {
-           
+            if (dataGridView1.ColumnCount > 0)
+            {
+                writeDGVWidthToSetting(dataGridView1);
+            }
             
 
             bool rt = save();

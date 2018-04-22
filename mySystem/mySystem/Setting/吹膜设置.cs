@@ -370,9 +370,11 @@ namespace mySystem.Setting
             this.dgv权限.DataSource = bs权限.DataSource;
             //显示序号
             setDataGridViewRowNums(this.dgv权限);
-            this.dgv权限.Columns["步骤"].MinimumWidth = 250;
+            this.dgv权限.Columns["步骤"].MinimumWidth = 100;
             this.dgv权限.Columns["操作员"].MinimumWidth = 150;
             this.dgv权限.Columns["审核员"].MinimumWidth = 150;
+            this.dgv权限.Columns["操作员"].Width = 400;
+            this.dgv权限.Columns["审核员"].Width = 400;
             this.dgv权限.Columns["步骤"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             Utility.setDataGridViewAutoSizeMode(dgv权限);
             this.dgv权限.Columns["步骤"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;

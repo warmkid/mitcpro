@@ -386,7 +386,7 @@ namespace mySystem.Query
                             }
                             break;
                         case "03 吹膜机组清洁记录":
-                            b = mySystem.ExtructionMainForm.checkUser(Parameter.userName, Parameter.userRole, "吹膜机组清洁记录");
+                            b = mySystem.ExtructionMainForm.checkUser(Parameter.userName, Parameter.userRole, "吹膜机组清洁记录表");
                            if (b)
                            {
                                Record_extrusClean form3 = new Record_extrusClean(mainform, ID);

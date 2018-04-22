@@ -1151,7 +1151,7 @@ namespace mySystem
 
         private void A3Btn_Click(object sender, EventArgs e)
         {
-            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "吹膜机组清洁记录");
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "吹膜机组清洁记录表");
             if (b)
             {
                 Record_extrusClean form3 = new Record_extrusClean(mainform);

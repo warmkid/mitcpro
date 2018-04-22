@@ -95,7 +95,14 @@ namespace WindowsFormsApplication1
 
                 begin();
                 if (dt_out.Rows.Count < 0) this.Close();
-                instrid = Convert.ToInt32(dt_out.Rows[0]["生产指令ID"]);
+                try
+                {
+                    instrid = Convert.ToInt32(dt_out.Rows[0]["生产指令ID"]);
+                }
+                catch
+                {
+                    return;
+                }
                 String asql = "select * from 生产指令信息表 where ID=" + instrid;
 
                 //OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
@@ -329,7 +336,7 @@ namespace WindowsFormsApplication1
                 //OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 用户权限 where 步骤='吹膜机组清洁记录'", mySystem.Parameter.connOle);
 
                 //*****************改为sql连接***********************
-                SqlDataAdapter da = new SqlDataAdapter(@"select * from 用户权限 where 步骤='吹膜机组清洁记录'", mySystem.Parameter.conn);
+                SqlDataAdapter da = new SqlDataAdapter(@"select * from 用户权限 where 步骤='吹膜机组清洁记录表'", mySystem.Parameter.conn);
                 da.Fill(dt);
 
                 if (dt.Rows.Count > 0)
@@ -850,6 +857,13 @@ namespace WindowsFormsApplication1
         //保存内表和外表数据
         private bool save()
         {
+            // 记录列宽
+            if (dataGridView1.ColumnCount > 0)
+            {
+                writeDGVWidthToSetting(dataGridView1);
+            }
+
+            //
             //判断合法性
             if (!input_Judge())
             {
@@ -892,14 +906,10 @@ namespace WindowsFormsApplication1
 
         private void button1_Click(object sender, EventArgs e)
         {
-            // 记录列宽
-            if (dataGridView1.ColumnCount > 0)
-            {
-                writeDGVWidthToSetting(dataGridView1);
-            }
-            //
+            
 
             bool rt = save();
+            isFirstBind = true;
             //控件可见性
             if (rt && _userState == Parameter.UserState.操作员)
                 bt提交审核.Enabled = true;
@@ -1183,6 +1193,8 @@ namespace WindowsFormsApplication1
             ////Utility.setDataGridViewAutoSizeMode(dataGridView1);
 
             setDataGridViewCombox();
+            // 再读一次列宽
+            readDGVWidthFromSettingAndSet(dataGridView1);
             bs_in.DataSource = dt_in;
             dataGridView1.DataSource = bs_in.DataSource;
             setDataGridViewColumns();
@@ -1602,7 +1614,7 @@ namespace WindowsFormsApplication1
 
         private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
-            if (true)
+            if (isFirstBind)
             {
                 readDGVWidthFromSettingAndSet(dataGridView1);
                 isFirstBind = false;

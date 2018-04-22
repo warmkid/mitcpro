@@ -1007,7 +1007,7 @@ namespace mySystem.Extruction.Process
             dr["操作人"] = mySystem.Parameter.userName;
             dr["操作员备注"] = "无";
             dr["退料数量"] = 0;
-            dr["二维码"] = "";
+            dr["二维码"] = "1";
             return dr;
         }
         // 根据条件从数据库中读取一行外表的数据

@@ -667,6 +667,7 @@ namespace mySystem.Process.Stock
             ndr["本厂批号"] = dr["批号"];
             ndr["单位"] = dr["主计量单位"];
             ndr["数量"] = dr["数量"];
+            ndr["有无厂家检验报告"] = "无";
 
             dtMore.Rows.Add(ndr);
 

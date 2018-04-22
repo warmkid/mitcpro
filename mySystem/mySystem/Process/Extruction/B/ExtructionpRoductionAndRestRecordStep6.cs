@@ -486,6 +486,20 @@ namespace mySystem.Extruction.Process
                 readOuterData(InstruID, productName, flight, searchTime);
                 outerBind();
                 myid = Convert.ToInt32(dt记录.Rows[0]["ID"]);
+
+                // 修改 是否可以新建  的表，不准新建
+                // 判断是否可以新建
+                String sql = "select * from 是否可以新建生产检验记录 where 生产指令ID={0} and 产品代码='{1}'";
+
+                SqlDataAdapter da = new SqlDataAdapter(String.Format(sql, InstruID, cb产品名称.Text), mySystem.Parameter.conn);
+                SqlCommandBuilder cb = new SqlCommandBuilder(da);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                
+                dt.Rows[0]["是否可以新建"] = 0;
+                da.Update(dt);
+                ///////
+
                 //********* 内表新建、保存、重新绑定 *********//
 
                 //内表绑定
@@ -813,6 +827,9 @@ namespace mySystem.Extruction.Process
         //用于显示/新建数据
         private void btn查询新建_Click(object sender, EventArgs e)
         {
+
+            
+
             // 查询历史编号
 
 

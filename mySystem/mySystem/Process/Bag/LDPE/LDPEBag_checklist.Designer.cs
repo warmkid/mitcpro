@@ -194,7 +194,7 @@
             this.btn确认.Name = "btn确认";
             this.btn确认.Size = new System.Drawing.Size(80, 30);
             this.btn确认.TabIndex = 169;
-            this.btn确认.Text = "确认";
+            this.btn确认.Text = "保存";
             this.btn确认.UseVisualStyleBackColor = true;
             this.btn确认.Click += new System.EventHandler(this.btn确认_Click);
             // 
