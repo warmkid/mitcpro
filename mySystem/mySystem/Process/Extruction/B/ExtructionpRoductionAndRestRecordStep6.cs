@@ -1148,7 +1148,8 @@ namespace mySystem.Extruction.Process
         //审核按钮
         private void CheckBtn_Click(object sender, EventArgs e)
         {
-            if (mySystem.Parameter.userName == dt记录详情.Rows[0]["操作员"].ToString())
+
+            if (dt记录详情.Rows.Count!=0  && mySystem.Parameter.userName == dt记录详情.Rows[0]["操作员"].ToString())
             {
                 MessageBox.Show("当前登录的审核员与操作员为同一人，不可进行审核！");
                 return;
