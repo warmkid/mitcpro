@@ -1552,6 +1552,12 @@ namespace mySystem
             taskbarNotifier1.ReShowOnMouseOver = true;
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            mySystem.Forms.交接班记录 f = new Forms.交接班记录(mySystem.Parameter.proInstruID, mySystem.Parameter.proInstruction, "吹膜");
+            f.ShowDialog();
+        }
+
         
     }
 }

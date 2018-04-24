@@ -72,6 +72,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\交接班Controller.cs" />
+    <Compile Include="Controllers\交接班设置Controller.cs" />
+    <Compile Include="Forms\交接班记录.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\交接班记录.Designer.cs">
+      <DependentUpon>交接班记录.cs</DependentUpon>
+    </Compile>
     <Compile Include="Other\BaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1349,6 +1358,9 @@
     <Compile Include="Setting\订单设置.Designer.cs">
       <DependentUpon>订单设置.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Forms\交接班记录.resx">
+      <DependentUpon>交接班记录.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Other\BaseForm.resx">
       <DependentUpon>BaseForm.cs</DependentUpon>
     </EmbeddedResource>

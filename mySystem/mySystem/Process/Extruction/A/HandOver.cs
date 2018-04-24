@@ -116,6 +116,7 @@ namespace mySystem.Process.Extruction.A
             if (check需要接班(out tmpid))
             {
                 HandOver h = new HandOver(mainform, tmpid);
+                this.Hide();
                 h.ShowDialog();
             } 
             else
@@ -1159,6 +1160,47 @@ namespace mySystem.Process.Extruction.A
                 return false;
             }
 
+            //sql = "select * from 生产领料申请单表 where 生产指令ID={0}";
+            //da = new SqlDataAdapter(String.Format(sql, __生产指令ID), mySystem.Parameter.conn);
+            //da.Fill(dt);
+            //foreach (DataRow dr in dt.Rows)
+            //{
+            //    if (dr["审核员"].ToString() == "")
+            //    {
+            //        msg += "有生产领料申请单表未提交审核" + "\n";
+            //        return false;
+            //    }
+            //}
+
+            //sql = "select * from 吹膜生产和检验记录表 where 生产指令ID={0}";
+            //da = new SqlDataAdapter(String.Format(sql, __生产指令ID), mySystem.Parameter.conn);
+            //da.Fill(dt);
+            //foreach (DataRow dr in dt.Rows)
+            //{
+            //    if (dr["审核人"].ToString() == "")
+            //    {
+            //        msg += "有吹膜生产和检验记录表未提交审核" + "\n";
+            //        return false;
+            //    }
+            //}
+
+            //sql = "select * from 吹膜机组运行记录 where 生产指令ID={0}";
+            //da = new SqlDataAdapter(String.Format(sql, __生产指令ID), mySystem.Parameter.conn);
+            //da.Fill(dt);
+            //foreach (DataRow dr in dt.Rows)
+            //{
+            //    if (dr["审核员"].ToString() == "")
+            //    {
+            //        msg += "有吹膜机组运行记录未提交审核" + "\n";
+            //        return false;
+            //    }
+            //}
+           
+
+
+
+
+
             // {0} 内表名字 {1} 外表名字  {2}生产指令表,{3}外表ID,{4}生产指令ID列名,{5}生产指令ID，{6}审核员列名
             sql = "select distinct {0}.ID as ID from {0},{1},{2} where {0}.{3}={1}.ID and {1}.{4}={5} and ({0}.{6}='__待审核' or {0}.{6}='')";
             // 供料系统运行记录
@@ -1198,7 +1240,7 @@ namespace mySystem.Process.Extruction.A
             da.Fill(dt);
             if (dt.Rows.Count > 0)
             {
-                msg += "领料退料记录\n";
+                msg += "废品记录\n";
                 return false;
             }
             return true;
@@ -1288,63 +1330,103 @@ namespace mySystem.Process.Extruction.A
             }
             else
             {
-                //read from database table and find current record
-                string checkName = "待审核";
-                DataTable dtCheck = new DataTable(checkName);
-
-                SqlDataAdapter daCheck = new SqlDataAdapter("SELECT * FROM " + checkName + " WHERE 表名='" + tablename1 + "' AND 对应ID = " + searchId + ";", mySystem.Parameter.conn);
-                BindingSource bsCheck = new BindingSource();
-                SqlCommandBuilder cbCheck = new SqlCommandBuilder(daCheck);
-                daCheck.Fill(dtCheck);
-
-                //if current hasn't been stored, insert a record in table
-                if (0 == dtCheck.Rows.Count)
+                if (cbb最后一班.Checked)
                 {
-                    DataRow newrow = dtCheck.NewRow();
-                    newrow["表名"] = tablename1;
-                    newrow["对应ID"] = dtOuter.Rows[0]["ID"];
-                    dtCheck.Rows.Add(newrow);
+                    string log = "=====================================\n";
+                    log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n操作员：" + mySystem.Parameter.userName + " 提交审核\n";
+                    dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
+
+                    //fill reviwer information
+
+                    if ((Convert.ToString(Parameter.userflight) == "白班") && (dtOuter.Rows[0]["夜班接班员"].ToString() == ""))
+                    {
+                        dtOuter.Rows[0]["夜班接班员"] = "无";
+                        dtOuter.Rows[0]["白班交接班时间"] = Convert.ToDateTime(DateTime.Now.ToShortTimeString());
+                    }
+                    if ((Convert.ToString(Parameter.userflight) == "夜班") && (dtOuter.Rows[0]["白班接班员"].ToString() == ""))
+                    {
+                        dtOuter.Rows[0]["白班接班员"] ="无";
+                        dtOuter.Rows[0]["夜班交接班时间"] = Convert.ToDateTime(DateTime.Now.ToShortTimeString());
+                    }
+
+
+
+
+                    //update log into table
+                    bsOuter.EndEdit();
+                    daOuter_sql.Update((DataTable)bsOuter.DataSource);
+
+                    readOuterData(__生产指令编号, __生产日期);
+
+                    removeOuterBind();
+                    outerBind();
+
+                    _formState = Parameter.FormState.待审核;
+                    setEnableReadOnly(true);
+                    btn提交审核.Enabled = false;
+                    btn保存.Enabled = false;
                 }
-                bsCheck.DataSource = dtCheck;
-                daCheck.Update((DataTable)bsCheck.DataSource);
-
-                //this part to add log 
-                //格式： 
-                // =================================================
-                // yyyy年MM月dd日，操作员：XXX 提交审核
-                string log = "=====================================\n";
-                log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n操作员：" + mySystem.Parameter.userName + " 提交审核\n";
-                dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
-
-                //fill reviwer information
-
-                if ((Convert.ToString(Parameter.userflight) == "白班") && (dtOuter.Rows[0]["夜班接班员"].ToString() == ""))
+                else
                 {
-                    dtOuter.Rows[0]["夜班接班员"] = __待审核;
-                    dtOuter.Rows[0]["白班交接班时间"] = Convert.ToDateTime(DateTime.Now.ToShortTimeString());
+                    //read from database table and find current record
+                    string checkName = "待审核";
+                    DataTable dtCheck = new DataTable(checkName);
+
+                    SqlDataAdapter daCheck = new SqlDataAdapter("SELECT * FROM " + checkName + " WHERE 表名='" + tablename1 + "' AND 对应ID = " + searchId + ";", mySystem.Parameter.conn);
+                    BindingSource bsCheck = new BindingSource();
+                    SqlCommandBuilder cbCheck = new SqlCommandBuilder(daCheck);
+                    daCheck.Fill(dtCheck);
+
+                    //if current hasn't been stored, insert a record in table
+                    if (0 == dtCheck.Rows.Count)
+                    {
+                        DataRow newrow = dtCheck.NewRow();
+                        newrow["表名"] = tablename1;
+                        newrow["对应ID"] = dtOuter.Rows[0]["ID"];
+                        dtCheck.Rows.Add(newrow);
+                    }
+                    bsCheck.DataSource = dtCheck;
+                    daCheck.Update((DataTable)bsCheck.DataSource);
+
+                    //this part to add log 
+                    //格式： 
+                    // =================================================
+                    // yyyy年MM月dd日，操作员：XXX 提交审核
+                    string log = "=====================================\n";
+                    log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n操作员：" + mySystem.Parameter.userName + " 提交审核\n";
+                    dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
+
+                    //fill reviwer information
+
+                    if ((Convert.ToString(Parameter.userflight) == "白班") && (dtOuter.Rows[0]["夜班接班员"].ToString() == ""))
+                    {
+                        dtOuter.Rows[0]["夜班接班员"] = __待审核;
+                        dtOuter.Rows[0]["白班交接班时间"] = Convert.ToDateTime(DateTime.Now.ToShortTimeString());
+                    }
+                    if ((Convert.ToString(Parameter.userflight) == "夜班") && (dtOuter.Rows[0]["白班接班员"].ToString() == ""))
+                    {
+                        dtOuter.Rows[0]["白班接班员"] = __待审核;
+                        dtOuter.Rows[0]["夜班交接班时间"] = Convert.ToDateTime(DateTime.Now.ToShortTimeString());
+                    }
+
+
+
+
+                    //update log into table
+                    bsOuter.EndEdit();
+                    daOuter_sql.Update((DataTable)bsOuter.DataSource);
+
+                    readOuterData(__生产指令编号, __生产日期);
+
+                    removeOuterBind();
+                    outerBind();
+
+                    _formState = Parameter.FormState.待审核;
+                    setEnableReadOnly(true);
+                    btn提交审核.Enabled = false;
+                    btn保存.Enabled = false;
                 }
-                if ((Convert.ToString(Parameter.userflight) == "夜班") && (dtOuter.Rows[0]["白班接班员"].ToString() == ""))
-                {
-                    dtOuter.Rows[0]["白班接班员"] = __待审核;
-                    dtOuter.Rows[0]["夜班交接班时间"] = Convert.ToDateTime(DateTime.Now.ToShortTimeString());
-                }
-
-
-
-
-                //update log into table
-                bsOuter.EndEdit();
-                daOuter_sql.Update((DataTable)bsOuter.DataSource);
-
-                readOuterData(__生产指令编号, __生产日期);
-
-                removeOuterBind();
-                outerBind();
-
-                _formState = Parameter.FormState.待审核;
-                setEnableReadOnly(true);
-                btn提交审核.Enabled = false;
-                btn保存.Enabled = false;
+               
             }
 
         }
@@ -1549,6 +1631,11 @@ namespace mySystem.Process.Extruction.A
             {
                 writeDGVWidthToSetting(dataGridView1);
             }
+        }
+
+        private void HandOver_Load(object sender, EventArgs e)
+        {
+
         }
 
         //leave datagridview check the right things

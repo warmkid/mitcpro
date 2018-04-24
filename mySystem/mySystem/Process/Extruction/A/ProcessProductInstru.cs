@@ -2272,71 +2272,71 @@ namespace BatchProductRecord
             }
 
             //my.Cells[14 + ind, 6].Value = textBox6.Text;//计划产量米
-            my.Cells[14 + ind, 6].Value = dt_prodinstr.Rows[0]["计划产量合计米"];
+            my.Cells[8 + ind, 6].Value = dt_prodinstr.Rows[0]["计划产量合计米"];
             
             //my.Cells[14 + ind, 7].Value = tb用料重量合计.Text;//用料重量
-            my.Cells[14 + ind, 7].Value = dt_prodinstr.Rows[0]["用料重量合计"];
+            my.Cells[8 + ind, 7].Value = dt_prodinstr.Rows[0]["用料重量合计"];
             
             //my.Cells[14 + ind, 10].Value = textBox10.Text;//计划产量卷
-            my.Cells[14 + ind, 10].Value = dt_prodinstr.Rows[0]["计划产量合计卷"];
+            my.Cells[8 + ind, 10].Value = dt_prodinstr.Rows[0]["计划产量合计卷"];
             
             //my.Cells[16 + ind, 6].Value = cb内外层物料代码.Text;
-            my.Cells[16 + ind, 6].Value = dt_prodinstr.Rows[0]["内外层物料代码"];
+            my.Cells[10 + ind, 6].Value = dt_prodinstr.Rows[0]["内外层物料代码"];
             
             //my.Cells[16 + ind, 8].Value = tb内外层物料批号.Text;
-            my.Cells[16 + ind, 8].Value = dt_prodinstr.Rows[0]["内外层物料批号"];
+            my.Cells[10 + ind, 8].Value = dt_prodinstr.Rows[0]["内外层物料批号"];
             
             //my.Cells[16 + ind, 9].Value = tb内外层包装规格.Text;
-            my.Cells[16 + ind, 9].Value = dt_prodinstr.Rows[0]["内外层包装规格"];
+            my.Cells[10 + ind, 9].Value = dt_prodinstr.Rows[0]["内外层包装规格"];
             
             //my.Cells[16 + ind, 10].Value = tb内外领料量.Text;
-            my.Cells[16 + ind, 10].Value = dt_prodinstr.Rows[0]["内外层领料量"];
+            my.Cells[10 + ind, 10].Value = dt_prodinstr.Rows[0]["内外层领料量"];
 
 
             //my.Cells[17 + ind, 6].Value = cb中层物料代码.Text;
-            my.Cells[17 + ind, 6].Value = dt_prodinstr.Rows[0]["中层物料代码"];
+            my.Cells[11 + ind, 6].Value = dt_prodinstr.Rows[0]["中层物料代码"];
             
             //my.Cells[17 + ind, 8].Value = tb中层物料批号.Text;
-            my.Cells[17 + ind, 8].Value = dt_prodinstr.Rows[0]["中层物料批号"];
+            my.Cells[11 + ind, 8].Value = dt_prodinstr.Rows[0]["中层物料批号"];
             
             //my.Cells[17 + ind, 9].Value = tb中层包装规格.Text;
-            my.Cells[17 + ind, 9].Value = dt_prodinstr.Rows[0]["中层包装规格"];
+            my.Cells[11 + ind, 9].Value = dt_prodinstr.Rows[0]["中层包装规格"];
             
             //my.Cells[17 + ind, 10].Value = tb中层领料量.Text;
-            my.Cells[17 + ind, 10].Value = dt_prodinstr.Rows[0]["中层领料量"];
+            my.Cells[11 + ind, 10].Value = dt_prodinstr.Rows[0]["中层领料量"];
 
             //my.Cells[18 + ind, 6].Value = textBox12.Text;
-            my.Cells[18 + ind, 6].Value = dt_prodinstr.Rows[0]["卷心管"];
+            my.Cells[12 + ind, 6].Value = dt_prodinstr.Rows[0]["卷心管"];
             
             //my.Cells[18 + ind, 9].Value = textBox13.Text;
-            my.Cells[18 + ind, 9].Value = dt_prodinstr.Rows[0]["卷心管规格"];
+            my.Cells[12 + ind, 9].Value = dt_prodinstr.Rows[0]["卷心管规格"];
             
             //my.Cells[18 + ind, 10].Value = tb卷心管领料量.Text;
-            my.Cells[18 + ind, 10].Value = dt_prodinstr.Rows[0]["卷心管领料量"];
+            my.Cells[12 + ind, 10].Value = dt_prodinstr.Rows[0]["卷心管领料量"];
 
             //my.Cells[20 + ind, 6].Value = textBox7.Text;
-            my.Cells[20 + ind, 6].Value = "双层洁净包装";
+            my.Cells[14 + ind, 6].Value = "双层洁净包装";
 
             //my.Cells[20 + ind, 9].Value = textBox9.Text;
-            my.Cells[20 + ind, 9].Value = dt_prodinstr.Rows[0]["双层洁净包装包装规格"];
+            my.Cells[14 + ind, 9].Value = dt_prodinstr.Rows[0]["双层洁净包装包装规格"];
 
             //my.Cells[20 + ind, 10].Value = tb双层包装领料量.Text;
-            my.Cells[20 + ind, 10].Value = dt_prodinstr.Rows[0]["双层洁净包装领料量"];
+            my.Cells[14 + ind, 10].Value = dt_prodinstr.Rows[0]["双层洁净包装领料量"];
 
 
-            my.Cells[16 + ind, 12].Value = "白班：" + dt_prodinstr.Rows[0]["白班负责人"] + "\n" + "夜班：" + dt_prodinstr.Rows[0]["夜班负责人"];
+            my.Cells[10 + ind, 12].Value = "白班：" + dt_prodinstr.Rows[0]["白班负责人"] + "\n" + "夜班：" + dt_prodinstr.Rows[0]["夜班负责人"];
             //my.Cells[21 + ind, 2].Value = tb备注.Text;
-            my.Cells[21 + ind, 2].Value = dt_prodinstr.Rows[0]["备注"];
+            my.Cells[15 + ind, 2].Value = dt_prodinstr.Rows[0]["备注"];
 
 
             //my.Cells[22 + ind, 1].Value = "编制人：" + tb编制人.Text + "\n" + dateTimePicker2.Value.ToString("yyyy年MM月dd日");
-            my.Cells[22 + ind, 1].Value = "编制人：" + dt_prodinstr.Rows[0]["编制人"] + "\n" + DateTime.Parse(dt_prodinstr.Rows[0]["编制时间"].ToString()).ToString("yyyy年MM月dd日");
+            my.Cells[16 + ind, 1].Value = "编制人：" + dt_prodinstr.Rows[0]["编制人"] + "\n" + DateTime.Parse(dt_prodinstr.Rows[0]["编制时间"].ToString()).ToString("yyyy年MM月dd日");
 
             //my.Cells[22 + ind, 6].Value = "审批人：" + tb审批人.Text + "\n" + dateTimePicker3.Value.ToString("yyyy年MM月dd日");
-            my.Cells[22 + ind, 6].Value = "审批人：" + dt_prodinstr.Rows[0]["审批人"] + "\n" + DateTime.Parse(dt_prodinstr.Rows[0]["审批时间"].ToString()).ToString("yyyy年MM月dd日");
+            my.Cells[16 + ind, 6].Value = "审批人：" + dt_prodinstr.Rows[0]["审批人"] + "\n" + DateTime.Parse(dt_prodinstr.Rows[0]["审批时间"].ToString()).ToString("yyyy年MM月dd日");
 
             //my.Cells[22 + ind, 9].Value = "接收人：" + tb接收人.Text + "\n" + dateTimePicker4.Value.ToString("yyyy年MM月dd日");
-            my.Cells[22 + ind, 9].Value = "接收人：" + dt_prodinstr.Rows[0]["接收人"] + "\n" + DateTime.Parse(dt_prodinstr.Rows[0]["接收时间"].ToString()).ToString("yyyy年MM月dd日");
+            my.Cells[16 + ind, 9].Value = "接收人：" + dt_prodinstr.Rows[0]["接收人"] + "\n" + DateTime.Parse(dt_prodinstr.Rows[0]["接收时间"].ToString()).ToString("yyyy年MM月dd日");
 
 
         }

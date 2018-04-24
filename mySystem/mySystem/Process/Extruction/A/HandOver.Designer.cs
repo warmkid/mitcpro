@@ -60,6 +60,7 @@
             this.label角色 = new System.Windows.Forms.Label();
             this.lbl生产指令编号 = new System.Windows.Forms.Label();
             this.btn上一条记录 = new System.Windows.Forms.Button();
+            this.cbb最后一班 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -344,13 +345,25 @@
             this.btn上一条记录.TabIndex = 165;
             this.btn上一条记录.Text = "上一条记录";
             this.btn上一条记录.UseVisualStyleBackColor = true;
+            this.btn上一条记录.Visible = false;
             this.btn上一条记录.Click += new System.EventHandler(this.btn上一条记录_Click);
+            // 
+            // cbb最后一班
+            // 
+            this.cbb最后一班.AutoSize = true;
+            this.cbb最后一班.Location = new System.Drawing.Point(697, 523);
+            this.cbb最后一班.Name = "cbb最后一班";
+            this.cbb最后一班.Size = new System.Drawing.Size(91, 20);
+            this.cbb最后一班.TabIndex = 166;
+            this.cbb最后一班.Text = "最后一班";
+            this.cbb最后一班.UseVisualStyleBackColor = true;
             // 
             // HandOver
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1143, 559);
+            this.Controls.Add(this.cbb最后一班);
             this.Controls.Add(this.btn上一条记录);
             this.Controls.Add(this.lbl生产指令编号);
             this.Controls.Add(this.label角色);
@@ -387,6 +400,7 @@
             this.Name = "HandOver";
             this.Text = "吹膜岗位交接班记录";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandOver_FormClosing);
+            this.Load += new System.EventHandler(this.HandOver_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
@@ -427,5 +441,6 @@
         private System.Windows.Forms.Label label角色;
         private System.Windows.Forms.Label lbl生产指令编号;
         private System.Windows.Forms.Button btn上一条记录;
+        private System.Windows.Forms.CheckBox cbb最后一班;
     }
 }

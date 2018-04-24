@@ -36,6 +36,7 @@
             this.D4Btn = new System.Windows.Forms.Button();
             this.D3Btn = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.C4Btn = new System.Windows.Forms.Button();
             this.C3Btn = new System.Windows.Forms.Button();
             this.B1Btn = new System.Windows.Forms.Button();
@@ -133,6 +134,7 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.button1);
             this.groupBox3.Controls.Add(this.C4Btn);
             this.groupBox3.Controls.Add(this.C3Btn);
             this.groupBox3.Controls.Add(this.B1Btn);
@@ -144,6 +146,17 @@
             this.groupBox3.TabIndex = 20;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "设备运行";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(83, 347);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(106, 47);
+            this.button1.TabIndex = 16;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // C4Btn
             // 
@@ -501,5 +514,6 @@
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Button LabelBtn;
         private System.Windows.Forms.Button btn生产领料申请单;
+        private System.Windows.Forms.Button button1;
     }
 }
