@@ -124,8 +124,10 @@ namespace mySystem.Process.Extruction.A
                     
                     return false;
                 }
-                if (dt.Rows[0]["夜班交班员"].ToString() != "" &&
-                    (dt.Rows[0]["夜班接班员"].ToString() != "" || dt.Rows[0]["夜班接班员"].ToString() != __待审核))
+                //if (dt.Rows[0]["夜班交班员"].ToString() != "" &&
+                //    (dt.Rows[0]["夜班接班员"].ToString() != "" || dt.Rows[0]["夜班接班员"].ToString() != __待审核))
+                // 只要白班接班员是一个人名，则表示上一个单子的这个过程已经完成了
+                if (dt.Rows[0]["白班接班员"].ToString() !="" ||dt.Rows[0]["白班接班员"].ToString() != __待审核 )
                 {
                     return false;
                 }
