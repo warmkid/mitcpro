@@ -63,6 +63,7 @@
             this.label16 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.tbPA生产部处理记录 = new System.Windows.Forms.TextBox();
+            this.btn日志 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // cmbPA质量部处理建议
@@ -153,7 +154,7 @@
             // btn确认
             // 
             this.btn确认.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn确认.Location = new System.Drawing.Point(534, 425);
+            this.btn确认.Location = new System.Drawing.Point(422, 426);
             this.btn确认.Name = "btn确认";
             this.btn确认.Size = new System.Drawing.Size(75, 23);
             this.btn确认.TabIndex = 313;
@@ -164,7 +165,7 @@
             // btn提交审核
             // 
             this.btn提交审核.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn提交审核.Location = new System.Drawing.Point(625, 425);
+            this.btn提交审核.Location = new System.Drawing.Point(513, 426);
             this.btn提交审核.Name = "btn提交审核";
             this.btn提交审核.Size = new System.Drawing.Size(100, 23);
             this.btn提交审核.TabIndex = 312;
@@ -402,11 +403,23 @@
             this.tbPA生产部处理记录.Size = new System.Drawing.Size(710, 60);
             this.tbPA生产部处理记录.TabIndex = 328;
             // 
+            // btn日志
+            // 
+            this.btn日志.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn日志.Location = new System.Drawing.Point(640, 425);
+            this.btn日志.Name = "btn日志";
+            this.btn日志.Size = new System.Drawing.Size(82, 23);
+            this.btn日志.TabIndex = 329;
+            this.btn日志.Text = "查看日志";
+            this.btn日志.UseVisualStyleBackColor = true;
+            this.btn日志.Click += new System.EventHandler(this.btn日志_Click);
+            // 
             // 产品退货评审单2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(734, 472);
+            this.Controls.Add(this.btn日志);
             this.Controls.Add(this.tbPA生产部处理记录);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.cmbPA质量部处理建议);
@@ -486,6 +499,7 @@
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.TextBox tbPA生产部处理记录;
+        private System.Windows.Forms.Button btn日志;
 
     }
 }

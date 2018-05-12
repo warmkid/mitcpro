@@ -247,6 +247,11 @@ namespace mySystem.Process.Stock
             dr["厂家随附检验报告"] = "无";
             dr["是否有样品"] = "无";
             dr["无样品理由"] = "无";
+            string log = "\n=====================================\n";
+
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + mySystem.Parameter.userName + " 新建记录\n";
+
+            dr["日志"] = log;
             return dr;
         }
 
@@ -722,6 +727,10 @@ namespace mySystem.Process.Stock
 
 
             dtOuter.Rows[0]["审核员"] = "__待审核";
+            string log = "=============================\n";
+            log += DateTime.Now.ToShortDateString();
+            log += " 验收人：" + mySystem.Parameter.userName + " 提交审核\n";
+            dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
             _formState = Parameter.FormState.待审核;
             btn提交审核.Enabled = false;
             daOuter.Update((DataTable)bsOuter.DataSource);
@@ -729,10 +738,7 @@ namespace mySystem.Process.Stock
             setFormState();
             setEnableReadOnly();
 
-            string log = "=============================\n";
-            log += DateTime.Now.ToShortDateString();
-            log += " 验收人：" + mySystem.Parameter.userName + " 提交审核\n";
-            dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
+            
             setControlFalse();
 
             // TODO 判断，然后决定是新建 请验单 还是  检验记录
@@ -809,6 +815,16 @@ namespace mySystem.Process.Stock
             dr["请验人"] = mySystem.Parameter.userName;
             dr["请验编号"] = create请验编号();
             dr["物资验收记录ID"] = dtOuter.Rows[0]["ID"];
+
+
+            string log = "\n=====================================\n";
+
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + mySystem.Parameter.userName + " 新建记录\n";
+
+            dr["日志"] = log;
+
+
+
             dt.Rows.Add(dr);
 
             da.Update(dt);
@@ -854,6 +870,15 @@ namespace mySystem.Process.Stock
             dr["审核时间"] = DateTime.Now;
             dr["供应商代码"] = dtOuter.Rows[0]["供应商代码"].ToString();
             dr["供应商名称"] = dtOuter.Rows[0]["供应商名称"].ToString();
+
+
+
+            string log = "\n=====================================\n";
+
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + mySystem.Parameter.userName + " 新建记录\n";
+
+            dr["日志"] = log;
+
             dt.Rows.Add(dr);
 
             da.Update(dt);
@@ -915,7 +940,14 @@ namespace mySystem.Process.Stock
 
         private void btn查看日志_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(dtOuter.Rows[0]["日志"].ToString());
+            try
+            {
+                (new mySystem.Other.LogForm()).setLog(dtOuter.Rows[0]["日志"].ToString()).Show();
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show(ee.Message + "\n" + ee.StackTrace);
+            }
         }
 
         private void btn审核_Click(object sender, EventArgs e)
@@ -1028,7 +1060,7 @@ namespace mySystem.Process.Stock
             log += DateTime.Now.ToString("yyyy年MM月dd日 HH:mm:ss");
             log += "\n审核员：" + mySystem.Parameter.userName + " 审核完毕\n";
             log += "审核结果为：通过\n";
-            log += "审核意见为：无\n";
+            log += "审核意见为：" + ckform.opinion + "\n";
             dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
             btn保存.PerformClick();
             setFormState();
@@ -1070,6 +1102,11 @@ namespace mySystem.Process.Stock
             ndr["单位"] = dr["单位"];
             ndr["换算率"] = dr["换算率"];
             ndr["审核结果"] = false;//默认值
+            string log = "\n=====================================\n";
+
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + mySystem.Parameter.userName + " 新建记录\n";
+
+            ndr["日志"] = log;
             dt.Rows.Add(ndr);
             da.Update(dt);
             return "已为物料：" + dr["物料名称"] + "生成复验记录\n";
@@ -1102,6 +1139,11 @@ namespace mySystem.Process.Stock
             ndr["入库人"] = mySystem.Parameter.userName;
             ndr["审核日期"] = DateTime.Now;
             ndr["审核结果"] = false;//默认值
+            string log = "\n=====================================\n";
+
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + mySystem.Parameter.userName + " 新建记录\n";
+
+            ndr["日志"] = log;
             dt.Rows.Add(ndr);
             da.Update(dt);
             return "已为物料：" + dr["物料名称"] + "生成入库单\n";

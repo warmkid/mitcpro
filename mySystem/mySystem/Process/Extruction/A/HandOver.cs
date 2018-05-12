@@ -153,6 +153,7 @@ namespace mySystem.Process.Extruction.A
             } 
             else
             {
+                // TODO: 开新记录前弹出对话框提醒？先不加
                 InitializeComponent();
                 conOle = Parameter.connOle;
                 fill_printer();

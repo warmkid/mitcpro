@@ -61,6 +61,7 @@
             this.物资请验单ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.检验记录ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.取样记录ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btn日志 = new System.Windows.Forms.Button();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -86,7 +87,7 @@
             // btn保存
             // 
             this.btn保存.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn保存.Location = new System.Drawing.Point(803, 522);
+            this.btn保存.Location = new System.Drawing.Point(694, 526);
             this.btn保存.Name = "btn保存";
             this.btn保存.Size = new System.Drawing.Size(75, 23);
             this.btn保存.TabIndex = 2;
@@ -269,7 +270,7 @@
             // btn提交审核
             // 
             this.btn提交审核.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn提交审核.Location = new System.Drawing.Point(899, 522);
+            this.btn提交审核.Location = new System.Drawing.Point(790, 526);
             this.btn提交审核.Name = "btn提交审核";
             this.btn提交审核.Size = new System.Drawing.Size(100, 23);
             this.btn提交审核.TabIndex = 54;
@@ -351,11 +352,23 @@
             this.取样记录ToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
             this.取样记录ToolStripMenuItem.Text = "取样记录";
             // 
+            // btn日志
+            // 
+            this.btn日志.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn日志.Location = new System.Drawing.Point(917, 525);
+            this.btn日志.Name = "btn日志";
+            this.btn日志.Size = new System.Drawing.Size(82, 23);
+            this.btn日志.TabIndex = 334;
+            this.btn日志.Text = "查看日志";
+            this.btn日志.UseVisualStyleBackColor = true;
+            this.btn日志.Click += new System.EventHandler(this.btn日志_Click);
+            // 
             // 复验记录
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1023, 569);
+            this.Controls.Add(this.btn日志);
             this.Controls.Add(this.label角色);
             this.Controls.Add(this.cmb检验结论);
             this.Controls.Add(this.label11);
@@ -425,5 +438,6 @@
         private System.Windows.Forms.ToolStripMenuItem 物资请验单ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 检验记录ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 取样记录ToolStripMenuItem;
+        private System.Windows.Forms.Button btn日志;
     }
 }

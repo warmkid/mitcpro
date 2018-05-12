@@ -69,6 +69,7 @@
             this.label角色 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.Title = new System.Windows.Forms.Label();
+            this.btn日志 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -465,11 +466,23 @@
             this.Title.TabIndex = 38;
             this.Title.Text = "入库单";
             // 
+            // btn日志
+            // 
+            this.btn日志.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn日志.Location = new System.Drawing.Point(830, 420);
+            this.btn日志.Name = "btn日志";
+            this.btn日志.Size = new System.Drawing.Size(82, 23);
+            this.btn日志.TabIndex = 337;
+            this.btn日志.Text = "查看日志";
+            this.btn日志.UseVisualStyleBackColor = true;
+            this.btn日志.Click += new System.EventHandler(this.btn日志_Click);
+            // 
             // 入库单
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1117, 457);
+            this.Controls.Add(this.btn日志);
             this.Controls.Add(this.btn生成二维码);
             this.Controls.Add(this.btn添加);
             this.Controls.Add(this.btn删除);
@@ -563,5 +576,6 @@
         private System.Windows.Forms.Button btn删除;
         private System.Windows.Forms.Button btn添加;
         private System.Windows.Forms.Button btn生成二维码;
+        private System.Windows.Forms.Button btn日志;
     }
 }

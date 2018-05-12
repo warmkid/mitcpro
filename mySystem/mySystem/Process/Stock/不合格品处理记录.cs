@@ -261,7 +261,7 @@ namespace mySystem.Process.Stock
                     c.Enabled = false;
                 }
             }
-            // btn查看日志.Enabled = true;
+            btn日志.Enabled = true;
         }
 
         void addOtherEventHandler()
@@ -315,6 +315,15 @@ namespace mySystem.Process.Stock
             dtOuter.Rows[0]["现场应急处理措施审核员"] = "__待审核";
 
             _formState = Parameter.FormState.待审核;
+
+            //写日志
+            //格式： 
+            // =================================================
+            // yyyy年MM月dd日，操作员：XXX 提交审核
+            string log = "\n=====================================\n";
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n操作员：" + mySystem.Parameter.userName + " 提交审核\n";
+            dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
+
             btn提交审核.Enabled = false;
             daOuter.Update((DataTable)bsOuter.DataSource);
             btn保存.PerformClick();
@@ -367,7 +376,18 @@ namespace mySystem.Process.Stock
             dtOuter.Rows[0]["现场应急处理措施审核员"] = mySystem.Parameter.userName;
             dtOuter.Rows[0]["审核结果"] = ckform.ischeckOk;
             //dtOuter.Rows[0]["审核意见"] = ckform.opinion;
-           
+
+            //写日志
+            string log = "\n=====================================\n";
+
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n审核员：" + mySystem.Parameter.userName + " 完成审核\n";
+
+            log += "审核结果：" + (ckform.ischeckOk == true ? "通过\n" : "不通过\n");
+
+            log += "审核意见：" + ckform.opinion;
+
+            dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
+
             btn保存.PerformClick();
             setFormState();
             setEnableReadOnly();
@@ -380,6 +400,18 @@ namespace mySystem.Process.Stock
             }
             catch (Exception ee)
             {
+            }
+        }
+
+        private void btn日志_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                (new mySystem.Other.LogForm()).setLog(dtOuter.Rows[0]["???"].ToString()).Show();
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show(ee.Message + "\n" + ee.StackTrace);
             }
         }
     }

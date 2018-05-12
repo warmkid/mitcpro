@@ -61,6 +61,7 @@
             this.label12 = new System.Windows.Forms.Label();
             this.btn退回 = new System.Windows.Forms.Button();
             this.btn删除 = new System.Windows.Forms.Button();
+            this.bt日志 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -255,7 +256,7 @@
             // btn确认
             // 
             this.btn确认.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn确认.Location = new System.Drawing.Point(762, 575);
+            this.btn确认.Location = new System.Drawing.Point(672, 575);
             this.btn确认.Name = "btn确认";
             this.btn确认.Size = new System.Drawing.Size(75, 23);
             this.btn确认.TabIndex = 155;
@@ -266,7 +267,7 @@
             // btn提交审核
             // 
             this.btn提交审核.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn提交审核.Location = new System.Drawing.Point(843, 575);
+            this.btn提交审核.Location = new System.Drawing.Point(753, 575);
             this.btn提交审核.Name = "btn提交审核";
             this.btn提交审核.Size = new System.Drawing.Size(100, 23);
             this.btn提交审核.TabIndex = 154;
@@ -380,11 +381,23 @@
             this.btn删除.UseVisualStyleBackColor = true;
             this.btn删除.Click += new System.EventHandler(this.btn删除_Click);
             // 
+            // bt日志
+            // 
+            this.bt日志.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bt日志.Location = new System.Drawing.Point(859, 576);
+            this.bt日志.Name = "bt日志";
+            this.bt日志.Size = new System.Drawing.Size(75, 23);
+            this.bt日志.TabIndex = 168;
+            this.bt日志.Text = "查看日志";
+            this.bt日志.UseVisualStyleBackColor = true;
+            this.bt日志.Click += new System.EventHandler(this.bt日志_Click);
+            // 
             // 采购订单
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(965, 609);
+            this.Controls.Add(this.bt日志);
             this.Controls.Add(this.btn删除);
             this.Controls.Add(this.btn退回);
             this.Controls.Add(this.tb汇率);
@@ -462,5 +475,6 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Button btn退回;
         private System.Windows.Forms.Button btn删除;
+        private System.Windows.Forms.Button bt日志;
     }
 }

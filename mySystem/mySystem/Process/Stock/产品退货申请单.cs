@@ -307,6 +307,11 @@ namespace mySystem.Process.Stock
             dr["申请日期"] = DateTime.Now;
             dr["审核日期"] = DateTime.Now;
             dr["审核结果"] = 0;
+            string log = "\n=====================================\n";
+
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + mySystem.Parameter.userName + " 新建记录\n";
+
+            dr["日志"] = log;
             return dr;
         }
 
@@ -394,6 +399,14 @@ namespace mySystem.Process.Stock
             da.Update(dt);
 
             dtOuter.Rows[0]["审核人"] = "__待审核";
+
+
+            string log = "\n=====================================\n";
+
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n操作员：" + mySystem.Parameter.userName + " 提交审核\n";
+
+            dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
+
             save();
             setFormState();
             setEnableReadOnly();
@@ -423,7 +436,15 @@ namespace mySystem.Process.Stock
             dtOuter.Rows[0]["审核人"] = mySystem.Parameter.userName;
             dtOuter.Rows[0]["审核结果"] = ckform.ischeckOk;
             dtOuter.Rows[0]["审核意见"] = ckform.opinion;
+            string log = "\n=====================================\n";
 
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n审核员：" + mySystem.Parameter.userName + " 完成审核\n";
+
+            log += "审核结果：" + (ckform.ischeckOk == true ? "通过\n" : "不通过\n");
+
+            log += "审核意见：" + ckform.opinion;
+
+            dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
             // 如果审核通过自动生产产品退货审批单1
             da = new SqlDataAdapter("select * from 产品退货审批单1 where 退货申请单编号='" + _code + "'", mySystem.Parameter.conn);
             cb = new SqlCommandBuilder(da);
@@ -445,6 +466,14 @@ namespace mySystem.Process.Stock
                 dr["批准日期"] = DateTime.Now;
 
                 dr["批准结果"] = false;//默认值
+
+
+                string log1 = "\n=====================================\n";
+
+                log1 += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + mySystem.Parameter.userName + " 新建记录\n";
+
+                dr["日志"] = log1;
+
                 dt.Rows.Add(dr);
                 da.Update(dt);
                 MessageBox.Show("产品退货审批单(1)已生成！");
@@ -647,6 +676,19 @@ namespace mySystem.Process.Stock
             //mysheet.PageSetup.RightFooter = str生产指令 + "-03-" + sheetnum.ToString("D3") + " &P/" + mybook.ActiveSheet.PageSetup.Pages.Count.ToString(); // "生产指令-步骤序号- 表序号 /&P"; // &P 是页码
             //返回
             return mysheet;
+        }
+
+        private void btn日志_Click(object sender, EventArgs e)
+        {
+
+            try
+            {
+                (new mySystem.Other.LogForm()).setLog(dtOuter.Rows[0]["日志"].ToString()).Show();
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show(ee.Message + "\n" + ee.StackTrace);
+            }
         }
 
     }

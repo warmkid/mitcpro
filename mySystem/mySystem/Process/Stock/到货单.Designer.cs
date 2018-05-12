@@ -69,6 +69,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label角色 = new System.Windows.Forms.Label();
             this.Title = new System.Windows.Forms.Label();
+            this.btn日志 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -86,7 +87,7 @@
             // btn确认
             // 
             this.btn确认.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn确认.Location = new System.Drawing.Point(887, 479);
+            this.btn确认.Location = new System.Drawing.Point(744, 481);
             this.btn确认.Name = "btn确认";
             this.btn确认.Size = new System.Drawing.Size(75, 23);
             this.btn确认.TabIndex = 279;
@@ -97,7 +98,7 @@
             // btn提交审核
             // 
             this.btn提交审核.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn提交审核.Location = new System.Drawing.Point(1006, 479);
+            this.btn提交审核.Location = new System.Drawing.Point(863, 481);
             this.btn提交审核.Name = "btn提交审核";
             this.btn提交审核.Size = new System.Drawing.Size(100, 23);
             this.btn提交审核.TabIndex = 278;
@@ -466,11 +467,23 @@
             this.Title.TabIndex = 70;
             this.Title.Text = "到货单";
             // 
+            // btn日志
+            // 
+            this.btn日志.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn日志.Location = new System.Drawing.Point(1024, 481);
+            this.btn日志.Name = "btn日志";
+            this.btn日志.Size = new System.Drawing.Size(82, 23);
+            this.btn日志.TabIndex = 333;
+            this.btn日志.Text = "查看日志";
+            this.btn日志.UseVisualStyleBackColor = true;
+            this.btn日志.Click += new System.EventHandler(this.btn日志_Click);
+            // 
             // 到货单
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1157, 516);
+            this.Controls.Add(this.btn日志);
             this.Controls.Add(this.btn新建);
             this.Controls.Add(this.btn确认);
             this.Controls.Add(this.btn提交审核);
@@ -564,5 +577,6 @@
         private System.Windows.Forms.Button btn打印;
         private System.Windows.Forms.Button btn审核;
         private System.Windows.Forms.Button btn新建;
+        private System.Windows.Forms.Button btn日志;
     }
 }

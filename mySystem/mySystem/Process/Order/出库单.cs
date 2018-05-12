@@ -306,6 +306,7 @@ namespace mySystem.Process.Order
             }
             btn打印.Enabled = true;
             combox打印机选择.Enabled = true;
+            bt日志.Enabled = true;
         }
 
         string generate出库单号()
@@ -443,6 +444,11 @@ namespace mySystem.Process.Order
             dr["审核日期"] = DateTime.Now;
             dr["审核结果"] = 0;
             dr["状态"] = "编辑中";
+            string log = "\n=====================================\n";
+
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + mySystem.Parameter.userName + " 新建记录\n";
+
+            dr["日志"] = log;
             return dr;
         }
 
@@ -679,7 +685,19 @@ namespace mySystem.Process.Order
             dtOuter.Rows[0]["状态"] = "待审核";
             dtOuter.Rows[0]["审核人"] = "__待审核";
             dtOuter.Rows[0]["审核日期"] = DateTime.Now;
+            //写日志
 
+            //格式： 
+
+            // =================================================
+
+            // yyyy年MM月dd日，操作员：XXX 提交审核
+
+            string log = "\n=====================================\n";
+
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n操作员：" + mySystem.Parameter.userName + " 提交审核\n";
+
+            dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
             save();
 
             //空间都不能点
@@ -731,6 +749,17 @@ namespace mySystem.Process.Order
             dtOuter.Rows[0]["审核日期"] = ckform.time;
             dtOuter.Rows[0]["审核意见"] = ckform.opinion;
             dtOuter.Rows[0]["审核结果"] = ckform.ischeckOk;
+
+            //写日志
+            string log = "\n=====================================\n";
+
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n审核员：" + mySystem.Parameter.userName + " 完成审核\n";
+
+            log += "审核结果：" + (ckform.ischeckOk == true ? "通过\n" : "不通过\n");
+
+            log += "审核意见：" + ckform.opinion;
+
+            dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
 
             if (ckform.ischeckOk)//审核通过
             {
@@ -832,6 +861,11 @@ namespace mySystem.Process.Order
             {
                 writeDGVWidthToSetting(dataGridView3);
             }
+            try
+            {
+                (this.Owner as 订单和库存管理.订单管理).btn出库单查询.PerformClick();
+            }
+            catch (NullReferenceException exp) { }
         }
 
         private void btn删除_Click(object sender, EventArgs e)
@@ -900,6 +934,18 @@ namespace mySystem.Process.Order
         private void btn打印_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void bt日志_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                (new mySystem.Other.LogForm()).setLog(dtOuter.Rows[0]["日志"].ToString()).Show();
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show(ee.Message + "\n" + ee.StackTrace);
+            }
         }
 
     }

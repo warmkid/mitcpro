@@ -68,6 +68,7 @@
             this.tb申请人 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
+            this.btn日志 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label14
@@ -248,7 +249,7 @@
             // btn批准
             // 
             this.btn批准.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn批准.Location = new System.Drawing.Point(672, 614);
+            this.btn批准.Location = new System.Drawing.Point(496, 614);
             this.btn批准.Name = "btn批准";
             this.btn批准.Size = new System.Drawing.Size(75, 24);
             this.btn批准.TabIndex = 278;
@@ -279,7 +280,7 @@
             // btn不批准
             // 
             this.btn不批准.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn不批准.Location = new System.Drawing.Point(496, 614);
+            this.btn不批准.Location = new System.Drawing.Point(320, 614);
             this.btn不批准.Name = "btn不批准";
             this.btn不批准.Size = new System.Drawing.Size(75, 24);
             this.btn不批准.TabIndex = 275;
@@ -447,11 +448,23 @@
             this.label16.TabIndex = 258;
             this.label16.Text = "退货申请单编号";
             // 
+            // btn日志
+            // 
+            this.btn日志.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn日志.Location = new System.Drawing.Point(665, 615);
+            this.btn日志.Name = "btn日志";
+            this.btn日志.Size = new System.Drawing.Size(82, 23);
+            this.btn日志.TabIndex = 333;
+            this.btn日志.Text = "查看日志";
+            this.btn日志.UseVisualStyleBackColor = true;
+            this.btn日志.Click += new System.EventHandler(this.btn日志_Click);
+            // 
             // 产品退货审批单2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(774, 647);
+            this.Controls.Add(this.btn日志);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.tb批准人);
             this.Controls.Add(this.label15);
@@ -541,5 +554,6 @@
         private System.Windows.Forms.TextBox tb质量部审批意见;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.DateTimePicker dtp批准日期;
+        private System.Windows.Forms.Button btn日志;
     }
 }

@@ -655,6 +655,7 @@
             this.btn日志.TabIndex = 77;
             this.btn日志.Text = "查看日志";
             this.btn日志.UseVisualStyleBackColor = true;
+            this.btn日志.Click += new System.EventHandler(this.btn日志_Click);
             // 
             // 不合格品处理记录
             // 

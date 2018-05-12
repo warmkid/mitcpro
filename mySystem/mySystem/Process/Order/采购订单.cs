@@ -265,6 +265,7 @@ namespace mySystem.Process.Order
             btn审核.Enabled = false;
             btn提交审核.Enabled = false;
             tb采购合同号.ReadOnly = true;
+            bt日志.Enabled = true;
         }
 
         void setControlFalse()
@@ -311,6 +312,9 @@ namespace mySystem.Process.Order
             dr["供应商"] = 供应商;
             dr["订单日期"] = DateTime.Now;
             dr["汇率"] = 1;
+            string log = "\n=====================================\n";
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + mySystem.Parameter.userName + " 新建记录\n";
+            dr["日志"] = log;
             dtOuter.Rows.Add(dr);
             daOuter.Update(dtOuter);
             SqlCommand comm = new SqlCommand();
@@ -639,11 +643,11 @@ namespace mySystem.Process.Order
                 return;
             }
 
-            if (!checkInnerData(dataGridView1))
-            {
-                MessageBox.Show("请填写完整的表单信息", "提示");
-                return;
-            }
+            //if (!checkInnerData(dataGridView1))
+            //{
+            //    MessageBox.Show("请填写完整的表单信息", "提示");
+            //    return;
+            //}
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
             BindingSource bs_temp = new BindingSource();
@@ -666,6 +670,15 @@ namespace mySystem.Process.Order
             dtOuter.Rows[0]["状态"] = "待审核";
             dtOuter.Rows[0]["审核人"] = "__待审核";
             dtOuter.Rows[0]["审核日期"] = DateTime.Now;
+
+
+            //写日志 
+            //格式： 
+            // =================================================
+            // yyyy年MM月dd日，操作员：XXX 提交审核
+            string log = "\n=====================================\n";
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n操作员：" + mySystem.Parameter.userName + " 提交审核\n";
+            dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
 
             save();
 
@@ -692,8 +705,19 @@ namespace mySystem.Process.Order
             dtOuter.Rows[0]["审核意见"] = ckform.opinion;
             dtOuter.Rows[0]["审核结果"] = ckform.ischeckOk;
 
+            //写日志
+            string log = "\n=====================================\n";
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n审核员：" + mySystem.Parameter.userName + " 完成审核\n";
+            log += "审核结果：" + (ckform.ischeckOk == true ? "通过\n" : "不通过\n");
+            log += "审核意见：" + ckform.opinion;
+            dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
+
             if (ckform.ischeckOk)//审核通过
             {
+
+
+
+                
                 
                 dtOuter.Rows[0]["状态"] = "审核完成";
                 // 读内表，然后改批准单的状态
@@ -724,9 +748,9 @@ namespace mySystem.Process.Order
                         {
                             foreach (DataRow tdr in dtT.Rows)
                             {
-                                string log = "";
-                                log += DateTime.Now.ToString("yyyy年MM月dd日，采购合同号："+dtOuter.Rows[0]["采购合同号"].ToString()+"，补充数量："+ Convert.ToDouble( dt.Rows[0]["采购数量"])+"。\n");
-                                tdr["借用日志"] = tdr["借用日志"] + log;
+                                string log1 = "";
+                                log1 += DateTime.Now.ToString("yyyy年MM月dd日，采购合同号："+dtOuter.Rows[0]["采购合同号"].ToString()+"，补充数量："+ Convert.ToDouble( dt.Rows[0]["采购数量"])+"。\n");
+                                tdr["借用日志"] = tdr["借用日志"] + log1;
                             }
                         }
                         daT.Update(dtT);
@@ -813,6 +837,11 @@ namespace mySystem.Process.Order
                 writeDGVWidthToSetting(dataGridView1);
             }
             //MessageBox.Show("TTT");
+            try
+            {
+                (this.Owner as 订单和库存管理.订单管理).btn采购订单查询.PerformClick();
+            }
+            catch (NullReferenceException exp) { }
         }
 
         private void btn打印_Click(object sender, EventArgs e)
@@ -822,6 +851,10 @@ namespace mySystem.Process.Order
                 MessageBox.Show("选择一台打印机");
                 return;
             }
+
+
+
+
             SetDefaultPrinter(combox打印机选择.Text);
             //true->预览
             //false->打印
@@ -959,6 +992,15 @@ namespace mySystem.Process.Order
                 DataTable dt;
                 dtOuter.Rows[0]["状态"] = "已退回";
                 daOuter.Update(dtOuter);
+
+
+                //写日志 
+                //格式： 
+                // =================================================
+                // yyyy年MM月dd日，操作员：XXX 提交审核
+                string log = "\n=====================================\n";
+                log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n操作员：" + mySystem.Parameter.userName + " 退回采购订单\n";
+                dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
 
                 foreach (DataRow dr in dtInner.Rows)
                 {
@@ -1110,6 +1152,18 @@ namespace mySystem.Process.Order
             {
                 readDGVWidthFromSettingAndSet(dataGridView1);
                 isFirstBind = false;
+            }
+        }
+
+        private void bt日志_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                (new mySystem.Other.LogForm()).setLog(dtOuter.Rows[0]["日志"].ToString()).Show();
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show(ee.Message + "\n" + ee.StackTrace);
             }
         }
     }

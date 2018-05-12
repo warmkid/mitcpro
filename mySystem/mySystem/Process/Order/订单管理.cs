@@ -62,7 +62,8 @@ namespace 订单和库存管理
             {
                 int id = Convert.ToInt32(dgv出库单["ID", e.RowIndex].Value);
                 mySystem.Process.Order.出库单 form = new mySystem.Process.Order.出库单(mainform, id);
-                form.Show();
+                form.Owner = this;
+                form.ShowDialog();
             }
         }
 
@@ -72,7 +73,8 @@ namespace 订单和库存管理
             {
                 int id = Convert.ToInt32(dgv采购订单["ID", e.RowIndex].Value);
                 mySystem.Process.Order.采购订单 form = new mySystem.Process.Order.采购订单(mainform, id);
-                form.Show();
+                form.Owner = this;
+                form.ShowDialog();
             }
         }
 
@@ -82,7 +84,8 @@ namespace 订单和库存管理
             {
                 int id = Convert.ToInt32(dgv采购批准单["ID", e.RowIndex].Value);
                 mySystem.Process.Order.采购批准单 form = new mySystem.Process.Order.采购批准单(mainform, id);
-                form.Show();
+                form.Owner = this;
+                form.ShowDialog();
             }
         }
 
@@ -92,7 +95,8 @@ namespace 订单和库存管理
             {
                 string 订单号 = dgv采购需求单["用途", e.RowIndex].Value.ToString();
                 mySystem.Process.Order.采购需求单 form = new mySystem.Process.Order.采购需求单(mainform, 订单号);
-                form.Show();
+                form.Owner = this;
+                form.ShowDialog();
             }
         }
 
@@ -126,7 +130,8 @@ namespace 订单和库存管理
             {
                 int id = Convert.ToInt32(dgv销售订单[0, e.RowIndex].Value);
                 mySystem.Process.Order.销售订单 form = new mySystem.Process.Order.销售订单(mainform, id);
-                form.Show();
+                form.Owner = this;
+                form.ShowDialog();
             }
         }
 
@@ -515,7 +520,7 @@ namespace 订单和库存管理
                 int iii;
                 if (ids == "" || !Int32.TryParse(ids, out iii)) return;
                 // 从id里获取供应商信息
-                string gys = dt.Select("ID=" + iii)[0]["供应商"].ToString();
+                string gys = dt.Select("ID='" + iii+"'")[0]["供应商"].ToString();
                 mySystem.Process.Order.采购订单 form = new mySystem.Process.Order.采购订单(mainform, gys);
                 form.Show();
             }

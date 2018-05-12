@@ -33,7 +33,7 @@
             this.btn查看 = new System.Windows.Forms.Button();
             this.btn上传 = new System.Windows.Forms.Button();
             this.btn浏览 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tb检验报告路径 = new System.Windows.Forms.TextBox();
             this.lbl数量 = new System.Windows.Forms.Label();
             this.btn审核 = new System.Windows.Forms.Button();
             this.btn提交审核 = new System.Windows.Forms.Button();
@@ -63,6 +63,7 @@
             this.label12 = new System.Windows.Forms.Label();
             this.label角色 = new System.Windows.Forms.Label();
             this.Title = new System.Windows.Forms.Label();
+            this.btn日志 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // cmb检验结论
@@ -120,13 +121,13 @@
             this.btn浏览.UseVisualStyleBackColor = true;
             this.btn浏览.Click += new System.EventHandler(this.btn浏览_Click);
             // 
-            // textBox1
+            // tb检验报告路径
             // 
-            this.textBox1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox1.Location = new System.Drawing.Point(57, 286);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(267, 26);
-            this.textBox1.TabIndex = 118;
+            this.tb检验报告路径.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb检验报告路径.Location = new System.Drawing.Point(57, 286);
+            this.tb检验报告路径.Name = "tb检验报告路径";
+            this.tb检验报告路径.Size = new System.Drawing.Size(267, 26);
+            this.tb检验报告路径.TabIndex = 118;
             // 
             // lbl数量
             // 
@@ -151,7 +152,7 @@
             // btn提交审核
             // 
             this.btn提交审核.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn提交审核.Location = new System.Drawing.Point(725, 390);
+            this.btn提交审核.Location = new System.Drawing.Point(620, 390);
             this.btn提交审核.Name = "btn提交审核";
             this.btn提交审核.Size = new System.Drawing.Size(102, 23);
             this.btn提交审核.TabIndex = 115;
@@ -162,7 +163,7 @@
             // btn保存
             // 
             this.btn保存.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn保存.Location = new System.Drawing.Point(607, 390);
+            this.btn保存.Location = new System.Drawing.Point(502, 390);
             this.btn保存.Name = "btn保存";
             this.btn保存.Size = new System.Drawing.Size(102, 23);
             this.btn保存.TabIndex = 114;
@@ -405,17 +406,29 @@
             this.Title.TabIndex = 54;
             this.Title.Text = "检验记录";
             // 
+            // btn日志
+            // 
+            this.btn日志.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn日志.Location = new System.Drawing.Point(750, 390);
+            this.btn日志.Name = "btn日志";
+            this.btn日志.Size = new System.Drawing.Size(82, 23);
+            this.btn日志.TabIndex = 335;
+            this.btn日志.Text = "查看日志";
+            this.btn日志.UseVisualStyleBackColor = true;
+            this.btn日志.Click += new System.EventHandler(this.btn日志_Click);
+            // 
             // 检验记录
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(870, 433);
+            this.Controls.Add(this.btn日志);
             this.Controls.Add(this.cmb检验结论);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btn查看);
             this.Controls.Add(this.btn上传);
             this.Controls.Add(this.btn浏览);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.tb检验报告路径);
             this.Controls.Add(this.lbl数量);
             this.Controls.Add(this.btn审核);
             this.Controls.Add(this.btn提交审核);
@@ -483,11 +496,12 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox tb检验人;
         private System.Windows.Forms.Label lbl数量;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox tb检验报告路径;
         private System.Windows.Forms.Button btn浏览;
         private System.Windows.Forms.Button btn上传;
         private System.Windows.Forms.Button btn查看;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cmb检验结论;
+        private System.Windows.Forms.Button btn日志;
     }
 }

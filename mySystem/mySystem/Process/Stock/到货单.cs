@@ -327,7 +327,7 @@ namespace mySystem.Process.Stock
 
             btn打印.Enabled = true;
             combox打印机选择.Enabled = true;
-            
+            btn日志.Enabled = true;
         }
 
         private void fillPrinter()
@@ -377,6 +377,11 @@ namespace mySystem.Process.Stock
             dr["税率"] = 17;
             dr["备注"] = "无";
             dr["部门"] = "采购部";
+            string log = "\n=====================================\n";
+
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + mySystem.Parameter.userName + " 新建记录\n";
+
+            dr["日志"] = log;
             return dr;
         }
 
@@ -631,9 +636,9 @@ namespace mySystem.Process.Stock
             //格式： 
             // =================================================
             // yyyy年MM月dd日，操作员：XXX 提交审核
-            //string log = "\n=====================================\n";
-            //log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n操作员：" + mySystem.Parameter.userName + " 提交审核\n";
-            //dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
+            string log = "\n=====================================\n";
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n操作员：" + mySystem.Parameter.userName + " 提交审核\n";
+            dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
 
             dtOuter.Rows[0]["审核员"] = "__待审核";
             dtOuter.Rows[0]["审核日期"] = DateTime.Now;
@@ -684,11 +689,11 @@ namespace mySystem.Process.Stock
             dt_temp.Rows[0].Delete();
             da_temp.Update(dt_temp);
 
-            //string log = "\n=====================================\n";
-            //log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n审核员：" + mySystem.Parameter.userName + " 完成审核\n";
-            //log += "审核结果：" + (ckform.ischeckOk == true ? "通过\n" : "不通过\n");
-            //log += "审核意见：" + ckform.opinion;
-            //dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
+            string log = "\n=====================================\n";
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n审核员：" + mySystem.Parameter.userName + " 完成审核\n";
+            log += "审核结果：" + (ckform.ischeckOk == true ? "通过\n" : "不通过\n");
+            log += "审核意见：" + ckform.opinion;
+            dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
 
 
             save();
@@ -715,7 +720,7 @@ namespace mySystem.Process.Stock
                 dr["无样品理由"] = "无";
                 dr["审核时间"] = DateTime.Now;
                 dr["请验时间"] = DateTime.Now;
-                dr["日志"] = "";
+                dr["日志"] = "\n=====================================\n" + DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + mySystem.Parameter.userName + " 新建记录\n";;
                 dr["审核结果"] = false;//默认值
                 dt.Rows.Add(dr);
                 da.Update(dt);
@@ -957,6 +962,18 @@ namespace mySystem.Process.Stock
 
             if (dataGridView1.Columns.Count > 0)
                 writeDGVWidthToSetting(dataGridView1);
+        }
+
+        private void btn日志_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                (new mySystem.Other.LogForm()).setLog(dtOuter.Rows[0]["日志"].ToString()).Show();
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show(ee.Message + "\n" + ee.StackTrace);
+            }
         }
 
      

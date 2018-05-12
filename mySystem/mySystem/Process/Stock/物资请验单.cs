@@ -393,6 +393,12 @@ namespace mySystem.Process.Stock
 
 
             dtOuter.Rows[0]["审核员"] = "__待审核";
+            string log = "\n=====================================\n";
+            
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n操作员：" + mySystem.Parameter.userName + " 提交审核\n";
+            
+            dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
+
             _formState = Parameter.FormState.待审核;
             btn提交审核.Enabled = false;
             daOuter.Update((DataTable)bsOuter.DataSource);
@@ -428,6 +434,15 @@ namespace mySystem.Process.Stock
 
             dtOuter.Rows[0]["审核员"] = mySystem.Parameter.userName;
             dtOuter.Rows[0]["审核结果"] = ckform.ischeckOk;
+            string log = "\n=====================================\n";
+
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n审核员：" + mySystem.Parameter.userName + " 完成审核\n";
+
+            log += "审核结果：" + (ckform.ischeckOk == true ? "通过\n" : "不通过\n");
+
+            log += "审核意见：" + ckform.opinion;
+
+            dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
             //dtOuter.Rows[0]["审核意见"] = ckform.opinion;
 
             btn保存.PerformClick();
@@ -507,6 +522,18 @@ namespace mySystem.Process.Stock
         {
             if (dataGridView1.Columns.Count > 0)
                 writeDGVWidthToSetting(dataGridView1);
+        }
+
+        private void btn查看日志_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                (new mySystem.Other.LogForm()).setLog(dtOuter.Rows[0]["日志"].ToString()).Show();
+            }
+            catch (Exception ee)
+            {
+            }
+               
         }
 
 

@@ -238,6 +238,7 @@ namespace mySystem.Process.Stock
             }
             btn打印.Enabled = true;
             combox打印机选择.Enabled = true;
+            btn日志.Enabled = true;
         }
 
         void readOuterData(String 退货编码)
@@ -277,7 +278,11 @@ namespace mySystem.Process.Stock
             dr["批准日期"] = DateTime.Now;
             dr["实施日期"] = DateTime.Now;
             dr["验证日期"] = DateTime.Now;
-            
+            string log = "\n=====================================\n";
+
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + mySystem.Parameter.userName + " 新建记录\n";
+
+            dr["日志"] = log;
             return dr;
         }
 
@@ -347,6 +352,22 @@ namespace mySystem.Process.Stock
             da.Update(dt);
 
             dtOuter.Rows[0]["审核人"] = "__待审核";
+
+            //写日志
+
+            //格式： 
+
+            // =================================================
+
+            // yyyy年MM月dd日，操作员：XXX 提交审核
+
+            string log = "\n=====================================\n";
+
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n操作员：" + mySystem.Parameter.userName + " 提交审核\n";
+
+            dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
+
+
             save();
             setFormState();
             setEnableReadOnly();
@@ -376,13 +397,13 @@ namespace mySystem.Process.Stock
             dtOuter.Rows[0]["审核人"] = ckform.userName;
             dtOuter.Rows[0]["审核结果"] = ckform.ischeckOk;
             dtOuter.Rows[0]["评审意见"] = ckform.opinion;
-            
-            //String log = "===================================\n";
-            //log += DateTime.Now.ToString("yyyy年MM月dd日 HH:mm:ss");
-            //log += "\n审核员：" + mySystem.Parameter.userName + " 审核完毕\n";
-            //log += "审核结果为：" + (ckform.ischeckOk ? "通过" : "不通过") + "\n";
-            //log += "审核意见为：" + ckform.opinion + "\n";
-            //dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
+
+            String log = "===================================\n";
+            log += DateTime.Now.ToString("yyyy年MM月dd日 HH:mm:ss");
+            log += "\n审核员：" + mySystem.Parameter.userName + " 审核完毕\n";
+            log += "审核结果为：" + (ckform.ischeckOk ? "通过" : "不通过") + "\n";
+            log += "审核意见为：" + ckform.opinion + "\n";
+            dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
             save();
             setFormState();
             setEnableReadOnly();
@@ -429,6 +450,18 @@ namespace mySystem.Process.Stock
         private void btn打印_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btn日志_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                (new mySystem.Other.LogForm()).setLog(dtOuter.Rows[0]["日志"].ToString()).Show();
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show(ee.Message + "\n" + ee.StackTrace);
+            }
         }
     }
 }

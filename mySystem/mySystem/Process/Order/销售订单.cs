@@ -1076,6 +1076,12 @@ namespace mySystem.Process.Order
                 da.Update(dt);
                 dtOuter.Rows[0]["状态"] = "已取消";
                 dtOuter.Rows[0]["取消人"] = mySystem.Parameter.userName;
+                //写日志
+                string log = "\n=====================================\n";
+
+                log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + mySystem.Parameter.userName + " 取消订单\n";
+
+                dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
                 save();
                 this.Close();
             }
@@ -1100,6 +1106,11 @@ namespace mySystem.Process.Order
             {
                 writeDGVWidthToSetting(dataGridView1);
             }
+            try
+            {
+                (this.Owner as 订单和库存管理.订单管理).btn查询销售订单.PerformClick();
+            }
+            catch (NullReferenceException exp) { }
         }
 
         private void btn打印_Click(object sender, EventArgs e)

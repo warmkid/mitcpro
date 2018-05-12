@@ -241,6 +241,7 @@ namespace mySystem.Process.Stock
             }
             btn打印.Enabled = true;
             combox打印机选择.Enabled = true;
+            btn日志.Enabled = true;
         }
 
 
@@ -289,6 +290,13 @@ namespace mySystem.Process.Stock
             dr["拟退货数量"] = dt.Rows[0]["拟退货数量"];
             dr["辅计量单位"] = dt.Rows[0]["辅计量单位"];
             dr["审核结果"] = false;
+
+            string log = "\n=====================================\n";
+
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + mySystem.Parameter.userName + " 新建记录\n";
+
+            dr["日志"] = log;
+
             return dr;
         }
 
@@ -368,6 +376,22 @@ namespace mySystem.Process.Stock
             da.Update(dt);
 
             dtOuter.Rows[0]["审核人"] = "__待审核";
+
+            //写日志
+
+            //格式： 
+
+            // =================================================
+
+            // yyyy年MM月dd日，操作员：XXX 提交审核
+
+            string log = "\n=====================================\n";
+
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n操作员：" + mySystem.Parameter.userName + " 提交审核\n";
+
+            dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
+
+
             save();
             setFormState();
             setEnableReadOnly();
@@ -397,6 +421,17 @@ namespace mySystem.Process.Stock
             dtOuter.Rows[0]["审核人"] = mySystem.Parameter.userName;
             dtOuter.Rows[0]["审核结果"] = ckform.ischeckOk;
             dtOuter.Rows[0]["审核意见"] = ckform.opinion;
+            //写日志
+            string log = "\n=====================================\n";
+
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n审核员：" + mySystem.Parameter.userName + " 完成审核\n";
+
+            log += "审核结果：" + (ckform.ischeckOk == true ? "通过\n" : "不通过\n");
+
+            log += "审核意见：" + ckform.opinion;
+
+            dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
+
 
             if (ckform.ischeckOk)
             {
@@ -418,6 +453,11 @@ namespace mySystem.Process.Stock
                     dr["请验日期"] = DateTime.Now;
                     dr["审核日期"] = DateTime.Now;
                     dr["审核结果"] = false;//默认值
+                    string log1 = "\n=====================================\n";
+
+                    log1 += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + mySystem.Parameter.userName + " 新建记录\n";
+
+                    dr["日志"] = log1;
                     for (int i = 4; i <= 10; ++i)
                     {
                         dr[i] = dtOuter.Rows[0][i];
@@ -536,6 +576,18 @@ namespace mySystem.Process.Stock
 
             //返回
             return mysheet;
+        }
+
+        private void btn日志_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                (new mySystem.Other.LogForm()).setLog(dtOuter.Rows[0]["日志"].ToString()).Show();
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show(ee.Message + "\n" + ee.StackTrace);
+            }
         }
 
     }

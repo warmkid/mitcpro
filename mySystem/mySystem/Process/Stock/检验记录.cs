@@ -276,6 +276,7 @@ namespace mySystem.Process.Stock
                 }
             }
             btn查看.Enabled = true;
+            btn日志.Enabled = true;
         }
 
         private void btn保存_Click(object sender, EventArgs e)
@@ -326,9 +327,9 @@ namespace mySystem.Process.Stock
             //格式： 
             // =================================================
             // yyyy年MM月dd日，操作员：XXX 提交审核
-            //string log = "\n=====================================\n";
-            //log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n操作员：" + mySystem.Parameter.userName + " 提交审核\n";
-            //dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
+            string log = "\n=====================================\n";
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n操作员：" + mySystem.Parameter.userName + " 提交审核\n";
+            dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
 
             dtOuter.Rows[0]["审核员"] = "__待审核";
             dtOuter.Rows[0]["审核日期"] = DateTime.Now;
@@ -351,6 +352,16 @@ namespace mySystem.Process.Stock
             dtOuter.Rows[0]["审核员"] = mySystem.Parameter.userName;
             dtOuter.Rows[0]["审核日期"] = ckform.time;
             dtOuter.Rows[0]["审核结果"] = ckform.ischeckOk;
+            //写日志
+            string log = "\n=====================================\n";
+
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n审核员：" + mySystem.Parameter.userName + " 完成审核\n";
+
+            log += "审核结果：" + (ckform.ischeckOk == true ? "通过\n" : "不通过\n");
+
+            log += "审核意见：" + ckform.opinion;
+
+            dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
 
             SqlDataAdapter da;
             DataTable dt;
@@ -426,7 +437,7 @@ namespace mySystem.Process.Stock
 
                 String fullName = ofd.FileName;
                 fname = ofd.SafeFileName;
-                textBox1.Text = fullName;
+                tb检验报告路径.Text = fullName;
                 DateTime now = DateTime.Now;
             }
         }
@@ -439,7 +450,7 @@ namespace mySystem.Process.Stock
                 return;
             }
             String path = System.Environment.CurrentDirectory + @"/../../物料入场检验报告/";
-            System.IO.File.Copy(textBox1.Text, path + fname, true);
+            System.IO.File.Copy(tb检验报告路径.Text, path + fname, true);
             dtOuter.Rows[0]["检验报告路径"] = path + fname;
         }
 
@@ -489,6 +500,18 @@ namespace mySystem.Process.Stock
             ndr["申请人"] = mySystem.Parameter.userName;
             ndr["申请日期"] = DateTime.Now;
             
+        }
+
+        private void btn日志_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                (new mySystem.Other.LogForm()).setLog(dtOuter.Rows[0]["日志"].ToString()).Show();
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show(ee.Message + "\n" + ee.StackTrace);
+            }
         }
 
     }

@@ -77,6 +77,7 @@
             this.btn查看日志.TabIndex = 61;
             this.btn查看日志.Text = "查看日志";
             this.btn查看日志.UseVisualStyleBackColor = true;
+            this.btn查看日志.Click += new System.EventHandler(this.btn查看日志_Click);
             // 
             // btn提交审核
             // 

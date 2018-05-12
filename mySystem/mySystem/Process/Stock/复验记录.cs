@@ -339,7 +339,7 @@ namespace mySystem.Process.Stock
                     c.Enabled = false;
                 }
             }
-            // btn查看日志.Enabled = true;
+            btn日志.Enabled = true;
         }
 
         private void btn保存_Click(object sender, EventArgs e)
@@ -385,6 +385,23 @@ namespace mySystem.Process.Stock
 
 
             dtOuter.Rows[0]["审核员"] = "__待审核";
+
+
+            //写日志
+
+            //格式： 
+
+            // =================================================
+
+            // yyyy年MM月dd日，操作员：XXX 提交审核
+
+            string log = "\n=====================================\n";
+
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n操作员：" + mySystem.Parameter.userName + " 提交审核\n";
+
+            dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
+
+
             _formState = Parameter.FormState.待审核;
             btn提交审核.Enabled = false;
             daOuter.Update((DataTable)bsOuter.DataSource);
@@ -503,6 +520,18 @@ namespace mySystem.Process.Stock
             dtOuter.Rows[0]["审核日期"] = ckform.time;
             dtOuter.Rows[0]["审核结果"] = ckform.ischeckOk;
 
+            //写日志
+            string log = "\n=====================================\n";
+
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n审核员：" + mySystem.Parameter.userName + " 完成审核\n";
+
+            log += "审核结果：" + (ckform.ischeckOk == true ? "通过\n" : "不通过\n");
+
+            log += "审核意见：" + ckform.opinion;
+
+            dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
+
+
             SqlDataAdapter da;
             DataTable dt;
             SqlCommandBuilder cb;
@@ -572,6 +601,13 @@ namespace mySystem.Process.Stock
                         dr["确认日期"] = DateTime.Now;
                         dr["审核日期"] = DateTime.Now;
                         dr["审核结果"] = false;//默认值
+                        string log1 = "\n=====================================\n";
+
+                        log1 += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + mySystem.Parameter.userName + " 新建记录\n";
+
+                        dr["日志"] = log1;
+
+
                         dt.Rows.Add(dr);
                         da.Update(dt);
                         MessageBox.Show("已经自动生成不合格品记录");
@@ -643,9 +679,28 @@ namespace mySystem.Process.Stock
             ndr["入库人"] = mySystem.Parameter.userName;
             ndr["审核日期"] = DateTime.Now;
             ndr["审核结果"] = false;//默认值
+            string log = "\n=====================================\n";
+
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + mySystem.Parameter.userName + " 新建记录\n";
+
+            ndr["日志"] = log;
+
+
             dt.Rows.Add(ndr);
             da.Update(dt);
             MessageBox.Show("已为物料：" + dr["物料名称"] + "生成入库单");
+        }
+
+        private void btn日志_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                (new mySystem.Other.LogForm()).setLog(dtOuter.Rows[0]["日志"].ToString()).Show();
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show(ee.Message + "\n" + ee.StackTrace);
+            }
         }
     }
 }

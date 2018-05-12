@@ -180,6 +180,7 @@ namespace mySystem
                         if (tb.Name.Contains("批准")) continue;
                         if (tb.Name.Contains("备注")) continue;
                         if (tb.Name.Contains("接班员")) continue;
+                        if (tb.Name.Contains("取消人")) continue;
                         name = regx.Replace(tb.Name, "");
                         return false;
                     }
@@ -189,6 +190,8 @@ namespace mySystem
                     ComboBox cb = c as ComboBox;
                     if (cb.Text.Trim() == "")
                     {
+                        if (cb.Name.Contains("库存部分存货编码筛选")) continue;
+                        
                         name = regx.Replace(cb.Name, "");
                         return false;
                     }
@@ -205,12 +208,12 @@ namespace mySystem
             {
                 foreach (DataGridViewCell dgvc in dgvr.Cells)
                 {
-                    if (dgvc.OwningColumn.Name == "ID")
-                    {
-                        continue;
-                    }
+                    if (dgvc.OwningColumn.Name.Contains("ID")) continue;
+                    
                     if (dgvc.OwningColumn.Name.Contains("审")) continue;
                     if (dgvc.OwningColumn.Name.Contains("备注")) continue;
+                    if (dgvc.OwningColumn.Name.Contains("状态")) continue;
+                    if (dgvc.OwningColumn.Name.Contains("规格型号")) continue;
                     if (dgvc.Value==null|| dgvc.Value.ToString() == "")
                     {
                         return false;

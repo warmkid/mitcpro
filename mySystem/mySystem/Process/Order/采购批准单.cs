@@ -264,6 +264,7 @@ namespace mySystem.Process.Order
             
             btn打印.Enabled = true;
             combox打印机选择.Enabled = true;
+            bt日志.Enabled = true;
             
         }
 
@@ -455,6 +456,12 @@ namespace mySystem.Process.Order
             dr["审核结果"]=0;
             dr["状态"] = "编辑中";
             dr["关联的采购需求单ID"] = _ids;
+            string log = "\n=====================================\n";
+
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + mySystem.Parameter.userName + " 新建记录\n";
+
+            dr["日志"] = log;
+
             //dr["审核结果"] = "未知";
             dtOuter.Rows.Add(dr);
             daOuter.Update(dtOuter);
@@ -846,18 +853,24 @@ namespace mySystem.Process.Order
             {
                 if (dataGridView3.Columns[e.ColumnIndex].Name == "实际购入")
                 {
-                    double 订单需求数量 = Convert.ToDouble(dataGridView3["订单需求数量", e.RowIndex].Value);
-                    double 仓库可用 = Convert.ToDouble(dataGridView3["仓库可用", e.RowIndex].Value);
-                    double 实际购入 = Convert.ToDouble(dataGridView3["实际购入", e.RowIndex].Value);
-                    double 换算率 = Convert.ToDouble(dataGridView3["换算率", e.RowIndex].Value);
-                    dataGridView3["富余量", e.RowIndex].Value = 实际购入 - (订单需求数量 - 仓库可用);
-                    if (0 != 实际购入 % 换算率)
+                    try
                     {
-                        dataGridView3.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Yellow;
+                        double 订单需求数量 = Convert.ToDouble(dataGridView3["订单需求数量", e.RowIndex].Value);
+                        double 仓库可用 = Convert.ToDouble(dataGridView3["仓库可用", e.RowIndex].Value);
+                        double 实际购入 = Convert.ToDouble(dataGridView3["实际购入", e.RowIndex].Value);
+                        double 换算率 = Convert.ToDouble(dataGridView3["换算率", e.RowIndex].Value);
+                        dataGridView3["富余量", e.RowIndex].Value = 实际购入 - (订单需求数量 - 仓库可用);
+                        if (0 != 实际购入 % 换算率)
+                        {
+                            dataGridView3.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Yellow;
+                        }
+                        else
+                        {
+                            dataGridView3.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
+                        }
                     }
-                    else
+                    catch (Exception eee)
                     {
-                        dataGridView3.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
                     }
                 }
             }
@@ -1280,6 +1293,10 @@ namespace mySystem.Process.Order
                 {
                     dgvc.ReadOnly = true;
                 }
+                else
+                {
+                    dgvc.ReadOnly = false;
+                }
             }
             if (isFirstBind1)
             {
@@ -1541,6 +1558,19 @@ namespace mySystem.Process.Order
             dtOuter.Rows[0]["审核意见"] = ckform.opinion;
             dtOuter.Rows[0]["审核结果"] = ckform.ischeckOk;
 
+            //写日志
+            string log = "\n=====================================\n";
+
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n审核员：" + mySystem.Parameter.userName + " 完成审核\n";
+
+            log += "审核结果：" + (ckform.ischeckOk == true ? "通过\n" : "不通过\n");
+
+            log += "审核意见：" + ckform.opinion;
+
+            dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
+
+
+
             if (ckform.ischeckOk)//审核通过
             {
                 dtOuter.Rows[0]["状态"] = "审核完成";
@@ -1739,6 +1769,11 @@ namespace mySystem.Process.Order
                 return;
             }
 
+            if (!checkInnerData(dataGridView1))
+            {
+                MessageBox.Show("请填写完整的表单信息", "提示");
+                return;
+            }
             if (!checkInnerData(dataGridView3))
             {
                 MessageBox.Show("请填写完整的表单信息", "提示");
@@ -1785,6 +1820,22 @@ namespace mySystem.Process.Order
             dtOuter.Rows[0]["状态"] = "待审核";
             dtOuter.Rows[0]["审核人"] = "__待审核";
             dtOuter.Rows[0]["审核日期"] = DateTime.Now;
+
+
+            //写日志
+
+            //格式： 
+
+            // =================================================
+
+            // yyyy年MM月dd日，操作员：XXX 提交审核
+
+            string log = "\n=====================================\n";
+
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n操作员：" + mySystem.Parameter.userName + " 提交审核\n";
+
+            dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
+
 
             save();
 
@@ -2040,6 +2091,11 @@ namespace mySystem.Process.Order
             {
                 writeDGVWidthToSetting(dataGridView4);
             }
+            try
+            {
+                (this.Owner as 订单和库存管理.订单管理).btn采购批准单查询.PerformClick();
+            }
+            catch (NullReferenceException exp) { }
         }
 
         void setDGV本订单采购信息Column()
@@ -2063,6 +2119,24 @@ namespace mySystem.Process.Order
         }
 
         private void btn打印_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bt日志_Click(object sender, EventArgs e)
+        {
+
+            try
+            {
+                (new mySystem.Other.LogForm()).setLog(dtOuter.Rows[0]["日志"].ToString()).Show();
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show(ee.Message + "\n" + ee.StackTrace);
+            }
+        }
+
+        private void 采购批准单_Load(object sender, EventArgs e)
         {
 
         }

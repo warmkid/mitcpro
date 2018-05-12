@@ -198,6 +198,7 @@ namespace mySystem.Process.Stock
             }
             btn打印.Enabled = true;
             combox打印机选择.Enabled = true;
+            btn日志.Enabled = true;
         }
 
 
@@ -296,6 +297,13 @@ namespace mySystem.Process.Stock
             dtOuter.Rows[0]["批准人"] = mySystem.Parameter.userName;
             dtOuter.Rows[0]["批准日期"] = DateTime.Now;
             dtOuter.Rows[0]["批准结果"] = true;
+
+            string log = "\n=====================================\n";
+
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n操作员：" + mySystem.Parameter.userName + " 批准通过\n";
+
+            dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
+
             save();
             setControlFalse();
             // 自动生产审批单2
@@ -322,6 +330,14 @@ namespace mySystem.Process.Stock
                 dr["批准日期"] = DateTime.Now;
 
                 dr["批准结果"] = false;//默认值
+
+                string log1 = "\n=====================================\n";
+
+                log1 += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + mySystem.Parameter.userName + " 新建记录\n";
+
+                dr["日志"] = log1;
+
+
                 dt.Rows.Add(dr);
                 da.Update(dt);
                 MessageBox.Show("产品退货审批单(2)已生成！");
@@ -344,6 +360,13 @@ namespace mySystem.Process.Stock
             dtOuter.Rows[0]["批准人"] = mySystem.Parameter.userName;
             dtOuter.Rows[0]["批准日期"] = DateTime.Now;
             dtOuter.Rows[0]["批准结果"] = false ;
+
+            string log = "\n=====================================\n";
+
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n操作员：" + mySystem.Parameter.userName + " 不予批准\n";
+
+            dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
+
             save();
             setControlFalse();
         }
@@ -442,6 +465,18 @@ namespace mySystem.Process.Stock
             
             //返回
             return mysheet;
+        }
+
+        private void btn日志_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                (new mySystem.Other.LogForm()).setLog(dtOuter.Rows[0]["日志"].ToString()).Show();
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show(ee.Message + "\n" + ee.StackTrace);
+            }
         }
 
         

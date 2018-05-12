@@ -62,6 +62,7 @@
             this.label16 = new System.Windows.Forms.Label();
             this.lbl客户名称 = new System.Windows.Forms.Label();
             this.lbl产品代码 = new System.Windows.Forms.Label();
+            this.btn日志 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // cmb产品名称
@@ -142,7 +143,7 @@
             // btn确认
             // 
             this.btn确认.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn确认.Location = new System.Drawing.Point(553, 487);
+            this.btn确认.Location = new System.Drawing.Point(436, 488);
             this.btn确认.Name = "btn确认";
             this.btn确认.Size = new System.Drawing.Size(75, 23);
             this.btn确认.TabIndex = 206;
@@ -153,7 +154,7 @@
             // btn提交审核
             // 
             this.btn提交审核.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn提交审核.Location = new System.Drawing.Point(644, 487);
+            this.btn提交审核.Location = new System.Drawing.Point(527, 488);
             this.btn提交审核.Name = "btn提交审核";
             this.btn提交审核.Size = new System.Drawing.Size(100, 23);
             this.btn提交审核.TabIndex = 205;
@@ -390,11 +391,23 @@
             this.lbl产品代码.Size = new System.Drawing.Size(0, 16);
             this.lbl产品代码.TabIndex = 215;
             // 
+            // btn日志
+            // 
+            this.btn日志.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn日志.Location = new System.Drawing.Point(645, 488);
+            this.btn日志.Name = "btn日志";
+            this.btn日志.Size = new System.Drawing.Size(82, 23);
+            this.btn日志.TabIndex = 331;
+            this.btn日志.Text = "查看日志";
+            this.btn日志.UseVisualStyleBackColor = true;
+            this.btn日志.Click += new System.EventHandler(this.btn日志_Click);
+            // 
             // 产品退货申请单
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(771, 531);
+            this.Controls.Add(this.btn日志);
             this.Controls.Add(this.cmb产品名称);
             this.Controls.Add(this.lbl产品代码);
             this.Controls.Add(this.lbl客户名称);
@@ -473,5 +486,6 @@
         private System.Windows.Forms.ComboBox cmb产品名称;
         private System.Windows.Forms.Label lbl客户名称;
         private System.Windows.Forms.Label lbl产品代码;
+        private System.Windows.Forms.Button btn日志;
     }
 }

@@ -707,7 +707,7 @@
         private System.Windows.Forms.TabPage tabPage采购批准单;
         private System.Windows.Forms.TabPage tabPage采购订单;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button btn查询销售订单;
+        public System.Windows.Forms.Button btn查询销售订单;
         private System.Windows.Forms.ComboBox cmb销售订单审核状态;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox tb销售订单号;
@@ -718,7 +718,7 @@
         private System.Windows.Forms.Button btn添加销售订单;
         private System.Windows.Forms.Button btn添加采购需求单;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Button btn查询采购需求单;
+        public System.Windows.Forms.Button btn查询采购需求单;
         private System.Windows.Forms.ComboBox cmb采购需求单审核状态;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox tb用途;
@@ -729,7 +729,7 @@
         private System.Windows.Forms.DataGridView dgv采购批准单;
         private System.Windows.Forms.Button btn采购批准单添加;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Button btn采购批准单查询;
+        public System.Windows.Forms.Button btn采购批准单查询;
         private System.Windows.Forms.ComboBox cmb采购批准单审核状态;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox textBox1;
@@ -738,7 +738,7 @@
         private System.Windows.Forms.DateTimePicker dtp采购批准单开始时间;
         private System.Windows.Forms.Button btn采购订单添加;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Button btn采购订单查询;
+        public System.Windows.Forms.Button btn采购订单查询;
         private System.Windows.Forms.ComboBox cmb采购订单审核状态;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox tb采购合同号;
@@ -749,7 +749,7 @@
         private System.Windows.Forms.TabPage tabPage出库单;
         private System.Windows.Forms.Button btn出库单添加;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Button btn出库单查询;
+        public System.Windows.Forms.Button btn出库单查询;
         private System.Windows.Forms.ComboBox cmb出库单审核状态;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.TextBox tb出库单销售订单;

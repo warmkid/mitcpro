@@ -1149,8 +1149,14 @@ namespace mySystem.Process.Stock
         //查看日志按钮
         private void btn查看日志_Click(object sender, EventArgs e)
         {
-            mySystem.Other.LogForm logform = new mySystem.Other.LogForm();
-            logform.setLog(dt记录.Rows[0]["日志"].ToString()).Show();
+            try
+            {
+                (new mySystem.Other.LogForm()).setLog(dt记录.Rows[0]["日志"].ToString()).Show();
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show(ee.Message + "\n" + ee.StackTrace);
+            }
         }
 
         //审核功能

@@ -196,6 +196,7 @@ namespace mySystem.Process.Stock
             }
             btn打印.Enabled = true;
             combox打印机选择.Enabled = true;
+            btn日志.Enabled = true;
         }
 
 
@@ -324,6 +325,13 @@ namespace mySystem.Process.Stock
             da.Update(dt);
 
             dtOuter.Rows[0]["审核人"] = "__待审核";
+            string log = "\n=====================================\n";
+
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n操作员：" + mySystem.Parameter.userName + " 提交审核\n";
+
+            dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
+
+
             save();
             setFormState();
             setEnableReadOnly();
@@ -353,7 +361,15 @@ namespace mySystem.Process.Stock
             dtOuter.Rows[0]["审核人"] = mySystem.Parameter.userName;
             dtOuter.Rows[0]["审核结果"] = ckform.ischeckOk;
             dtOuter.Rows[0]["审核意见"] = ckform.opinion;
+            string log = "\n=====================================\n";
 
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n审核员：" + mySystem.Parameter.userName + " 完成审核\n";
+
+            log += "审核结果：" + (ckform.ischeckOk == true ? "通过\n" : "不通过\n");
+
+            log += "审核意见：" + ckform.opinion;
+
+            dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
             if (ckform.ischeckOk)
             {
                 // 自动生产退货记录
@@ -402,6 +418,14 @@ namespace mySystem.Process.Stock
 
 
                     dr["验证日期"] = DateTime.Now;
+
+                    string log1 = "\n=====================================\n";
+
+                    log1 += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + mySystem.Parameter.userName + " 新建记录\n";
+
+                    dr["日志"] = log1;
+
+
                     dt.Rows.Add(dr);
                     da.Update(dt);
                     MessageBox.Show("产品退货记录已生成！");
@@ -509,6 +533,18 @@ namespace mySystem.Process.Stock
             my.Cells[7, 2].Value = dtOuter.Rows[0]["PA质量部处理建议"].ToString();
             my.Cells[9, 2].Value = dtOuter.Rows[0]["PA生产部处理记录"].ToString();
 
+        }
+
+        private void btn日志_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                (new mySystem.Other.LogForm()).setLog(dtOuter.Rows[0]["日志"].ToString()).Show();
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show(ee.Message + "\n" + ee.StackTrace);
+            }
         }
 
 
