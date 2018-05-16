@@ -1374,18 +1374,18 @@ namespace mySystem.Process.Extruction.B
 
             // TODO 没有考虑行数过多的情况
             int ind = 0;//偏移
-            if (dataGridView1.Rows.Count > 18)
+            if (dataGridView1.Rows.Count > 1)
             {
                 //在第10行插入
-                for (int i = 0; i < dataGridView1.Rows.Count - 18; i++)
+                for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
                 {
-                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[10, Type.Missing];
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[5, Type.Missing];
                     range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
                     Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
                 }
-                ind = dataGridView1.Rows.Count - 18;
+                ind = dataGridView1.Rows.Count - 1;
             }
-            my.Cells[23+ind, 5].Value = dtOuter.Rows[0]["合计不良品数量"];
+            my.Cells[6+ind, 5].Value = dtOuter.Rows[0]["合计不良品数量"];
             // my.Cells[23, 7].Value = dtOuter.Rows[0]["审核员"];
             for (int i = 0; i < dtInner.Rows.Count; i++)
             {

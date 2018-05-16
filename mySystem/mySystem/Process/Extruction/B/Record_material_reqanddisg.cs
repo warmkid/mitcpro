@@ -1414,16 +1414,16 @@ namespace mySystem.Extruction.Process
         private void fill_excel(Microsoft.Office.Interop.Excel._Worksheet my, String zhiling)
         {
             int ind = 0;//偏移
-            if (dataGridView1.Rows.Count > 24)
+            if (dataGridView1.Rows.Count > 1)
             {
                 //在第6行插入
-                for (int i = 0; i < dataGridView1.Rows.Count - 24; i++)
+                for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
                 {
-                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[6, Type.Missing];
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[5, Type.Missing];
                     range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
                     Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
                 }
-                ind = dataGridView1.Rows.Count - 24;
+                ind = dataGridView1.Rows.Count - 1;
             }
 
             my.Cells[3, 1].Value = "物料代码："+dt_prodinstr.Rows[0]["物料代码"].ToString();
@@ -1432,6 +1432,7 @@ namespace mySystem.Extruction.Process
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
                 DateTime tempdt = DateTime.Parse(dataGridView1.Rows[i].Cells[3].Value.ToString());
+                my.Cells[5 + i, 1] = i + 1;
                 my.Cells[5 + i, 2] = tempdt.ToString("yyyy年MM月dd日 HH:mm:ss");
                 // 3 是批号；TODO，在数据库中加入列：批号
                 my.Cells[5 + i, 3] = dataGridView1.Rows[i].Cells[4].Value.ToString();
@@ -1444,9 +1445,9 @@ namespace mySystem.Extruction.Process
                 my.Cells[5 + i, 10] = dataGridView1.Rows[i].Cells[12].Value.ToString();
             }
 
-            my.Cells[20 +ind, 4].Value = dt_prodinstr.Rows[0]["数量合计"];
-            my.Cells[20 + ind, 6].Value = dt_prodinstr.Rows[0]["重量合计"];
-            my.Cells[20 + ind, 7].Value = "退料：" + dt_prodinstr.Rows[0]["退料"] + " KG";
+            my.Cells[6 +ind, 4].Value = dt_prodinstr.Rows[0]["数量合计"];
+            my.Cells[6 + ind, 6].Value = dt_prodinstr.Rows[0]["重量合计"];
+            my.Cells[6 + ind, 7].Value = "退料：" + dt_prodinstr.Rows[0]["退料"] + " KG";
             //my.Cells[23+ind, 7].Value = tb退料操作人.Text;
             //my.Cells[23+ind, 8].Value = tb退料审核人.Text;
         }

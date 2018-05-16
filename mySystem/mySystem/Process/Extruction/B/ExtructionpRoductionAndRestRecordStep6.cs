@@ -1265,12 +1265,11 @@ namespace mySystem.Extruction.Process
             mysheet.Cells[4, 9].Value = "环境温度：" + dt记录.Rows[0]["环境温度"].ToString() + "℃";
             mysheet.Cells[4, 11].Value = "相对湿度：" + dt记录.Rows[0]["环境湿度"].ToString() + "%";
             mysheet.Cells[4, 13].Value = "审核人：" + dt记录.Rows[0]["审核人"].ToString();
-            mysheet.Cells[18, 4].Value = dt记录.Rows[0]["累计同规格膜卷长度R"].ToString();
-            mysheet.Cells[18, 5].Value = dt记录.Rows[0]["累计同规格膜卷重量T"].ToString();
+            
             //内表信息
             int rownum = dt记录详情.Rows.Count;
             //无需插入的部分
-            for (int i = 0; i < (rownum > 10 ? 10 : rownum); i++)
+            for (int i = 0; i < (rownum > 1 ? 1 : rownum); i++)
             {
                 mysheet.Cells[8 + i, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["开始时间"].ToString()).ToString("HH:mm") + " ~ " + Convert.ToDateTime(dt记录详情.Rows[i]["结束时间"].ToString()).ToString("HH:mm");
                 mysheet.Cells[8 + i, 3].Value = dt记录详情.Rows[i]["膜卷编号"].ToString();
@@ -1287,9 +1286,10 @@ namespace mySystem.Extruction.Process
                 mysheet.Cells[8 + i, 14].Value = dt记录详情.Rows[i]["判定"].ToString() == "Yes" ? "√" : "×";
             }
             //需要插入的部分
-            if (rownum > 10)
+            int delta = rownum - 1;
+            if (rownum > 1)
             {
-                for (int i = 10; i < rownum; i++)
+                for (int i = 1; i < rownum; i++)
                 {
                     Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[8+i, Type.Missing];
 
@@ -1312,6 +1312,8 @@ namespace mySystem.Extruction.Process
                     mysheet.Cells[8 + i, 14].Value = dt记录详情.Rows[i]["判定"].ToString() == "Yes" ? "√" : "×";
                 }
             }
+            mysheet.Cells[9+delta, 4].Value = dt记录.Rows[0]["累计同规格膜卷长度R"].ToString();
+            mysheet.Cells[9+delta, 5].Value = dt记录.Rows[0]["累计同规格膜卷重量T"].ToString();
             //加页脚
             int sheetnum;
             DataTable dt = new DataTable("temp");

@@ -1540,16 +1540,16 @@ namespace WindowsFormsApplication1
         private void fill_excel(Microsoft.Office.Interop.Excel._Worksheet my)
         {
             int ind = 0;//偏移
-            if (dataGridView1.Rows.Count > 15)
+            if (dataGridView1.Rows.Count > 1)
             {
-                //在第10行插入
-                for (int i = 0; i < dataGridView1.Rows.Count - 15; i++)
+                //在第6行插入
+                for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
                 {
-                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[10, Type.Missing];
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[6, Type.Missing];
                     range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
                     Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
                 }
-                ind = dataGridView1.Rows.Count - 15;
+                ind = dataGridView1.Rows.Count - 1;
             }
 
             my.Cells[3, 1].Value = "生产指令编号： " + dt_prodinstr.Rows[0]["生产指令编号"].ToString();
@@ -1611,10 +1611,10 @@ namespace WindowsFormsApplication1
             //my.Cells[9, 10].Value = dt_prodinstr.Rows[0]["审核人"];
             
             //my.Cells[13+ind, 2].Value = tb外层合计.Text ;
-            my.Cells[21 + ind, 3].Value = dt_prodinstr.Rows[0]["外层供料量合计a"];
+            my.Cells[7 + ind, 3].Value = dt_prodinstr.Rows[0]["外层供料量合计a"];
 
             //my.Cells[13+ind, 4].Value = tb中内层合计.Text;
-            my.Cells[21 + ind, 6].Value = dt_prodinstr.Rows[0]["中内层供料量合计b"];
+            my.Cells[7 + ind, 6].Value = dt_prodinstr.Rows[0]["中内层供料量合计b"];
 
         }
 

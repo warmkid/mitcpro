@@ -642,7 +642,7 @@ namespace mySystem
         private void fill_excel(Microsoft.Office.Interop.Excel._Worksheet my)
         {
             int ind = 0;
-            if (dataGridView1.Rows.Count > 11)
+            if (dataGridView1.Rows.Count > 1)
             {
                 //在第6行插入
                 for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
@@ -657,6 +657,7 @@ namespace mySystem
             my.Cells[3, 10].Value = "生产指令: "+mySystem.Parameter.proInstruction;
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
+                my.Cells[5 + i, 1] = i + 1;
                 my.Cells[5 + i, 2] = DateTime.Parse( dataGridView1.Rows[i].Cells[3].Value.ToString()).ToString("yyyy年MM月dd日");
                 my.Cells[5 + i, 3] = dataGridView1.Rows[i].Cells[4].Value.ToString();
                 my.Cells[5 + i, 4] = dataGridView1.Rows[i].Cells[5].Value.ToString();

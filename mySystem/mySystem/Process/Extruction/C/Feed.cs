@@ -980,16 +980,16 @@ namespace mySystem.Process.Extruction.C
             //my.Cells[5, 9].Value = "";
 
             int ind = 0;//偏移
-            if (dataGridView1.Rows.Count > 15)
+            if (dataGridView1.Rows.Count > 1)
             {
-                //在第10行插入
-                for (int i = 0; i < dataGridView1.Rows.Count - 15; i++)
+                //在第6s行插入
+                for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
                 {
-                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[10, Type.Missing];
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[5, Type.Missing];
                     range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
                     Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
                 }
-                ind = dataGridView1.Rows.Count - 15;
+                ind = dataGridView1.Rows.Count - 1;
             }
 
 
