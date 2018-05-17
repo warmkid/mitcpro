@@ -40,6 +40,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.btn退回审核 = new System.Windows.Forms.Button();
+            this.btn删除 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             this.SuspendLayout();
             // 
@@ -101,7 +103,7 @@
             // SearchBtn
             // 
             this.SearchBtn.Font = new System.Drawing.Font("宋体", 12F);
-            this.SearchBtn.Location = new System.Drawing.Point(792, 66);
+            this.SearchBtn.Location = new System.Drawing.Point(716, 66);
             this.SearchBtn.Name = "SearchBtn";
             this.SearchBtn.Size = new System.Drawing.Size(75, 30);
             this.SearchBtn.TabIndex = 13;
@@ -115,8 +117,9 @@
             this.dgv.Location = new System.Drawing.Point(39, 114);
             this.dgv.Name = "dgv";
             this.dgv.RowTemplate.Height = 23;
-            this.dgv.Size = new System.Drawing.Size(1089, 460);
+            this.dgv.Size = new System.Drawing.Size(1001, 460);
             this.dgv.TabIndex = 14;
+            this.dgv.ColumnWidthChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dgv_ColumnWidthChanged);
             this.dgv.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgv_DataBindingComplete);
             // 
             // comboBox1
@@ -177,11 +180,37 @@
             this.label4.TabIndex = 19;
             this.label4.Text = "记录表单：";
             // 
+            // btn退回审核
+            // 
+            this.btn退回审核.Font = new System.Drawing.Font("宋体", 12F);
+            this.btn退回审核.Location = new System.Drawing.Point(838, 66);
+            this.btn退回审核.Name = "btn退回审核";
+            this.btn退回审核.Size = new System.Drawing.Size(100, 30);
+            this.btn退回审核.TabIndex = 21;
+            this.btn退回审核.Text = "退回审核";
+            this.btn退回审核.UseVisualStyleBackColor = true;
+            this.btn退回审核.Visible = false;
+            this.btn退回审核.Click += new System.EventHandler(this.btn退回审核_Click);
+            // 
+            // btn删除
+            // 
+            this.btn删除.Font = new System.Drawing.Font("宋体", 12F);
+            this.btn删除.Location = new System.Drawing.Point(965, 66);
+            this.btn删除.Name = "btn删除";
+            this.btn删除.Size = new System.Drawing.Size(75, 30);
+            this.btn删除.TabIndex = 22;
+            this.btn删除.Text = "删除";
+            this.btn删除.UseVisualStyleBackColor = true;
+            this.btn删除.Visible = false;
+            this.btn删除.Click += new System.EventHandler(this.btn删除_Click);
+            // 
             // QueryExtruForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1170, 615);
+            this.ClientSize = new System.Drawing.Size(1062, 615);
+            this.Controls.Add(this.btn删除);
+            this.Controls.Add(this.btn退回审核);
             this.Controls.Add(this.comboBox2);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.comboBox1);
@@ -217,6 +246,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox comboBox2;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button btn退回审核;
+        private System.Windows.Forms.Button btn删除;
 
     }
 }

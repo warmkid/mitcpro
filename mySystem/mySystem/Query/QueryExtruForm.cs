@@ -47,6 +47,12 @@ namespace mySystem.Query
             {
                 comboBox1.Text = Parameter.c查询_吹膜_生产指令;
             }
+            if (3 == mySystem.Parameter.userRole)
+            {
+                // 3是管理员
+                btn删除.Visible = true;
+                btn退回审核.Visible = true;
+            }
         }
 
         void dgv_DataError(object sender, DataGridViewDataErrorEventArgs e)
@@ -331,7 +337,10 @@ namespace mySystem.Query
 
         private void SearchBtn_Click(object sender, EventArgs e)
         {
+            // TODO 517: 根据选择的表读取列宽；加一个dgv_column_wdth_change时间，只要有变化就保存列宽
             search();
+            string tbl = get表名fromCombobox(comboBox2.Text);
+            readDGVWidthFromSettingAndSet(dgv, tbl);
         }
 
         public void search()
@@ -631,12 +640,12 @@ namespace mySystem.Query
         private void dgv_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             //设置列宽
-            for (int i = 0; i < dgv.Columns.Count; i++)
-            {
-                String colName = dgv.Columns[i].HeaderText;
-                int strlen = colName.Length;
-                dgv.Columns[i].MinimumWidth = strlen * 25;
-            }
+            //for (int i = 0; i < dgv.Columns.Count; i++)
+            //{
+            //    String colName = dgv.Columns[i].HeaderText;
+            //    int strlen = colName.Length;
+            //    dgv.Columns[i].MinimumWidth = strlen * 25;
+            //}
 
             dgv.Columns["ID"].Visible = false;
             try
@@ -674,8 +683,141 @@ namespace mySystem.Query
             }
         }
 
-        
+        private void btn删除_Click(object sender, EventArgs e)
+        {
+            if (dgv.SelectedCells.Count <= 0) return;
+            if (DialogResult.OK == MessageBox.Show("确认删除吗？此操作不可撤销", "提示", MessageBoxButtons.OKCancel))
+            {
+                // get id of current selected row
+                int id = Convert.ToInt32(dgv.SelectedCells[0].OwningRow.Cells["ID"].Value);
+                // delete 
+                dt.Select("ID=" + id)[0].Delete();
+                da.Update(dt);
+                SearchBtn.PerformClick();
+            }
+            
+        }
 
+        private void btn退回审核_Click(object sender, EventArgs e)
+        {
+            if (dgv.SelectedCells.Count <= 0) return;
+            if (DialogResult.OK == MessageBox.Show("确认撤销审核吗？", "提示", MessageBoxButtons.OKCancel))
+            {
+                // get id of current selected row
+                int id = Convert.ToInt32(dgv.SelectedCells[0].OwningRow.Cells["ID"].Value);
+                string colname = "";
+                foreach (DataGridViewColumn dgvc in dgv.Columns)
+                {
+                    if (dgvc.Name == "审核员" || dgvc.Name == "审核人")
+                    {
+                        colname = dgvc.Name;
+                        break;
+                    }
+                }
+                string 审核员;
+                try
+                {
+                    审核员 = dgv.SelectedCells[0].OwningRow.Cells[colname].Value.ToString();
+                    if (审核员 == "") return;
+                    else
+                    {
+                        dt.Select("ID=" + id)[0][colname] = "";
+                        da.Update(dt);
+                        SearchBtn.PerformClick();
+
+
+                        string 表名 = "";
+                        表名 = get表名fromCombobox(comboBox2.Text);
+                        if (表名 == "吹膜工序物料平衡记录" || 表名 == "吹膜生产日报表") return;
+
+                        string sql = @"select * from 待审核 where 表名='{0}' and 对应ID={1}";
+                        DataTable dt_temp = new DataTable(); ;
+                        SqlDataAdapter da_temp = new SqlDataAdapter(String.Format(sql,表名,id), mySystem.Parameter.conn);
+                        SqlCommandBuilder cb_temp = new SqlCommandBuilder(da_temp);
+                        da_temp.Fill(dt_temp);
+
+                        if (dt_temp.Rows.Count == 0) return;
+                        dt_temp.Rows[0].Delete();
+                        da_temp.Update(dt_temp);
+
+
+                    }
+                }
+                catch
+                {
+                    return;
+                }
+                
+
+               
+            }
+        }
+
+
+        string get表名fromCombobox(String comboText)
+        {
+            string 表名 = "";
+            switch (comboText)
+            {
+                case "00 批生产记录（吹膜）":
+                    表名 = "批生产记录表";
+                    break;
+                case "02 吹膜生产日报表":
+                    return "吹膜生产日报表";
+                case "03 吹膜机组清洁记录":
+                    表名 = "吹膜机组清洁记录表";
+                    break;
+                case "04 吹膜机组开机前确认表":
+                    表名 = "吹膜开机前确认表";
+                    break;
+                case "05 吹膜机组预热参数记录表":
+                    表名 = "吹膜预热参数记录表";
+                    break;
+                case "06 吹膜供料记录":
+                    表名 = "吹膜供料记录";
+                    break;
+                case "07 吹膜供料系统运行记录":
+                    表名 = "吹膜供料系统运行记录";
+                    break;
+                case "08 吹膜机组运行记录":
+                    表名 = "吹膜机组运行记录";
+                    break;
+                case "09 吹膜工序生产和检验记录":
+                    表名 = "吹膜生产和检验记录表";
+                    break;
+                case "10 吹膜工序废品记录":
+                    表名 = "吹膜工序废品记录";
+                    break;
+                case "11 吹膜工序清场记录":
+                    表名 = "吹膜工序清场记录";
+                    break;
+                case "12 吹膜工序物料平衡记录":
+                    return "吹膜工序物料平衡记录";
+                case "13 吹膜工序领料退料记录":
+                    表名 = "吹膜工序领料退料记录";
+                    break;
+                case "14 吹膜岗位交接班记录":
+                    表名 = "吹膜岗位交接班记录";
+                    break;
+                case "15 产品内包装记录":
+                    表名 = "吹膜产品内包装记录表";
+                    break;
+                case "16 产品外包装记录":
+                    表名 = "吹膜产品外包装记录表";
+                    break;
+                case "生产领料申请单":
+                    表名 = "生产领料申请单表";
+                    break;
+
+            }
+            return 表名;
+        }
+
+        private void dgv_ColumnWidthChanged(object sender, DataGridViewColumnEventArgs e)
+        {
+            string tbl = get表名fromCombobox(comboBox2.Text);
+            writeDGVWidthToSetting(dgv, tbl);
+        }
 
     }
 }
