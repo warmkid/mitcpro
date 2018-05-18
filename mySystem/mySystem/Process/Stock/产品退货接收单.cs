@@ -401,7 +401,7 @@ namespace mySystem.Process.Stock
         private void btn审核_Click(object sender, EventArgs e)
         {
             ckform = new CheckForm(this);
-            ckform.Show();
+            ckform.ShowDialog();
         }
 
         public override void CheckResult()

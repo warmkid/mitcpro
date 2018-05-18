@@ -565,7 +565,7 @@ namespace mySystem.Process.Bag.LDPE
                 return;
             }
             ckform = new CheckForm(this);
-            ckform.Show();
+            ckform.ShowDialog();
         }
 
         public override void CheckResult()

@@ -669,7 +669,7 @@ namespace mySystem.Process.Bag.LDPE
             //    return;
             //}
             checkform = new CheckForm(this);
-            checkform.Show();
+            checkform.ShowDialog();
         }
         //审核功能
         public override void CheckResult()

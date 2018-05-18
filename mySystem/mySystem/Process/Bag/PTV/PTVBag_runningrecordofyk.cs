@@ -783,7 +783,7 @@ namespace mySystem.Process.Bag.PTV
                 return;
             }
             checkform = new CheckForm(this);
-            checkform.Show();
+            checkform.ShowDialog();
         }
 
         //添加打印机

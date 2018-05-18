@@ -609,7 +609,7 @@ namespace mySystem.Process.Order
                 return;
             }
             ckform = new mySystem.CheckForm(this);
-            ckform.Show();  
+            ckform.ShowDialog();  
         }
 
         public override void CheckResult()

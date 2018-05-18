@@ -774,7 +774,7 @@ namespace mySystem.Process.Bag.PTV
         private void btn审核_Click(object sender, EventArgs e)
         {
             checkform = new CheckForm(this);
-            checkform.Show();
+            checkform.ShowDialog();
         }
         public override void CheckResult()
         {

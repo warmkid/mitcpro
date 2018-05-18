@@ -819,7 +819,7 @@ namespace mySystem.Process.Bag.BTV
         private void btn审核_Click(object sender, EventArgs e)
         {
             ckForm = new CheckForm(this);
-            ckForm.Show();
+            ckForm.ShowDialog();
             
         }
 

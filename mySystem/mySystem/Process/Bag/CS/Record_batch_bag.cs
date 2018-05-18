@@ -659,7 +659,7 @@ namespace mySystem.Process.Bag
                 return;
             }
             ckform = new CheckForm(this);
-            ckform.Show();
+            ckform.ShowDialog();
         }
 
         public override void CheckResult()

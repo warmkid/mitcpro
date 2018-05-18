@@ -816,7 +816,7 @@ namespace mySystem.Process.Bag.BTV
                 return;
             }
             checkform = new CheckForm(this);
-            checkform.Show();
+            checkform.ShowDialog();
         }
 
         //this function main call the static method in  mySystem.Process.Stock.材料退库出库单.生成表单, which write database

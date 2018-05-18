@@ -988,7 +988,7 @@ namespace mySystem.Process.Bag.CS
             }
 
             ckForm = new CheckForm(this);
-            ckForm.Show();
+            ckForm.ShowDialog();
             
         }
 

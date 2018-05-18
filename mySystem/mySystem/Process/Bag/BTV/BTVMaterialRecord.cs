@@ -875,7 +875,7 @@ namespace mySystem.Process.Bag.BTV
                 return;
             }
             checkform = new CheckForm(this);
-            checkform.Show();
+            checkform.ShowDialog();
         }
 
 

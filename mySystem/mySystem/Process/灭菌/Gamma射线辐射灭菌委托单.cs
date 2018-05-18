@@ -997,7 +997,7 @@ namespace mySystem.Process.灭菌
         private void bt审核_Click(object sender, EventArgs e)
         {
             checkform = new CheckForm(this);
-            checkform.Show();
+            checkform.ShowDialog();
         }
 
         [DllImport("winspool.drv")]

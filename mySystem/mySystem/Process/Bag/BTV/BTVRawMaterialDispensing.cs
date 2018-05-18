@@ -850,7 +850,7 @@ namespace mySystem.Process.Bag.BTV
                 return;
             }
             checkform = new CheckForm(this);
-            checkform.Show();
+            checkform.ShowDialog();
         }
 
         private Boolean check当前登录的审核员与操作员()

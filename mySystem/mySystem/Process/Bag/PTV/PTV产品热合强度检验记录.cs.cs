@@ -887,7 +887,7 @@ namespace mySystem.Process.Bag.PTV
             }
 
             ckForm = new CheckForm(this);
-            ckForm.Show();
+            ckForm.ShowDialog();
             
         }
 

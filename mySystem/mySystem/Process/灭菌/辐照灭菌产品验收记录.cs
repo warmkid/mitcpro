@@ -915,7 +915,7 @@ namespace mySystem.Process.灭菌
         private void bt审核_Click(object sender, EventArgs e)
         {
             checkform = new mySystem.CheckForm(this);
-            checkform.Show();  
+            checkform.ShowDialog();  
         }
 
         private void ckb符合要求_CheckedChanged(object sender, EventArgs e)

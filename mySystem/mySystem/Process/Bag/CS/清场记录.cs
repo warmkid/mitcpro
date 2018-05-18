@@ -625,7 +625,7 @@ namespace mySystem.Process.Bag.CS
                 return;
             }
             ckform = new CheckForm(this);
-            ckform.Show();  
+            ckform.ShowDialog();  
         }
 
         public override void CheckResult()

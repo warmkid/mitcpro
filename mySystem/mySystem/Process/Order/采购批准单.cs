@@ -1547,7 +1547,7 @@ namespace mySystem.Process.Order
         {
             // TOOD 注意要改变需求单中的状态
             ckform = new mySystem.CheckForm(this);
-            ckform.Show();  
+            ckform.ShowDialog();  
         }
 
         public override void CheckResult()

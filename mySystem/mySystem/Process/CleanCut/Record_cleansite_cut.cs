@@ -739,7 +739,7 @@ namespace mySystem.Process.CleanCut
                 checkform.ShowDialog();
             }
             //checkform = new CheckForm(this);
-            //checkform.Show();
+            //checkform.ShowDialog();
         }
 
         void checkform_FormClosed(object sender, FormClosedEventArgs e)

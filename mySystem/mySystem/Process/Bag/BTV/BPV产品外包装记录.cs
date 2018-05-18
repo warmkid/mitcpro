@@ -818,7 +818,7 @@ namespace mySystem.Process.Bag.BTV
                 return;
             }
             checkform = new CheckForm(this);
-            checkform.Show();
+            checkform.ShowDialog();
         }
 
         //审核功能

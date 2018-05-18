@@ -712,7 +712,7 @@ namespace mySystem.Process.Order
                 return;
             }
             ckform = new mySystem.CheckForm(this);
-            ckform.Show();  
+            ckform.ShowDialog();  
         }
 
         public override void CheckResult()
@@ -1122,6 +1122,7 @@ namespace mySystem.Process.Order
         {
             if (DialogResult.Yes == MessageBox.Show("修改意见为:" + textbox修改.Text, "确认", MessageBoxButtons.YesNo))
             {
+                btn修改.Enabled = false;
                 dtOuter.Rows[0]["审核员"] = "_修改中";
                 string log = "\n=====================================\n";
                 log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n审核员：" + mySystem.Parameter.userName + " 要求修改\n";

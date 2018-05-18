@@ -796,7 +796,7 @@ namespace mySystem.Process.Bag.PTV
                 return;
             }
             checkform = new CheckForm(this);
-            checkform.Show();
+            checkform.ShowDialog();
         }
 
         private void btn打印_Click(object sender, EventArgs e)

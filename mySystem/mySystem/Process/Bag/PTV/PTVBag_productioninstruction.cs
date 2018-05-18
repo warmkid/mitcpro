@@ -1279,7 +1279,7 @@ namespace mySystem.Process.Bag.PTV
                 return;
             }
             ckform = new CheckForm(this);
-            ckform.Show();
+            ckform.ShowDialog();
 
         }
 
