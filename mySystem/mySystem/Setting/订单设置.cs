@@ -429,36 +429,40 @@ namespace mySystem.Setting
 
         private void del存货档案_Click(object sender, EventArgs e)
         {
-            int idx = this.dgv存货档案.CurrentRow.Index;
-            int dispIdx = dgv存货档案.FirstDisplayedScrollingRowIndex;
-            if (dgv存货档案.Rows[idx].Cells[0].Value == DBNull.Value)
+            if (DialogResult.OK == MessageBox.Show("确认删除吗？", "提示", MessageBoxButtons.OKCancel))
             {
-                dgv存货档案.Rows.RemoveAt(idx);
-            }
-            else
-            {
-                int id = Convert.ToInt32(dgv存货档案.Rows[idx].Cells[0].Value);
-                dt存货档案.Select("ID=" + id)[0].Delete();
-                da存货档案.Update((DataTable)bs存货档案.DataSource);
-                dt存货档案.Clear();
-                da存货档案.Fill(dt存货档案);
-            }
+                int idx = this.dgv存货档案.CurrentRow.Index;
+                int dispIdx = dgv存货档案.FirstDisplayedScrollingRowIndex;
+                if (dgv存货档案.Rows[idx].Cells[0].Value == DBNull.Value)
+                {
+                    dgv存货档案.Rows.RemoveAt(idx);
+                }
+                else
+                {
+                    int id = Convert.ToInt32(dgv存货档案.Rows[idx].Cells[0].Value);
+                    dt存货档案.Select("ID=" + id)[0].Delete();
+                    da存货档案.Update((DataTable)bs存货档案.DataSource);
+                    dt存货档案.Clear();
+                    da存货档案.Fill(dt存货档案);
+                }
 
-            if (idx != 0)
-            {
-                dgv存货档案.Rows[idx - 1].Selected = true;
-            }
-            else
-            {
-                dgv存货档案.Rows[0].Selected = true;
-            }
+                if (idx != 0)
+                {
+                    dgv存货档案.Rows[idx - 1].Selected = true;
+                }
+                else
+                {
+                    dgv存货档案.Rows[0].Selected = true;
+                }
 
-            if (dispIdx > 0)
-                dgv存货档案.FirstDisplayedScrollingRowIndex = dispIdx - 1;
-            else
-                dgv存货档案.FirstDisplayedScrollingRowIndex = 0;
-            //setDataGridViewRowNums(this.dgv存货档案);
-            refresh序号();
+                if (dispIdx > 0)
+                    dgv存货档案.FirstDisplayedScrollingRowIndex = dispIdx - 1;
+                else
+                    dgv存货档案.FirstDisplayedScrollingRowIndex = 0;
+                //setDataGridViewRowNums(this.dgv存货档案);
+                refresh序号();
+            }
+            
         }
 
         

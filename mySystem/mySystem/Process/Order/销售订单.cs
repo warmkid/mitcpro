@@ -389,32 +389,39 @@ namespace mySystem.Process.Order
                 cmb业务类型.Items.Add(cmb业务类型.Text);
             }
             dr["业务类型"] = cmb业务类型.Text;
+            if (cmb业务类型.Items.Count > 0) dr["业务类型"] = cmb业务类型.Items[0].ToString(); 
 
             if (cmb销售类型.Text.Trim() != "" && !cmb销售类型.Items.Contains(cmb销售类型.Text))
             {
                 cmb销售类型.Items.Add(cmb销售类型.Text);
             }
             dr["销售类型"] = cmb销售类型.Text;
+            if (cmb销售类型.Items.Count > 0) dr["销售类型"] = cmb销售类型.Items[0].ToString(); 
 
             if (cmb客户简称.Text.Trim() != "" && !cmb客户简称.Items.Contains(cmb客户简称.Text))
             {
                 cmb客户简称.Items.Add(cmb客户简称.Text);
             }
             dr["客户简称"] = cmb客户简称.Text;
+            if (cmb客户简称.Items.Count > 0) dr["客户简称"] = cmb客户简称.Items[0].ToString();
 
             if (cmb销售部门.Text.Trim() != "" && !cmb销售部门.Items.Contains(cmb销售部门.Text))
             {
                 cmb销售部门.Items.Add(cmb销售部门.Text);
             }
             dr["销售部门"] = cmb销售部门.Text;
+            if (cmb销售部门.Items.Count > 0) dr["销售部门"] = cmb销售部门.Items[0].ToString();
 
             if (cmb币种.Text.Trim() != "" && !cmb币种.Items.Contains(cmb币种.Text))
             {
                 cmb币种.Items.Add(cmb币种.Text);
             }
             dr["币种"] = cmb币种.Text;
+            if (cmb币种.Items.Count > 0) dr["币种"] = cmb币种.Items[0].ToString();
 
             dr["付款条件"] = cmb付款条件.Text;
+            if (cmb付款条件.Items.Count > 0) dr["付款条件"] = cmb付款条件.Items[0].ToString();
+            
             bool ok;
             double temp;
             ok = double.TryParse(tb税率.Text, out temp);
@@ -423,6 +430,7 @@ namespace mySystem.Process.Order
             dr["汇率"] = ok ? temp : 1;
             dr["备注"] = tb备注.Text;
             dr["操作员"] = mySystem.Parameter.userName;
+            dr["业务员"] = mySystem.Parameter.userName;
             dr["状态"] = "编辑中";
             dr["件数合计"] = 0;
             dr["数量合计"] = 0;

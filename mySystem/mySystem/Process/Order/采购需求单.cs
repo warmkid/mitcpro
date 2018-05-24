@@ -1037,6 +1037,8 @@ namespace mySystem.Process.Order
 
         private void btn更新_Click(object sender, EventArgs e)
         {
+            // 此功能用途：编制采购需求单时，发现产品档案有误。此时应该先更新产品档案，然后点击更新按钮即可。
+            // 审核后无法点击
             更新();
             setDataGridView1ColumnsFormat();
             //dataGridView1.Columns["件数"].Visible = false;
