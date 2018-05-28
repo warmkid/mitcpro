@@ -340,8 +340,8 @@ namespace mySystem.Setting
             this.dgvUser.Columns["班次开始时间"].Visible = false;
             this.dgvUser.Columns["班次结束时间"].Visible = false;
 
-            this.dgvUser.Columns["用户ID"].MinimumWidth = 150;
-            this.dgvUser.Columns["密码"].MinimumWidth = 150;
+            //this.dgvUser.Columns["用户ID"].MinimumWidth = 150;
+            //this.dgvUser.Columns["密码"].MinimumWidth = 150;
 
             ////设置列宽
             //for (int i = 0; i < this.dgvUser.Columns.Count; i++)

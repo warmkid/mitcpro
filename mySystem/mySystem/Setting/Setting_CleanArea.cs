@@ -74,7 +74,7 @@ namespace WindowsFormsApplication1
             numFresh();
 
             this.dataGridView1.Columns["ID"].Visible = false;
-            this.dataGridView1.Columns["清洁区域"].MinimumWidth = 160;
+            //this.dataGridView1.Columns["清洁区域"].MinimumWidth = 160;
             this.dataGridView1.Columns["清洁内容"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             this.dataGridView1.Columns["清洁内容"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 

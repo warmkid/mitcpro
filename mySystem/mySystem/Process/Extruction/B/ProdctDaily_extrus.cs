@@ -244,6 +244,28 @@ namespace mySystem
         }
 
 
+        int get面数(string code)
+        {
+            if (code.Contains("SA"))
+            {
+                return 1;
+            }
+            return 2;
+        }
+
+        double get面积(string code, int width, double length)
+        {
+            int mian = get面数(code);
+            if (mian == 1)
+            {
+                return (width + 40) * length / 1000;
+            }
+            if(mian==2){
+                return width*length*2 / 1000;
+            }
+            return 0;
+        }
+
         //查找同一条生产指令下的数据
         private void query_by_instru(int para_instrid)
         {
@@ -296,6 +318,7 @@ namespace mySystem
                 da3.Fill(dt_废品记录);
             }
             
+           
 
             //根据产品代码和产品批号进行联合,以检验记录的行为标准
             for (int i = 0; i < dt_检验记录.Rows.Count; i++)
@@ -348,8 +371,9 @@ namespace mySystem
                 dr["生产数量"]= sum_膜卷长度;//生产数量
                 dr["生产重量"] = Double.Parse( sum_膜卷重量.ToString("f1"));//生产重量
                 dr["膜宽"] = Convert.ToInt32(ht代码宽度[code_temp1]);
-                dr["膜层数"] = Convert.ToInt32(ht代码面数[code_temp1]);
-                dr["生产数量平米"] = Math.Round(sum_膜卷长度 * Convert.ToInt32(ht代码宽度[code_temp1]) * Convert.ToInt32(ht代码面数[code_temp1]) / 1000, 2);
+                dr["膜层数"] = get面数(code_temp1);
+                //dr["生产数量平米"] = Math.Round(sum_膜卷长度 * Convert.ToInt32(ht代码宽度[code_temp1]) * Convert.ToInt32(ht代码面数[code_temp1]) / 1000, 2);
+                dr["生产数量平米"] = get面积(code_temp1, Convert.ToInt32(ht代码宽度[code_temp1]), sum_膜卷长度);
                 if (dt_检验记录_详细.Rows[dt_检验记录_详细.Rows.Count - 1]["结束时间"] != null && dt_检验记录_详细.Rows[dt_检验记录_详细.Rows.Count - 1]["结束时间"].ToString() != "")
                 {
                     TimeSpan delt = (DateTime)dt_检验记录_详细.Rows[dt_检验记录_详细.Rows.Count - 1]["结束时间"] - (DateTime)dt_检验记录_详细.Rows[0]["开始时间"];

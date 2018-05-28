@@ -84,7 +84,6 @@
             this.btn新建.TabIndex = 176;
             this.btn新建.Text = "新建";
             this.btn新建.UseVisualStyleBackColor = true;
-            this.btn新建.Visible = false;
             this.btn新建.Click += new System.EventHandler(this.btn新建_Click);
             // 
             // bt查看人员信息
@@ -152,9 +151,9 @@
             this.btn查询新建.Font = new System.Drawing.Font("宋体", 12F);
             this.btn查询新建.Location = new System.Drawing.Point(1068, 93);
             this.btn查询新建.Name = "btn查询新建";
-            this.btn查询新建.Size = new System.Drawing.Size(90, 30);
+            this.btn查询新建.Size = new System.Drawing.Size(65, 30);
             this.btn查询新建.TabIndex = 129;
-            this.btn查询新建.Text = "查询/新建";
+            this.btn查询新建.Text = "查询";
             this.btn查询新建.UseVisualStyleBackColor = true;
             this.btn查询新建.Click += new System.EventHandler(this.btn查询新建_Click);
             // 

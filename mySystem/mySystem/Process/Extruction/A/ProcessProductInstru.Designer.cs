@@ -33,6 +33,11 @@
             this.tb双层包装领料量 = new System.Windows.Forms.TextBox();
             this.textBox9 = new System.Windows.Forms.TextBox();
             this.textBox7 = new System.Windows.Forms.TextBox();
+            this.textBox生产天数 = new System.Windows.Forms.TextBox();
+            this.label43 = new System.Windows.Forms.Label();
+            this.tb每日产量 = new System.Windows.Forms.TextBox();
+            this.cb需要开机清洁 = new System.Windows.Forms.CheckBox();
+            this.label42 = new System.Windows.Forms.Label();
             this.bt查看人员信息 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.tb接收人 = new System.Windows.Forms.TextBox();
@@ -137,9 +142,7 @@
             this.tb指令编号 = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.cb需要开机清洁 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -209,6 +212,55 @@
             this.textBox7.Size = new System.Drawing.Size(231, 21);
             this.textBox7.TabIndex = 12;
             this.textBox7.Text = "双层洁净包装";
+            // 
+            // textBox生产天数
+            // 
+            this.textBox生产天数.Location = new System.Drawing.Point(279, 48);
+            this.textBox生产天数.Name = "textBox生产天数";
+            this.textBox生产天数.ReadOnly = true;
+            this.textBox生产天数.Size = new System.Drawing.Size(59, 21);
+            this.textBox生产天数.TabIndex = 40;
+            // 
+            // label43
+            // 
+            this.label43.AutoSize = true;
+            this.label43.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label43.Location = new System.Drawing.Point(197, 52);
+            this.label43.Name = "label43";
+            this.label43.Size = new System.Drawing.Size(63, 14);
+            this.label43.TabIndex = 39;
+            this.label43.Text = "生产天数";
+            // 
+            // tb每日产量
+            // 
+            this.tb每日产量.Location = new System.Drawing.Point(123, 48);
+            this.tb每日产量.Name = "tb每日产量";
+            this.tb每日产量.Size = new System.Drawing.Size(59, 21);
+            this.tb每日产量.TabIndex = 28;
+            this.tb每日产量.TextChanged += new System.EventHandler(this.tb每日产量_TextChanged);
+            // 
+            // cb需要开机清洁
+            // 
+            this.cb需要开机清洁.AutoSize = true;
+            this.cb需要开机清洁.Checked = true;
+            this.cb需要开机清洁.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cb需要开机清洁.Font = new System.Drawing.Font("宋体", 12F);
+            this.cb需要开机清洁.Location = new System.Drawing.Point(429, 52);
+            this.cb需要开机清洁.Name = "cb需要开机清洁";
+            this.cb需要开机清洁.Size = new System.Drawing.Size(123, 20);
+            this.cb需要开机清洁.TabIndex = 38;
+            this.cb需要开机清洁.Text = "需要开机清洁";
+            this.cb需要开机清洁.UseVisualStyleBackColor = true;
+            // 
+            // label42
+            // 
+            this.label42.AutoSize = true;
+            this.label42.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label42.Location = new System.Drawing.Point(28, 52);
+            this.label42.Name = "label42";
+            this.label42.Size = new System.Drawing.Size(98, 14);
+            this.label42.TabIndex = 27;
+            this.label42.Text = "每日产量(kg）";
             // 
             // bt查看人员信息
             // 
@@ -430,7 +482,7 @@
             // bt复制
             // 
             this.bt复制.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt复制.Location = new System.Drawing.Point(225, 10);
+            this.bt复制.Location = new System.Drawing.Point(210, 10);
             this.bt复制.Name = "bt复制";
             this.bt复制.Size = new System.Drawing.Size(46, 23);
             this.bt复制.TabIndex = 26;
@@ -441,7 +493,7 @@
             // bt下移
             // 
             this.bt下移.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt下移.Location = new System.Drawing.Point(173, 10);
+            this.bt下移.Location = new System.Drawing.Point(159, 10);
             this.bt下移.Name = "bt下移";
             this.bt下移.Size = new System.Drawing.Size(46, 23);
             this.bt下移.TabIndex = 25;
@@ -452,7 +504,7 @@
             // bt上移
             // 
             this.bt上移.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt上移.Location = new System.Drawing.Point(121, 10);
+            this.bt上移.Location = new System.Drawing.Point(110, 10);
             this.bt上移.Name = "bt上移";
             this.bt上移.Size = new System.Drawing.Size(46, 23);
             this.bt上移.TabIndex = 24;
@@ -463,7 +515,7 @@
             // bt删除
             // 
             this.bt删除.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt删除.Location = new System.Drawing.Point(62, 10);
+            this.bt删除.Location = new System.Drawing.Point(60, 10);
             this.bt删除.Name = "bt删除";
             this.bt删除.Size = new System.Drawing.Size(46, 23);
             this.bt删除.TabIndex = 23;
@@ -484,7 +536,7 @@
             // 
             // tb计划产量合计卷
             // 
-            this.tb计划产量合计卷.Location = new System.Drawing.Point(822, 10);
+            this.tb计划产量合计卷.Location = new System.Drawing.Point(781, 10);
             this.tb计划产量合计卷.Name = "tb计划产量合计卷";
             this.tb计划产量合计卷.ReadOnly = true;
             this.tb计划产量合计卷.Size = new System.Drawing.Size(59, 21);
@@ -494,7 +546,7 @@
             // 
             this.label31.AutoSize = true;
             this.label31.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label31.Location = new System.Drawing.Point(711, 14);
+            this.label31.Location = new System.Drawing.Point(680, 14);
             this.label31.Name = "label31";
             this.label31.Size = new System.Drawing.Size(105, 14);
             this.label31.TabIndex = 20;
@@ -502,7 +554,7 @@
             // 
             // tb用料重量合计
             // 
-            this.tb用料重量合计.Location = new System.Drawing.Point(636, 10);
+            this.tb用料重量合计.Location = new System.Drawing.Point(596, 10);
             this.tb用料重量合计.Name = "tb用料重量合计";
             this.tb用料重量合计.ReadOnly = true;
             this.tb用料重量合计.Size = new System.Drawing.Size(60, 21);
@@ -512,7 +564,7 @@
             // 
             this.label30.AutoSize = true;
             this.label30.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label30.Location = new System.Drawing.Point(525, 14);
+            this.label30.Location = new System.Drawing.Point(494, 14);
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(105, 14);
             this.label30.TabIndex = 18;
@@ -520,7 +572,7 @@
             // 
             // tb计划产量合计米
             // 
-            this.tb计划产量合计米.Location = new System.Drawing.Point(455, 10);
+            this.tb计划产量合计米.Location = new System.Drawing.Point(418, 10);
             this.tb计划产量合计米.Name = "tb计划产量合计米";
             this.tb计划产量合计米.ReadOnly = true;
             this.tb计划产量合计米.Size = new System.Drawing.Size(59, 21);
@@ -530,7 +582,7 @@
             // 
             this.label29.AutoSize = true;
             this.label29.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label29.Location = new System.Drawing.Point(344, 14);
+            this.label29.Location = new System.Drawing.Point(313, 14);
             this.label29.Name = "label29";
             this.label29.Size = new System.Drawing.Size(105, 14);
             this.label29.TabIndex = 9;
@@ -540,7 +592,7 @@
             // 
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label17.Location = new System.Drawing.Point(296, 14);
+            this.label17.Location = new System.Drawing.Point(265, 14);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(42, 14);
             this.label17.TabIndex = 8;
@@ -1317,16 +1369,6 @@
             this.label3.TabIndex = 2;
             this.label3.Text = "产品名称";
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2.Location = new System.Drawing.Point(337, 9);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(35, 16);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "PEF";
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -1337,26 +1379,17 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "吹膜工序生产指令";
             // 
-            // cb需要开机清洁
-            // 
-            this.cb需要开机清洁.AutoSize = true;
-            this.cb需要开机清洁.Checked = true;
-            this.cb需要开机清洁.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cb需要开机清洁.Font = new System.Drawing.Font("宋体", 12F);
-            this.cb需要开机清洁.Location = new System.Drawing.Point(429, 52);
-            this.cb需要开机清洁.Name = "cb需要开机清洁";
-            this.cb需要开机清洁.Size = new System.Drawing.Size(123, 20);
-            this.cb需要开机清洁.TabIndex = 38;
-            this.cb需要开机清洁.Text = "需要开机清洁";
-            this.cb需要开机清洁.UseVisualStyleBackColor = true;
-            // 
             // ProcessProductInstru
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1016, 643);
+            this.Controls.Add(this.textBox生产天数);
+            this.Controls.Add(this.label43);
+            this.Controls.Add(this.tb每日产量);
             this.Controls.Add(this.cb需要开机清洁);
+            this.Controls.Add(this.label42);
             this.Controls.Add(this.bt查看人员信息);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.tb接收人);
@@ -1391,7 +1424,6 @@
             this.Controls.Add(this.tb指令编号);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ProcessProductInstru";
@@ -1453,7 +1485,6 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox tb指令编号;
@@ -1563,5 +1594,9 @@
         private System.Windows.Forms.Button bt查看人员信息;
         private System.Windows.Forms.ComboBox cb接收人;
         private System.Windows.Forms.CheckBox cb需要开机清洁;
+        private System.Windows.Forms.TextBox tb每日产量;
+        private System.Windows.Forms.Label label42;
+        private System.Windows.Forms.TextBox textBox生产天数;
+        private System.Windows.Forms.Label label43;
     }
 }

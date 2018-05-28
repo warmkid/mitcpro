@@ -380,7 +380,7 @@ namespace mySystem.Query
             {
                 String colName = dgv.Columns[i].HeaderText;
                 int strlen = colName.Length;
-                dgv.Columns[i].MinimumWidth = strlen * 25;
+                //dgv.Columns[i].MinimumWidth = strlen * 25;
             }
 
             dgv.Columns["ID"].Visible = false;

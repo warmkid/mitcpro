@@ -52,6 +52,7 @@ namespace BatchProductRecord
         private List<string> list_操作员;
         private List<string> list_审核员;
         private List<string> list_负责员;
+        private List<string> list_生产指令;
         Hashtable ht代码面数;
 
         //用于带id参数构造函数，存储已存在记录的相关信息
@@ -281,6 +282,26 @@ namespace BatchProductRecord
             cb打印机.SelectedItem = print.PrinterSettings.PrinterName;
         }
 
+        void fill_instru()
+        {
+            list_生产指令 = new List<string>();
+            SqlDataAdapter da = new SqlDataAdapter("select top 10  生产指令编号 from 生产指令信息表", mySystem.Parameter.conn);
+            DataTable dtt = new DataTable();
+            da.Fill(dtt);
+            foreach (DataRow dr in dtt.Rows)
+            {
+                list_生产指令.Add(dr["生产指令编号"].ToString());
+            }
+            
+
+                AutoCompleteStringCollection acsc = new AutoCompleteStringCollection();
+
+                acsc.AddRange(list_生产指令.ToArray());
+                tb指令编号.AutoCompleteCustomSource = acsc;
+                tb指令编号.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                tb指令编号.AutoCompleteSource = AutoCompleteSource.CustomSource;
+        }
+
         private void getOtherData()
         {
             if (label == 0)
@@ -291,9 +312,11 @@ namespace BatchProductRecord
                 fill_matcode();
                 fill_respons_user();
                 fill_printer();
+                fill_instru();
             }
             label = 1;
             ht代码面数 = new Hashtable();
+            
             if (!mySystem.Parameter.isSqlOk)
             {
                 string strConnect = "server=" + Parameter.IP_port + ";database=dingdan_kucun;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
@@ -638,6 +661,7 @@ namespace BatchProductRecord
             bt查询插入.Enabled = false;
             dataGridView1.DataBindingComplete += dataGridView1_DataBindingComplete;
             dataGridView1.EditingControlShowing += new DataGridViewEditingControlShowingEventHandler(dataGridView1_EditingControlShowing);
+            估计天数();
         }
 
         private void init()
@@ -678,6 +702,8 @@ namespace BatchProductRecord
             cb工艺.DataBindings.Add("Text", bs_prodinstr.DataSource, "生产工艺");
             tb设备编号.DataBindings.Add("Text", bs_prodinstr.DataSource, "生产设备编号");
             dtp开始生产日期.DataBindings.Add("Value", bs_prodinstr.DataSource, "开始生产日期");
+
+            tb每日产量.DataBindings.Add("Text", bs_prodinstr.DataSource, "每日产量");
 
             //tb内外层物料代码.DataBindings.Add("Text", bs_prodinstr.DataSource, "内外层物料代码");
             cb内外层物料代码.DataBindings.Add("Text", bs_prodinstr.DataSource, "内外层物料代码");
@@ -1166,8 +1192,21 @@ namespace BatchProductRecord
 
             //计算合计
             calc合计();
+            估计天数();
         }
 
+        void 估计天数()
+        {
+            try
+            {
+                double a = Convert.ToDouble(dt_prodinstr.Rows[0]["用料重量合计"]) / Convert.ToInt32(tb每日产量.Text) / 24;
+                textBox生产天数.Text = Math.Ceiling(a).ToString();
+            }
+            catch
+            {
+                textBox生产天数.Text = "0";
+            }
+        }
 
         void calc合计()
         {
@@ -1441,9 +1480,10 @@ namespace BatchProductRecord
             dr["编制时间"]=DateTime.Now;
             dr["审批时间"]=DateTime.Now;
             dr["接收时间"]=DateTime.Now;
+            dr["每日产量"] = 120;
             dr["备注"] = "批号末尾数字代表膜的厚度，分别为：100um-1,80um-2,60um-3,120um-4,200um-5,110um-6,70um-7";
             dr["比例"] = 25;
-
+            dr["审核是否通过"] = false;
             dr["审批人"] = "";
             dr["接收人"] = "";
 
@@ -1524,6 +1564,8 @@ namespace BatchProductRecord
             cb工艺.DataBindings.Clear();
             tb设备编号.DataBindings.Clear();
             dtp开始生产日期.DataBindings.Clear();
+
+            tb每日产量.DataBindings.Clear();
 
             cb内外层物料代码.DataBindings.Clear();
             tb内外层物料批号.DataBindings.Clear();
@@ -2601,6 +2643,11 @@ namespace BatchProductRecord
             {
                 writeDGVWidthToSetting(dataGridView1);
             }
+        }
+
+        private void tb每日产量_TextChanged(object sender, EventArgs e)
+        {
+            估计天数();
         }
     }
 }

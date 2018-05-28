@@ -12,7 +12,7 @@ using System.Collections;
 
 namespace mySystem.Setting
 {
-    public partial class 吹膜设置 : Form
+    public partial class 吹膜设置 : BaseForm
     {
         public 吹膜设置()
         {
@@ -191,12 +191,13 @@ namespace mySystem.Setting
             this.dgv清洁.DataSource = bs清洁.DataSource;
             //显示序号
             setDataGridViewRowNums(this.dgv清洁);
-            this.dgv清洁.Columns["清洁区域"].MinimumWidth = 200;
-            this.dgv清洁.Columns["清洁内容"].MinimumWidth = 250;
+            //this.dgv清洁.Columns["清洁区域"].MinimumWidth = 200;
+            //this.dgv清洁.Columns["清洁内容"].MinimumWidth = 250;
             this.dgv清洁.Columns["清洁内容"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             Utility.setDataGridViewAutoSizeMode(dgv清洁);
             this.dgv清洁.Columns["清洁内容"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv清洁.Columns["ID"].Visible = false;
+            readDGVWidthFromSettingAndSet(dgv清洁);
 
             //**************************   供料清场    ***********************************
             dt供料清场 = new DataTable("设置供料工序清场项目"); //""中的是表名
@@ -208,11 +209,12 @@ namespace mySystem.Setting
             this.dgv供料清场.DataSource = bs供料清场.DataSource;
             //显示序号
             setDataGridViewRowNums(this.dgv供料清场);
-            this.dgv供料清场.Columns["清场内容"].MinimumWidth = 200;
+            //this.dgv供料清场.Columns["清场内容"].MinimumWidth = 200;
             this.dgv供料清场.Columns["清场内容"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             Utility.setDataGridViewAutoSizeMode(dgv供料清场);
             this.dgv供料清场.Columns["清场内容"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv供料清场.Columns["ID"].Visible = false;
+            readDGVWidthFromSettingAndSet(dgv供料清场);
 
             //************************    吹膜清场     *******************************************
             dt吹膜清场 = new DataTable("设置吹膜工序清场项目"); //""中的是表名
@@ -224,11 +226,12 @@ namespace mySystem.Setting
             this.dgv吹膜清场.DataSource = bs吹膜清场.DataSource;
             //显示序号
             setDataGridViewRowNums(this.dgv吹膜清场);
-            this.dgv吹膜清场.Columns["清场内容"].MinimumWidth = 200;
+            //this.dgv吹膜清场.Columns["清场内容"].MinimumWidth = 200;
             this.dgv吹膜清场.Columns["清场内容"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             Utility.setDataGridViewAutoSizeMode(dgv吹膜清场);
             this.dgv吹膜清场.Columns["清场内容"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv吹膜清场.Columns["ID"].Visible = false;
+            readDGVWidthFromSettingAndSet(dgv吹膜清场);
 
             //**************************   开机    ***********************************
             dt开机 = new DataTable("设置吹膜机组开机前确认项目"); //""中的是表名
@@ -240,12 +243,13 @@ namespace mySystem.Setting
             this.dgv开机.DataSource = bs开机.DataSource;
             //显示序号
             setDataGridViewRowNums(this.dgv开机);
-            this.dgv开机.Columns["确认项目"].MinimumWidth = 160;
-            this.dgv开机.Columns["确认内容"].MinimumWidth = 200;
+            //this.dgv开机.Columns["确认项目"].MinimumWidth = 160;
+            //this.dgv开机.Columns["确认内容"].MinimumWidth = 200;
             this.dgv开机.Columns["确认内容"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             Utility.setDataGridViewAutoSizeMode(dgv开机);
             this.dgv开机.Columns["确认内容"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv开机.Columns["ID"].Visible = false;
+            readDGVWidthFromSettingAndSet(dgv开机);
 
             //************************    交接班     *******************************************
             dt交接班 = new DataTable("设置岗位交接班项目"); //""中的是表名
@@ -257,11 +261,12 @@ namespace mySystem.Setting
             this.dgv交接班.DataSource = bs交接班.DataSource;
             //显示序号
             setDataGridViewRowNums(this.dgv交接班);
-            this.dgv交接班.Columns["确认项目"].MinimumWidth = 250;
+            //this.dgv交接班.Columns["确认项目"].MinimumWidth = 250;
             this.dgv交接班.Columns["确认项目"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             Utility.setDataGridViewAutoSizeMode(dgv交接班);
             this.dgv交接班.Columns["确认项目"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv交接班.Columns["ID"].Visible = false;
+            readDGVWidthFromSettingAndSet(dgv交接班);
 
             //************************    产品     *******************************************
             dt产品 = new DataTable("设置吹膜产品"); //""中的是表名
@@ -273,11 +278,12 @@ namespace mySystem.Setting
             this.dgv产品.DataSource = bs产品.DataSource;
             //显示序号
             setDataGridViewRowNums(this.dgv产品);
-            this.dgv产品.Columns["产品名称"].MinimumWidth = 150;
+            //this.dgv产品.Columns["产品名称"].MinimumWidth = 150;
             this.dgv产品.Columns["产品名称"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             Utility.setDataGridViewAutoSizeMode(dgv产品);
             this.dgv产品.Columns["产品名称"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv产品.Columns["ID"].Visible = false;
+            readDGVWidthFromSettingAndSet(dgv产品);
 
             //**************************   产品编码    ***********************************
             dt产品编码 = new DataTable("设置吹膜产品编码"); //""中的是表名
@@ -289,11 +295,12 @@ namespace mySystem.Setting
             this.dgv产品编码.DataSource = bs产品编码.DataSource;
             //显示序号
             setDataGridViewRowNums(this.dgv产品编码);
-            this.dgv产品编码.Columns["产品编码"].MinimumWidth = 150;
+            //this.dgv产品编码.Columns["产品编码"].MinimumWidth = 150;
             this.dgv产品编码.Columns["产品编码"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             Utility.setDataGridViewAutoSizeMode(dgv产品编码);
             this.dgv产品编码.Columns["产品编码"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv产品编码.Columns["ID"].Visible = false;
+            readDGVWidthFromSettingAndSet(dgv产品编码);
 
             //************************    物料代码     *******************************************
             dt物料代码 = new DataTable("设置物料代码"); //""中的是表名
@@ -305,11 +312,12 @@ namespace mySystem.Setting
             this.dgv物料代码.DataSource = bs物料代码.DataSource;
             //显示序号
             setDataGridViewRowNums(this.dgv物料代码);
-            this.dgv物料代码.Columns["物料代码"].MinimumWidth = 150;
+            //this.dgv物料代码.Columns["物料代码"].MinimumWidth = 150;
             this.dgv物料代码.Columns["物料代码"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             Utility.setDataGridViewAutoSizeMode(dgv物料代码);
             this.dgv物料代码.Columns["物料代码"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv物料代码.Columns["ID"].Visible = false;
+            readDGVWidthFromSettingAndSet(dgv物料代码);
 
             //**************************   工艺    ***********************************
             dt工艺 = new DataTable("设置吹膜工艺"); //""中的是表名
@@ -321,11 +329,12 @@ namespace mySystem.Setting
             this.dgv工艺.DataSource = bs工艺.DataSource;
             //显示序号
             setDataGridViewRowNums(this.dgv工艺);
-            this.dgv工艺.Columns["工艺名称"].MinimumWidth = 150;
+            //this.dgv工艺.Columns["工艺名称"].MinimumWidth = 150;
             this.dgv工艺.Columns["工艺名称"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             Utility.setDataGridViewAutoSizeMode(dgv工艺);
             this.dgv工艺.Columns["工艺名称"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv工艺.Columns["ID"].Visible = false;
+            readDGVWidthFromSettingAndSet(dgv工艺);
 
             //**************************   废品    ***********************************
             dt废品 = new DataTable("设置废品产生原因"); //""中的是表名
@@ -337,11 +346,12 @@ namespace mySystem.Setting
             this.dgv废品.DataSource = bs废品.DataSource;
             //显示序号
             setDataGridViewRowNums(this.dgv废品);
-            this.dgv废品.Columns["废品产生原因"].MinimumWidth = 250;
+            //this.dgv废品.Columns["废品产生原因"].MinimumWidth = 250;
             this.dgv废品.Columns["废品产生原因"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             Utility.setDataGridViewAutoSizeMode(dgv废品);
             this.dgv废品.Columns["废品产生原因"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv废品.Columns["ID"].Visible = false;
+            readDGVWidthFromSettingAndSet(dgv废品);
 
             //**************************   人员设置    ***********************************
             dt人员 = new DataTable("用户"); //""中的是表名
@@ -354,11 +364,12 @@ namespace mySystem.Setting
             this.dgv人员.DataSource = bs人员.DataSource;
             //显示序号
             setDataGridViewRowNums(this.dgv人员);
-            this.dgv人员.Columns["用户名"].MinimumWidth = 150;
-            this.dgv人员.Columns["班次"].MinimumWidth = 100;
+            //this.dgv人员.Columns["用户名"].MinimumWidth = 150;
+            //this.dgv人员.Columns["班次"].MinimumWidth = 100;
             Utility.setDataGridViewAutoSizeMode(dgv人员);
             this.dgv人员.Columns["用户名"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv人员.Columns["ID"].Visible = false;
+            readDGVWidthFromSettingAndSet(dgv人员);
 
             //************************    人员权限     *******************************************
             dt权限 = new DataTable("用户权限"); //""中的是表名
@@ -370,15 +381,17 @@ namespace mySystem.Setting
             this.dgv权限.DataSource = bs权限.DataSource;
             //显示序号
             setDataGridViewRowNums(this.dgv权限);
-            this.dgv权限.Columns["步骤"].MinimumWidth = 100;
-            this.dgv权限.Columns["操作员"].MinimumWidth = 150;
-            this.dgv权限.Columns["审核员"].MinimumWidth = 150;
-            this.dgv权限.Columns["操作员"].Width = 400;
-            this.dgv权限.Columns["审核员"].Width = 400;
+            //this.dgv权限.Columns["步骤"].MinimumWidth = 100;
+            //this.dgv权限.Columns["操作员"].MinimumWidth = 150;
+            //this.dgv权限.Columns["审核员"].MinimumWidth = 150;
+            //this.dgv权限.Columns["操作员"].Width = 400;
+            //this.dgv权限.Columns["审核员"].Width = 400;
             this.dgv权限.Columns["步骤"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             Utility.setDataGridViewAutoSizeMode(dgv权限);
             this.dgv权限.Columns["步骤"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv权限.Columns["ID"].Visible = false;
+            readDGVWidthFromSettingAndSet(dgv权限);
+
             // ********   代码批号 设置 ***********
             dt代码批号 = new DataTable("设置产品代码和产品批号的对应关系");
             da代码批号 = new SqlDataAdapter("select * from 设置产品代码和产品批号的对应关系", mySystem.Parameter.conn);
@@ -390,6 +403,7 @@ namespace mySystem.Setting
             setDataGridViewRowNums(this.dgv代码批号);
             this.dgv代码批号.Columns["ID"].Visible = false;
             Utility.setDataGridViewAutoSizeMode(dgv代码批号);
+            readDGVWidthFromSettingAndSet(dgv代码批号);
         }
 
         private void setDataGridViewRowNums(DataGridView dgv)
@@ -1146,6 +1160,12 @@ namespace mySystem.Setting
 
 
             setDataGridViewRowNums(dgv物料代码);
+        }
+
+        private void dgv清洁_ColumnWidthChanged(object sender, DataGridViewColumnEventArgs e)
+        {
+            DataGridView dgv = (sender as DataGridView);
+            writeDGVWidthToSetting(dgv);
         }
     }
 }

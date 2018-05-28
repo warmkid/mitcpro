@@ -268,6 +268,7 @@
             this.dgv吹膜清场.RowTemplate.Height = 23;
             this.dgv吹膜清场.Size = new System.Drawing.Size(500, 165);
             this.dgv吹膜清场.TabIndex = 7;
+            this.dgv吹膜清场.ColumnWidthChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dgv清洁_ColumnWidthChanged);
             this.dgv吹膜清场.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgv吹膜清场_DataBindingComplete);
             // 
             // label35
@@ -329,6 +330,7 @@
             this.dgv供料清场.RowTemplate.Height = 23;
             this.dgv供料清场.Size = new System.Drawing.Size(500, 165);
             this.dgv供料清场.TabIndex = 7;
+            this.dgv供料清场.ColumnWidthChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dgv清洁_ColumnWidthChanged);
             this.dgv供料清场.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgv供料清场_DataBindingComplete);
             // 
             // label36
@@ -404,6 +406,7 @@
             this.dgv清洁.RowTemplate.Height = 23;
             this.dgv清洁.Size = new System.Drawing.Size(662, 165);
             this.dgv清洁.TabIndex = 2;
+            this.dgv清洁.ColumnWidthChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dgv清洁_ColumnWidthChanged);
             this.dgv清洁.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgv清洁_DataBindingComplete);
             // 
             // button1
@@ -515,6 +518,7 @@
             this.dgv交接班.RowTemplate.Height = 23;
             this.dgv交接班.Size = new System.Drawing.Size(784, 165);
             this.dgv交接班.TabIndex = 2;
+            this.dgv交接班.ColumnWidthChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dgv清洁_ColumnWidthChanged);
             this.dgv交接班.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgv交接班_DataBindingComplete);
             // 
             // del交接班
@@ -568,6 +572,7 @@
             this.dgv开机.RowTemplate.Height = 23;
             this.dgv开机.Size = new System.Drawing.Size(784, 165);
             this.dgv开机.TabIndex = 2;
+            this.dgv开机.ColumnWidthChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dgv清洁_ColumnWidthChanged);
             this.dgv开机.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgv开机_DataBindingComplete);
             // 
             // del开机
@@ -1315,6 +1320,7 @@
             this.dgv废品.RowTemplate.Height = 23;
             this.dgv废品.Size = new System.Drawing.Size(606, 149);
             this.dgv废品.TabIndex = 2;
+            this.dgv废品.ColumnWidthChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dgv清洁_ColumnWidthChanged);
             this.dgv废品.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgv废品_DataBindingComplete);
             // 
             // del废品
@@ -1368,6 +1374,7 @@
             this.dgv工艺.RowTemplate.Height = 23;
             this.dgv工艺.Size = new System.Drawing.Size(490, 129);
             this.dgv工艺.TabIndex = 2;
+            this.dgv工艺.ColumnWidthChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dgv清洁_ColumnWidthChanged);
             this.dgv工艺.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgv工艺_DataBindingComplete);
             // 
             // del工艺
@@ -1527,6 +1534,7 @@
             this.dgv产品.RowTemplate.Height = 23;
             this.dgv产品.Size = new System.Drawing.Size(490, 129);
             this.dgv产品.TabIndex = 2;
+            this.dgv产品.ColumnWidthChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dgv清洁_ColumnWidthChanged);
             this.dgv产品.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgv产品_DataBindingComplete);
             // 
             // del产品
@@ -1664,6 +1672,7 @@
             this.dgv权限.RowTemplate.Height = 23;
             this.dgv权限.Size = new System.Drawing.Size(968, 187);
             this.dgv权限.TabIndex = 2;
+            this.dgv权限.ColumnWidthChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dgv清洁_ColumnWidthChanged);
             this.dgv权限.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgv权限_DataBindingComplete);
             // 
             // button3
@@ -1715,6 +1724,7 @@
             this.dgv人员.RowTemplate.Height = 23;
             this.dgv人员.Size = new System.Drawing.Size(534, 184);
             this.dgv人员.TabIndex = 2;
+            this.dgv人员.ColumnWidthChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dgv清洁_ColumnWidthChanged);
             this.dgv人员.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgv人员_DataBindingComplete);
             // 
             // del人员
@@ -1804,6 +1814,7 @@
             this.dgv代码批号.RowTemplate.Height = 23;
             this.dgv代码批号.Size = new System.Drawing.Size(562, 363);
             this.dgv代码批号.TabIndex = 0;
+            this.dgv代码批号.ColumnWidthChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dgv清洁_ColumnWidthChanged);
             // 
             // 吹膜设置
             // 

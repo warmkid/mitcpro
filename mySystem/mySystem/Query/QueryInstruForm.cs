@@ -289,7 +289,7 @@ namespace mySystem
             {
                 String colName = this.dgv.Columns[i].HeaderText;
                 int strlen = colName.Length;
-                this.dgv.Columns[i].MinimumWidth = strlen * 25;
+                //this.dgv.Columns[i].MinimumWidth = strlen * 25;
             }  
 
             //待审核标红

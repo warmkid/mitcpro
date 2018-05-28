@@ -1087,7 +1087,7 @@ namespace mySystem.Extruction.Process
                 dataGridView1.Columns.RemoveAt(dataGridView1.Columns.Count - 1);
             }
             setDataGridViewColumns();
-
+            readDGVWidthFromSettingAndSet(dataGridView1);
             bs_prodlist.DataSource = dt_prodlist;
             dataGridView1.DataSource = bs_prodlist.DataSource;
             setDataGridViewRowNums();
@@ -1834,6 +1834,11 @@ namespace mySystem.Extruction.Process
                 this.Close();
                 //return;
             }
+        }
+
+        private void dataGridView1_ColumnWidthChanged(object sender, DataGridViewColumnEventArgs e)
+        {
+            writeDGVWidthToSetting(dataGridView1);
         }
     }
 }

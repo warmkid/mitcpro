@@ -569,7 +569,8 @@ namespace mySystem.Extruction.Process
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
+            writeDGVWidthToSetting(dataGridView1);
+            writeDGVWidthToSetting(dataGridView2);
             bool rt = save();
             //控件可见性
             if (rt && _userState == Parameter.UserState.操作员)
@@ -909,6 +910,7 @@ namespace mySystem.Extruction.Process
             while (dataGridView1.Columns.Count > 0)
                 dataGridView1.Columns.RemoveAt(dataGridView1.Columns.Count - 1);
             setDataGridViewCombox();
+            readDGVWidthFromSettingAndSet(dataGridView1);
             bs_prodlist.DataSource = dt_prodlist;
             dataGridView1.DataSource = bs_prodlist.DataSource;
             setDataGridViewColumns();
@@ -923,6 +925,7 @@ namespace mySystem.Extruction.Process
             while (dataGridView2.Columns.Count > 0)
                 dataGridView2.Columns.RemoveAt(dataGridView2.Columns.Count - 1);
             setDataGridViewCombox2();
+            readDGVWidthFromSettingAndSet(dataGridView2);
             bs_prodlist2.DataSource = dt_prodlist2;
             dataGridView2.DataSource = bs_prodlist2.DataSource;
             setDataGridViewColumns2();

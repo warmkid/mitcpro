@@ -251,7 +251,7 @@ namespace mySystem.Setting
             //显示序号
             //dgv人员下拉框设置();
             setDataGridViewRowNums(this.dgv人员);
-            this.dgv人员.Columns["用户名"].MinimumWidth = 150;
+            //this.dgv人员.Columns["用户名"].MinimumWidth = 150;
             //this.dgv人员.Columns["班次"].MinimumWidth = 100;
             Utility.setDataGridViewAutoSizeMode(dgv人员);
             this.dgv人员.Columns["用户名"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
@@ -267,9 +267,9 @@ namespace mySystem.Setting
             this.dgv权限.DataSource = bs权限.DataSource;
             //显示序号
             setDataGridViewRowNums(this.dgv权限);
-            this.dgv权限.Columns["步骤"].MinimumWidth = 250;
-            this.dgv权限.Columns["操作员"].MinimumWidth = 150;
-            this.dgv权限.Columns["审核员"].MinimumWidth = 150;
+            //this.dgv权限.Columns["步骤"].MinimumWidth = 250;
+            //this.dgv权限.Columns["操作员"].MinimumWidth = 150;
+            //this.dgv权限.Columns["审核员"].MinimumWidth = 150;
             this.dgv权限.Columns["步骤"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             Utility.setDataGridViewAutoSizeMode(dgv权限);
             this.dgv权限.Columns["步骤"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;

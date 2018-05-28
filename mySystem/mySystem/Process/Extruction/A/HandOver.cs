@@ -127,7 +127,7 @@ namespace mySystem.Process.Extruction.A
                 //if (dt.Rows[0]["夜班交班员"].ToString() != "" &&
                 //    (dt.Rows[0]["夜班接班员"].ToString() != "" || dt.Rows[0]["夜班接班员"].ToString() != __待审核))
                 // 只要白班接班员是一个人名，则表示上一个单子的这个过程已经完成了
-                if (dt.Rows[0]["白班接班员"].ToString() !="" ||dt.Rows[0]["白班接班员"].ToString() != __待审核 )
+                if (dt.Rows[0]["白班接班员"].ToString() !="" && dt.Rows[0]["白班接班员"].ToString() != __待审核 )
                 {
                     return false;
                 }
@@ -326,12 +326,12 @@ namespace mySystem.Process.Extruction.A
                 label角色.Text = mySystem.Parameter.userName+"(管理员)";
             }
             // 让用户选择操作员还是审核员，选“是”表示操作员
-            if (Parameter.UserState.Both == _userState)
-            {
-                if (DialogResult.Yes == MessageBox.Show("您是否要以操作员身份进入", "提示", MessageBoxButtons.YesNo)) _userState = Parameter.UserState.操作员;
-                else _userState = Parameter.UserState.审核员;
+            //if (Parameter.UserState.Both == _userState)
+            //{
+            //    if (DialogResult.Yes == MessageBox.Show("您是否要以操作员身份进入", "提示", MessageBoxButtons.YesNo)) _userState = Parameter.UserState.操作员;
+            //    else _userState = Parameter.UserState.审核员;
 
-            }
+            //}
             if (Parameter.UserState.操作员 == _userState) label角色.Text = mySystem.Parameter.userName+"(操作员)";
             if (Parameter.UserState.审核员 == _userState) label角色.Text = mySystem.Parameter.userName+"(审核员)";
             label角色.Text += " " + Parameter.userflight;
@@ -516,11 +516,11 @@ namespace mySystem.Process.Extruction.A
         {
             for (int i = 0; i < dtInner.Rows.Count; i++)
             {
-                if ((Convert.ToString(Parameter.userflight) == "白班")&&(txb夜班接班员.Text==""))
+                if (true || (Convert.ToString(Parameter.userflight) == "白班")&&(txb夜班接班员.Text==""))
                 {
                     dtInner.Rows[i]["确认结果白班"] = "是";
                 }
-                if ((Convert.ToString(Parameter.userflight) == "夜班") && (txb白班接班员.Text == ""))
+                if (true || (Convert.ToString(Parameter.userflight) == "夜班") && (txb白班接班员.Text == ""))
                 {
                     dtInner.Rows[i]["确认结果夜班"] = "是";
                 }
@@ -1375,11 +1375,17 @@ namespace mySystem.Process.Extruction.A
                     if ((Convert.ToString(Parameter.userflight) == "白班") && (dtOuter.Rows[0]["夜班接班员"].ToString() == ""))
                     {
                         dtOuter.Rows[0]["夜班接班员"] = "无";
+                        if (dtOuter.Rows[0]["夜班交班员"].ToString() == "") dtOuter.Rows[0]["夜班交班员"] = "无";
+                        if (dtOuter.Rows[0]["白班接班员"].ToString() == "") dtOuter.Rows[0]["白班接班员"] = "无";
+                        if (dtOuter.Rows[0]["夜班异常情况处理"].ToString() == "") dtOuter.Rows[0]["夜班异常情况处理"] = "无";
                         dtOuter.Rows[0]["白班交接班时间"] = Convert.ToDateTime(DateTime.Now.ToShortTimeString());
                     }
                     if ((Convert.ToString(Parameter.userflight) == "夜班") && (dtOuter.Rows[0]["白班接班员"].ToString() == ""))
                     {
                         dtOuter.Rows[0]["白班接班员"] ="无";
+                        if (dtOuter.Rows[0]["白班交班员"].ToString() == "") dtOuter.Rows[0]["白班交班员"] = "无";
+                        if (dtOuter.Rows[0]["夜班接班员"].ToString() == "") dtOuter.Rows[0]["夜班接班员"] = "无";
+                        if (dtOuter.Rows[0]["白班异常情况处理"].ToString() == "") dtOuter.Rows[0]["白班异常情况处理"] = "无";
                         dtOuter.Rows[0]["夜班交接班时间"] = Convert.ToDateTime(DateTime.Now.ToShortTimeString());
                     }
 
