@@ -40,6 +40,13 @@ namespace mySystem.Process.Extruction
             cc班次.Items.Add("夜班");
             cc班次.SelectedIndex = 0;
 
+            cc质量状态.Items.Add("待验");
+            cc质量状态.Items.Add("合格");
+            cc质量状态.Items.Add("不合格");
+            cc质量状态.SelectedIndex = 0;
+
+            tc操作人.Text = mySystem.Parameter.userName;
+
             c标签模板.Items.Add("吹膜半成品标签");
             c标签模板.Items.Add("内标签-英文照射");
             c标签模板.Items.Add("内标签-英文不照射");
@@ -167,6 +174,7 @@ namespace mySystem.Process.Extruction
                 da.Fill(dt);
                 if (dt.Rows.Count == 0)
                 {
+                    // TODO 修改了标签模板，这里也需要修改
                     DataRow dr = dt.NewRow();
                     dr["生产指令ID"] = mySystem.Parameter.proInstruID;
                     dr["生产指令"] = _s;
@@ -328,6 +336,8 @@ namespace mySystem.Process.Extruction
             wb = null;
             oXL = null;
         }
+
+       
   
     }
 }
