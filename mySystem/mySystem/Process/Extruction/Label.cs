@@ -179,6 +179,7 @@ namespace mySystem.Process.Extruction
                     dr["生产指令ID"] = mySystem.Parameter.proInstruID;
                     dr["生产指令"] = _s;
                     dr["标签类型"] = c标签模板.SelectedIndex;
+                    
                     dr["膜代码"] = cmb膜代码.SelectedItem;
                     dr["批号中文"] = tc批号.Text;
                     dr["数量米"] = tc数量米.Text;
@@ -221,6 +222,7 @@ namespace mySystem.Process.Extruction
 
         public static void printLable(int id)
         {
+            // TODO 根据ID打印的函数，因为标签模板格式有修改，这里也需要修改：质量状态，操作人，备注
             string sql = "select * from 标签 where ID={0}";
             OleDbDataAdapter da = new OleDbDataAdapter(String.Format(sql, id), mySystem.Parameter.connOle);
             System.Data.DataTable dt = new System.Data.DataTable();
@@ -230,6 +232,7 @@ namespace mySystem.Process.Extruction
                 MessageBox.Show("未找到标签信息，无法打印");
                 return;
             }
+            
             DataRow dr = dt.Rows[0];
             string path = Directory.GetCurrentDirectory();
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
@@ -243,7 +246,6 @@ namespace mySystem.Process.Extruction
             my.Cells[3, 2].Value = dr["数量米"] + "米；" + dr["数量千克"] + "KG";
             my.Cells[4, 2].Value = Convert.ToDateTime(dr["日期中文"]).ToString("yyyy/MM/dd") + "     " +
                 (dr["班次中文"]);
-
             my.Cells[6, 2].Value = dr["产品名称中文"];
             my.Cells[7, 2].Value = dr["产品编码中文"];
             my.Cells[8, 2].Value = dr["产品规格中文"];
@@ -300,6 +302,9 @@ namespace mySystem.Process.Extruction
             my.Cells[3, 2].Value = tc数量米.Text + "米；" + tc数量KG.Text + "KG";
             my.Cells[4, 2].Value = dc日期.Value.ToShortDateString() + "     " +
                 (cc班次.SelectedItem.ToString() == "白班" ? "白班" : "夜班");
+            my.Cells[22, 2].Value = cc质量状态.SelectedItem.ToString();
+            my.Cells[23, 2].Value = tc操作人.Text;
+            my.Cells[24, 2].Value = tc备注.Text;
 
             my.Cells[6, 2].Value = tc产品名称.Text;
             my.Cells[7, 2].Value = tc产品编码.Text;
