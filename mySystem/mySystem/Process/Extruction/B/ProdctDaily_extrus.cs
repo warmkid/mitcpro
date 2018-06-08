@@ -377,22 +377,42 @@ namespace mySystem
                 if (dt_检验记录_详细.Rows[dt_检验记录_详细.Rows.Count - 1]["结束时间"] != null && dt_检验记录_详细.Rows[dt_检验记录_详细.Rows.Count - 1]["结束时间"].ToString() != "")
                 {
                     TimeSpan delt = (DateTime)dt_检验记录_详细.Rows[dt_检验记录_详细.Rows.Count - 1]["结束时间"] - (DateTime)dt_检验记录_详细.Rows[0]["开始时间"];
-                    dr["工时"] = Math.Ceiling(delt.TotalHours);//工时
+                    //dr["工时"] = Math.Ceiling(delt.TotalHours);//工时
+                    dr["工时"] = Math.Round(delt.TotalHours, 1);
                 }
 
 
                 //查找废品记录中对应的记录查看的是当天的产品代码下供料合计
                 float sum_废品重量 = 0;
                 for (int j = 0; j < dt_废品记录.Rows.Count; j++)
-                {                   
-                    string date_temp2=((DateTime)dt_废品记录.Rows[j]["生产日期"]).ToString("yyyy-MM-dd");                    
+                {
+                    // 白班则正常检查
+                    string date_temp2 = ((DateTime)dt_废品记录.Rows[j]["生产日期"]).ToString("yyyy-MM-dd");
                     string code_temp2 = dt_废品记录.Rows[j]["产品代码"].ToString();
-                    string flight_temp2=dt_废品记录.Rows[j]["班次"].ToString();
-
-                    if (date_temp1 == date_temp2 && code_temp1 == code_temp2 && flight_temp2==flight_temp1)
+                    string flight_temp2 = dt_废品记录.Rows[j]["班次"].ToString();
+                    if (flight_temp2 == "白班")
                     {
-                        if (dt_废品记录.Rows[j]["不良品数量"] != null && dt_废品记录.Rows[j]["不良品数量"].ToString()!="")
-                            sum_废品重量 += float.Parse(dt_废品记录.Rows[j]["不良品数量"].ToString());
+                        if (date_temp1 == date_temp2 && code_temp1 == code_temp2 && flight_temp2 == flight_temp1)
+                        {
+                            if (dt_废品记录.Rows[j]["不良品数量"] != null && dt_废品记录.Rows[j]["不良品数量"].ToString() != "")
+                                sum_废品重量 += float.Parse(dt_废品记录.Rows[j]["不良品数量"].ToString());
+                        }
+                    }
+                    // 夜班则应该是当天12点后-第二天12点前的夜班
+                    else
+                    {
+                        DateTime tttt= DateTime.Parse(date_temp1);
+                        String today = tttt.ToString("yyyy-MM-dd");
+                        String tomorrow = tttt.AddDays(1).ToString("yyyy-MM-dd");
+                        String this_datetime = ((DateTime)dt_废品记录.Rows[j]["生产日期"]).ToString("yyyy-MM-dd");
+                        int hour = Convert.ToInt32( ((DateTime)dt_废品记录.Rows[j]["生产日期"]).ToString("HH"));
+                        if (flight_temp2 == flight_temp1 /*班次一样*/&& code_temp1 == code_temp2/*产品代码一样*/ &&
+                            (this_datetime == today && hour >= 12 ||
+                            this_datetime == tomorrow && hour <= 12))
+                        {
+                            if (dt_废品记录.Rows[j]["不良品数量"] != null && dt_废品记录.Rows[j]["不良品数量"].ToString() != "")
+                                sum_废品重量 += float.Parse(dt_废品记录.Rows[j]["不良品数量"].ToString());
+                        }
                     }
                 }
                 dr["废品重量"] = Double.Parse(sum_废品重量.ToString("f1"));//废品重量
@@ -420,10 +440,22 @@ namespace mySystem
                     SqlDataAdapter da4 = new SqlDataAdapter(comm4);
                     da4.Fill(dt_供料记录);
                 }
-               
 
-                if (dt_供料记录.Rows.Count > 0)
+                //如果上一行的本行是同一天同一个班次，则直接为0
+                bool isPrevTheSame = false;
+                if (dt_prodlist.Rows.Count > 0)
                 {
+                    DataRow prevdr = dt_prodlist.Rows[dt_prodlist.Rows.Count - 1];
+                    if (prevdr["生产时间"].ToString() == dr["生产时间"].ToString() 
+                        && prevdr["班次"].ToString() == dr["班次"].ToString())
+                        isPrevTheSame = true;
+                }
+
+                if (dt_供料记录.Rows.Count > 0 && !isPrevTheSame)
+                {
+                    
+
+
                     if (dt_供料记录.Rows[0]["外层供料量合计a"] != null && dt_供料记录.Rows[0]["外层供料量合计a"].ToString() != "")
                         dr["加料A"] = float.Parse(dt_供料记录.Rows[0]["外层供料量合计a"].ToString());//加料A
                     else

@@ -183,6 +183,7 @@ namespace mySystem.Process.Extruction.B
             //cmb产品代码.SelectedIndexChanged += new EventHandler(cmb产品代码_SelectedIndexChanged_without_Id);
             填写界面上被disable的部分为横线();
             setEnableReadOnly();
+            调整tab顺序();
         }
         /// <summary>
         /// get settings and so on
@@ -307,8 +308,23 @@ namespace mySystem.Process.Extruction.B
             
             添加行列名称();
             隐藏多余TextBox();
-            
+            //调整tab顺序();
         }
+
+
+        private void 调整tab顺序()
+        {
+            int tabidx = 0;
+            for (int i = 0; i < array1[0].Count; ++i)
+            {
+                for (int j = 0; j < array1.Count; ++j)
+                {
+                    if (array1[j][i].Enabled) 
+                        array1[j][i].TabIndex = ++tabidx;
+                }
+            }
+        }
+
 
         /// <summary>
         /// this function fill some textboxes the rows name anf columns name
@@ -1823,8 +1839,8 @@ namespace mySystem.Process.Extruction.B
             addOtherEvnetHandler();            
             btn打印.Enabled = true;
             cmb打印机选择.Enabled = true;
-            
-            
+
+            调整tab顺序();
         }
 
         private void btn查看日志_Click(object sender, EventArgs e)
@@ -1904,6 +1920,15 @@ namespace mySystem.Process.Extruction.B
 
         private void bt查看人员信息_Click(object sender, EventArgs e)
         {
+            //
+            string fmt = "type:{0} x:{1} y{2} width:{3} height:{4} name:{5} tabidx:{6}";
+            foreach (Control c in this.Controls)
+            {
+                System.Console.WriteLine(String.Format(
+                    fmt, c.GetType().ToString(), c.Location.X, c.Location.Y, c.Width, c.Height, c.Name, c.TabIndex
+                    ));
+            }
+            //
             if (!mySystem.Parameter.isSqlOk)
             {
                 OleDbDataAdapter da;

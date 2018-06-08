@@ -929,7 +929,8 @@ namespace mySystem.Extruction.Process
         //保存按钮
         private void SaveBtn_Click(object sender, EventArgs e)
         {
-            
+            // 保存时再统计一次。
+            getTotal();
             isSaveClicked = true;
             bool isSaved = Save();
             //控件可见性

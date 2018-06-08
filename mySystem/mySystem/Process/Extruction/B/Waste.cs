@@ -82,7 +82,7 @@ namespace mySystem.Process.Extruction.B
             getUsrList();
             getWasteRason();
             
-            dtp生产结束时间.Value = DateTime.Now;
+            
             
 
             readOuterData(lbl生产指令.Text);
@@ -122,6 +122,13 @@ namespace mySystem.Process.Extruction.B
             innerBind();
             计算不良品数量合计();
             setFormState();
+
+            if (_formState == Parameter.FormState.未保存 || _formState == Parameter.FormState.审核未通过 || _formState == Parameter.FormState.无数据)
+            {
+                dtOuter.Rows[0]["生产结束时间"] = DateTime.Now;
+            }
+
+
             setEnableReadOnly();
             
 
@@ -183,6 +190,12 @@ namespace mySystem.Process.Extruction.B
 
             计算不良品数量合计();
             setFormState();
+
+            if (_formState == Parameter.FormState.未保存 || _formState == Parameter.FormState.审核未通过 || _formState == Parameter.FormState.无数据)
+            {
+                dtOuter.Rows[0]["生产结束时间"] = DateTime.Now;
+            }
+
             setEnableReadOnly();
             
         }
