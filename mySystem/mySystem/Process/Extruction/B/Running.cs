@@ -317,12 +317,21 @@ namespace mySystem.Process.Extruction.B
             int tabidx = 0;
             for (int i = 0; i < array1[0].Count; ++i)
             {
-                for (int j = 0; j < array1.Count; ++j)
+                for (int j = 0; j < 8; ++j)
                 {
                     if (array1[j][i].Enabled) 
                         array1[j][i].TabIndex = ++tabidx;
                 }
             }
+            for (int i = 0; i < array1[0].Count; ++i)
+            {
+                for (int j = 8; j < array1.Count; ++j)
+                {
+                    if (array1[j][i].Enabled)
+                        array1[j][i].TabIndex = ++tabidx;
+                }
+            }
+            btn保存.TabIndex = ++tabidx;
         }
 
 

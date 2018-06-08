@@ -81,7 +81,31 @@ namespace mySystem.Process.Extruction
 
         void cmb膜代码_SelectedIndexChanged(object sender, EventArgs e)
         {
-            tc批号.Text = codeToBatch[cmb膜代码.SelectedItem].ToString();
+            string sql = "select * from 已打印标签 where 生产指令='{0}' and 产品代码='{1}'";
+            SqlDataAdapter da = new SqlDataAdapter( String.Format(sql, mySystem.Parameter.proInstruction,
+                cmb膜代码.SelectedItem.ToString()), mySystem.Parameter.conn);
+            SqlCommandBuilder cb = new SqlCommandBuilder(da);
+            System.Data.DataTable dt = new System.Data.DataTable("temp");
+            da.Fill(dt);
+            if (dt.Rows.Count == 0)
+            {
+                DataRow dr = dt.NewRow();
+                dr["生产指令"] = mySystem.Parameter.proInstruction;
+                dr["产品代码"] = cmb膜代码.SelectedItem.ToString();
+                dr["卷号"] = 1;
+                dt.Rows.Add(dr);
+                da.Update(dt);
+            }
+            
+
+
+            tc批号.Text = codeToBatch[cmb膜代码.SelectedItem].ToString() + " - " + dt.Rows[0]["卷号"].ToString();
+
+
+            dt.Rows[0]["卷号"] = 1 + Convert.ToInt32(dt.Rows[0]["卷号"]);
+            da.Update(dt);
+
+
             // 
             c标签模板.SelectedIndex = Convert.ToInt32(codeToLabel[cmb膜代码.SelectedItem]) - 1;
         }
@@ -174,12 +198,15 @@ namespace mySystem.Process.Extruction
                 da.Fill(dt);
                 if (dt.Rows.Count == 0)
                 {
-                    // TODO 修改了标签模板，这里也需要修改
                     DataRow dr = dt.NewRow();
                     dr["生产指令ID"] = mySystem.Parameter.proInstruID;
                     dr["生产指令"] = _s;
                     dr["标签类型"] = c标签模板.SelectedIndex;
-                    
+
+                    dr["质量状态"] = cc质量状态.SelectedItem.ToString();
+                    dr["操作人"] = tc操作人.Text;
+                    dr["备注"] = tc备注.Text;
+
                     dr["膜代码"] = cmb膜代码.SelectedItem;
                     dr["批号中文"] = tc批号.Text;
                     dr["数量米"] = tc数量米.Text;
@@ -222,7 +249,6 @@ namespace mySystem.Process.Extruction
 
         public static void printLable(int id)
         {
-            // TODO 根据ID打印的函数，因为标签模板格式有修改，这里也需要修改：质量状态，操作人，备注
             string sql = "select * from 标签 where ID={0}";
             OleDbDataAdapter da = new OleDbDataAdapter(String.Format(sql, id), mySystem.Parameter.connOle);
             System.Data.DataTable dt = new System.Data.DataTable();
@@ -246,6 +272,12 @@ namespace mySystem.Process.Extruction
             my.Cells[3, 2].Value = dr["数量米"] + "米；" + dr["数量千克"] + "KG";
             my.Cells[4, 2].Value = Convert.ToDateTime(dr["日期中文"]).ToString("yyyy/MM/dd") + "     " +
                 (dr["班次中文"]);
+
+            my.Cells[22, 2].Value = dr["质量状态"];
+            my.Cells[23, 2].Value = dr["操作人"];
+            my.Cells[24, 2].Value = dr["备注"];
+
+
             my.Cells[6, 2].Value = dr["产品名称中文"];
             my.Cells[7, 2].Value = dr["产品编码中文"];
             my.Cells[8, 2].Value = dr["产品规格中文"];
