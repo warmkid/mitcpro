@@ -433,10 +433,24 @@ namespace mySystem
                     // 应该查供料记录详细信息，按日期查
                     //acsql = "select * from 吹膜供料记录 where 生产指令ID=" + id;
                     acsql = "select sum(吹膜供料记录详细信息.外层供料量) as 外层供料量合计a ,sum(吹膜供料记录详细信息.中内层供料量) as 中内层供料量合计b from 吹膜供料记录详细信息,吹膜供料记录 where 吹膜供料记录详细信息.T吹膜供料记录ID=吹膜供料记录.ID and 吹膜供料记录详细信息.供料时间 between '{0}' and '{1}' and 吹膜供料记录.生产指令ID={2} and 吹膜供料记录详细信息.班次='{3}'";
-                    SqlCommand comm4 = new SqlCommand(String.Format( acsql,
+                    // 这里分白班和夜班。
+                    // 白班正常统计，夜班统计今天中午12点到明天中午12点的数据
+                    SqlCommand comm4 = null;
+                    if(flight_temp1=="白班"){
+                        comm4 = new SqlCommand(String.Format(acsql,
                         date_temp1,
                         DateTime.Parse(date_temp1).AddDays(1).ToString("yyyy-MM-dd"),
-                        id,flight_temp1), mySystem.Parameter.conn);
+                        id, flight_temp1), mySystem.Parameter.conn);
+                    }
+                    else if (flight_temp1 == "夜班")
+                    {
+                        String temp_start = DateTime.Parse(date_temp1).AddHours(12).ToString("yyyy-MM-dd HH:mm:ss");
+                        String temp_end = DateTime.Parse(date_temp1).AddHours(12+24).ToString("yyyy-MM-dd HH:mm:ss");
+                        comm4 = new SqlCommand(String.Format(acsql,
+                        temp_start,
+                        temp_end,
+                        id, flight_temp1), mySystem.Parameter.conn);
+                    }
                     SqlDataAdapter da4 = new SqlDataAdapter(comm4);
                     da4.Fill(dt_供料记录);
                 }

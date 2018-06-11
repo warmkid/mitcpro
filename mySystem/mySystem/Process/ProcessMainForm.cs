@@ -70,10 +70,8 @@ namespace mySystem
         //吹膜
         private void ExtructionBtn_Click(object sender, EventArgs e)
         {
-           
             Parameter.selectCon = 1;
             Parameter.InitCon();
-
             //--无权限不能打开
             if (!checkRight())
             {
@@ -82,14 +80,13 @@ namespace mySystem
             }
             //--
 
-
+            
             checkFlight(); //获取用户班次
             BtnColor();
             Btn吹膜.BackColor = Color.FromArgb(138, 158, 196);            
             foreach (Control control in ProducePanelRight.Controls)
             { control.Dispose(); }
             ProducePanelRight.Controls.Clear();
-
             extruform = new ExtructionMainForm(mainform);
             Parameter.parentExtru = extruform;      
             extruform.TopLevel = false;

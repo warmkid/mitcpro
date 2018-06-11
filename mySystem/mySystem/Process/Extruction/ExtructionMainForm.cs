@@ -29,7 +29,7 @@ namespace mySystem
         {
             InitializeComponent();
             comboInit(); //从数据库中读取生产指令
-            InitBtn();
+            //InitBtn();
             InitTaskBar();
         }
 
@@ -132,7 +132,6 @@ namespace mySystem
                 bool checkBeforePower = false;
                 bool extrusClean = false;
                 bool preheat = false;
-                
                 string sql = @"select 需要开机清洁 from 生产指令信息表 where ID='{0}'";
                 SqlDataAdapter da11 = new SqlDataAdapter(string.Format(sql, Parameter.proInstruID), Parameter.conn);
                 DataTable dt11 = new DataTable();
@@ -239,6 +238,11 @@ namespace mySystem
         //清场记录按钮状态
         public void cleanBtnInit()
         {
+
+            // test
+            A5Btn.Enabled = true;
+            return;
+
             //1、批生产记录（吹膜）  2、吹膜机组清洁记录  3、吹膜岗位交接班记录  4、吹膜供料记录
             //5、吹膜工序废品记录  6、吹膜工序领料退料记录  7、吹膜生产日报表  8、吹膜工序生产和检验记录
             //9、吹膜工序物料平衡记录  10、吹膜机组开机前确认表  11、吹膜机组预热参数记录表
