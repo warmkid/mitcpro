@@ -511,6 +511,15 @@ namespace mySystem
                 }
                 Parameter.proInstruID = Convert.ToInt32(res[0][0]);
             }
+            else
+            {
+                // 按钮都不可以点
+                A3Btn.Enabled = false;
+                C1Btn.Enabled = false;
+                C2Btn.Enabled = false;
+                A5Btn.Enabled = false;
+                otherBtnInit(false);
+            }
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)

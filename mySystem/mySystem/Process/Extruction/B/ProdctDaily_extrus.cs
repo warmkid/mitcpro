@@ -23,6 +23,7 @@ namespace mySystem
     public partial class ProdctDaily_extrus : mySystem.BaseForm
     {
         int __生产指令ID;
+        string __生产指令编码;
         Hashtable ht代码面数;
         Hashtable ht代码宽度;
         bool isFirstBind = true;
@@ -33,6 +34,7 @@ namespace mySystem
             InitializeComponent();
             
             __生产指令ID = mySystem.Parameter.proInstruID;
+            __生产指令编码 = mySystem.Parameter.proInstruction;
             getOtherData();
             fill_printer();
             Init();
@@ -43,6 +45,34 @@ namespace mySystem
             {
                 button2.Enabled = false;
             }
+        }
+
+
+
+        private string idtocode(int id)
+        {
+            string ret = "";
+
+            DataTable dt_temp = new DataTable("生产指令表");
+            BindingSource bs_temp = new BindingSource();
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 生产指令信息表 where ID=" + id, mySystem.Parameter.connOle);
+                OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+                da_temp.Fill(dt_temp);
+            }
+            else
+            {
+                SqlDataAdapter da_temp = new SqlDataAdapter(@"select * from 生产指令信息表 where ID=" + id, mySystem.Parameter.conn);
+                SqlCommandBuilder cb_temp = new SqlCommandBuilder(da_temp);
+                da_temp.Fill(dt_temp);
+            }
+
+            if (dt_temp.Rows.Count > 0)
+            {
+                ret = dt_temp.Rows[0]["生产指令编号"].ToString();
+            }
+            return ret;
         }
 
         public ProdctDaily_extrus(mySystem.MainForm mainform,int id)
@@ -79,6 +109,7 @@ namespace mySystem
             }
             
             __生产指令ID = (int)tempdt.Rows[0]["生产指令ID"];
+            __生产指令编码 = idtocode(__生产指令ID);
             getOtherData();
             fill_printer();
             Init();
@@ -724,7 +755,7 @@ namespace mySystem
                 ind = dataGridView1.Rows.Count - 1;
             }
             double 生产数量合计平米 = 0;
-            my.Cells[3, 10].Value = "生产指令: "+mySystem.Parameter.proInstruction;
+            my.Cells[3, 10].Value = "生产指令: "+__生产指令编码;
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
                 my.Cells[5 + i, 1] = i + 1;

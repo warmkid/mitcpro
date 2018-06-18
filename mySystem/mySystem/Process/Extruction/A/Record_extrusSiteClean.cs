@@ -33,6 +33,8 @@ namespace mySystem.Extruction.Process
         private BindingSource bs_prodinstr, bs_prodlist, bs_prodlist2;
         private OleDbCommandBuilder cb_prodinstr, cb_prodlist, cb_prodlist2;
 
+
+
         private SqlDataAdapter da_prodinstr_sql, da_prodlist_sql, da_prodlist2_sql;
         private SqlCommandBuilder cb_prodinstr_sql, cb_prodlist_sql, cb_prodlist2_sql;
 
@@ -1104,6 +1106,7 @@ namespace mySystem.Extruction.Process
             fill_excel(my);
             //"生产指令-步骤序号- 表序号 /&P"
             string str_instruction = idtocode(instrid);
+
             my.PageSetup.RightFooter = str_instruction + "-11-" + find_indexofprint().ToString("D3") + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
 
             if (b)
@@ -1180,9 +1183,9 @@ namespace mySystem.Extruction.Process
                     Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
                 }
             }
-            
 
-            my.Cells[3, 1].Value = "生产指令："+mySystem.Parameter.proInstruction;
+            string str_instruction = idtocode(instrid);
+            my.Cells[3, 1].Value = "生产指令：" + str_instruction;
             //my.Cells[3, 3].Value = "清场前产品代码及批号：" + tb产品代码.Text + "  " + tb产品批号.Text ;
             my.Cells[3, 5].Value = "清场日期：" + dtp清场日期.Value.ToString("yyyy年MM月dd日");
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
@@ -1197,9 +1200,10 @@ namespace mySystem.Extruction.Process
                 my.Cells[index + i, 3].Value = dataGridView2.Rows[i].Cells[3].Value.ToString();
                 my.Cells[index + i, 4].Value = dataGridView2.Rows[i].Cells[4].Value.ToString();
             }
-            my.Cells[5, 5].Value = tb清场人.Text;
-            my.Cells[5, 6].Value = ckb合格.Checked==true?"合格":"不合格";
-            my.Cells[5, 7].Value = tb检查人.Text;
+
+            my.Cells[5, 5].Value = dt_prodinstr.Rows[0]["清场人"].ToString();
+            my.Cells[5, 6].Value = Convert.ToBoolean(dt_prodinstr.Rows[0]["检查结果"]) ? "合格" : "不合格";
+            my.Cells[5, 7].Value = dt_prodinstr.Rows[0]["检查人"].ToString(); 
         }
 
         //查找打印的表序号

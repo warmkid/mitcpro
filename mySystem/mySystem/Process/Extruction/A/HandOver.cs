@@ -54,7 +54,7 @@ namespace mySystem.Process.Extruction.A
         SqlCommandBuilder cbSettingHandOver_sql;
 
         List<string> settingItem;
-        List<string> flight = new List<string>(new string[] { "是","否" });
+        List<string> flight = new List<string>(new string[] { "符合","不符合" });
         List<string> ls操作员;// = new List<string>(new string[] { dtUser.Rows[0]["操作员"].ToString() });
         List<string> ls审核员;//= new List<string>(new string[] { dtUser.Rows[0]["审核员"].ToString() });
         int __生产指令ID;
@@ -518,11 +518,11 @@ namespace mySystem.Process.Extruction.A
             {
                 if (true || (Convert.ToString(Parameter.userflight) == "白班")&&(txb夜班接班员.Text==""))
                 {
-                    dtInner.Rows[i]["确认结果白班"] = "是";
+                    dtInner.Rows[i]["确认结果白班"] = "符合";
                 }
                 if (true || (Convert.ToString(Parameter.userflight) == "夜班") && (txb白班接班员.Text == ""))
                 {
-                    dtInner.Rows[i]["确认结果夜班"] = "是";
+                    dtInner.Rows[i]["确认结果夜班"] = "符合";
                 }
             }
         }

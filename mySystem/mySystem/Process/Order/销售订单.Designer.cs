@@ -85,6 +85,7 @@
             this.label19 = new System.Windows.Forms.Label();
             this.btn修改 = new System.Windows.Forms.Button();
             this.textbox修改 = new System.Windows.Forms.TextBox();
+            this.btn更新产品代码 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -641,11 +642,23 @@
             this.textbox修改.TabIndex = 137;
             this.textbox修改.Text = "请在此输入修改意见";
             // 
+            // btn更新产品代码
+            // 
+            this.btn更新产品代码.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn更新产品代码.Location = new System.Drawing.Point(357, 411);
+            this.btn更新产品代码.Name = "btn更新产品代码";
+            this.btn更新产品代码.Size = new System.Drawing.Size(129, 23);
+            this.btn更新产品代码.TabIndex = 138;
+            this.btn更新产品代码.Text = "更新产品代码";
+            this.btn更新产品代码.UseVisualStyleBackColor = true;
+            this.btn更新产品代码.Click += new System.EventHandler(this.btn更新产品代码_Click);
+            // 
             // 销售订单
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1168, 589);
+            this.Controls.Add(this.btn更新产品代码);
             this.Controls.Add(this.textbox修改);
             this.Controls.Add(this.btn修改);
             this.Controls.Add(this.dtp拟交货日期);
@@ -772,5 +785,6 @@
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Button btn修改;
         private System.Windows.Forms.TextBox textbox修改;
+        private System.Windows.Forms.Button btn更新产品代码;
     }
 }

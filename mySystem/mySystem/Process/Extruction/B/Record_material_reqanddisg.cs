@@ -1441,8 +1441,8 @@ namespace mySystem.Extruction.Process
                 my.Cells[5 + i, 6] = dataGridView1.Rows[i].Cells[7].Value.ToString();
                 my.Cells[5 + i, 7] = dataGridView1.Rows[i].Cells[8].Value.ToString();
                 my.Cells[5 + i, 8] = dataGridView1.Rows[i].Cells[9].Value.ToString();
-                my.Cells[5 + i, 9] = dataGridView1.Rows[i].Cells[11].Value.ToString();
-                my.Cells[5 + i, 10] = dataGridView1.Rows[i].Cells[12].Value.ToString();
+                my.Cells[5 + i, 9] = dataGridView1.Rows[i].Cells[10].Value.ToString();
+                my.Cells[5 + i, 10] = dataGridView1.Rows[i].Cells[11].Value.ToString();
             }
 
             my.Cells[6 +ind, 4].Value = dt_prodinstr.Rows[0]["数量合计"];

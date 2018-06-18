@@ -87,7 +87,7 @@ namespace mySystem.Query
             {
                 SqlCommand comm = new SqlCommand();
                 comm.Connection = mySystem.Parameter.conn;
-                comm.CommandText = "select * from 生产指令信息表 where 状态<>4";
+                comm.CommandText = "select * from 生产指令信息表 where 状态<>3";
                 SqlDataReader reader = comm.ExecuteReader();//执行查询
                 if (reader.HasRows)
                 {
@@ -103,7 +103,7 @@ namespace mySystem.Query
             {
                 SqlCommand comm = new SqlCommand();
                 comm.Connection = Parameter.conn;
-                comm.CommandText = "select * from 生产指令信息表 where 状态<>4";
+                comm.CommandText = "select * from 生产指令信息表 where 状态<>3";
                 SqlDataReader reader = comm.ExecuteReader();//执行查询
                 if (reader.HasRows)
                 {

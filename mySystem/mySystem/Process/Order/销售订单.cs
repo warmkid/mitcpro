@@ -458,8 +458,18 @@ namespace mySystem.Process.Order
             dtOuter = new DataTable("销售订单");
             cbOuter = new SqlCommandBuilder(daOuter);
             bsOuter = new BindingSource();
-
+            
             daOuter.Fill(dtOuter);
+            
+        }
+
+        private void setDataGridViewRowNums(DataGridView dgv)
+        {
+            int coun = dgv.RowCount;
+            for (int ii = 0; ii < coun; ii++)
+            {
+                dgv.Rows[ii].Cells[0].Value = (ii + 1).ToString();
+            }
         }
 
        
@@ -495,6 +505,7 @@ namespace mySystem.Process.Order
                     DataSourceUpdateMode dm = (c as DateTimePicker).DataBindings["Value"].DataSourceUpdateMode;
                 }
             }
+            setDataGridViewRowNums(dataGridView1);
         }
 
         private void btn添加_Click(object sender, EventArgs e)
@@ -555,7 +566,7 @@ namespace mySystem.Process.Order
             dtInner = new DataTable("销售订单详细信息");
             cbInner = new SqlCommandBuilder(daInner);
             bsInner = new BindingSource();
-            
+            dtInner.Columns.Add("序号", System.Type.GetType("System.String"));
             daInner.Fill(dtInner);
         }
 
@@ -566,6 +577,7 @@ namespace mySystem.Process.Order
             dataGridView1.DataSource = bsInner.DataSource;
             Utility.setDataGridViewAutoSizeMode(dataGridView1);
             setDGV规格型号Column();
+            setDataGridViewRowNums(dataGridView1);
         }
 
         DataRow writeInnerDefault(DataRow dr)
@@ -1008,6 +1020,7 @@ namespace mySystem.Process.Order
                 readDGVWidthFromSettingAndSet(dataGridView1);
                 isFirstBind = false;
             }
+            
         }
 
         void calc合计()
@@ -1148,6 +1161,14 @@ namespace mySystem.Process.Order
         private void 销售订单_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void btn更新产品代码_Click(object sender, EventArgs e)
+        {
+            getOtherData();
+            // test
+            
+            //
         }
 
     }

@@ -927,6 +927,9 @@ namespace BatchProductRecord
 
                 }
             }
+            // 审核完自动生产批生产指令信息
+            BatchProductRecord.生成表单(dt_prodinstr.Rows[0]["生产指令编号"].ToString(), Convert.ToInt32(dt_prodinstr.Rows[0]["ID"]));
+            //
             try
             {
                 (this.Owner as mySystem.QueryInstruForm).search();
@@ -2555,7 +2558,7 @@ namespace BatchProductRecord
             string newcode = dr["生产指令编号"].ToString() + " 更改 " + DateTime.Now.ToString("yyyyMMddHHmmss");
             String oldcode = dr["生产指令编号"].ToString();
             dr["生产指令编号"] = newcode;
-            dr["状态"] = 4;
+            dr["状态"] = 3;
             //写日志
             string log = "\n=====================================\n";
             log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n审核员：" + mySystem.Parameter.userName + " 更改生产指令计划\n";
@@ -2628,6 +2631,13 @@ namespace BatchProductRecord
                 String str人员信息 = "人员信息：\n\n操作员：" + str操作员 + "\n\n审核员：" + str审核员;
                 MessageBox.Show(str人员信息);
             }
+
+            // test
+
+            print(true);
+            GC.Collect();
+            //
+            
             
         }
 

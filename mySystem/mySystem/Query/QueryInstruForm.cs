@@ -134,12 +134,12 @@ namespace mySystem
             String sql = "";
             if (mod)
             {
-                sql ="select * from {0} where {1} like '%{2}%' and {3} between '{4}' and '{5}' and 状态=4 order by ID";
+                sql ="select * from {0} where {1} like '%{2}%' and {3} between '{4}' and '{5}' and 状态=3 order by ID";
                 
             }
             else
             {
-                sql = "select * from {0} where {1} like '%{2}%' and {3} between '{4}' and '{5}' and 状态<>4 order by ID";
+                sql = "select * from {0} where {1} like '%{2}%' and {3} between '{4}' and '{5}' and 状态<>3 order by ID";
             }
             da = new SqlDataAdapter(String.Format(sql, tblName, person, writer, time, date1, date2.AddDays(1)), mySystem.Parameter.conn);
             

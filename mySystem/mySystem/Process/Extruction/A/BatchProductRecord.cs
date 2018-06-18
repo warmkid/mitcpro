@@ -1345,7 +1345,8 @@ namespace BatchProductRecord
             }
             
         }
-
+        [DllImport("winspool.drv")]
+        public static extern bool SetDefaultPrinter(string Name);
         private void btn打印_Click(object sender, EventArgs e)
         {
             htRow2Page = new Hashtable();
@@ -1372,7 +1373,7 @@ namespace BatchProductRecord
                 }
             }
 
-
+            SetDefaultPrinter(cmb打印.Text);
             #region
 
             if (!mySystem.Parameter.isSqlOk)
@@ -2292,5 +2293,43 @@ namespace BatchProductRecord
                 writeDGVWidthToSetting(dataGridView2);
             }
         }
+        public static void 生成表单(string intrcode, int instrid)
+        {
+            SqlDataAdapter dat, datt;
+            SqlCommandBuilder cbt;
+            DataTable dtt, dttt;
+            string sql = "select * from 批生产记录表 where 生产指令编号='{0}'";
+            dat = new SqlDataAdapter(string.Format(sql, intrcode), mySystem.Parameter.conn);
+            cbt = new SqlCommandBuilder(dat);
+            dtt = new DataTable("批生产记录表");
+
+            dat.Fill(dtt);
+
+            if (dtt.Rows.Count == 0)
+            {
+                DataRow dr = dtt.NewRow();
+                dr["生产指令ID"] = instrid;
+                dr["生产指令编号"] = intrcode;
+
+                datt = new SqlDataAdapter("select * from 生产指令信息表 where ID=" + instrid, mySystem.Parameter.conn);
+                dttt = new DataTable("temp");
+                datt.Fill(dttt);
+                dr["使用物料"] = dttt.Rows[0]["内外层物料代码"].ToString() + "," + dttt.Rows[0]["中层物料代码"].ToString();
+                dr["开始生产时间"] = dttt.Rows[0]["开始生产日期"];
+                dr["结束生产时间"] = DateTime.Now;
+                dr["汇总人"] = mySystem.Parameter.userName;
+                dr["汇总时间"] = DateTime.Now;
+                dr["批准时间"] = DateTime.Now;
+                dr["审核时间"] = DateTime.Now;
+
+                dr["审核是否通过"] = false;
+
+                dtt.Rows.Add(dr);
+
+                dat.Update(dtt);
+            }
+        }
     }
+
 }
+

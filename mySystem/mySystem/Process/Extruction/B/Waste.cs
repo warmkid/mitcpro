@@ -156,10 +156,11 @@ namespace mySystem.Process.Extruction.B
             getWasteRason();
             lbl生产指令.Text = __生产指令;
             
-            dtp生产结束时间.Value = DateTime.Now;
+            //dtp生产结束时间.Value = DateTime.Now;
 
 
-            readOuterData(lbl生产指令.Text);
+            readOuterData(__生产指令);
+            
             removeOuterBinding();
             outerBind();
             if (0 == dtOuter.Rows.Count)
@@ -175,8 +176,8 @@ namespace mySystem.Process.Extruction.B
                 {
                     daOuterSQL.Update((DataTable)bsOuter.DataSource);
                 }
-                
-                readOuterData(lbl生产指令.Text);
+
+                readOuterData(__生产指令);
                 removeOuterBinding();
                 outerBind();
             }
@@ -184,20 +185,26 @@ namespace mySystem.Process.Extruction.B
 
 
             readInnerData(searchId);
+            计算不良品数量合计();
+            
+            
             setDataGridViewColumns();
             setRowNums();
             innerBind();
 
-            计算不良品数量合计();
+            
             setFormState();
 
             if (_formState == Parameter.FormState.未保存 || _formState == Parameter.FormState.审核未通过 || _formState == Parameter.FormState.无数据)
             {
                 dtOuter.Rows[0]["生产结束时间"] = DateTime.Now;
             }
-
+            daOuterSQL.Update(dtOuter);
+            readOuterData(__生产指令);
+            removeOuterBinding();
+            outerBind();
             setEnableReadOnly();
-            
+            //lbl合计不良品数量.Text = dtOuter.Rows[0]["合计不良品数量"].ToString();
         }
         private void readOuterData(int Id)
         {
@@ -1251,7 +1258,8 @@ namespace mySystem.Process.Extruction.B
             {
                 sum += Convert.ToDouble(dtInner.Rows[i]["不良品数量"]);
             }
-            outerDataSync("lbl合计不良品数量", (sum).ToString());
+            dtOuter.Rows[0]["合计不良品数量"] = sum;
+            //outerDataSync("lbl合计不良品数量", (sum).ToString());
             //DataGridViewBindingCompleteEventArgs e=new DataGridViewBindingCompleteEventArgs;
             //dataGridView1_DataBindingComplete(dataGridView1,e);
             //dtOuter.Rows[0]["合计不良品数量"] = sum.ToString();
@@ -1426,7 +1434,7 @@ namespace mySystem.Process.Extruction.B
             else
 			{                
                 //add footer
-                my.PageSetup.RightFooter = mySystem.Parameter.proInstruction + "-10-" + find_indexofprint().ToString("D3") + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
+                my.PageSetup.RightFooter = dtOuter.Rows[0]["生产指令"].ToString() +"-10-" + find_indexofprint().ToString("D3") + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
                 // 直接用默认打印机打印该Sheet
                 try
                 {
