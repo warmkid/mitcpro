@@ -474,10 +474,10 @@ namespace mySystem.Extruction.Process
                      double balance = (t + u) / a * 100;
                      balance = Convert.ToDouble(balance.ToString("0.00"));
 
-                     if (Math.Abs(balance - 100) > 2)
-                     {
-                         MessageBox.Show("物料平衡超出98%--102%!");
-                     }
+                     //if (Math.Abs(balance - 100) > 2)
+                     //{
+                     //    MessageBox.Show("物料平衡超出98%--102%!");
+                     //}
                      dtOuter.Rows[0]["成品重量合计"] = t;
                      dtOuter.Rows[0]["废品量合计"] = u;
                      dtOuter.Rows[0]["领料量"] = a;

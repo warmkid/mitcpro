@@ -1390,7 +1390,7 @@ namespace mySystem.Process.Extruction.B
             int idx = 0;
 
             my.Cells[3, 1].Value = "生产指令：" + dtOuter.Rows[0]["生产指令"];
-            my.Cells[3, 6].Value = "生产时段：" + dtOuter.Rows[0]["生产开始时间"] + "--" + Convert.ToDateTime(dtOuter.Rows[0]["生产结束时间"]).ToString("yyyy年MM月dd日");
+            my.Cells[3, 6].Value = "生产时段：" + Convert.ToDateTime(dtOuter.Rows[0]["生产开始时间"]).ToString("yyyy/MM/dd") + "--" + Convert.ToDateTime(dtOuter.Rows[0]["生产结束时间"]).ToString("yyyy/MM/dd");
             
 
             // TODO 没有考虑行数过多的情况
@@ -1402,7 +1402,7 @@ namespace mySystem.Process.Extruction.B
                 {
                     Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[5, Type.Missing];
                     range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
-                    Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+                    Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromRightOrBelow);
                 }
                 ind = dataGridView1.Rows.Count - 1;
             }

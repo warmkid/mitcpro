@@ -177,7 +177,7 @@
             // Btn保存产品
             // 
             this.Btn保存产品.Font = new System.Drawing.Font("宋体", 12F);
-            this.Btn保存产品.Location = new System.Drawing.Point(1012, 6);
+            this.Btn保存产品.Location = new System.Drawing.Point(868, 6);
             this.Btn保存产品.Name = "Btn保存产品";
             this.Btn保存产品.Size = new System.Drawing.Size(90, 25);
             this.Btn保存产品.TabIndex = 68;
@@ -203,7 +203,7 @@
             this.groupBox6.Controls.Add(this.add辐照单位);
             this.groupBox6.Location = new System.Drawing.Point(32, 114);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(534, 225);
+            this.groupBox6.Size = new System.Drawing.Size(434, 225);
             this.groupBox6.TabIndex = 75;
             this.groupBox6.TabStop = false;
             // 
@@ -213,7 +213,7 @@
             this.dgv辐照单位.Location = new System.Drawing.Point(12, 51);
             this.dgv辐照单位.Name = "dgv辐照单位";
             this.dgv辐照单位.RowTemplate.Height = 23;
-            this.dgv辐照单位.Size = new System.Drawing.Size(490, 165);
+            this.dgv辐照单位.Size = new System.Drawing.Size(394, 165);
             this.dgv辐照单位.TabIndex = 2;
             this.dgv辐照单位.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgv辐照单位_DataBindingComplete);
             // 
@@ -254,9 +254,9 @@
             this.groupBox2.Controls.Add(this.dgv运输商);
             this.groupBox2.Controls.Add(this.del运输商);
             this.groupBox2.Controls.Add(this.add运输商);
-            this.groupBox2.Location = new System.Drawing.Point(589, 114);
+            this.groupBox2.Location = new System.Drawing.Point(495, 114);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(534, 225);
+            this.groupBox2.Size = new System.Drawing.Size(463, 225);
             this.groupBox2.TabIndex = 73;
             this.groupBox2.TabStop = false;
             // 
@@ -266,7 +266,7 @@
             this.dgv运输商.Location = new System.Drawing.Point(12, 51);
             this.dgv运输商.Name = "dgv运输商";
             this.dgv运输商.RowTemplate.Height = 23;
-            this.dgv运输商.Size = new System.Drawing.Size(490, 165);
+            this.dgv运输商.Size = new System.Drawing.Size(420, 165);
             this.dgv运输商.TabIndex = 2;
             this.dgv运输商.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgv运输商_DataBindingComplete);
             // 
@@ -296,7 +296,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold);
-            this.label2.Location = new System.Drawing.Point(589, 95);
+            this.label2.Location = new System.Drawing.Point(495, 95);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(114, 20);
             this.label2.TabIndex = 72;

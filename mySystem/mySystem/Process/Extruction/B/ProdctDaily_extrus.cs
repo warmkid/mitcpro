@@ -750,7 +750,7 @@ namespace mySystem
                 {
                     Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[5, Type.Missing];
                     range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
-                    Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+                    Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromRightOrBelow);
                 }
                 ind = dataGridView1.Rows.Count - 1;
             }
@@ -759,7 +759,7 @@ namespace mySystem
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
                 my.Cells[5 + i, 1] = i + 1;
-                my.Cells[5 + i, 2] = DateTime.Parse( dataGridView1.Rows[i].Cells[3].Value.ToString()).ToString("yyyy年MM月dd日");
+                my.Cells[5 + i, 2] = DateTime.Parse( dataGridView1.Rows[i].Cells[3].Value.ToString()).ToString("yyyy/MM/dd");
                 my.Cells[5 + i, 3] = dataGridView1.Rows[i].Cells[4].Value.ToString();
                 my.Cells[5 + i, 4] = dataGridView1.Rows[i].Cells[5].Value.ToString();
                 my.Cells[5 + i, 5] = dataGridView1.Rows[i].Cells[6].Value.ToString();

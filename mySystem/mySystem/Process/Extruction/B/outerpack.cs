@@ -1079,7 +1079,7 @@ namespace mySystem.Extruction.Chart
                 }
                 Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[20, Type.Missing];
                 range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
-                    Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+                    Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromRightOrBelow);
                 for (int i = 24; i < rownum; i++)
                 {
                     range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[i - 3, Type.Missing];
