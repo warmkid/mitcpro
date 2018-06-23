@@ -2634,8 +2634,8 @@ namespace BatchProductRecord
 
             // test
 
-            print(true);
-            GC.Collect();
+            //print(true);
+            //GC.Collect();
             //
             
             

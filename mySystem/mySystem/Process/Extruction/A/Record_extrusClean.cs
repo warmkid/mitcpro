@@ -1336,7 +1336,7 @@ namespace WindowsFormsApplication1
             dir += "/../../xls/Extrusion/A/SOP-MFG-301-R03 吹膜机组清洁记录.xlsx";
             Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(dir);
             // 选择一个Sheet，注意Sheet的序号是从1开始的
-            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];   
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[2];   
             // 修改Sheet中某行某列的值
             fill_excel(my);
             //"生产指令-步骤序号- 表序号 /&P"
@@ -1418,7 +1418,7 @@ namespace WindowsFormsApplication1
                 my.Cells[5 + i, 2] = dataGridView1.Rows[i].Cells[3].Value.ToString();
                 my.Cells[5 + i, 9] = dataGridView1.Rows[i].Cells[4].Value.ToString();
                 my.Cells[5 + i, 11] = dataGridView1.Rows[i].Cells[5].Value.ToString();
-                my.Cells[5 + i, 12] = dataGridView1.Rows[i].Cells[6].Value.ToString();
+                //my.Cells[5 + i, 12] = dataGridView1.Rows[i].Cells[6].Value.ToString();
             }          
         }
 
