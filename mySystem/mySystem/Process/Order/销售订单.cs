@@ -513,7 +513,7 @@ namespace mySystem.Process.Order
             DataRow dr = dtInner.NewRow();
             dr = writeInnerDefault(dr);
             dtInner.Rows.Add(dr);
-
+            setDataGridViewRowNums(dataGridView1);
             if (dataGridView1.Rows.Count > 0)
                 dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.Rows.Count - 1;
         }
@@ -634,6 +634,8 @@ namespace mySystem.Process.Order
             daInner.Fill(dtInner);
             dataGridView1.ClearSelection();
             dataGridView1.Rows[index - 1].Selected = true;
+
+            setDataGridViewRowNums(dataGridView1);
         }
 
         private void btn下移_Click(object sender, EventArgs e)
@@ -668,6 +670,7 @@ namespace mySystem.Process.Order
             daInner.Fill(dtInner);
             dataGridView1.ClearSelection();
             dataGridView1.Rows[index + 1].Selected = true;
+            setDataGridViewRowNums(dataGridView1);
         }
 
         private void btn提交审核_Click(object sender, EventArgs e)
