@@ -1217,6 +1217,18 @@ namespace mySystem.Process.Order
             }
         }
 
+        private void btn打印预览_Click(object sender, EventArgs e)
+        {
+            if (combox打印机选择.Text == "")
+            {
+                MessageBox.Show("选择一台打印机");
+                return;
+            }
+            SetDefaultPrinter(combox打印机选择.Text);
+            print(true);
+            GC.Collect();
+        }
+
        
 
     }
