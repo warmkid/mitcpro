@@ -164,7 +164,9 @@ namespace BatchProductRecord
                 initly();
 
             }
+            
             addOtherEventHandler();
+            setEnableReadOnly();
         }
 
         void setKeyInfo(int pid, int mid, string code)
@@ -1974,7 +1976,7 @@ namespace BatchProductRecord
 
         void setEnableReadOnly()
         {
-
+            
             if (mySystem.Parameter.UserState.管理员 == _userState)
             {
                 setControlTrue();
@@ -1993,6 +1995,7 @@ namespace BatchProductRecord
                 if (mySystem.Parameter.FormState.未保存 == _formState || mySystem.Parameter.FormState.审核未通过 == _formState) setControlTrue();
                 else setControlFalse();
             }
+            dataGridView2.ReadOnly = true;
         }
 
         private void btn提交审核_Click(object sender, EventArgs e)

@@ -1365,7 +1365,7 @@ namespace mySystem.Process.Extruction.B
             my.Cells[3, 1].Value = "产品代码：" + dtOuter.Rows[0]["产品代码"];
             my.Cells[3, 5].Value = "批号：" + dtOuter.Rows[0]["产品批号"];
             my.Cells[3, 7].Value = "生产日期：" + Convert.ToDateTime(dtOuter.Rows[0]["生产日期"]).ToString("yyyy年MM月dd日");
-            my.Cells[3, 10].Value = "记录时间：" +  Convert.ToDateTime(dtOuter.Rows[0]["记录时间"]).ToString("HH:mm:ss");
+            my.Cells[3, 10].Value = "时间：" +  Convert.ToDateTime(dtOuter.Rows[0]["记录时间"]).ToString("HH:mm:ss");
             my.Cells[3, 12].Value = "记录人：" + dtOuter.Rows[0]["记录员"];
             my.Cells[3, 14].Value = "复核人：" + dtOuter.Rows[0]["审核员"];
 
