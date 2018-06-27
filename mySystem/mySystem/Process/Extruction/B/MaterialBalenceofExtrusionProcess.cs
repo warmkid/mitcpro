@@ -323,7 +323,7 @@ namespace mySystem.Extruction.Process
             }
             //some textboxes act as column name and row name, so these shoule be forbidden
             btnSave.Enabled = true;
-            txb备注.ReadOnly = false;
+            txb备注.ReadOnly = true;
             btn查看日志.Enabled = true;                        
         }
 
@@ -451,11 +451,20 @@ namespace mySystem.Extruction.Process
 
                  string Uname = "吹膜工序废品记录";
                  string Ucol = "合计不良品数量";
+
+                 string Lname = "吹膜工序领料退料记录";
+                 string Lcol1 = "重量合计";
+                 string Lcol2 = "退料";
+
+
                  string Tsqlcmd = "SELECT sum(" + Tcol + ") FROM " + Tname + " WHERE " + where + " = " + __生产指令ID + ";";
                  string Asqlcmd1 = "SELECT " + Acol1 + " FROM " + Aname + " WHERE " + where + " = " + __生产指令ID + ";";
                  string Asqlcmd2 = "SELECT " + Acol2 + " FROM " + Aname + " WHERE " + where + " = " + __生产指令ID + ";";
                  string Asqlcmd3 = "SELECT " + Acol3 + " FROM " + Aname + " WHERE " + where + " = " + __生产指令ID + ";";
                  string Usqlcmd = "SELECT " + Ucol + " FROM " + Uname + " WHERE " + where + " = " + __生产指令ID + ";";
+                 string Lsqlcmd1 = "SELECT sum(" + Lcol1 + ") FROM " + Lname + " WHERE " + where + " = " + __生产指令ID + ";";
+                 string Lsqlcmd2 = "SELECT sum(" + Lcol2 + ") FROM " + Lname + " WHERE " + where + " = " + __生产指令ID + ";";
+
                  if (!mySystem.Parameter.isSqlOk)
                  {
                      OleDbCommand Tcmd = new OleDbCommand(Tsqlcmd, connOle);
@@ -492,26 +501,33 @@ namespace mySystem.Extruction.Process
                      SqlCommand Acmd2 = new SqlCommand(Asqlcmd2, mySystem.Parameter.conn);
                      SqlCommand Acmd3 = new SqlCommand(Asqlcmd3, mySystem.Parameter.conn);
                      SqlCommand Ucmd = new SqlCommand(Usqlcmd, mySystem.Parameter.conn);
-                     double t = Convert.ToDouble(Tcmd.ExecuteScalar());
-                     double a1 = Convert.ToDouble(Acmd1.ExecuteScalar());
-                     double a2 = Convert.ToDouble(Acmd2.ExecuteScalar());
-                     double a3 = Convert.ToDouble(Acmd3.ExecuteScalar());
+                     SqlCommand Lcmd1 = new SqlCommand(Lsqlcmd1, mySystem.Parameter.conn);
+                     SqlCommand Lcmd2 = new SqlCommand(Lsqlcmd2, mySystem.Parameter.conn);
+
+                     double t = Convert.ToDouble(Tcmd.ExecuteScalar()); // 生产重量合计
+                     double a1 = Convert.ToDouble(Acmd1.ExecuteScalar()); // 外层供料合计
+                     double a2 = Convert.ToDouble(Acmd2.ExecuteScalar()); // 中内层供料合计
+                     double a3 = Convert.ToDouble(Acmd3.ExecuteScalar()); // 内层供料合计
+                     double l1 = Convert.ToDouble(Lcmd1.ExecuteScalar()); // 领料合计
+                     double l2 = Convert.ToDouble(Lcmd2.ExecuteScalar());// 退料合计
                      double a = a1 + a2 + a3;
-                     double u = Convert.ToDouble(Ucmd.ExecuteScalar());
-                     double rate = t / (t + u+eps) * 100;
+                     double u = Convert.ToDouble(Ucmd.ExecuteScalar()); // 废品
+                     double rate = t / (t + u + eps) * 100;
                      rate = Convert.ToDouble(rate.ToString("0.00"));
-                     double balance = (t + u) / (a+eps) * 100;
+                     //double balance = (t + u) / (a+eps) * 100;
+                     double balance = (a - t - u) / a;
                      balance = Convert.ToDouble(balance.ToString("0.00"));
 
-                     if (Math.Abs(balance - 100) > 2)
-                     {
-                         MessageBox.Show("物料平衡超出98%--102%!");
-                     }
+                     //if (Math.Abs(balance - 100) > 2)
+                     //{
+                     //    MessageBox.Show("物料平衡超出98%--102%!");
+                     //}
                      dtOuter.Rows[0]["成品重量合计"] = t;
                      dtOuter.Rows[0]["废品量合计"] = u;
-                     dtOuter.Rows[0]["领料量"] = a;
+                     dtOuter.Rows[0]["供料量"] = a;
                      dtOuter.Rows[0]["重量比成品率"] = rate;
                      dtOuter.Rows[0]["物料平衡"] = balance;
+                     dtOuter.Rows[0]["领料量"] = l1 - l2;
                  }
 
 
@@ -576,6 +592,7 @@ namespace mySystem.Extruction.Process
              txb成品重量合计.DataBindings.Add("Text", bsOuter.DataSource, "成品重量合计");
              txb废品量合计.DataBindings.Add("Text", bsOuter.DataSource, "废品量合计");
              txb领料量.DataBindings.Add("Text", bsOuter.DataSource, "领料量");
+             txb供料量.DataBindings.Add("Text", bsOuter.DataSource, "供料量");
              txb重量比成品率.DataBindings.Add("Text", bsOuter.DataSource, "重量比成品率");
              txb物料平衡.DataBindings.Add("Text", bsOuter.DataSource, "物料平衡");
              // TODO: BINDING FAILED
@@ -583,7 +600,7 @@ namespace mySystem.Extruction.Process
              dtp记录日期.DataBindings.Add("Value", bsOuter.DataSource, "记录日期");
              txb审核员.DataBindings.Add("Text", bsOuter.DataSource, "审核员");
              dtp审核日期.DataBindings.Add("Value", bsOuter.DataSource, "审核日期");
-             txb备注.DataBindings.Add("Text", bsOuter.DataSource, "备注");
+             //txb备注.DataBindings.Add("Text", bsOuter.DataSource, "备注");
          }
 
          private void removeOuterBind()
@@ -593,13 +610,14 @@ namespace mySystem.Extruction.Process
              txb成品重量合计.DataBindings.Clear();
              txb废品量合计.DataBindings.Clear();
              txb领料量.DataBindings.Clear();
+             txb供料量.DataBindings.Clear();
              txb重量比成品率.DataBindings.Clear();
              txb物料平衡.DataBindings.Clear();
              txb记录员.DataBindings.Clear();
              dtp记录日期.DataBindings.Clear();
              txb审核员.DataBindings.Clear();
              dtp审核日期.DataBindings.Clear();
-             txb备注.DataBindings.Clear();
+             //txb备注.DataBindings.Clear();
          }
 
        
@@ -672,11 +690,12 @@ namespace mySystem.Extruction.Process
              my.Cells[6, 1].Value = dtOuter.Rows[0]["成品重量合计"]; //txb成品重量合计.Text;
              my.Cells[6, 2].Value = dtOuter.Rows[0]["废品量合计"]; //txb废品量合计.Text;
              my.Cells[6, 3].Value = dtOuter.Rows[0]["领料量"]; //txb领料量.Text;
-             my.Cells[6, 4].Value = dtOuter.Rows[0]["重量比成品率"]; //txb重量比成品率.Text;
-             my.Cells[6, 5].Value = dtOuter.Rows[0]["物料平衡"]; //txb物料平衡.Text;
+             my.Cells[6, 4].Value = dtOuter.Rows[0]["供料量"]; //txb领料量.Text;
+             my.Cells[6, 5].Value = dtOuter.Rows[0]["重量比成品率"]; //txb重量比成品率.Text;
+             my.Cells[6, 6].Value = dtOuter.Rows[0]["物料平衡"]; //txb物料平衡.Text;
              my.Cells[7, 2].Value = dtOuter.Rows[0]["备注"];
              my.Cells[8, 1].Value = "记录员/日期：" + dtOuter.Rows[0]["记录员"] +"   "+Convert.ToDateTime(dtOuter.Rows[0]["记录日期"]).ToString("yyyy年MM月dd日");
-             my.Cells[8, 4].Value = dtOuter.Rows[0]["审核员"] + Convert.ToDateTime(dtOuter.Rows[0]["审核日期"]).ToString("yyyy年MM月dd日"); 
+             my.Cells[8, 5].Value = dtOuter.Rows[0]["审核员"] + Convert.ToDateTime(dtOuter.Rows[0]["审核日期"]).ToString("yyyy年MM月dd日"); 
              
 
 			if(preview)
@@ -763,7 +782,45 @@ namespace mySystem.Extruction.Process
 
          }
 
-        
+
+
+
+
+
+         public MaterialBalenceofExtrusionProcess(mySystem.MainForm mainform, int Id, bool forprint)
+             : base(mainform)
+         {
+             InitializeComponent();
+             connOle = Parameter.connOle;
+             fill_printer();
+             getPeople();
+             //setUserState();
+             _userState = Parameter.UserState.NoBody;
+             searchId = Id;
+             readOuterBind(searchId);
+             removeOuterBind();
+             outerBind();
+
+             //get othertime will use current instruction Id
+             getInstructionInfo();
+             getOtherData();
+
+             重新读取并计算();
+             if (!mySystem.Parameter.isSqlOk)
+             {
+                 daOuter.Update((DataTable)bsOuter.DataSource);
+             }
+             else
+             {
+                 daOutersql.Update((DataTable)bsOuter.DataSource);
+             }
+
+             readOuterBind(searchId);
+             removeOuterBind();
+             outerBind();
+             setFormState();
+             setEnableReadOnly();
+         }
        
     }
 }

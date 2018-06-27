@@ -2659,5 +2659,72 @@ namespace BatchProductRecord
         {
             估计天数();
         }
+
+
+
+        public ProcessProductInstru(mySystem.MainForm mainform, int id, bool isForPrint)
+            : base(mainform)
+        {
+            InitializeComponent();
+            init();
+
+            getPeople();
+            //setUserState();
+            _userState = Parameter.UserState.NoBody;
+            getOtherData();
+
+            string asql = "select * from 生产指令信息表 where ID=" + id;
+            DataTable tempdt = new DataTable();
+
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
+                OleDbDataAdapter da = new OleDbDataAdapter(comm);
+                da.Fill(tempdt);
+            }
+            else
+            {
+                SqlCommand comm = new SqlCommand(asql, mySystem.Parameter.conn);
+                SqlDataAdapter da = new SqlDataAdapter(comm);
+                da.Fill(tempdt);
+            }
+
+
+            instrcode = tempdt.Rows[0]["生产指令编号"].ToString();
+
+
+            readOuterData(instrcode, id);
+            removeOuterBinding();
+            outerBind();
+            readOuterData(instrcode, id);
+
+            readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
+            innerBind();
+
+            string s = tb白班.Text;
+            string[] s1 = s.Split(',');
+            dict_白班.Clear();
+            dict_夜班.Clear();
+            for (int i = 0; i < s1.Length - 1; i++)
+            {
+                dict_白班.Add(s1[i], s1[i]);
+            }
+            s = tb夜班.Text;
+            s1 = s.Split(',');
+            for (int i = 0; i < s1.Length - 1; i++)
+            {
+                dict_夜班.Add(s1[i], s1[i]);
+            }
+            setFormState();
+            setEnableReadOnly();
+
+            tb指令编号.Enabled = false;
+            bt查询插入.Enabled = false;
+            dataGridView1.DataBindingComplete += dataGridView1_DataBindingComplete;
+            dataGridView1.EditingControlShowing += new DataGridViewEditingControlShowingEventHandler(dataGridView1_EditingControlShowing);
+            估计天数();
+        }
+
+
     }
 }

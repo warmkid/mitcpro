@@ -1397,7 +1397,7 @@ namespace BatchProductRecord
                             foreach (int page in pages)
                             {
                                 id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
-                                (new ProcessProductInstru(mainform, id)).print(false);
+                                (new ProcessProductInstru(mainform, id,true)).print(false);
                                 GC.Collect();
                             }
                             htRow2Page[r] = pages.Count;
@@ -1409,7 +1409,7 @@ namespace BatchProductRecord
                             foreach (int page in pages)
                             {
                                 id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
-                                (new mySystem.ProdctDaily_extrus(mainform, id)).print(false);
+                                (new mySystem.ProdctDaily_extrus(mainform, id,true)).print(false);
                                 GC.Collect();
                             }
                             htRow2Page[r] = pages.Count;
@@ -1421,7 +1421,7 @@ namespace BatchProductRecord
                             foreach (int page in pages)
                             {
                                 id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
-                                (new WindowsFormsApplication1.Record_extrusClean(mainform, id)).print(false);
+                                (new WindowsFormsApplication1.Record_extrusClean(mainform, id,true)).print(false);
                                 GC.Collect();
                             }
                             htRow2Page[r] = pages.Count;
@@ -1433,7 +1433,7 @@ namespace BatchProductRecord
                             foreach (int page in pages)
                             {
                                 id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
-                                (new mySystem.Extruction.Process.ExtructionCheckBeforePowerStep2(mainform, id)).print(false);
+                                (new mySystem.Extruction.Process.ExtructionCheckBeforePowerStep2(mainform, id,true)).print(false);
                                 GC.Collect();
                             }
                             htRow2Page[r] = pages.Count;
@@ -1446,7 +1446,7 @@ namespace BatchProductRecord
                             {
                                 id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
                                 // TODO
-                                (new mySystem.Extruction.Process.ExtructionPreheatParameterRecordStep3(mainform, id)).print(false);
+                                (new mySystem.Extruction.Process.ExtructionPreheatParameterRecordStep3(mainform, id, true)).print(false);
                                 GC.Collect();
 
                             }
@@ -1459,7 +1459,7 @@ namespace BatchProductRecord
                             foreach (int page in pages)
                             {
                                 id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
-                                (new WindowsFormsApplication1.Record_extrusSupply(mainform, id)).print(false);
+                                (new WindowsFormsApplication1.Record_extrusSupply(mainform, id, true)).print(false);
                                 GC.Collect();
                             }
                             htRow2Page[r] = pages.Count;
@@ -1471,7 +1471,7 @@ namespace BatchProductRecord
                             foreach (int page in pages)
                             {
                                 id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
-                                (new mySystem.Process.Extruction.C.Feed(mainform, id)).print(false);
+                                (new mySystem.Process.Extruction.C.Feed(mainform, id, true)).print(false);
                                 GC.Collect();
                             }
                             htRow2Page[r] = pages.Count;
@@ -1484,7 +1484,7 @@ namespace BatchProductRecord
                             foreach (int page in pages)
                             {
                                 id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
-                                (new mySystem.Process.Extruction.B.Running(mainform, id)).print(false);
+                                (new mySystem.Process.Extruction.B.Running(mainform, id, true)).print(false);
                                 GC.Collect();
                             }
                             htRow2Page[r] = pages.Count;
@@ -1496,7 +1496,7 @@ namespace BatchProductRecord
                             foreach (int page in pages)
                             {
                                 id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
-                                (new mySystem.Extruction.Process.ExtructionpRoductionAndRestRecordStep6(mainform, id)).print(false);
+                                (new mySystem.Extruction.Process.ExtructionpRoductionAndRestRecordStep6(mainform, id, true)).print(false);
                                 GC.Collect();
                             }
                             htRow2Page[r] = pages.Count;
@@ -1509,7 +1509,7 @@ namespace BatchProductRecord
                             foreach (int page in pages)
                             {
                                 id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
-                                (new mySystem.Process.Extruction.B.Waste(mainform, id)).print(false);
+                                (new mySystem.Process.Extruction.B.Waste(mainform, id, true)).print(false);
                                 GC.Collect();
                             }
                             htRow2Page[r] = pages.Count;
@@ -1522,7 +1522,7 @@ namespace BatchProductRecord
                             foreach (int page in pages)
                             {
                                 id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
-                                (new mySystem.Extruction.Process.Record_extrusSiteClean(mainform, id)).print(false);
+                                (new mySystem.Extruction.Process.Record_extrusSiteClean(mainform, id, true)).print(false);
                                 GC.Collect();
                             }
                             htRow2Page[r] = pages.Count;
@@ -1534,7 +1534,7 @@ namespace BatchProductRecord
                             foreach (int page in pages)
                             {
                                 id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
-                                (new mySystem.Extruction.Process.MaterialBalenceofExtrusionProcess(mainform, id)).print(false);
+                                (new mySystem.Extruction.Process.MaterialBalenceofExtrusionProcess(mainform, id, true)).print(false);
                                 GC.Collect();
                             }
                             htRow2Page[r] = pages.Count;
@@ -1546,7 +1546,7 @@ namespace BatchProductRecord
                             foreach (int page in pages)
                             {
                                 id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
-                                (new mySystem.Extruction.Process.Record_material_reqanddisg(mainform, id)).print(false);
+                                (new mySystem.Extruction.Process.Record_material_reqanddisg(mainform, id, true)).print(false);
                                 GC.Collect();
                             }
                             htRow2Page[r] = pages.Count;
@@ -1570,7 +1570,7 @@ namespace BatchProductRecord
                             foreach (int page in pages)
                             {
                                 id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
-                                (new mySystem.Extruction.Process.ProductInnerPackagingRecord(mainform, id)).print(false);
+                                (new mySystem.Extruction.Process.ProductInnerPackagingRecord(mainform, id, true)).print(false);
                                 GC.Collect();
                             }
                             htRow2Page[r] = pages.Count;
@@ -1582,7 +1582,7 @@ namespace BatchProductRecord
                             foreach (int page in pages)
                             {
                                 id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
-                                (new mySystem.Extruction.Chart.outerpack(mainform, id)).print(false);
+                                (new mySystem.Extruction.Chart.outerpack(mainform, id, true)).print(false);
                                 GC.Collect();
                             }
                             htRow2Page[r] = pages.Count;
@@ -1623,7 +1623,7 @@ namespace BatchProductRecord
                             foreach (int page in pages)
                             {
                                 id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
-                                (new ProcessProductInstru(mainform, id)).print(false);
+                                (new ProcessProductInstru(mainform, id, true)).print(false);
                                 GC.Collect();
                             }
                             htRow2Page[r] = pages.Count;
@@ -1635,7 +1635,7 @@ namespace BatchProductRecord
                             foreach (int page in pages)
                             {
                                 id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
-                                (new mySystem.ProdctDaily_extrus(mainform, id)).print(false);
+                                (new mySystem.ProdctDaily_extrus(mainform, id, true)).print(false);
                                 GC.Collect();
                             }
                             htRow2Page[r] = pages.Count;
@@ -1647,7 +1647,7 @@ namespace BatchProductRecord
                             foreach (int page in pages)
                             {
                                 id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
-                                (new WindowsFormsApplication1.Record_extrusClean(mainform, id)).print(false);
+                                (new WindowsFormsApplication1.Record_extrusClean(mainform, id, true)).print(false);
                                 GC.Collect();
                             }
                             htRow2Page[r] = pages.Count;
@@ -1659,7 +1659,7 @@ namespace BatchProductRecord
                             foreach (int page in pages)
                             {
                                 id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
-                                (new mySystem.Extruction.Process.ExtructionCheckBeforePowerStep2(mainform, id)).print(false);
+                                (new mySystem.Extruction.Process.ExtructionCheckBeforePowerStep2(mainform, id, true)).print(false);
                                 GC.Collect();
                             }
                             htRow2Page[r] = pages.Count;
@@ -1672,7 +1672,7 @@ namespace BatchProductRecord
                             {
                                 id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
                                 // TODO
-                                (new mySystem.Extruction.Process.ExtructionPreheatParameterRecordStep3(mainform, id)).print(false);
+                                (new mySystem.Extruction.Process.ExtructionPreheatParameterRecordStep3(mainform, id, true)).print(false);
                                 GC.Collect();
 
                             }
@@ -1685,7 +1685,7 @@ namespace BatchProductRecord
                             foreach (int page in pages)
                             {
                                 id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
-                                (new WindowsFormsApplication1.Record_extrusSupply(mainform, id)).print(false);
+                                (new WindowsFormsApplication1.Record_extrusSupply(mainform, id, true)).print(false);
                                 GC.Collect();
                             }
                             htRow2Page[r] = pages.Count;
@@ -1697,7 +1697,7 @@ namespace BatchProductRecord
                             foreach (int page in pages)
                             {
                                 id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
-                                (new mySystem.Process.Extruction.C.Feed(mainform, id)).print(false);
+                                (new mySystem.Process.Extruction.C.Feed(mainform, id, true)).print(false);
                                 GC.Collect();
                             }
                             htRow2Page[r] = pages.Count;
@@ -1710,7 +1710,7 @@ namespace BatchProductRecord
                             foreach (int page in pages)
                             {
                                 id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
-                                (new mySystem.Process.Extruction.B.Running(mainform, id)).print(false);
+                                (new mySystem.Process.Extruction.B.Running(mainform, id, true)).print(false);
                                 GC.Collect();
                             }
                             htRow2Page[r] = pages.Count;
@@ -1722,7 +1722,7 @@ namespace BatchProductRecord
                             foreach (int page in pages)
                             {
                                 id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
-                                (new mySystem.Extruction.Process.ExtructionpRoductionAndRestRecordStep6(mainform, id)).print(false);
+                                (new mySystem.Extruction.Process.ExtructionpRoductionAndRestRecordStep6(mainform, id, true)).print(false);
                                 GC.Collect();
                             }
                             htRow2Page[r] = pages.Count;
@@ -1735,7 +1735,7 @@ namespace BatchProductRecord
                             foreach (int page in pages)
                             {
                                 id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
-                                (new mySystem.Process.Extruction.B.Waste(mainform, id)).print(false);
+                                (new mySystem.Process.Extruction.B.Waste(mainform, id, true)).print(false);
                                 GC.Collect();
                             }
                             htRow2Page[r] = pages.Count;
@@ -1748,7 +1748,7 @@ namespace BatchProductRecord
                             foreach (int page in pages)
                             {
                                 id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
-                                (new mySystem.Extruction.Process.Record_extrusSiteClean(mainform, id)).print(false);
+                                (new mySystem.Extruction.Process.Record_extrusSiteClean(mainform, id, true)).print(false);
                                 GC.Collect();
                             }
                             htRow2Page[r] = pages.Count;
@@ -1760,7 +1760,7 @@ namespace BatchProductRecord
                             foreach (int page in pages)
                             {
                                 id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
-                                (new mySystem.Extruction.Process.MaterialBalenceofExtrusionProcess(mainform, id)).print(false);
+                                (new mySystem.Extruction.Process.MaterialBalenceofExtrusionProcess(mainform, id, true)).print(false);
                                 GC.Collect();
                             }
                             htRow2Page[r] = pages.Count;
@@ -1772,7 +1772,7 @@ namespace BatchProductRecord
                             foreach (int page in pages)
                             {
                                 id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
-                                (new mySystem.Extruction.Process.Record_material_reqanddisg(mainform, id)).print(false);
+                                (new mySystem.Extruction.Process.Record_material_reqanddisg(mainform, id, true)).print(false);
                                 GC.Collect();
                             }
                             htRow2Page[r] = pages.Count;
@@ -1796,7 +1796,7 @@ namespace BatchProductRecord
                             foreach (int page in pages)
                             {
                                 id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
-                                (new mySystem.Extruction.Process.ProductInnerPackagingRecord(mainform, id)).print(false);
+                                (new mySystem.Extruction.Process.ProductInnerPackagingRecord(mainform, id, true)).print(false);
                                 GC.Collect();
                             }
                             htRow2Page[r] = pages.Count;
@@ -1808,7 +1808,7 @@ namespace BatchProductRecord
                             foreach (int page in pages)
                             {
                                 id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
-                                (new mySystem.Extruction.Chart.outerpack(mainform, id)).print(false);
+                                (new mySystem.Extruction.Chart.outerpack(mainform, id, true)).print(false);
                                 GC.Collect();
                             }
                             htRow2Page[r] = pages.Count;

@@ -1180,6 +1180,39 @@ namespace mySystem.Process.Extruction.C
         {
 
         }
+
+
+
+
+        public Feed(mySystem.MainForm mainform, int Id, bool forprint)
+            : base(mainform)
+        {
+            InitializeComponent();
+            conOle = Parameter.connOle;
+            getPeople();
+            //setUserState();
+            _userState = Parameter.UserState.NoBody;
+            fill_printer();
+            dtOuter = new DataTable(tablename1);
+            daOutersql = new SqlDataAdapter("SELECT * FROM 吹膜供料系统运行记录 WHERE ID =" + Id, mySystem.Parameter.conn);
+            bsOuter = new BindingSource();
+            cbOutersql = new SqlCommandBuilder(daOutersql);
+            daOutersql.Fill(dtOuter);
+            removeOuterBind();
+            outerBind();
+            __生产指令编号 = Convert.ToString(dtOuter.Rows[0]["生产指令编号"]);
+            __生产日期 = Convert.ToDateTime(dtOuter.Rows[0]["生产日期"]);
+            __班次 = Convert.ToString(dtOuter.Rows[0]["班次"]);
+            searchId = Id;
+            cmb班次.Text = __班次;
+
+            readInnerData(searchId);
+
+            innerBind();
+
+            setFormState();
+            setEnableReadOnly();
+        }
     }
 	
 }

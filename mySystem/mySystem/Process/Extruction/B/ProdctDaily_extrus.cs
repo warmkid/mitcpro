@@ -1186,5 +1186,80 @@ namespace mySystem
             }
         }
 
+
+
+        public ProdctDaily_extrus(mySystem.MainForm mainform, int id, bool forprint)
+            : base(mainform)
+        {
+            InitializeComponent();
+
+            string asql = "select * from 吹膜生产日报表 where ID=" + id;
+            OleDbCommand comm = null;
+            OleDbDataAdapter da = null;
+            SqlCommand commsql = null;
+            SqlDataAdapter dasql = null;
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
+                da = new OleDbDataAdapter(comm);
+            }
+            else
+            {
+                commsql = new SqlCommand(asql, mySystem.Parameter.conn);
+                dasql = new SqlDataAdapter(commsql);
+            }
+
+
+
+            DataTable tempdt = new DataTable();
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                da.Fill(tempdt);
+            }
+            else
+            {
+                dasql.Fill(tempdt);
+            }
+
+            __生产指令ID = (int)tempdt.Rows[0]["生产指令ID"];
+            __生产指令编码 = idtocode(__生产指令ID);
+            getOtherData();
+            fill_printer();
+            Init();
+            getPeople();
+            //setUserState();
+            _userState = Parameter.UserState.NoBody;
+            ;
+            if ((_userState == Parameter.UserState.操作员))
+            {
+                button2.Enabled = false;
+            }
+
+
+            readOuterData(__生产指令ID);
+            removeOuterBinding();
+            outerBind();
+
+            readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
+            innerBind();
+            query_by_instru(__生产指令ID);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+            }
+            else
+            {
+                da_prodlistsql.Update((DataTable)bs_prodlist.DataSource);
+            }
+
+
+            DataGridViewsum();
+            dataGridView1.Columns[0].Visible = false;//ID
+
+            //foreach (Control c in this.Controls)
+            //    c.Enabled = false;
+            //dataGridView1.Enabled = true;
+            dataGridView1.ReadOnly = true;
+        }
     }
 }

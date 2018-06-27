@@ -1772,7 +1772,7 @@ namespace mySystem.Extruction.Process
         {
             if (dt_prodinstr != null)
             {
-                if (!isSaved && dt_prodinstr.Rows.Count > 0)
+                if (  !isSaved && dt_prodinstr.Rows.Count > 0  )
                 {
                     dt_prodinstr.Rows[0].Delete();
                     if (!mySystem.Parameter.isSqlOk)
@@ -1784,6 +1784,18 @@ namespace mySystem.Extruction.Process
                         da_prodinstrsql.Update((DataTable)bs_prodinstr.DataSource);
                     }
                     
+                }
+                if (dt_prodinstr.Rows.Count > 0 && dt_prodinstr.Rows[0]["物料代码"].ToString().Trim() == "")
+                {
+                    dt_prodinstr.Rows[0].Delete();
+                    if (!mySystem.Parameter.isSqlOk)
+                    {
+                        da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+                    }
+                    else
+                    {
+                        da_prodinstrsql.Update((DataTable)bs_prodinstr.DataSource);
+                    }
                 }
             }
             //string width = getDGVWidth(dataGridView1);
@@ -1839,6 +1851,61 @@ namespace mySystem.Extruction.Process
         private void dataGridView1_ColumnWidthChanged(object sender, DataGridViewColumnEventArgs e)
         {
             writeDGVWidthToSetting(dataGridView1);
+        }
+
+
+
+        public Record_material_reqanddisg(MainForm mainform, int id, bool forprint)
+            : base(mainform)
+        {
+            string asql = "select * from 吹膜工序领料退料记录 where ID=" + id;
+            SqlCommand comm = new SqlCommand(asql, mySystem.Parameter.conn);
+            SqlDataAdapter da = new SqlDataAdapter(comm);
+
+            DataTable tempdt = new DataTable();
+            da.Fill(tempdt);
+            _id = Convert.ToInt32(tempdt.Rows[0]["生产指令ID"]);
+            InitializeComponent();
+            isSaved = true;
+            fill_printer();
+            getPeople();
+            //setUserState();
+            _userState = Parameter.UserState.NoBody;
+
+            setControlFalse();
+
+
+
+            //TODO instrid matcode可以放在读外表函数内************************
+            //cB物料代码.Text = tempdt.Rows[0]["物料代码"].ToString();
+            matcode = tempdt.Rows[0]["物料代码"].ToString();
+            instrid = (int)tempdt.Rows[0]["生产指令ID"];
+
+
+            readOuterData(instrid, matcode);
+            removeOuterBinding();
+            outerBind();
+
+            bs_prodinstr.EndEdit();
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+            }
+            else
+            {
+                da_prodinstrsql.Update((DataTable)bs_prodinstr.DataSource);
+            }
+
+
+            readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
+            innerBind();
+
+            setFormState();
+            setEnableReadOnly();
+
+            cB物料代码.Enabled = false;
+
+            addOtherEventHandler();
         }
     }
 }

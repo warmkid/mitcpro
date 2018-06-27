@@ -1966,7 +1966,47 @@ namespace mySystem.Process.Extruction.B
         }
 
 
+        public Running(mySystem.MainForm mainform, int Id, bool forprint)
+            : base(mainform)
+        {
+            InitializeComponent();
+            //different handler function
+            isSaved = true;
+            conOle = Parameter.connOle;
+            searchId = Id;
+            自动绘制表格();
+            getPeople();
+            //setUserState();
+            _userState = Parameter.UserState.NoBody;
 
+
+            getOtherData();
+            addDataEventHandler();
+            //btn提交审核.PerformClick();
+            dtOuter = new DataTable(tablename1);
+            daOutersql = new SqlDataAdapter("SELECT * FROM 吹膜机组运行记录 WHERE ID =" + Id, mySystem.Parameter.conn);
+            bsOuter = new BindingSource();
+            cbOutersql = new SqlCommandBuilder(daOutersql);
+            daOutersql.Fill(dtOuter);
+            removeOuterBinding();
+
+
+            _生产指令ID = Convert.ToInt32(dtOuter.Rows[0]["生产指令ID"]);
+            _产品代码 = Convert.ToString(dtOuter.Rows[0]["产品代码"]);
+            _Date = Convert.ToDateTime(dtOuter.Rows[0]["生产日期"]);
+            _Time = Convert.ToDateTime(dtOuter.Rows[0]["记录时间"]);
+            //add item in cmb
+            cmb产品代码.Items.Add(dtOuter.Rows[0]["产品代码"].ToString());
+            outerBind();
+            setFormState(false);
+
+            //btn保存.Visible = false;
+
+            //cmb产品代码.SelectedIndexChanged += new EventHandler(cmb产品代码_SelectedIndexChanged_without_Id);
+            填写界面上被disable的部分为横线();
+            setEnableReadOnly();
+            调整tab顺序();
+        }
         
     }
 }

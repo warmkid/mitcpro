@@ -1520,5 +1520,82 @@ namespace mySystem.Process.Extruction.B
                 writeDGVWidthToSetting(dataGridView1);
             }
         }
+
+
+
+        public Waste(mySystem.MainForm mainform, int Id, bool forprint)
+            : base(mainform)
+        {
+
+
+
+            conOle = Parameter.connOle;
+
+            getPeople();
+
+            searchId = Id;
+            readOuterData(searchId);
+            __生产指令 = Convert.ToString(dtOuter.Rows[0]["生产指令"]);
+            __生产指令ID = Convert.ToInt32(dtOuter.Rows[0]["生产指令ID"]);
+            InitializeComponent();
+            //setUserState();
+            _userState = Parameter.UserState.NoBody;
+            fill_printer();
+            getProductCode();
+            getStartTime();
+            getUsrList();
+            getWasteRason();
+            lbl生产指令.Text = __生产指令;
+
+            //dtp生产结束时间.Value = DateTime.Now;
+
+
+            readOuterData(__生产指令);
+
+            removeOuterBinding();
+            outerBind();
+            if (0 == dtOuter.Rows.Count)
+            {
+                DataRow newrow = dtOuter.NewRow();
+                newrow = writeOuterDefault(newrow);
+                dtOuter.Rows.Add(newrow);
+                if (!mySystem.Parameter.isSqlOk)
+                {
+                    daOuter.Update((DataTable)bsOuter.DataSource);
+                }
+                else
+                {
+                    daOuterSQL.Update((DataTable)bsOuter.DataSource);
+                }
+
+                readOuterData(__生产指令);
+                removeOuterBinding();
+                outerBind();
+            }
+
+
+
+            readInnerData(searchId);
+            计算不良品数量合计();
+
+
+            setDataGridViewColumns();
+            setRowNums();
+            innerBind();
+
+
+            setFormState();
+
+            if (_formState == Parameter.FormState.未保存 || _formState == Parameter.FormState.审核未通过 || _formState == Parameter.FormState.无数据)
+            {
+                dtOuter.Rows[0]["生产结束时间"] = DateTime.Now;
+            }
+            daOuterSQL.Update(dtOuter);
+            readOuterData(__生产指令);
+            removeOuterBinding();
+            outerBind();
+            setEnableReadOnly();
+            //lbl合计不良品数量.Text = dtOuter.Rows[0]["合计不良品数量"].ToString();
+        }
     }
 }

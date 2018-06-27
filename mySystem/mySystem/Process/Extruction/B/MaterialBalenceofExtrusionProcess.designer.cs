@@ -63,13 +63,15 @@
             this.label3 = new System.Windows.Forms.Label();
             this.lbl生产结束时间 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.txb供料量 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // bt查看人员信息
             // 
             this.bt查看人员信息.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt查看人员信息.Location = new System.Drawing.Point(432, 340);
+            this.bt查看人员信息.Location = new System.Drawing.Point(590, 333);
             this.bt查看人员信息.Name = "bt查看人员信息";
             this.bt查看人员信息.Size = new System.Drawing.Size(123, 34);
             this.bt查看人员信息.TabIndex = 162;
@@ -125,7 +127,7 @@
             // 
             // btn查看日志
             // 
-            this.btn查看日志.Location = new System.Drawing.Point(734, 344);
+            this.btn查看日志.Location = new System.Drawing.Point(892, 337);
             this.btn查看日志.Name = "btn查看日志";
             this.btn查看日志.Size = new System.Drawing.Size(81, 30);
             this.btn查看日志.TabIndex = 78;
@@ -166,7 +168,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(708, 163);
+            this.label7.Location = new System.Drawing.Point(866, 163);
             this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(80, 16);
@@ -175,7 +177,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(594, 340);
+            this.btnSave.Location = new System.Drawing.Point(752, 333);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(92, 30);
             this.btnSave.TabIndex = 42;
@@ -188,7 +190,7 @@
             // 
             this.dtp审核日期.CustomFormat = "yyyy-MM-dd";
             this.dtp审核日期.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtp审核日期.Location = new System.Drawing.Point(927, 265);
+            this.dtp审核日期.Location = new System.Drawing.Point(1244, 262);
             this.dtp审核日期.Margin = new System.Windows.Forms.Padding(4);
             this.dtp审核日期.Name = "dtp审核日期";
             this.dtp审核日期.Size = new System.Drawing.Size(162, 26);
@@ -199,7 +201,7 @@
             // txb重量比成品率
             // 
             this.txb重量比成品率.Enabled = false;
-            this.txb重量比成品率.Location = new System.Drawing.Point(507, 183);
+            this.txb重量比成品率.Location = new System.Drawing.Point(665, 183);
             this.txb重量比成品率.Margin = new System.Windows.Forms.Padding(4);
             this.txb重量比成品率.Name = "txb重量比成品率";
             this.txb重量比成品率.ReadOnly = true;
@@ -209,7 +211,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(847, 272);
+            this.label12.Location = new System.Drawing.Point(1164, 269);
             this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(72, 16);
@@ -220,7 +222,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(513, 163);
+            this.label8.Location = new System.Drawing.Point(671, 163);
             this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(144, 16);
@@ -240,7 +242,7 @@
             // lbRecheckMan
             // 
             this.lbRecheckMan.AutoSize = true;
-            this.lbRecheckMan.Location = new System.Drawing.Point(863, 234);
+            this.lbRecheckMan.Location = new System.Drawing.Point(1180, 231);
             this.lbRecheckMan.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbRecheckMan.Name = "lbRecheckMan";
             this.lbRecheckMan.Size = new System.Drawing.Size(56, 16);
@@ -270,7 +272,7 @@
             // 
             // txb审核员
             // 
-            this.txb审核员.Location = new System.Drawing.Point(927, 231);
+            this.txb审核员.Location = new System.Drawing.Point(1244, 228);
             this.txb审核员.Margin = new System.Windows.Forms.Padding(4);
             this.txb审核员.Name = "txb审核员";
             this.txb审核员.Size = new System.Drawing.Size(162, 26);
@@ -291,7 +293,7 @@
             // 
             this.dtp记录日期.CustomFormat = "yyyy-MM-dd";
             this.dtp记录日期.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtp记录日期.Location = new System.Drawing.Point(927, 197);
+            this.dtp记录日期.Location = new System.Drawing.Point(1244, 194);
             this.dtp记录日期.Margin = new System.Windows.Forms.Padding(4);
             this.dtp记录日期.Name = "dtp记录日期";
             this.dtp记录日期.Size = new System.Drawing.Size(162, 26);
@@ -305,14 +307,14 @@
             this.txb备注.Margin = new System.Windows.Forms.Padding(4);
             this.txb备注.Multiline = true;
             this.txb备注.Name = "txb备注";
-            this.txb备注.Size = new System.Drawing.Size(780, 47);
+            this.txb备注.Size = new System.Drawing.Size(938, 47);
             this.txb备注.TabIndex = 18;
-            this.txb备注.Text = "无";
+            this.txb备注.Text = "成品率=成品重量合计/(成品重量合计+废品重量)\r\n物料平衡=（1- (成品重量合计+废品重量) / 供料量  ）";
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(847, 200);
+            this.label10.Location = new System.Drawing.Point(1164, 197);
             this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(72, 16);
@@ -333,7 +335,7 @@
             // lbRecordMan
             // 
             this.lbRecordMan.AutoSize = true;
-            this.lbRecordMan.Location = new System.Drawing.Point(863, 166);
+            this.lbRecordMan.Location = new System.Drawing.Point(1180, 163);
             this.lbRecordMan.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbRecordMan.Name = "lbRecordMan";
             this.lbRecordMan.Size = new System.Drawing.Size(56, 16);
@@ -344,7 +346,7 @@
             // txb物料平衡
             // 
             this.txb物料平衡.Enabled = false;
-            this.txb物料平衡.Location = new System.Drawing.Point(665, 183);
+            this.txb物料平衡.Location = new System.Drawing.Point(823, 183);
             this.txb物料平衡.Margin = new System.Windows.Forms.Padding(4);
             this.txb物料平衡.Name = "txb物料平衡";
             this.txb物料平衡.ReadOnly = true;
@@ -353,7 +355,7 @@
             // 
             // txb记录员
             // 
-            this.txb记录员.Location = new System.Drawing.Point(927, 163);
+            this.txb记录员.Location = new System.Drawing.Point(1244, 160);
             this.txb记录员.Margin = new System.Windows.Forms.Padding(4);
             this.txb记录员.Name = "txb记录员";
             this.txb记录员.Size = new System.Drawing.Size(162, 26);
@@ -409,11 +411,33 @@
             this.label5.TabIndex = 164;
             this.label5.Text = "--";
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(537, 163);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(88, 16);
+            this.label6.TabIndex = 166;
+            this.label6.Text = "供料量(Kg)";
+            // 
+            // txb供料量
+            // 
+            this.txb供料量.Enabled = false;
+            this.txb供料量.Location = new System.Drawing.Point(509, 183);
+            this.txb供料量.Margin = new System.Windows.Forms.Padding(4);
+            this.txb供料量.Name = "txb供料量";
+            this.txb供料量.ReadOnly = true;
+            this.txb供料量.Size = new System.Drawing.Size(150, 26);
+            this.txb供料量.TabIndex = 165;
+            // 
             // MaterialBalenceofExtrusionProcess
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(839, 406);
+            this.ClientSize = new System.Drawing.Size(1014, 403);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.txb供料量);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.lbl生产结束时间);
             this.Controls.Add(this.bt查看人员信息);
@@ -496,5 +520,7 @@
         private System.Windows.Forms.Button bt查看人员信息;
         private System.Windows.Forms.Label lbl生产结束时间;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox txb供料量;
     }
 }

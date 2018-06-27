@@ -1460,5 +1460,53 @@ namespace mySystem.Extruction.Process
                 writeDGVWidthToSetting(dataGridView2);
             }
         }
+
+
+        public Record_extrusSiteClean(mySystem.MainForm mainform, int id, bool forprint)
+            : base(mainform)
+        {
+            InitializeComponent();
+            Init();
+            getPeople();
+            //setUserState();
+            _userState = Parameter.UserState.NoBody;
+            getOtherData();
+
+            DataTable tempdt = new DataTable();
+            string asql = "select * from 吹膜工序清场记录 where ID=" + id;
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
+                OleDbDataAdapter da = new OleDbDataAdapter(comm);
+                da.Fill(tempdt);
+            }
+            else
+            {
+                SqlCommand comm = new SqlCommand(asql, mySystem.Parameter.conn);
+                SqlDataAdapter da = new SqlDataAdapter(comm);
+                da.Fill(tempdt);
+            }
+
+            instrid = int.Parse(tempdt.Rows[0]["生产指令ID"].ToString());
+
+            readOuterData(instrid);
+            removeOuterBinding();
+            outerBind();
+            ckb合格.Checked = (bool)dt_prodinstr.Rows[0]["审核是否通过"];
+            ckb不合格.Checked = !ckb合格.Checked;
+
+            readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
+            innerBind();
+            dataGridView1.Columns[0].Visible = false;
+
+            readInnerData2((int)dt_prodinstr.Rows[0]["ID"]);
+            innerBind2();
+            dataGridView2.Columns[0].Visible = false;
+
+            setFormState();
+            setEnableReadOnly();
+
+        }
+
     }
 }

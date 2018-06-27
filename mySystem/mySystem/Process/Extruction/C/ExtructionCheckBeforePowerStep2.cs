@@ -1149,5 +1149,51 @@ namespace mySystem.Extruction.Process
         }
 
 
+
+        public ExtructionCheckBeforePowerStep2(MainForm mainform, Int32 ID, bool forprint)
+            : base(mainform)
+        {
+            InitializeComponent();
+
+            conn = Parameter.conn;
+            connOle = Parameter.connOle;
+            isSqlOk = Parameter.isSqlOk;
+
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbDataAdapter da = new OleDbDataAdapter("select * from 吹膜机组开机前确认表 where ID=" + ID, connOle);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                InstruID = Convert.ToInt32(dt.Rows[0]["生产指令ID"]);
+
+                da = new OleDbDataAdapter("select * from 生产指令信息表 where ID=" + InstruID, connOle);
+                dt = new DataTable();
+                da.Fill(dt);
+                Instruction = dt.Rows[0]["生产指令编号"].ToString();
+            }
+            else
+            {
+                SqlDataAdapter da = new SqlDataAdapter("select * from 吹膜机组开机前确认表 where ID=" + ID, conn);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                InstruID = Convert.ToInt32(dt.Rows[0]["生产指令ID"]);
+
+                da = new SqlDataAdapter("select * from 生产指令信息表 where ID=" + InstruID, conn);
+                dt = new DataTable();
+                da.Fill(dt);
+                Instruction = dt.Rows[0]["生产指令编号"].ToString();
+            }
+
+            fill_printer(); //添加打印机
+            getPeople();  // 获取操作员和审核员
+            //setUserState();  // 根据登录人，设置stat_user
+            _userState = Parameter.UserState.NoBody;
+            getOtherData();  //读取设置内容
+            addOtherEvnetHandler();  // 其他事件，datagridview：DataError、CellEndEdit、DataBindingComplete
+            addDataEventHandler();  // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged
+
+            IDShow(ID);
+        }
+
     }
 }

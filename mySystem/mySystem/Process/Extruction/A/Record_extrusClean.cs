@@ -1649,5 +1649,176 @@ namespace WindowsFormsApplication1
             }
         }
 
+
+
+        public Record_extrusClean(mySystem.MainForm mainform, int id, bool forprint)
+            : base(mainform)
+        {
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                conn = mainform.conn;
+                connOle = mainform.connOle;
+                isSqlOk = mainform.isSqlOk;
+
+                InitializeComponent();
+                Init();
+                getPeople();
+                setUserState();
+                getOtherData();
+
+                string asql = "select * from 吹膜机组清洁记录表 where ID=" + id;
+                OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
+                OleDbDataAdapter da = new OleDbDataAdapter(comm);
+                DataTable tempdt = new DataTable();
+                da.Fill(tempdt);
+                instrid = int.Parse(tempdt.Rows[0]["生产指令ID"].ToString());
+
+
+                asql = "select * from 生产指令信息表 where ID=" + instrid;
+                comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
+                da = new OleDbDataAdapter(comm);
+                tempdt = new DataTable();
+                da.Fill(tempdt);
+                instr = tempdt.Rows[0]["生产指令编号"].ToString();
+
+
+                readOuterData(instrid);
+                removeOuterBinding();
+                outerBind();
+
+                ckb白班.Checked = (bool)dt_out.Rows[0]["班次"];
+                ckb夜班.Checked = !ckb白班.Checked;
+
+                readInnerData((int)dt_out.Rows[0]["ID"]);
+                innerBind();
+
+                DialogResult result;
+                if (!is_sameto_setting())
+                {
+                    result = MessageBox.Show("检测到之前的记录与目前设置中不一致，保留当前设置选择是，保留之前记录设置选择否", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (result == DialogResult.Yes)//保留当前设置
+                    {
+                        while (dataGridView1.Rows.Count > 0)
+                            dataGridView1.Rows.RemoveAt(dataGridView1.Rows.Count - 1);                        //ndr["审核人"] = "";
+                        if (!mySystem.Parameter.isSqlOk)
+                        {
+                            da_in.Update((DataTable)bs_in.DataSource);
+                        }
+                        else
+                        {
+                            da_in_sql.Update((DataTable)bs_in.DataSource);
+                        }
+
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            DataRow ndr = dt_in.NewRow();
+                            ndr[1] = (int)dt_out.Rows[0]["ID"];
+                            // 注意ID不要复制过去了，所以从1开始
+                            for (int i = 1; i < dr.Table.Columns.Count; ++i)
+                            {
+                                ndr[i + 1] = dr[i];
+                            }
+                            // 这里添加检查是否合格、检查人、审核人等默认信息
+                            ndr["合格"] = "合格";
+                            ndr["清洁人"] = mySystem.Parameter.userName;
+                            //ndr["审核人"] = "";
+                            ndr["清洁员备注"] = "";
+                            dt_in.Rows.Add(ndr);
+                        }
+                        dataGridView1.Columns[0].Visible = false;
+                        dataGridView1.Columns[1].Visible = false;
+                        //da_in.Update((DataTable)bs_in.DataSource);
+
+                    }
+                }
+
+                setFormState();
+                setEnableReadOnly();
+            }
+            else
+            {
+                conn = mainform.conn;
+                connOle = mainform.connOle;
+                isSqlOk = mainform.isSqlOk;
+
+                InitializeComponent();
+                Init();
+                getPeople();
+                //setUserState();
+                _userState = Parameter.UserState.NoBody;
+                getOtherData();
+
+                string asql = "select * from 吹膜机组清洁记录表 where ID=" + id;
+                SqlCommand comm = new SqlCommand(asql, mySystem.Parameter.conn);
+                SqlDataAdapter da = new SqlDataAdapter(comm);
+                DataTable tempdt = new DataTable();
+                da.Fill(tempdt);
+                instrid = int.Parse(tempdt.Rows[0]["生产指令ID"].ToString());
+
+
+                asql = "select * from 生产指令信息表 where ID=" + instrid;
+                comm = new SqlCommand(asql, mySystem.Parameter.conn);
+                da = new SqlDataAdapter(comm);
+                tempdt = new DataTable();
+                da.Fill(tempdt);
+                instr = tempdt.Rows[0]["生产指令编号"].ToString();
+
+
+                readOuterData(instrid);
+                removeOuterBinding();
+                outerBind();
+
+                ckb白班.Checked = (bool)dt_out.Rows[0]["班次"];
+                ckb夜班.Checked = !ckb白班.Checked;
+
+                readInnerData((int)dt_out.Rows[0]["ID"]);
+                innerBind();
+
+                DialogResult result;
+                if (!is_sameto_setting())
+                {
+                    result = MessageBox.Show("检测到之前的记录与目前设置中不一致，保留当前设置选择是，保留之前记录设置选择否", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (result == DialogResult.Yes)//保留当前设置
+                    {
+                        while (dataGridView1.Rows.Count > 0)
+                            dataGridView1.Rows.RemoveAt(dataGridView1.Rows.Count - 1);
+                        if (!mySystem.Parameter.isSqlOk)
+                        {
+                            da_in.Update((DataTable)bs_in.DataSource);
+                        }
+                        else
+                        {
+                            da_in_sql.Update((DataTable)bs_in.DataSource);
+                        }
+
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            DataRow ndr = dt_in.NewRow();
+                            ndr[1] = (int)dt_out.Rows[0]["ID"];
+                            // 注意ID不要复制过去了，所以从1开始
+                            for (int i = 1; i < dr.Table.Columns.Count; ++i)
+                            {
+                                ndr[i + 1] = dr[i];
+                            }
+                            // 这里添加检查是否合格、检查人、审核人等默认信息
+                            ndr["合格"] = "合格";
+                            ndr["清洁人"] = mySystem.Parameter.userName;
+                            //ndr["审核人"] = "";
+                            ndr["清洁员备注"] = "";
+                            dt_in.Rows.Add(ndr);
+                        }
+                        dataGridView1.Columns[0].Visible = false;
+                        dataGridView1.Columns[1].Visible = false;
+                        //da_in.Update((DataTable)bs_in.DataSource);
+
+                    }
+                }
+
+                setFormState();
+                setEnableReadOnly();
+            }
+
+        }
+
     }
 }

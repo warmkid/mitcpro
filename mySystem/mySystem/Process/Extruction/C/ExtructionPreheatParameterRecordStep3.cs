@@ -999,6 +999,31 @@ namespace mySystem.Extruction.Process
             }
             
         }
+
+
+
+
+
+
+        public ExtructionPreheatParameterRecordStep3(MainForm mainform, Int32 ID, bool forprint)
+            : base(mainform)
+        {
+            InitializeComponent();
+
+            conn = Parameter.conn;
+            connOle = Parameter.connOle;
+            isSqlOk = Parameter.isSqlOk;
+
+            fill_printer(); //添加打印机
+            getPeople();  // 获取操作员和审核员
+            //setUserState();  // 根据登录人，设置stat_user
+            _userState = Parameter.UserState.NoBody;
+            getOtherData();  //读取设置内容
+            addOtherEvnetHandler();  // 其他事件，几个时间的格式
+            addDataEventHandler();  // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged  
+
+            IDShow(ID);
+        }
                         
     }
 }

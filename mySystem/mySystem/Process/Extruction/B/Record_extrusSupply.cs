@@ -1973,5 +1973,65 @@ namespace WindowsFormsApplication1
                 //return;
             }
         }
+
+        public Record_extrusSupply(mySystem.MainForm mainform, int id, bool forprint)
+            : base(mainform)
+        {
+            InitializeComponent();
+            fill_printer();
+            getPeople();
+            //setUserState();
+            _userState = Parameter.UserState.NoBody;
+
+            setControlFalse();
+
+            string asql = "select * from 吹膜供料记录 where ID=" + id;
+            SqlCommand comm = new SqlCommand(asql, mySystem.Parameter.conn);
+            SqlDataAdapter da = new SqlDataAdapter(comm);
+
+            DataTable tempdt = new DataTable();
+            da.Fill(tempdt);
+
+            instrid = int.Parse(tempdt.Rows[0]["生产指令ID"].ToString());
+            instr = tempdt.Rows[0]["生产指令编号"].ToString();
+            prodcode = tempdt.Rows[0]["产品代码"].ToString();
+            time = (DateTime)tempdt.Rows[0]["供料日期"];
+            flight = (bool)tempdt.Rows[0]["班次"];
+
+            addmatcode(instrid);
+            label_prodcode = 1;
+
+            readOuterData(instrid);
+            removeOuterBinding();
+            outerBind();
+            //cb产品代码.Text = prodcode;
+            cb原料代码ab1c.Text = dt_prodinstr.Rows[0]["外中内层原料代码"].ToString();
+            cb原料代码b2.Text = dt_prodinstr.Rows[0]["中层原料代码"].ToString();
+            ckb白班.Checked = (bool)dt_prodinstr.Rows[0]["班次"];
+            ckb夜班.Checked = !ckb白班.Checked;
+
+            bs_prodinstr.EndEdit();
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+            }
+            else
+            {
+                da_prodinstrsql.Update((DataTable)bs_prodinstr.DataSource);
+            }
+
+
+            readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
+            innerBind();
+
+            setFormState();
+            setEnableReadOnly();
+            addDataEventHandler();
+
+            //cb产品代码.Enabled = false;
+            dtp供料日期.Enabled = false;
+            bt插入查询.Enabled = false;
+        }
+
     }
 }
