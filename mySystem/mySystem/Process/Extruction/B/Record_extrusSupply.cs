@@ -1584,15 +1584,16 @@ namespace WindowsFormsApplication1
                 DateTime tempdt=DateTime.Parse(dataGridView1.Rows[i].Cells[2].Value.ToString());
                 //string time = string.Format("{0}:{1}:{2}", tempdt.Hour.ToString(), tempdt.Minute.ToString(), tempdt.Second.ToString());
                 my.Cells[6 + i, 2] = tempdt.ToString("yyyy/MM/dd HH:mm:ss");
-                my.Cells[6 + i, 3] = daima1;
-                my.Cells[6 + i, 4] = pihao1;
-                my.Cells[6 + i, 5] = dataGridView1.Rows[i].Cells["外层供料量"].Value.ToString();
-                my.Cells[6 + i, 6] = daima2;
-                my.Cells[6 + i, 7] = pihao2;
-                my.Cells[6 + i, 8] = dataGridView1.Rows[i].Cells["中内层供料量"].Value.ToString();
-                my.Cells[6 + i, 9] = dataGridView1.Rows[i].Cells["原料抽查结果"].Value.ToString();
-                my.Cells[6 + i, 10] = dataGridView1.Rows[i].Cells["供料人"].Value.ToString();
-                my.Cells[6 + i, 11] = dataGridView1.Rows[i].Cells["审核员"].Value.ToString();
+                my.Cells[6 + i, 3] = dataGridView1.Rows[i].Cells["班次"].Value.ToString(); ;
+                my.Cells[6 + i, 4] = daima1;
+                my.Cells[6 + i, 5] = pihao1;
+                my.Cells[6 + i, 6] = dataGridView1.Rows[i].Cells["外层供料量"].Value.ToString();
+                my.Cells[6 + i, 7] = daima2;
+                my.Cells[6 + i, 8] = pihao2;
+                my.Cells[6 + i, 9] = dataGridView1.Rows[i].Cells["中内层供料量"].Value.ToString();
+                my.Cells[6 + i, 10] = dataGridView1.Rows[i].Cells["原料抽查结果"].Value.ToString();
+                my.Cells[6 + i, 11] = dataGridView1.Rows[i].Cells["供料人"].Value.ToString();
+                my.Cells[6 + i, 12] = dataGridView1.Rows[i].Cells["审核员"].Value.ToString();
 
             }
 
