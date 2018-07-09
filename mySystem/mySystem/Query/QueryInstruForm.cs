@@ -166,7 +166,10 @@ namespace mySystem
         private void SearchBtn_Click(object sender, EventArgs e)
         {
             search();
+            readDGVWidthFromSettingAndSet(dgv, comboBox1.Text);
         }
+
+        
 
         public void search()
         {
@@ -301,8 +304,12 @@ namespace mySystem
             { setDataGridViewBackColor("审核人"); }
             catch
             { }
-            if (processName == "吹膜")
-                setDataGridViewBackColor("审批人");
+            try
+            {
+                if (processName == "吹膜")
+                    setDataGridViewBackColor("审批人");
+            }
+            catch { }
         }
 
         //设置datagridview背景颜色，待审核标红
@@ -435,6 +442,11 @@ namespace mySystem
             }
             
  
+        }
+
+        private void dgv_ColumnWidthChanged(object sender, DataGridViewColumnEventArgs e)
+        {
+            writeDGVWidthToSetting(dgv, comboBox1.Text);
         }
 
 

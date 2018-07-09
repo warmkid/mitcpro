@@ -1272,7 +1272,7 @@ namespace WindowsFormsApplication1
 
 
             //供料人是否合法
-            if (e.ColumnIndex == 7)
+            if (e.ColumnIndex == 8)
             {
                 if(queryid(dataGridView1.Rows[e.RowIndex].Cells[7].Value.ToString())==-1)
                 {
@@ -1304,9 +1304,11 @@ namespace WindowsFormsApplication1
         //检查输入人是否合法
         private int queryid(string s)
         {
-            string asql = "select ID from users where 姓名=" + "'" + s + "'";
-            OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOleUser);
-            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+            string asql = "select ID from 用户 where 用户名=" + "'" + s + "'";
+            //OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOleUser);
+            //OleDbDataAdapter da = new OleDbDataAdapter(comm);
+            SqlCommand comm = new SqlCommand(asql, mySystem.Parameter.conn);
+            SqlDataAdapter da = new SqlDataAdapter(comm);
 
             DataTable tempdt = new DataTable();
             da.Fill(tempdt);
@@ -1949,6 +1951,7 @@ namespace WindowsFormsApplication1
                 readDGVWidthFromSettingAndSet(dataGridView1);
                 isFirstBind = false;
             }
+            dataGridView1.Columns["班次"].ReadOnly = true;
         }
 
         private void Record_extrusSupply_FormClosing(object sender, FormClosingEventArgs e)

@@ -233,7 +233,14 @@ namespace mySystem.Extruction.Process
                 for (int i = 0; i < dataGridView1.Rows.Count; i++)
                 {
                     if (dataGridView1.Rows[i].Cells["审核人"].Value.ToString() != "")
-                        dataGridView1.Rows[i].ReadOnly = true;
+                    {
+                        dataGridView1.Rows[i].ReadOnly = false;
+                        for (int j = 0; j < dataGridView1.Rows[i].Cells.Count; ++j)
+                        {
+                            if (dataGridView1.Rows[i].Cells[j].OwningColumn.Name != "退料数量")
+                                dataGridView1.Rows[i].Cells[j].ReadOnly = true;
+                        }
+                    }
                     else
                     {
                         dataGridView1.Rows[i].ReadOnly = false;
@@ -402,7 +409,7 @@ namespace mySystem.Extruction.Process
             getPeople();
             setUserState();
 
-            setControlFalse();
+            //setControlFalse();
 
             
 
@@ -411,6 +418,7 @@ namespace mySystem.Extruction.Process
             matcode = tempdt.Rows[0]["物料代码"].ToString();
             instrid = (int)tempdt.Rows[0]["生产指令ID"];
 
+            
 
             readOuterData(instrid, matcode);
             removeOuterBinding();
@@ -1190,6 +1198,7 @@ namespace mySystem.Extruction.Process
                 dataGridView1.Columns["审核人"].ReadOnly = true;//领料审核人
                 dataGridView1.Columns["数量"].ReadOnly = false;//领料审核人
                 dataGridView1.Columns["二维码"].Visible = false;
+                dataGridView1.Columns["退料数量"].ReadOnly = false;
             }
 
             for (int i = 0; i < dataGridView1.Rows.Count; i++)

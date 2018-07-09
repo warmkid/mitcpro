@@ -774,9 +774,9 @@ namespace mySystem.Process.Order
             foreach (DataRow dr in drs)
             {
                 string bom = dr["BOM列表"].ToString();
-                if (bom == "")
+                if (bom == "" || bom=="空")
                 {
-                    ret[ Convert.ToInt32(drs[0]["ID"]) ] = 数量;
+                    ret[Convert.ToInt32(drs[0]["ID"])] = 数量;
                     return ret;
                 }
                 JArray ja = JArray.Parse(bom);
