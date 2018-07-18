@@ -874,11 +874,15 @@ namespace WindowsFormsApplication1
             //setDataGridViewColumns();
             ////Utility.setDataGridViewAutoSizeMode(dataGridView1);
 
-
+            setDataGridViewCombox();
             bs_prodlist.DataSource = dt_prodlist;
             dataGridView1.DataSource = bs_prodlist.DataSource;
             setDataGridViewColumns();
+            
             Utility.setDataGridViewAutoSizeMode(dataGridView1);
+            // 调整显示顺序
+            dataGridView1.Columns["外中内层物料批号"].DisplayIndex = dataGridView1.Columns["外层供料量"].DisplayIndex;
+            dataGridView1.Columns["中层物料批号"].DisplayIndex = dataGridView1.Columns["中层供料量"].DisplayIndex - 1;
 
         }
 
@@ -887,38 +891,60 @@ namespace WindowsFormsApplication1
         {
             foreach (DataColumn dc in dt_prodlist.Columns)
             {
+                String 外中内层物料代码 = dict_inoutmatcode_batch.Keys.ToArray<String>()[0];
+                String 中层物料代码 = dict_midmatcode_batch.Keys.ToArray<String>()[0];
+                string[] 外中内层物料批号 = Regex.Split(dict_inoutmatcode_batch[外中内层物料代码], ",|，");
+                string[] 中层物料批号 = Regex.Split(dict_midmatcode_batch[中层物料代码], ",|，");
                 switch (dc.ColumnName)
                 {
-                    case "外层供料量":
-                        DataGridViewTextBoxColumn c3 = new DataGridViewTextBoxColumn();
-                        c3.DataPropertyName = dc.ColumnName;
-                        c3.HeaderText = cb原料代码ab1c.Text;
-                        c3.Name = dc.ColumnName;
-                        c3.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        c3.ValueType = dc.DataType;
-                        dataGridView1.Columns.Add(c3);
-                        break;
+                    //case "外层供料量":
+                    //    DataGridViewTextBoxColumn c3 = new DataGridViewTextBoxColumn();
+                    //    c3.DataPropertyName = dc.ColumnName;
+                    //    c3.HeaderText = cb原料代码ab1c.Text;
+                    //    c3.Name = dc.ColumnName;
+                    //    c3.SortMode = DataGridViewColumnSortMode.NotSortable;
+                    //    c3.ValueType = dc.DataType;
+                    //    dataGridView1.Columns.Add(c3);
+                    //    break;
 
-                    case "中内层供料量":
-                        DataGridViewTextBoxColumn c4 = new DataGridViewTextBoxColumn();
-                        c4.DataPropertyName = dc.ColumnName;
-                        c4.HeaderText = cb原料代码b2.Text;
-                        c4.Name = dc.ColumnName;
-                        c4.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        c4.ValueType = dc.DataType;
-                        dataGridView1.Columns.Add(c4);
-                        break;
-                    case "原料抽查结果":
+                    //case "中内层供料量":
+                    //    DataGridViewTextBoxColumn c4 = new DataGridViewTextBoxColumn();
+                    //    c4.DataPropertyName = dc.ColumnName;
+                    //    c4.HeaderText = cb原料代码b2.Text;
+                    //    c4.Name = dc.ColumnName;
+                    //    c4.SortMode = DataGridViewColumnSortMode.NotSortable;
+                    //    c4.ValueType = dc.DataType;
+                    //    dataGridView1.Columns.Add(c4);
+                    //    break;
+                    
+                    case "外中内层物料批号":
                         DataGridViewComboBoxColumn c1 = new DataGridViewComboBoxColumn();
                         c1.DataPropertyName = dc.ColumnName;
                         c1.HeaderText = dc.ColumnName;
                         c1.Name = dc.ColumnName;
                         c1.SortMode = DataGridViewColumnSortMode.NotSortable;
                         c1.ValueType = dc.DataType;
-
-                        c1.Items.Add("合格");
-                        c1.Items.Add("不合格");
+                        foreach (String s in 外中内层物料批号)
+                        {
+                            c1.Items.Add(s);
+                        }
+                        
                         dataGridView1.Columns.Add(c1);
+                        // 重写cell value changed 事件，自动填写id
+                        break;
+                    case "中层物料批号":
+                        DataGridViewComboBoxColumn c3 = new DataGridViewComboBoxColumn();
+                        c3.DataPropertyName = dc.ColumnName;
+                        c3.HeaderText = dc.ColumnName;
+                        c3.Name = dc.ColumnName;
+                        c3.SortMode = DataGridViewColumnSortMode.NotSortable;
+                        c3.ValueType = dc.DataType;
+
+                        foreach (String s in 中层物料批号)
+                        {
+                            c3.Items.Add(s);
+                        }
+                        dataGridView1.Columns.Add(c3);
                         // 重写cell value changed 事件，自动填写id
                         break;
 
@@ -1586,10 +1612,10 @@ namespace WindowsFormsApplication1
                 my.Cells[6 + i, 2] = tempdt.ToString("yyyy/MM/dd HH:mm:ss");
                 my.Cells[6 + i, 3] = dataGridView1.Rows[i].Cells["班次"].Value.ToString(); ;
                 my.Cells[6 + i, 4] = daima1;
-                my.Cells[6 + i, 5] = pihao1;
+                my.Cells[6 + i, 5] = dataGridView1.Rows[i].Cells["外中内层物料批号"].Value.ToString();
                 my.Cells[6 + i, 6] = dataGridView1.Rows[i].Cells["外层供料量"].Value.ToString();
                 my.Cells[6 + i, 7] = daima2;
-                my.Cells[6 + i, 8] = pihao2;
+                my.Cells[6 + i, 8] = dataGridView1.Rows[i].Cells["中层物料批号"].Value.ToString();
                 my.Cells[6 + i, 9] = dataGridView1.Rows[i].Cells["中内层供料量"].Value.ToString();
                 my.Cells[6 + i, 10] = dataGridView1.Rows[i].Cells["原料抽查结果"].Value.ToString();
                 my.Cells[6 + i, 11] = dataGridView1.Rows[i].Cells["供料人"].Value.ToString();
@@ -1614,10 +1640,10 @@ namespace WindowsFormsApplication1
             //my.Cells[9, 10].Value = dt_prodinstr.Rows[0]["审核人"];
             
             //my.Cells[13+ind, 2].Value = tb外层合计.Text ;
-            my.Cells[7 + ind, 3].Value = dt_prodinstr.Rows[0]["外层供料量合计a"];
+            my.Cells[7 + ind, 4].Value = dt_prodinstr.Rows[0]["外层供料量合计a"];
 
             //my.Cells[13+ind, 4].Value = tb中内层合计.Text;
-            my.Cells[7 + ind, 6].Value = dt_prodinstr.Rows[0]["中内层供料量合计b"];
+            my.Cells[7 + ind, 7].Value = dt_prodinstr.Rows[0]["中内层供料量合计b"];
 
         }
 
