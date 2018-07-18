@@ -65,6 +65,8 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.txb供料量 = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.txb退料量 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -138,7 +140,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(379, 163);
+            this.label14.Location = new System.Drawing.Point(352, 163);
             this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(88, 16);
@@ -168,7 +170,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(866, 163);
+            this.label7.Location = new System.Drawing.Point(857, 163);
             this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(80, 16);
@@ -201,7 +203,7 @@
             // txb重量比成品率
             // 
             this.txb重量比成品率.Enabled = false;
-            this.txb重量比成品率.Location = new System.Drawing.Point(665, 183);
+            this.txb重量比成品率.Location = new System.Drawing.Point(656, 183);
             this.txb重量比成品率.Margin = new System.Windows.Forms.Padding(4);
             this.txb重量比成品率.Name = "txb重量比成品率";
             this.txb重量比成品率.ReadOnly = true;
@@ -222,7 +224,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(671, 163);
+            this.label8.Location = new System.Drawing.Point(662, 163);
             this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(144, 16);
@@ -267,7 +269,7 @@
             this.txb领料量.Margin = new System.Windows.Forms.Padding(4);
             this.txb领料量.Name = "txb领料量";
             this.txb领料量.ReadOnly = true;
-            this.txb领料量.Size = new System.Drawing.Size(150, 26);
+            this.txb领料量.Size = new System.Drawing.Size(89, 26);
             this.txb领料量.TabIndex = 10;
             // 
             // txb审核员
@@ -346,7 +348,7 @@
             // txb物料平衡
             // 
             this.txb物料平衡.Enabled = false;
-            this.txb物料平衡.Location = new System.Drawing.Point(823, 183);
+            this.txb物料平衡.Location = new System.Drawing.Point(814, 183);
             this.txb物料平衡.Margin = new System.Windows.Forms.Padding(4);
             this.txb物料平衡.Name = "txb物料平衡";
             this.txb物料平衡.ReadOnly = true;
@@ -414,7 +416,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(537, 163);
+            this.label6.Location = new System.Drawing.Point(452, 163);
             this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(88, 16);
@@ -424,18 +426,40 @@
             // txb供料量
             // 
             this.txb供料量.Enabled = false;
-            this.txb供料量.Location = new System.Drawing.Point(509, 183);
+            this.txb供料量.Location = new System.Drawing.Point(449, 183);
             this.txb供料量.Margin = new System.Windows.Forms.Padding(4);
             this.txb供料量.Name = "txb供料量";
             this.txb供料量.ReadOnly = true;
-            this.txb供料量.Size = new System.Drawing.Size(150, 26);
+            this.txb供料量.Size = new System.Drawing.Size(97, 26);
             this.txb供料量.TabIndex = 165;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(558, 163);
+            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(88, 16);
+            this.label11.TabIndex = 168;
+            this.label11.Text = "退料量(Kg)";
+            // 
+            // txb退料量
+            // 
+            this.txb退料量.Enabled = false;
+            this.txb退料量.Location = new System.Drawing.Point(557, 183);
+            this.txb退料量.Margin = new System.Windows.Forms.Padding(4);
+            this.txb退料量.Name = "txb退料量";
+            this.txb退料量.ReadOnly = true;
+            this.txb退料量.Size = new System.Drawing.Size(89, 26);
+            this.txb退料量.TabIndex = 167;
             // 
             // MaterialBalenceofExtrusionProcess
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1014, 403);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.txb退料量);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.txb供料量);
             this.Controls.Add(this.label5);
@@ -522,5 +546,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txb供料量;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox txb退料量;
     }
 }

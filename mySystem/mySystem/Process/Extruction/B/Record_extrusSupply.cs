@@ -873,7 +873,7 @@ namespace WindowsFormsApplication1
             //dataGridView1.DataSource = bs_prodlist.DataSource;
             //setDataGridViewColumns();
             ////Utility.setDataGridViewAutoSizeMode(dataGridView1);
-
+            dataGridView1.Columns.Clear();
             setDataGridViewCombox();
             bs_prodlist.DataSource = dt_prodlist;
             dataGridView1.DataSource = bs_prodlist.DataSource;
@@ -1620,6 +1620,7 @@ namespace WindowsFormsApplication1
                 my.Cells[6 + i, 10] = dataGridView1.Rows[i].Cells["原料抽查结果"].Value.ToString();
                 my.Cells[6 + i, 11] = dataGridView1.Rows[i].Cells["供料人"].Value.ToString();
                 my.Cells[6 + i, 12] = dataGridView1.Rows[i].Cells["审核员"].Value.ToString();
+                my.Cells[6 + i, 13] = dataGridView1.Rows[i].Cells["备注"].Value.ToString();
 
             }
 
@@ -1976,7 +1977,7 @@ namespace WindowsFormsApplication1
             if (isFirstBind)
             {
                 readDGVWidthFromSettingAndSet(dataGridView1);
-                isFirstBind = false;
+                isFirstBind = true;
             }
             dataGridView1.Columns["班次"].ReadOnly = true;
         }
@@ -2061,6 +2062,11 @@ namespace WindowsFormsApplication1
             //cb产品代码.Enabled = false;
             dtp供料日期.Enabled = false;
             bt插入查询.Enabled = false;
+        }
+
+        private void dataGridView1_ColumnWidthChanged(object sender, DataGridViewColumnEventArgs e)
+        {
+            writeDGVWidthToSetting(dataGridView1);
         }
 
     }
