@@ -234,12 +234,12 @@ namespace mySystem.Extruction.Process
                 {
                     if (dataGridView1.Rows[i].Cells["审核人"].Value.ToString() != "")
                     {
-                        dataGridView1.Rows[i].ReadOnly = false;
-                        for (int j = 0; j < dataGridView1.Rows[i].Cells.Count; ++j)
-                        {
-                            if (dataGridView1.Rows[i].Cells[j].OwningColumn.Name != "退料数量")
-                                dataGridView1.Rows[i].Cells[j].ReadOnly = true;
-                        }
+                        dataGridView1.Rows[i].ReadOnly = true;
+                        //for (int j = 0; j < dataGridView1.Rows[i].Cells.Count; ++j)
+                        //{
+                        //    if (dataGridView1.Rows[i].Cells[j].OwningColumn.Name != "退料数量")
+                        //        dataGridView1.Rows[i].Cells[j].ReadOnly = true;
+                        //}
                     }
                     else
                     {
@@ -439,6 +439,12 @@ namespace mySystem.Extruction.Process
             innerBind();
 
             setFormState();
+
+            //if (ExtructionMainForm.isEnd(instrid, mySystem.Parameter.conn))
+            //{
+            //    bt提交审核.PerformClick();
+            //}
+
             setEnableReadOnly();
 
             cB物料代码.Enabled = false;
@@ -1816,6 +1822,7 @@ namespace mySystem.Extruction.Process
 
         private void bt查看人员信息_Click(object sender, EventArgs e)
         {
+            
             if (!mySystem.Parameter.isSqlOk)
             {
                 OleDbDataAdapter da;

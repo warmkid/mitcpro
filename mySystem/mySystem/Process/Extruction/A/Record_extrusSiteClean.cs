@@ -1296,6 +1296,59 @@ namespace mySystem.Extruction.Process
             return true;
         }
 
+
+        bool check是否都提交审核(out String msg)
+        {
+            String sql1,sql2;
+            SqlDataAdapter da;
+            DataTable dt;
+            String[] table_names = {"产品内包装记录表","产品外包装记录表","吹膜工序废品记录",
+                                       "吹膜工序领料退料记录","吹膜工序生产和检验记录","吹膜供料记录",
+                                       "吹膜供料系统运行记录","吹膜机组开机前确认表","吹膜机组清洁记录表",
+                                       "吹膜机组预热参数记录表","吹膜机组运行记录","生产领料申请单表"
+                                   };
+            sql1 = "select 审核员 from {0} where 生产指令ID={1}";
+            sql2 = "select 审核人 from {0} where 生产指令ID={1}";
+            // 下列表不用判断
+            // "生产指令信息表"，"批生产记录表"，"吹膜生产日报表","吹膜工序物料平衡记录","吹膜岗位交接班记录","吹膜工序清场记录"
+            msg = "";
+            foreach (String t in table_names)
+            {
+                try
+                {
+                    da = new SqlDataAdapter(String.Format(sql1, t, instrid), Parameter.conn);
+                    dt = new DataTable();
+                    da.Fill(dt);
+                    for (int i = 0; i < dt.Rows.Count; ++i)
+                    {
+                        if (dt.Rows[i]["审核员"] == DBNull.Value || dt.Rows[i]["审核员"] == "")
+                        {
+                            msg = t;
+                            return false;
+                        }
+                    }
+                }
+                catch
+                {
+                    da = new SqlDataAdapter(String.Format(sql2, t, instrid), Parameter.conn);
+                    dt = new DataTable();
+                    da.Fill(dt);
+                    for (int i = 0; i < dt.Rows.Count; ++i)
+                    {
+                        if (dt.Rows[i]["审核人"] == DBNull.Value || dt.Rows[i]["审核人"] == "")
+                        {
+                            msg = t;
+                            return false;
+                        }
+                    }
+                }
+
+            }
+            // 交接班？？
+            return true;
+           
+        }
+
         private void bt提交审核_Click(object sender, EventArgs e)
         {
             String n;
@@ -1326,8 +1379,16 @@ namespace mySystem.Extruction.Process
                     return;
                 }
             }
-            // 检查是否有待审核的
+
             String msg;
+            // 检查是否有未提交审核的
+            if (!check是否都提交审核(out msg))
+            {
+                MessageBox.Show("请先提交审核：\n" + msg);
+                return;
+            }
+            // 检查是否有待审核的
+            
             if (!check审核完成(out msg))
             {
                 MessageBox.Show("请先完成审核：\n"+msg);

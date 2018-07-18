@@ -1571,6 +1571,14 @@ namespace mySystem
             f.ShowDialog();
         }
 
+
+        public static Boolean isEnd(int instr_id, SqlConnection conn)
+        {
+            String sql = "select 状态 from 生产指令信息表 where ID={0}";
+            SqlCommand comm = new SqlCommand(string.Format(sql, instr_id), conn);
+            int res = Convert.ToInt32(comm.ExecuteScalar());
+            return res == 4;
+        }
         
     }
 }
