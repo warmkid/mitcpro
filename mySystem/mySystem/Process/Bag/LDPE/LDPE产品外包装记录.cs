@@ -1170,6 +1170,11 @@ namespace mySystem.Process.Bag.LDPE
             writeDGVWidthToSetting(dataGridView1);
         }
 
+        private void dataGridView1_ColumnWidthChanged(object sender, DataGridViewColumnEventArgs e)
+        {
+            writeDGVWidthToSetting(dataGridView1);
+        }
+
 
     }
 }

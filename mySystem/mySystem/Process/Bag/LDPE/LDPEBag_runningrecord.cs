@@ -382,6 +382,10 @@ namespace mySystem.Process.Bag.LDPE
             tb审核员.DataBindings.Add("Text", bs记录.DataSource, "审核员");
             dtp审核日期.DataBindings.Clear();
             dtp审核日期.DataBindings.Add("Text", bs记录.DataSource, "审核日期");
+            tb环境湿度.DataBindings.Clear();
+            tb环境湿度.DataBindings.Add("Text", bs记录.DataSource, "环境湿度");
+            tb环境温度.DataBindings.Clear();
+            tb环境温度.DataBindings.Add("Text", bs记录.DataSource, "环境温度");
         }
         
         //添加外表默认信息
@@ -392,6 +396,8 @@ namespace mySystem.Process.Bag.LDPE
             dr["审核员"] = "";
             dr["审核日期"] = DateTime.Now;
             dr["审核是否通过"] = false;
+            dr["环境温度"] = -1;
+            dr["环境湿度"] = -1;
             string log = DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 新建记录\n";
             log += "生产指令编码：" + mySystem.Parameter.ldpebagInstruction + "\n";
             dr["日志"] = log;
@@ -425,25 +431,14 @@ namespace mySystem.Process.Bag.LDPE
         private DataRow writeInnerDefault(DataRow dr)
         {
             dr["T制袋机组运行记录ID"] = dt记录.Rows[0]["ID"];
-            dr["生产日期"] = DateTime.Now;
-            dr["检查时间"] = DateTime.Now;
-            dr["上切刀切刀温度"] = 0;
-            dr["下切刀切刀温度"] = 0;
-            dr["冷却切刀温度"] = 0;
-            dr["横封温度1"] = 0;
-            dr["横封温度2"] = 0;
-            dr["纵封温度3"] = 0;
-            dr["纵封温度4"] = 0;
-            dr["纵封温度5"] = 0;
-            dr["横封热封时间"] = 0;
-            dr["纵封热封时间"] = 0;
-            dr["传输速度"] = 0;
-            dr["流量计"] = 0;
-            dr["产品质量是否正常"] = "正常";
-            dr["张力均匀是否正常"] = "正常";
-            dr["膜材运转是否正常"] = "正常";
-            dr["纠偏控制器是否正常"] = "正常";
-            dr["切刀运行是否正常"] = "正常";
+            //dr["生产日期"] = DateTime.Now.Date.ToString("yyyy/MM/dd");
+            dr["检查时间"] = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
+            dr["热封刀温度（300-340）"] = 0;
+            dr["底座温度（40-60）"] = 0;
+            dr["制袋速度（个/分钟）（30-50）"] = 0;
+            dr["切刀工作是否正常"] = "√";
+            dr["张力控制是否正常"] = "√";
+            dr["膜材运转是否平整"] = "√";
             dr["操作员"] = mySystem.Parameter.userName;
             return dr;
         }
@@ -551,23 +546,23 @@ namespace mySystem.Process.Bag.LDPE
             dataGridView1.Columns["T制袋机组运行记录ID"].Visible = false;
             //不可用
             //HeaderText
-            dataGridView1.Columns["上切刀切刀温度"].HeaderText = "切刀温度(°C)\r上切刀";
-            dataGridView1.Columns["下切刀切刀温度"].HeaderText = "切刀温度(°C)\r下切刀";
-            dataGridView1.Columns["冷却切刀温度"].HeaderText = "切刀温度(°C)\r冷却";
-            dataGridView1.Columns["横封温度1"].HeaderText = "横封温度(°C)\r(170-220)\r1#";
-            dataGridView1.Columns["横封温度2"].HeaderText = "横封温度(°C)\r(170-220)\r2#";
-            dataGridView1.Columns["纵封温度3"].HeaderText = "纵封温度(°C)\r(170-220)\r3#";
-            dataGridView1.Columns["纵封温度4"].HeaderText = "纵封温度(°C)\r(170-220)\r4#";
-            dataGridView1.Columns["纵封温度5"].HeaderText = "纵封温度(°C)\r(170-220)\r5#";
-            dataGridView1.Columns["横封热封时间"].HeaderText = "热封时间(S)\r(1.0-3.0)\r横封";
-            dataGridView1.Columns["纵封热封时间"].HeaderText = "热封时间(S)\r(1.0-3.0)\r纵封";
-            dataGridView1.Columns["传输速度"].HeaderText = "传输速度\r(米/S)";
-            dataGridView1.Columns["流量计"].HeaderText = "流量计\r(L/S)";
-            dataGridView1.Columns["产品质量是否正常"].HeaderText = "产品\r质量";
-            dataGridView1.Columns["张力均匀是否正常"].HeaderText = "张力\r均匀";
-            dataGridView1.Columns["膜材运转是否正常"].HeaderText = "膜材\r运转";
-            dataGridView1.Columns["纠偏控制器是否正常"].HeaderText = "纠偏\r控制器";
-            dataGridView1.Columns["切刀运行是否正常"].HeaderText = "切刀\r运行";
+            //dataGridView1.Columns["上切刀切刀温度"].HeaderText = "切刀温度(°C)\r上切刀";
+            //dataGridView1.Columns["下切刀切刀温度"].HeaderText = "切刀温度(°C)\r下切刀";
+            //dataGridView1.Columns["冷却切刀温度"].HeaderText = "切刀温度(°C)\r冷却";
+            //dataGridView1.Columns["横封温度1"].HeaderText = "横封温度(°C)\r(170-220)\r1#";
+            //dataGridView1.Columns["横封温度2"].HeaderText = "横封温度(°C)\r(170-220)\r2#";
+            //dataGridView1.Columns["纵封温度3"].HeaderText = "纵封温度(°C)\r(170-220)\r3#";
+            //dataGridView1.Columns["纵封温度4"].HeaderText = "纵封温度(°C)\r(170-220)\r4#";
+            //dataGridView1.Columns["纵封温度5"].HeaderText = "纵封温度(°C)\r(170-220)\r5#";
+            //dataGridView1.Columns["横封热封时间"].HeaderText = "热封时间(S)\r(1.0-3.0)\r横封";
+            //dataGridView1.Columns["纵封热封时间"].HeaderText = "热封时间(S)\r(1.0-3.0)\r纵封";
+            //dataGridView1.Columns["传输速度"].HeaderText = "传输速度\r(米/S)";
+            //dataGridView1.Columns["流量计"].HeaderText = "流量计\r(L/S)";
+            //dataGridView1.Columns["产品质量是否正常"].HeaderText = "产品\r质量";
+            //dataGridView1.Columns["张力均匀是否正常"].HeaderText = "张力\r均匀";
+            //dataGridView1.Columns["膜材运转是否正常"].HeaderText = "膜材\r运转";
+            //dataGridView1.Columns["纠偏控制器是否正常"].HeaderText = "纠偏\r控制器";
+            //dataGridView1.Columns["切刀运行是否正常"].HeaderText = "切刀\r运行";
         }
 
         //保存按钮
@@ -592,6 +587,9 @@ namespace mySystem.Process.Bag.LDPE
                     return false;
                 }
             }
+
+            // 检查温度湿度
+
 
             // 内表保存
             da记录详情.Update((DataTable)bs记录详情.DataSource);
@@ -803,73 +801,58 @@ namespace mySystem.Process.Bag.LDPE
         {
             int ind = 0;
             //外表信息
-            //String str生产日期 = "生产日期：" + Convert.ToDateTime(dt记录.Rows[0]["生产日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dt记录.Rows[0]["生产日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dt记录.Rows[0]["生产日期"].ToString()).Day.ToString() + "日";
-            //String str温度湿度 = "环境温度：" + Convert.ToDouble(dt记录.Rows[0]["生产环境温度"]).ToString() + " ℃      环境湿度：" + Convert.ToDouble(dt记录.Rows[0]["生产环境湿度"]).ToString() + "%";
-            //mysheet.Cells[5, 1].Value = str生产日期 + str温度湿度;
-            mysheet.Cells[3, 18].Value = dt记录.Rows[0]["生产指令编号"].ToString();
-            mysheet.Cells[20, 11].Value = "审核员：" + dt记录.Rows[0]["审核员"].ToString() + "   审核日期：" + Convert.ToDateTime(dt记录.Rows[0]["审核日期"].ToString()).ToString("yyyy/MM/dd");
+            String str生产日期 = "";
+            if (dt记录详情.Rows.Count >= 1)
+            {
+                str生产日期 = "生产日期：" + Convert.ToDateTime(dt记录详情.Rows[0]["检查时间"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dt记录详情.Rows[0]["检查时间"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dt记录详情.Rows[0]["检查时间"].ToString()).Day.ToString() + "日";
+            }
+            else
+            {
+                str生产日期 = "生产日期：" + DateTime.Now.Year.ToString() + 
+                    "年 " + DateTime.Now.Month.ToString() 
+                    + "月 " + DateTime.Now.Day.ToString() + "日";
+            }
+            String str温度湿度 = "环境温度：" + Convert.ToDouble(dt记录.Rows[0]["环境温度"]).ToString() + " ℃      环境湿度：" + Convert.ToDouble(dt记录.Rows[0]["环境湿度"]).ToString() + "%";
+            mysheet.Cells[5, 1].Value = str生产日期 + str温度湿度;
+            //mysheet.Cells[3, 18].Value = dt记录.Rows[0]["生产指令编号"].ToString();
+            //mysheet.Cells[20, 11].Value = "审核员：" + dt记录.Rows[0]["审核员"].ToString() + "   审核日期：" + Convert.ToDateTime(dt记录.Rows[0]["审核日期"].ToString()).ToString("yyyy/MM/dd");
             
             //内表信息
             int rownum = dt记录详情.Rows.Count;
             //无需插入的部分
-            for (int i = 0; i < (rownum > 13 ? 13 : rownum); i++)
+            for (int i = 0; i < (rownum > 6 ? 6 : rownum); i++)
             {
-                mysheet.Cells[6 + i, 1].Value = Convert.ToDateTime(dt记录详情.Rows[i]["生产日期"].ToString()).ToString("yyyy/MM/dd");
-                mysheet.Cells[6 + i, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["检查时间"].ToString()).ToString("HH：mm");
-                mysheet.Cells[6 + i, 3].Value = dt记录详情.Rows[i]["上切刀切刀温度"].ToString();
-                mysheet.Cells[6 + i, 4].Value = dt记录详情.Rows[i]["下切刀切刀温度"].ToString();
-                mysheet.Cells[6 + i, 5].Value = dt记录详情.Rows[i]["冷却切刀温度"].ToString();
-                mysheet.Cells[6 + i, 6].Value = dt记录详情.Rows[i]["横封温度1"].ToString();
-                mysheet.Cells[6 + i, 7].Value = dt记录详情.Rows[i]["横封温度2"].ToString();
-                mysheet.Cells[6 + i, 8].Value = dt记录详情.Rows[i]["纵封温度3"].ToString();
-                mysheet.Cells[6 + i, 9].Value = dt记录详情.Rows[i]["纵封温度4"].ToString();
-                mysheet.Cells[6 + i, 10].Value = dt记录详情.Rows[i]["纵封温度5"].ToString();
-                mysheet.Cells[6 + i, 11].Value = dt记录详情.Rows[i]["横封热封时间"].ToString();
-                mysheet.Cells[6 + i, 12].Value = dt记录详情.Rows[i]["纵封热封时间"].ToString();
-                mysheet.Cells[6 + i, 13].Value = dt记录详情.Rows[i]["传输速度"].ToString();
-                mysheet.Cells[6 + i, 14].Value = dt记录详情.Rows[i]["流量计"].ToString();
-                mysheet.Cells[6 + i, 15].Value = dt记录详情.Rows[i]["产品质量是否正常"].ToString() == "正常" ? "√" : dt记录详情.Rows[i]["产品质量是否正常"].ToString();
-                mysheet.Cells[6 + i, 16].Value = dt记录详情.Rows[i]["张力均匀是否正常"].ToString() == "正常" ? "√" : dt记录详情.Rows[i]["张力均匀是否正常"].ToString();
-                mysheet.Cells[6 + i, 17].Value = dt记录详情.Rows[i]["膜材运转是否正常"].ToString() == "正常" ? "√" : dt记录详情.Rows[i]["膜材运转是否正常"].ToString();
-                mysheet.Cells[6 + i, 18].Value = dt记录详情.Rows[i]["纠偏控制器是否正常"].ToString() == "正常" ? "√" : dt记录详情.Rows[i]["纠偏控制器是否正常"].ToString();
-                mysheet.Cells[6 + i, 19].Value = dt记录详情.Rows[i]["切刀运行是否正常"].ToString() == "正常" ? "√" : dt记录详情.Rows[i]["切刀运行是否正常"].ToString();
-                mysheet.Cells[6 + i, 20].Value = dt记录详情.Rows[i]["操作员"].ToString();
-                mysheet.Cells[6 + i, 21].Value = dt记录详情.Rows[i]["操作员备注"].ToString();
-                mysheet.Cells[6 + i, 22].Value = dt记录详情.Rows[i]["审核员"].ToString();
+                mysheet.Cells[8 + i, 1].Value = Convert.ToDateTime(dt记录详情.Rows[i]["检查时间"].ToString()).ToString("yyyy/MM/dd");
+                //mysheet.Cells[8 + i, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["检查时间"].ToString()).ToString("HH：mm");
+                mysheet.Cells[8 + i, 2].Value = dt记录详情.Rows[i]["热封刀温度（300-340）"].ToString();
+                mysheet.Cells[8 + i, 3].Value = dt记录详情.Rows[i]["底座温度（40-60）"].ToString();
+                mysheet.Cells[8 + i, 4].Value = dt记录详情.Rows[i]["制袋速度（个/分钟）（30-50）"].ToString();
+                mysheet.Cells[8 + i, 5].Value = dt记录详情.Rows[i]["切刀工作是否正常"].ToString();
+                mysheet.Cells[8 + i, 6].Value = dt记录详情.Rows[i]["张力控制是否正常"].ToString();
+                mysheet.Cells[8 + i, 7].Value = dt记录详情.Rows[i]["膜材运转是否平整"].ToString();
+                mysheet.Cells[8 + i, 8].Value = dt记录详情.Rows[i]["操作员"].ToString();
             }
             //需要插入的部分
-            if (rownum > 13)
+            if (rownum > 6)
             {
-                for (int i = 13; i < rownum; i++)
+                for (int i = 6; i < rownum; i++)
                 {
                     Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[6 + i, Type.Missing];
 
                     range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
                         Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
 
-                    mysheet.Cells[6 + i, 1].Value = Convert.ToDateTime(dt记录详情.Rows[i]["生产日期"].ToString()).ToString("yyyy/MM/dd");
-                    mysheet.Cells[6 + i, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["检查时间"].ToString()).ToString("HH：mm");
-                    mysheet.Cells[6 + i, 3].Value = dt记录详情.Rows[i]["上切刀切刀温度"].ToString();
-                    mysheet.Cells[6 + i, 4].Value = dt记录详情.Rows[i]["下切刀切刀温度"].ToString();
-                    mysheet.Cells[6 + i, 5].Value = dt记录详情.Rows[i]["冷却切刀温度"].ToString();
-                    mysheet.Cells[6 + i, 6].Value = dt记录详情.Rows[i]["横封温度1"].ToString();
-                    mysheet.Cells[6 + i, 7].Value = dt记录详情.Rows[i]["横封温度2"].ToString();
-                    mysheet.Cells[6 + i, 8].Value = dt记录详情.Rows[i]["纵封温度3"].ToString();
-                    mysheet.Cells[6 + i, 9].Value = dt记录详情.Rows[i]["纵封温度4"].ToString();
-                    mysheet.Cells[6 + i, 10].Value = dt记录详情.Rows[i]["纵封温度5"].ToString();
-                    mysheet.Cells[6 + i, 11].Value = dt记录详情.Rows[i]["横封热封时间"].ToString();
-                    mysheet.Cells[6 + i, 12].Value = dt记录详情.Rows[i]["纵封热封时间"].ToString();
-                    mysheet.Cells[6 + i, 13].Value = dt记录详情.Rows[i]["传输速度"].ToString();
-                    mysheet.Cells[6 + i, 14].Value = dt记录详情.Rows[i]["流量计"].ToString();
-                    mysheet.Cells[6 + i, 15].Value = dt记录详情.Rows[i]["产品质量是否正常"].ToString() == "正常" ? "√" : dt记录详情.Rows[i]["产品质量是否正常"].ToString();
-                    mysheet.Cells[6 + i, 16].Value = dt记录详情.Rows[i]["张力均匀是否正常"].ToString() == "正常" ? "√" : dt记录详情.Rows[i]["张力均匀是否正常"].ToString();
-                    mysheet.Cells[6 + i, 17].Value = dt记录详情.Rows[i]["膜材运转是否正常"].ToString() == "正常" ? "√" : dt记录详情.Rows[i]["膜材运转是否正常"].ToString();
-                    mysheet.Cells[6 + i, 18].Value = dt记录详情.Rows[i]["纠偏控制器是否正常"].ToString() == "正常" ? "√" : dt记录详情.Rows[i]["纠偏控制器是否正常"].ToString();
-                    mysheet.Cells[6 + i, 19].Value = dt记录详情.Rows[i]["切刀运行是否正常"].ToString() == "正常" ? "√" : dt记录详情.Rows[i]["切刀运行是否正常"].ToString();
-                    mysheet.Cells[6 + i, 20].Value = dt记录详情.Rows[i]["操作员"].ToString();
-                    mysheet.Cells[6 + i, 21].Value = dt记录详情.Rows[i]["操作员备注"].ToString();
-                    mysheet.Cells[6 + i, 22].Value = dt记录详情.Rows[i]["审核员"].ToString();
+                    mysheet.Cells[8 + i, 1].Value = Convert.ToDateTime(dt记录详情.Rows[i]["检查时间"].ToString()).ToString("yyyy/MM/dd");
+                    //mysheet.Cells[8 + i, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["检查时间"].ToString()).ToString("HH：mm");
+                    mysheet.Cells[8 + i, 2].Value = dt记录详情.Rows[i]["热封刀温度（300-340）"].ToString();
+                    mysheet.Cells[8 + i, 3].Value = dt记录详情.Rows[i]["底座温度（40-60）"].ToString();
+                    mysheet.Cells[8 + i, 4].Value = dt记录详情.Rows[i]["制袋速度（个/分钟）（30-50）"].ToString();
+                    mysheet.Cells[8 + i, 5].Value = dt记录详情.Rows[i]["切刀工作是否正常"].ToString();
+                    mysheet.Cells[8 + i, 6].Value = dt记录详情.Rows[i]["张力控制是否正常"].ToString();
+                    mysheet.Cells[8 + i, 7].Value = dt记录详情.Rows[i]["膜材运转是否平整"].ToString();
+                    mysheet.Cells[8 + i, 8].Value = dt记录详情.Rows[i]["操作员"].ToString();
                 }
+                
             }           
             //加页脚
             int sheetnum;
@@ -1022,7 +1005,14 @@ namespace mySystem.Process.Bag.LDPE
         private void LDPEBag_runningrecord_FormClosing(object sender, FormClosingEventArgs e)
         {
             writeDGVWidthToSetting(dataGridView1);
-        }       
+        }
+
+        private void dataGridView1_ColumnWidthChanged(object sender, DataGridViewColumnEventArgs e)
+        {
+            writeDGVWidthToSetting(dataGridView1);
+        }
+
+            
     }
 }
 

@@ -248,6 +248,10 @@ namespace mySystem.Process.Bag.PTV
             {
                 hs物料代码.Add(dr["存货代码"].ToString());
             }
+
+            cmb类型.Items.Add("正常");
+            cmb类型.Items.Add("返工");
+            cmb类型.SelectedIndex = 0;
         }
 
         /// <summary>
@@ -1265,7 +1269,7 @@ namespace mySystem.Process.Bag.PTV
             }
             catch (Exception exp)
             {
-                MessageBox.Show(exp.Message + "\n" + exp.StackTrace);
+                // MessageBox.Show(exp.Message + "\n" + exp.StackTrace);
             }
             
         }

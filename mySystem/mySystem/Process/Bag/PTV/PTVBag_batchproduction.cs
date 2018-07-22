@@ -469,9 +469,18 @@ namespace mySystem.Process.Bag.PTV
 
             dataGridView2.AllowUserToAddRows = false;
             int index = this.dataGridView2.Rows.Add();
-            this.dataGridView2.Rows[index].Cells[0].Value = dt.Rows[0]["产品代码"].ToString();//产品代码
-            this.dataGridView2.Rows[index].Cells[1].Value = dt.Rows[0]["生产批号"].ToString();
-            this.dataGridView2.Rows[index].Cells[2].Value = dt.Rows[0]["生产数量"].ToString(); //生产数量
+            if (dt.Rows.Count > 1)
+            {
+                this.dataGridView2.Rows[index].Cells[0].Value = dt.Rows[0]["产品代码"].ToString();//产品代码
+                this.dataGridView2.Rows[index].Cells[1].Value = dt.Rows[0]["生产批号"].ToString();
+                this.dataGridView2.Rows[index].Cells[2].Value = dt.Rows[0]["生产数量"].ToString(); //生产数量
+            }
+            else
+            {
+                this.dataGridView2.Rows[index].Cells[0].Value = "";
+                this.dataGridView2.Rows[index].Cells[1].Value = "";
+                this.dataGridView2.Rows[index].Cells[2].Value = 0;
+            }
             //dataGridView2.DataSource = dt;
             dataGridView2.ReadOnly = true;
 

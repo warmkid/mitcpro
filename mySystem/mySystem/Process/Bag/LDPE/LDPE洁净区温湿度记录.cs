@@ -439,7 +439,7 @@ namespace mySystem.Process.Bag.LDPE
         {
             //DataRow dr = dt记录详情.NewRow();
             dr["T洁净区温湿度记录ID"] = ID;
-            dr["生产日期"] = Convert.ToDateTime(DateTime.Now.ToString("yyyy/MM/dd"));
+            //dr["生产日期"] = Convert.ToDateTime(DateTime.Now.ToString("yyyy/MM/dd"));
             dr["班次"] = Flight == "" ? "白班" : Flight;
             dr["时间"] = Convert.ToDateTime(DateTime.Now.ToString("HH:mm:ss"));
             dr["温度"] = 0;

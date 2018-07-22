@@ -133,7 +133,7 @@
             this.tabControl1.Location = new System.Drawing.Point(5, 5);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1155, 610);
+            this.tabControl1.Size = new System.Drawing.Size(1052, 610);
             this.tabControl1.TabIndex = 60;
             // 
             // tabPage项目
@@ -150,7 +150,7 @@
             this.tabPage项目.Location = new System.Drawing.Point(4, 29);
             this.tabPage项目.Name = "tabPage项目";
             this.tabPage项目.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage项目.Size = new System.Drawing.Size(1147, 577);
+            this.tabPage项目.Size = new System.Drawing.Size(1044, 577);
             this.tabPage项目.TabIndex = 0;
             this.tabPage项目.Text = "项目设置";
             this.tabPage项目.UseVisualStyleBackColor = true;

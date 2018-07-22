@@ -31,22 +31,23 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.tb生产指令编号 = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.tb汇总人 = new System.Windows.Forms.TextBox();
-            this.tb审核人 = new System.Windows.Forms.TextBox();
-            this.tb批准人 = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.dtp汇总时间 = new System.Windows.Forms.DateTimePicker();
-            this.dtp审核时间 = new System.Windows.Forms.DateTimePicker();
-            this.dtp批准时间 = new System.Windows.Forms.DateTimePicker();
-            this.label11 = new System.Windows.Forms.Label();
+            this.btn打印本页 = new System.Windows.Forms.Button();
+            this.comboBox打印机选择 = new System.Windows.Forms.ComboBox();
+            this.btn打印 = new System.Windows.Forms.Button();
+            this.btn审核 = new System.Windows.Forms.Button();
+            this.btn提交审核 = new System.Windows.Forms.Button();
+            this.btn保存 = new System.Windows.Forms.Button();
+            this.dtp结束生产时间 = new System.Windows.Forms.DateTimePicker();
+            this.dtp开始生产时间 = new System.Windows.Forms.DateTimePicker();
+            this.tb备注 = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label角色 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.Column8 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.Column9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -54,172 +55,187 @@
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label角色 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tb备注 = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.dtp开始生产时间 = new System.Windows.Forms.DateTimePicker();
-            this.dtp结束生产时间 = new System.Windows.Forms.DateTimePicker();
-            this.btn提交审核 = new System.Windows.Forms.Button();
-            this.btn保存 = new System.Windows.Forms.Button();
-            this.comboBox打印机选择 = new System.Windows.Forms.ComboBox();
-            this.btn打印 = new System.Windows.Forms.Button();
-            this.btn审核 = new System.Windows.Forms.Button();
-            this.btn打印本页 = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.label11 = new System.Windows.Forms.Label();
+            this.dtp批准时间 = new System.Windows.Forms.DateTimePicker();
+            this.dtp审核时间 = new System.Windows.Forms.DateTimePicker();
+            this.dtp汇总时间 = new System.Windows.Forms.DateTimePicker();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.tb批准人 = new System.Windows.Forms.TextBox();
+            this.tb审核人 = new System.Windows.Forms.TextBox();
+            this.tb汇总人 = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.tb生产指令编号 = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
-            // label1
+            // btn打印本页
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(349, 13);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(189, 19);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "制袋工序批生产记录";
+            this.btn打印本页.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn打印本页.Location = new System.Drawing.Point(513, 545);
+            this.btn打印本页.Name = "btn打印本页";
+            this.btn打印本页.Size = new System.Drawing.Size(90, 27);
+            this.btn打印本页.TabIndex = 156;
+            this.btn打印本页.Text = "打印本页";
+            this.btn打印本页.UseVisualStyleBackColor = true;
+            this.btn打印本页.Visible = false;
+            this.btn打印本页.Click += new System.EventHandler(this.btn打印本页_Click);
             // 
-            // label3
+            // comboBox打印机选择
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label3.Location = new System.Drawing.Point(466, 75);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(72, 16);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "生产指令";
+            this.comboBox打印机选择.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.comboBox打印机选择.FormattingEnabled = true;
+            this.comboBox打印机选择.Location = new System.Drawing.Point(221, 548);
+            this.comboBox打印机选择.Name = "comboBox打印机选择";
+            this.comboBox打印机选择.Size = new System.Drawing.Size(274, 24);
+            this.comboBox打印机选择.TabIndex = 155;
             // 
-            // tb生产指令编号
+            // btn打印
             // 
-            this.tb生产指令编号.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb生产指令编号.Location = new System.Drawing.Point(544, 65);
-            this.tb生产指令编号.Name = "tb生产指令编号";
-            this.tb生产指令编号.Size = new System.Drawing.Size(100, 26);
-            this.tb生产指令编号.TabIndex = 4;
+            this.btn打印.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn打印.Location = new System.Drawing.Point(98, 545);
+            this.btn打印.Name = "btn打印";
+            this.btn打印.Size = new System.Drawing.Size(107, 28);
+            this.btn打印.TabIndex = 154;
+            this.btn打印.Text = "打印选中项";
+            this.btn打印.UseVisualStyleBackColor = true;
+            this.btn打印.Click += new System.EventHandler(this.btn打印_Click);
             // 
-            // label5
+            // btn审核
             // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label5.Location = new System.Drawing.Point(455, 334);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(40, 16);
-            this.label5.TabIndex = 7;
-            this.label5.Text = "汇总";
+            this.btn审核.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn审核.Location = new System.Drawing.Point(12, 545);
+            this.btn审核.Name = "btn审核";
+            this.btn审核.Size = new System.Drawing.Size(75, 27);
+            this.btn审核.TabIndex = 153;
+            this.btn审核.Text = "审核";
+            this.btn审核.UseVisualStyleBackColor = true;
+            this.btn审核.Click += new System.EventHandler(this.btn审核_Click);
             // 
-            // label6
+            // btn提交审核
             // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label6.Location = new System.Drawing.Point(455, 370);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(40, 16);
-            this.label6.TabIndex = 8;
-            this.label6.Text = "审核";
+            this.btn提交审核.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn提交审核.Location = new System.Drawing.Point(944, 546);
+            this.btn提交审核.Name = "btn提交审核";
+            this.btn提交审核.Size = new System.Drawing.Size(97, 27);
+            this.btn提交审核.TabIndex = 152;
+            this.btn提交审核.Text = "提交审核";
+            this.btn提交审核.UseVisualStyleBackColor = true;
+            this.btn提交审核.Click += new System.EventHandler(this.btn提交审核_Click);
             // 
-            // label7
+            // btn保存
             // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label7.Location = new System.Drawing.Point(455, 406);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(40, 16);
-            this.label7.TabIndex = 9;
-            this.label7.Text = "批准";
+            this.btn保存.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn保存.Location = new System.Drawing.Point(833, 546);
+            this.btn保存.Name = "btn保存";
+            this.btn保存.Size = new System.Drawing.Size(75, 27);
+            this.btn保存.TabIndex = 151;
+            this.btn保存.Text = "保存";
+            this.btn保存.UseVisualStyleBackColor = true;
+            this.btn保存.Click += new System.EventHandler(this.btn保存_Click);
             // 
-            // tb汇总人
+            // dtp结束生产时间
             // 
-            this.tb汇总人.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb汇总人.Location = new System.Drawing.Point(503, 328);
-            this.tb汇总人.Name = "tb汇总人";
-            this.tb汇总人.Size = new System.Drawing.Size(100, 26);
-            this.tb汇总人.TabIndex = 10;
+            this.dtp结束生产时间.CalendarFont = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dtp结束生产时间.Location = new System.Drawing.Point(902, 111);
+            this.dtp结束生产时间.Name = "dtp结束生产时间";
+            this.dtp结束生产时间.Size = new System.Drawing.Size(144, 21);
+            this.dtp结束生产时间.TabIndex = 40;
             // 
-            // tb审核人
+            // dtp开始生产时间
             // 
-            this.tb审核人.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb审核人.Location = new System.Drawing.Point(503, 366);
-            this.tb审核人.Name = "tb审核人";
-            this.tb审核人.Size = new System.Drawing.Size(100, 26);
-            this.tb审核人.TabIndex = 11;
+            this.dtp开始生产时间.CalendarFont = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dtp开始生产时间.Location = new System.Drawing.Point(738, 111);
+            this.dtp开始生产时间.Name = "dtp开始生产时间";
+            this.dtp开始生产时间.Size = new System.Drawing.Size(128, 21);
+            this.dtp开始生产时间.TabIndex = 39;
             // 
-            // tb批准人
+            // tb备注
             // 
-            this.tb批准人.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb批准人.Location = new System.Drawing.Point(503, 403);
-            this.tb批准人.Name = "tb批准人";
-            this.tb批准人.Size = new System.Drawing.Size(100, 26);
-            this.tb批准人.TabIndex = 12;
+            this.tb备注.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb备注.Location = new System.Drawing.Point(55, 457);
+            this.tb备注.Multiline = true;
+            this.tb备注.Name = "tb备注";
+            this.tb备注.Size = new System.Drawing.Size(997, 66);
+            this.tb备注.TabIndex = 38;
             // 
-            // label8
+            // label12
             // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label8.Location = new System.Drawing.Point(632, 334);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(40, 16);
-            this.label8.TabIndex = 13;
-            this.label8.Text = "日期";
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label12.Location = new System.Drawing.Point(14, 458);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(35, 14);
+            this.label12.TabIndex = 37;
+            this.label12.Text = "备注";
             // 
-            // label9
+            // dataGridView2
             // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label9.Location = new System.Drawing.Point(632, 370);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(40, 16);
-            this.label9.TabIndex = 14;
-            this.label9.Text = "日期";
+            this.dataGridView2.AllowUserToAddRows = false;
+            this.dataGridView2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column3,
+            this.Column5,
+            this.Column6});
+            this.dataGridView2.Location = new System.Drawing.Point(659, 143);
+            this.dataGridView2.Name = "dataGridView2";
+            this.dataGridView2.RowHeadersVisible = false;
+            this.dataGridView2.RowTemplate.Height = 23;
+            this.dataGridView2.Size = new System.Drawing.Size(396, 183);
+            this.dataGridView2.TabIndex = 31;
             // 
-            // label10
+            // Column3
             // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label10.Location = new System.Drawing.Point(632, 406);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(40, 16);
-            this.label10.TabIndex = 15;
-            this.label10.Text = "日期";
+            this.Column3.HeaderText = "产品代码";
+            this.Column3.Name = "Column3";
             // 
-            // dtp汇总时间
+            // Column5
             // 
-            this.dtp汇总时间.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dtp汇总时间.Location = new System.Drawing.Point(680, 328);
-            this.dtp汇总时间.Name = "dtp汇总时间";
-            this.dtp汇总时间.Size = new System.Drawing.Size(200, 26);
-            this.dtp汇总时间.TabIndex = 16;
+            this.Column5.HeaderText = "产品批号";
+            this.Column5.Name = "Column5";
             // 
-            // dtp审核时间
+            // Column6
             // 
-            this.dtp审核时间.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dtp审核时间.Location = new System.Drawing.Point(680, 366);
-            this.dtp审核时间.Name = "dtp审核时间";
-            this.dtp审核时间.Size = new System.Drawing.Size(200, 26);
-            this.dtp审核时间.TabIndex = 17;
+            this.Column6.HeaderText = "生产数量";
+            this.Column6.Name = "Column6";
             // 
-            // dtp批准时间
+            // label2
             // 
-            this.dtp批准时间.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dtp批准时间.Location = new System.Drawing.Point(680, 403);
-            this.dtp批准时间.Name = "dtp批准时间";
-            this.dtp批准时间.Size = new System.Drawing.Size(200, 26);
-            this.dtp批准时间.TabIndex = 18;
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(870, 117);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(23, 12);
+            this.label2.TabIndex = 30;
+            this.label2.Text = "---";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label11
+            // label4
             // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label11.Location = new System.Drawing.Point(144, 51);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(152, 16);
-            this.label11.TabIndex = 2;
-            this.label11.Text = "制袋工序记录  目录";
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label4.Location = new System.Drawing.Point(656, 113);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(72, 16);
+            this.label4.TabIndex = 27;
+            this.label4.Text = "生产时段";
+            // 
+            // label角色
+            // 
+            this.label角色.AutoSize = true;
+            this.label角色.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label角色.Location = new System.Drawing.Point(727, 13);
+            this.label角色.Name = "label角色";
+            this.label角色.Size = new System.Drawing.Size(49, 19);
+            this.label角色.TabIndex = 26;
+            this.label角色.Text = "角色";
             // 
             // dataGridView1
             // 
@@ -238,7 +254,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(437, 364);
+            this.dataGridView1.Size = new System.Drawing.Size(622, 364);
             this.dataGridView1.TabIndex = 20;
             // 
             // Column8
@@ -281,173 +297,157 @@
             this.Column4.Name = "Column4";
             this.Column4.Width = 120;
             // 
-            // label角色
+            // label11
             // 
-            this.label角色.AutoSize = true;
-            this.label角色.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label角色.Location = new System.Drawing.Point(727, 13);
-            this.label角色.Name = "label角色";
-            this.label角色.Size = new System.Drawing.Size(49, 19);
-            this.label角色.TabIndex = 26;
-            this.label角色.Text = "角色";
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label11.Location = new System.Drawing.Point(144, 51);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(152, 16);
+            this.label11.TabIndex = 2;
+            this.label11.Text = "制袋工序记录  目录";
             // 
-            // label2
+            // dtp批准时间
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(689, 116);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(23, 12);
-            this.label2.TabIndex = 30;
-            this.label2.Text = "---";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.dtp批准时间.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dtp批准时间.Location = new System.Drawing.Point(855, 407);
+            this.dtp批准时间.Name = "dtp批准时间";
+            this.dtp批准时间.Size = new System.Drawing.Size(200, 26);
+            this.dtp批准时间.TabIndex = 18;
             // 
-            // label4
+            // dtp审核时间
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label4.Location = new System.Drawing.Point(462, 109);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(72, 16);
-            this.label4.TabIndex = 27;
-            this.label4.Text = "生产时段";
+            this.dtp审核时间.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dtp审核时间.Location = new System.Drawing.Point(855, 370);
+            this.dtp审核时间.Name = "dtp审核时间";
+            this.dtp审核时间.Size = new System.Drawing.Size(200, 26);
+            this.dtp审核时间.TabIndex = 17;
             // 
-            // dataGridView2
+            // dtp汇总时间
             // 
-            this.dataGridView2.AllowUserToAddRows = false;
-            this.dataGridView2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column3,
-            this.Column5,
-            this.Column6});
-            this.dataGridView2.Location = new System.Drawing.Point(465, 139);
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.RowHeadersVisible = false;
-            this.dataGridView2.RowTemplate.Height = 23;
-            this.dataGridView2.Size = new System.Drawing.Size(428, 183);
-            this.dataGridView2.TabIndex = 31;
+            this.dtp汇总时间.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dtp汇总时间.Location = new System.Drawing.Point(855, 332);
+            this.dtp汇总时间.Name = "dtp汇总时间";
+            this.dtp汇总时间.Size = new System.Drawing.Size(200, 26);
+            this.dtp汇总时间.TabIndex = 16;
             // 
-            // Column3
+            // label10
             // 
-            this.Column3.HeaderText = "产品代码";
-            this.Column3.Name = "Column3";
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label10.Location = new System.Drawing.Point(807, 410);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(40, 16);
+            this.label10.TabIndex = 15;
+            this.label10.Text = "日期";
             // 
-            // Column5
+            // label9
             // 
-            this.Column5.HeaderText = "产品批号";
-            this.Column5.Name = "Column5";
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label9.Location = new System.Drawing.Point(807, 374);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(40, 16);
+            this.label9.TabIndex = 14;
+            this.label9.Text = "日期";
             // 
-            // Column6
+            // label8
             // 
-            this.Column6.HeaderText = "生产数量";
-            this.Column6.Name = "Column6";
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label8.Location = new System.Drawing.Point(807, 338);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(40, 16);
+            this.label8.TabIndex = 13;
+            this.label8.Text = "日期";
             // 
-            // tb备注
+            // tb批准人
             // 
-            this.tb备注.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb备注.Location = new System.Drawing.Point(55, 457);
-            this.tb备注.Multiline = true;
-            this.tb备注.Name = "tb备注";
-            this.tb备注.Size = new System.Drawing.Size(838, 66);
-            this.tb备注.TabIndex = 38;
+            this.tb批准人.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb批准人.Location = new System.Drawing.Point(697, 407);
+            this.tb批准人.Name = "tb批准人";
+            this.tb批准人.Size = new System.Drawing.Size(100, 26);
+            this.tb批准人.TabIndex = 12;
             // 
-            // label12
+            // tb审核人
             // 
-            this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label12.Location = new System.Drawing.Point(14, 458);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(35, 14);
-            this.label12.TabIndex = 37;
-            this.label12.Text = "备注";
+            this.tb审核人.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb审核人.Location = new System.Drawing.Point(697, 370);
+            this.tb审核人.Name = "tb审核人";
+            this.tb审核人.Size = new System.Drawing.Size(100, 26);
+            this.tb审核人.TabIndex = 11;
             // 
-            // dtp开始生产时间
+            // tb汇总人
             // 
-            this.dtp开始生产时间.CalendarFont = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dtp开始生产时间.Location = new System.Drawing.Point(544, 107);
-            this.dtp开始生产时间.Name = "dtp开始生产时间";
-            this.dtp开始生产时间.Size = new System.Drawing.Size(128, 21);
-            this.dtp开始生产时间.TabIndex = 39;
+            this.tb汇总人.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb汇总人.Location = new System.Drawing.Point(697, 332);
+            this.tb汇总人.Name = "tb汇总人";
+            this.tb汇总人.Size = new System.Drawing.Size(100, 26);
+            this.tb汇总人.TabIndex = 10;
             // 
-            // dtp结束生产时间
+            // label7
             // 
-            this.dtp结束生产时间.CalendarFont = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dtp结束生产时间.Location = new System.Drawing.Point(722, 107);
-            this.dtp结束生产时间.Name = "dtp结束生产时间";
-            this.dtp结束生产时间.Size = new System.Drawing.Size(144, 21);
-            this.dtp结束生产时间.TabIndex = 40;
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label7.Location = new System.Drawing.Point(649, 410);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(40, 16);
+            this.label7.TabIndex = 9;
+            this.label7.Text = "批准";
             // 
-            // btn提交审核
+            // label6
             // 
-            this.btn提交审核.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn提交审核.Location = new System.Drawing.Point(781, 546);
-            this.btn提交审核.Name = "btn提交审核";
-            this.btn提交审核.Size = new System.Drawing.Size(97, 27);
-            this.btn提交审核.TabIndex = 152;
-            this.btn提交审核.Text = "提交审核";
-            this.btn提交审核.UseVisualStyleBackColor = true;
-            this.btn提交审核.Click += new System.EventHandler(this.btn提交审核_Click);
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label6.Location = new System.Drawing.Point(649, 374);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(40, 16);
+            this.label6.TabIndex = 8;
+            this.label6.Text = "审核";
             // 
-            // btn保存
+            // label5
             // 
-            this.btn保存.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn保存.Location = new System.Drawing.Point(670, 546);
-            this.btn保存.Name = "btn保存";
-            this.btn保存.Size = new System.Drawing.Size(75, 27);
-            this.btn保存.TabIndex = 151;
-            this.btn保存.Text = "保存";
-            this.btn保存.UseVisualStyleBackColor = true;
-            this.btn保存.Click += new System.EventHandler(this.btn保存_Click);
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label5.Location = new System.Drawing.Point(649, 338);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(40, 16);
+            this.label5.TabIndex = 7;
+            this.label5.Text = "汇总";
             // 
-            // comboBox打印机选择
+            // tb生产指令编号
             // 
-            this.comboBox打印机选择.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.comboBox打印机选择.FormattingEnabled = true;
-            this.comboBox打印机选择.Location = new System.Drawing.Point(221, 548);
-            this.comboBox打印机选择.Name = "comboBox打印机选择";
-            this.comboBox打印机选择.Size = new System.Drawing.Size(274, 24);
-            this.comboBox打印机选择.TabIndex = 155;
+            this.tb生产指令编号.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb生产指令编号.Location = new System.Drawing.Point(738, 69);
+            this.tb生产指令编号.Name = "tb生产指令编号";
+            this.tb生产指令编号.Size = new System.Drawing.Size(100, 26);
+            this.tb生产指令编号.TabIndex = 4;
             // 
-            // btn打印
+            // label3
             // 
-            this.btn打印.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn打印.Location = new System.Drawing.Point(98, 545);
-            this.btn打印.Name = "btn打印";
-            this.btn打印.Size = new System.Drawing.Size(107, 28);
-            this.btn打印.TabIndex = 154;
-            this.btn打印.Text = "打印选中项";
-            this.btn打印.UseVisualStyleBackColor = true;
-            this.btn打印.Click += new System.EventHandler(this.btn打印_Click);
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label3.Location = new System.Drawing.Point(656, 75);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(72, 16);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "生产指令";
             // 
-            // btn审核
+            // label1
             // 
-            this.btn审核.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn审核.Location = new System.Drawing.Point(12, 545);
-            this.btn审核.Name = "btn审核";
-            this.btn审核.Size = new System.Drawing.Size(75, 27);
-            this.btn审核.TabIndex = 153;
-            this.btn审核.Text = "审核";
-            this.btn审核.UseVisualStyleBackColor = true;
-            this.btn审核.Click += new System.EventHandler(this.btn审核_Click);
-            // 
-            // btn打印本页
-            // 
-            this.btn打印本页.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn打印本页.Location = new System.Drawing.Point(513, 545);
-            this.btn打印本页.Name = "btn打印本页";
-            this.btn打印本页.Size = new System.Drawing.Size(90, 27);
-            this.btn打印本页.TabIndex = 156;
-            this.btn打印本页.Text = "打印本页";
-            this.btn打印本页.UseVisualStyleBackColor = true;
-            this.btn打印本页.Visible = false;
-            this.btn打印本页.Click += new System.EventHandler(this.btn打印本页_Click);
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.Location = new System.Drawing.Point(349, 13);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(189, 19);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "制袋工序批生产记录";
             // 
             // PTVBag_batchproduction
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(905, 585);
+            this.ClientSize = new System.Drawing.Size(1064, 585);
             this.Controls.Add(this.btn打印本页);
             this.Controls.Add(this.comboBox打印机选择);
             this.Controls.Add(this.btn打印);
@@ -482,8 +482,8 @@
             this.Name = "PTVBag_batchproduction";
             this.Text = "PTVBag_batchproduction";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PTVBag_batchproduction_FormClosing);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

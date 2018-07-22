@@ -13,6 +13,7 @@ namespace mySystem.Setting
 {
     public partial class 库存设置 : Form
     {
+        string[] allpeople;
         public 库存设置()
         {
             InitializeComponent();
@@ -166,7 +167,7 @@ namespace mySystem.Setting
             bs人员.DataSource = dt人员;
             this.dgv人员.DataSource = bs人员.DataSource;
             //显示序号
-            //dgv人员下拉框设置();
+            dgv人员下拉框设置();
             setDataGridViewRowNums(this.dgv人员);
             this.dgv人员.Columns["用户名"].MinimumWidth = 150;
             //this.dgv人员.Columns["班次"].MinimumWidth = 100;
@@ -452,8 +453,10 @@ namespace mySystem.Setting
             foreach (DataColumn dc in dt人员.Columns)
             {
                 // 要下拉框的特殊处理
-                if (dc.ColumnName == "班次")
+                
+                if (dc.ColumnName == "用户名")
                 {
+                    allpeople = Utility.getAllPeople();
                     cbc = new DataGridViewComboBoxColumn();
                     cbc.HeaderText = dc.ColumnName;
                     cbc.Name = dc.ColumnName;
@@ -461,12 +464,12 @@ namespace mySystem.Setting
                     cbc.DataPropertyName = dc.ColumnName;
                     cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
 
-                    cbc.Items.Add("白班");
-                    cbc.Items.Add("夜班");
+                    cbc.Items.AddRange(allpeople);
 
                     dgv人员.Columns.Add(cbc);
                     continue;
                 }
+
 
                 // 根据数据类型自动生成列的关键信息
                 switch (dc.DataType.ToString())

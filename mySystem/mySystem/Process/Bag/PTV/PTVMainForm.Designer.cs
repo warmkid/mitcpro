@@ -83,7 +83,7 @@
             // Btn开机前确认
             // 
             this.Btn开机前确认.Font = new System.Drawing.Font("宋体", 12F);
-            this.Btn开机前确认.Location = new System.Drawing.Point(31, 100);
+            this.Btn开机前确认.Location = new System.Drawing.Point(31, 98);
             this.Btn开机前确认.Name = "Btn开机前确认";
             this.Btn开机前确认.Size = new System.Drawing.Size(200, 38);
             this.Btn开机前确认.TabIndex = 16;
@@ -126,7 +126,7 @@
             // Btn瓶口焊接机
             // 
             this.Btn瓶口焊接机.Font = new System.Drawing.Font("宋体", 12F);
-            this.Btn瓶口焊接机.Location = new System.Drawing.Point(31, 400);
+            this.Btn瓶口焊接机.Location = new System.Drawing.Point(31, 388);
             this.Btn瓶口焊接机.Name = "Btn瓶口焊接机";
             this.Btn瓶口焊接机.Size = new System.Drawing.Size(200, 38);
             this.Btn瓶口焊接机.TabIndex = 15;
@@ -143,7 +143,7 @@
             this.groupBox2.Controls.Add(this.Btn产品内包装);
             this.groupBox2.Controls.Add(this.Btn生产日报表);
             this.groupBox2.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold);
-            this.groupBox2.Location = new System.Drawing.Point(28, 94);
+            this.groupBox2.Location = new System.Drawing.Point(28, 70);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.groupBox2.Size = new System.Drawing.Size(267, 459);
@@ -198,7 +198,7 @@
             // Btn底封机
             // 
             this.Btn底封机.Font = new System.Drawing.Font("宋体", 12F);
-            this.Btn底封机.Location = new System.Drawing.Point(31, 160);
+            this.Btn底封机.Location = new System.Drawing.Point(31, 156);
             this.Btn底封机.Name = "Btn底封机";
             this.Btn底封机.Size = new System.Drawing.Size(200, 38);
             this.Btn底封机.TabIndex = 11;
@@ -215,7 +215,7 @@
             this.groupBox3.Controls.Add(this.Btn外包装);
             this.groupBox3.Controls.Add(this.Btn退料);
             this.groupBox3.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold);
-            this.groupBox3.Location = new System.Drawing.Point(736, 94);
+            this.groupBox3.Location = new System.Drawing.Point(736, 70);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.groupBox3.Size = new System.Drawing.Size(260, 478);
@@ -300,7 +300,7 @@
             this.groupBox1.Controls.Add(this.Btn圆口焊接机);
             this.groupBox1.Controls.Add(this.Btn底封机);
             this.groupBox1.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold);
-            this.groupBox1.Location = new System.Drawing.Point(383, 94);
+            this.groupBox1.Location = new System.Drawing.Point(383, 70);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.groupBox1.Size = new System.Drawing.Size(260, 505);
@@ -311,7 +311,7 @@
             // Btn泄露测试
             // 
             this.Btn泄露测试.Font = new System.Drawing.Font("宋体", 12F);
-            this.Btn泄露测试.Location = new System.Drawing.Point(31, 280);
+            this.Btn泄露测试.Location = new System.Drawing.Point(31, 272);
             this.Btn泄露测试.Name = "Btn泄露测试";
             this.Btn泄露测试.Size = new System.Drawing.Size(200, 38);
             this.Btn泄露测试.TabIndex = 19;
@@ -322,7 +322,7 @@
             // Btn清场记录
             // 
             this.Btn清场记录.Font = new System.Drawing.Font("宋体", 12F);
-            this.Btn清场记录.Location = new System.Drawing.Point(31, 460);
+            this.Btn清场记录.Location = new System.Drawing.Point(31, 446);
             this.Btn清场记录.Name = "Btn清场记录";
             this.Btn清场记录.Size = new System.Drawing.Size(200, 38);
             this.Btn清场记录.TabIndex = 18;
@@ -333,7 +333,7 @@
             // Btn超声波
             // 
             this.Btn超声波.Font = new System.Drawing.Font("宋体", 12F);
-            this.Btn超声波.Location = new System.Drawing.Point(31, 340);
+            this.Btn超声波.Location = new System.Drawing.Point(31, 330);
             this.Btn超声波.Name = "Btn超声波";
             this.Btn超声波.Size = new System.Drawing.Size(200, 38);
             this.Btn超声波.TabIndex = 17;
@@ -344,7 +344,7 @@
             // Btn圆口焊接机
             // 
             this.Btn圆口焊接机.Font = new System.Drawing.Font("宋体", 12F);
-            this.Btn圆口焊接机.Location = new System.Drawing.Point(31, 220);
+            this.Btn圆口焊接机.Location = new System.Drawing.Point(31, 214);
             this.Btn圆口焊接机.Name = "Btn圆口焊接机";
             this.Btn圆口焊接机.Size = new System.Drawing.Size(200, 38);
             this.Btn圆口焊接机.TabIndex = 15;

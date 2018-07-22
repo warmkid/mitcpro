@@ -12,7 +12,8 @@ using System.Data.SqlClient;
 namespace mySystem.Setting
 {
     public partial class PE制袋设置 : BaseForm
-    {       
+    {
+        string[] allpeople;
         public PE制袋设置()
         {
             InitializeComponent();
@@ -739,6 +740,22 @@ namespace mySystem.Setting
                     dgv人员.Columns.Add(cbc);
                     continue;
                 }
+                else if (dc.ColumnName == "用户名")
+                {
+                    allpeople = Utility.getAllPeople();
+                    cbc = new DataGridViewComboBoxColumn();
+                    cbc.HeaderText = dc.ColumnName;
+                    cbc.Name = dc.ColumnName;
+                    cbc.ValueType = dc.DataType;
+                    cbc.DataPropertyName = dc.ColumnName;
+                    cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+
+                    cbc.Items.AddRange(allpeople);
+
+                    dgv人员.Columns.Add(cbc);
+                    continue;
+                }
+
 
                 // 根据数据类型自动生成列的关键信息
                 switch (dc.DataType.ToString())

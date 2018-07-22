@@ -323,7 +323,6 @@
             this.Btn日报表.TabIndex = 11;
             this.Btn日报表.Text = "LDPE生产日报表";
             this.Btn日报表.UseVisualStyleBackColor = true;
-            this.Btn日报表.Visible = false;
             this.Btn日报表.Click += new System.EventHandler(this.A3Btn_Click);
             // 
             // LDPEMainForm

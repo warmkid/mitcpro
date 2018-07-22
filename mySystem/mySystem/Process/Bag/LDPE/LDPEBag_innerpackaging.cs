@@ -36,6 +36,33 @@ namespace mySystem.Process.Bag.LDPE
         String Flight = "";
         bool isFirstBind = true;
 
+        List<String> dm所有相关产品代码;
+
+        void getAll产品代码()
+        {
+            dm所有相关产品代码 = new List<string>();
+            string strConnect = "server=" + Parameter.IP_port + ";database=dingdan_kucun;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
+            SqlConnection connToOrder = new SqlConnection(strConnect);
+            SqlDataAdapter da;
+            DataTable dt;
+            da = new SqlDataAdapter("select * from 设置存货档案 where 属于工序 like '%PE制袋%'", connToOrder);
+            dt = new DataTable();
+            da.Fill(dt);
+            foreach (DataRow dr in dt.Rows)
+            {
+                dm所有相关产品代码.Add(dr["存货代码"].ToString());
+            }
+
+            AutoCompleteStringCollection acsc = new AutoCompleteStringCollection();
+            acsc.AddRange(dm所有相关产品代码.ToArray());
+            tb联产品代码.AutoCompleteCustomSource = acsc;
+            tb联产品代码.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            tb联产品代码.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+
+           
+
+        }
+
         public LDPEBag_innerpackaging(MainForm mainform) : base(mainform)
         {
             InitializeComponent();
@@ -56,6 +83,9 @@ namespace mySystem.Process.Bag.LDPE
             addDataEventHandler();  // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged
 
             setControlFalse();
+
+            getAll产品代码();
+
             cb产品代码.Enabled = true;
             //dtp生产日期.Enabled = true;
             btn查询新建.Enabled = true;
@@ -81,6 +111,8 @@ namespace mySystem.Process.Bag.LDPE
             addDataEventHandler();  // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged
 
             IDShow(ID);
+
+            getAll产品代码();
         }
         
         //******************************初始化******************************//
@@ -187,6 +219,14 @@ namespace mySystem.Process.Bag.LDPE
                         }
                     }
                     datemp.Dispose();
+
+
+
+
+
+
+
+
                 }
                 else
                 {
@@ -330,7 +370,6 @@ namespace mySystem.Process.Bag.LDPE
             //tb内标签.ReadOnly = true;
             tb热封线不合格合计.ReadOnly = true;
             tb黑点晶点不合格合计.ReadOnly = true;
-            tb指示剂不良合计.ReadOnly = true;
             tb其他合计.ReadOnly = true;
             tb不良合计.ReadOnly = true;
             tb产品数量包数合计A.ReadOnly = true;
@@ -515,8 +554,6 @@ namespace mySystem.Process.Bag.LDPE
             tb热封线不合格合计.DataBindings.Add("Text", bs记录.DataSource, "热封线不合格合计");
             tb黑点晶点不合格合计.DataBindings.Clear();
             tb黑点晶点不合格合计.DataBindings.Add("Text", bs记录.DataSource, "黑点晶点不合格合计");
-            tb指示剂不良合计.DataBindings.Clear();
-            tb指示剂不良合计.DataBindings.Add("Text", bs记录.DataSource, "指示剂不良合计");
             tb其他合计.DataBindings.Clear();
             tb其他合计.DataBindings.Add("Text", bs记录.DataSource, "其他合计");
             tb不良合计.DataBindings.Clear();
@@ -526,6 +563,12 @@ namespace mySystem.Process.Bag.LDPE
             tb操作员备注.DataBindings.Add("Text", bs记录.DataSource, "操作员备注");
             tb审核员.DataBindings.Clear();
             tb审核员.DataBindings.Add("Text", bs记录.DataSource, "审核员");
+
+            tb联产品代码.DataBindings.Clear();
+            tb联产品代码.DataBindings.Add("Text", bs记录.DataSource, "联产品代码");
+
+            tb联产品数量.DataBindings.Clear();
+            tb联产品数量.DataBindings.Add("Text", bs记录.DataSource, "联产品数量");
         }
 
         //添加外表默认信息
@@ -555,6 +598,7 @@ namespace mySystem.Process.Bag.LDPE
             dr["操作员备注"] = "";
             dr["审核员"] = "";
             dr["审核是否通过"] = false;
+            dr["联产品数量"] = 0;
             string log = DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 新建记录\n";
             log += "生产指令编码：" + Instruction + "\n";
             dr["日志"] = log;
@@ -586,28 +630,39 @@ namespace mySystem.Process.Bag.LDPE
             dr["序号"] = 0;
             dr["T产品内包装记录ID"] = ID;
             //dr["生产开始时间"] = DateTime.Now;
+            dr["生产结束时间"] = DateTime.Now;
             if (dt记录详情.Rows.Count >= 1)
             {
+                int numtemp;
                 dr["生产开始时间"] = dt记录详情.Rows[dt记录详情.Rows.Count - 1]["生产结束时间"];  //根据上一行填写
+                if (Int32.TryParse(dt记录详情.Rows[dt记录详情.Rows.Count - 1]["内包序号"].ToString().Split('-')[1], out numtemp) == true)
+                {
+                    dr["内包序号"] = (numtemp + 1).ToString("D4");
+                }
+                DateTime end, start;
+                start = Convert.ToDateTime(dr["生产开始时间"]);
+                end = Convert.ToDateTime(dr["生产结束时间"]);
+                dr["生产工时"] = Math.Round((end - start).TotalMinutes / 60.0, 1);
             }
             else
             {
                 dr["生产开始时间"] = DateTime.Now; //新建第一行
+                dr["生产工时"] = 0;
+                dr["内包序号"] = 0;
             }    
-            dr["生产结束时间"] = DateTime.Now;
-            dr["内包序号"] = 0;
+            
+            
             //dr["包装规格每包只数"] = 0;
             dr["产品数量包"] = 0;
             dr["产品数量只"] = 0;
             dr["热封线不合格数量"] = 0;
             dr["黑点晶点数量"] = 0;
-            dr["指示剂不良数量"] = 0;
             dr["其他数量"] = 0;
             dr["不良合计"] = 0;
             dr["包装袋热封线"] = "Yes";
             dr["内标签"] = "Yes";
             dr["内包装外观"] = "Yes";
-            dr["生产工时"] = 0;
+            
             dr["操作员"] = mySystem.Parameter.userName;
             dr["审核员"] = "";
             return dr;
@@ -705,7 +760,7 @@ namespace mySystem.Process.Bag.LDPE
             dataGridView1.Columns["产品数量只"].HeaderText = "产品数量\r(只)";
             dataGridView1.Columns["热封线不合格数量"].HeaderText = "热封线\r不合格\r(只)";
             dataGridView1.Columns["黑点晶点数量"].HeaderText = "黑点\r晶点\r(只)";
-            dataGridView1.Columns["指示剂不良数量"].HeaderText = "指示剂\r不良\r(只)";
+            //dataGridView1.Columns["指示剂不良数量"].HeaderText = "指示剂\r不良\r(只)";
             dataGridView1.Columns["其他数量"].HeaderText = "其他\r(只)";
             dataGridView1.Columns["不良合计"].HeaderText = "不良\r合计\r(只)";
             dataGridView1.Columns["包装袋热封线"].HeaderText = "包装袋\r热封线";
@@ -753,11 +808,12 @@ namespace mySystem.Process.Bag.LDPE
 
                     getTotalCol("热封线不合格数量", "tb热封线不合格合计");
                     getTotalCol("黑点晶点数量", "tb黑点晶点不合格合计");
-                    getTotalCol("指示剂不良数量", "tb指示剂不良合计");
+                    //getTotalCol("指示剂不良数量", "tb指示剂不良合计");
                     getTotalCol("其他数量", "tb其他合计");
                     getTotalCol("不良合计", "tb不良合计");
                     getTotalCol("产品数量包", "tb产品数量包数合计A");
                     getTotalCol("产品数量只", "tb产品数量只数合计B");
+                    getTotalColFloat("生产工时", "tb工时");
 
                     setDataGridViewRowNums();
                     setEnableReadOnly();
@@ -925,6 +981,7 @@ namespace mySystem.Process.Bag.LDPE
         //审核功能
         public override void CheckResult()
         {
+            // TODO 内包入库，联产品入库
             //保存
             bool isSaved = Save();
             if (isSaved == false)
@@ -1107,7 +1164,7 @@ namespace mySystem.Process.Bag.LDPE
                 mysheet.Cells[7 + i, 5] = dt记录详情.Rows[i]["产品数量只"].ToString();
                 mysheet.Cells[7 + i, 6] = dt记录详情.Rows[i]["热封线不合格数量"].ToString();
                 mysheet.Cells[7 + i, 7] = dt记录详情.Rows[i]["黑点晶点数量"].ToString();
-                mysheet.Cells[7 + i, 8] = dt记录详情.Rows[i]["指示剂不良数量"].ToString();
+                //mysheet.Cells[7 + i, 8] = dt记录详情.Rows[i]["指示剂不良数量"].ToString();
                 mysheet.Cells[7 + i, 9] = dt记录详情.Rows[i]["其他数量"].ToString();
                 mysheet.Cells[7 + i, 10] = dt记录详情.Rows[i]["不良合计"].ToString();
                 mysheet.Cells[7 + i, 11] = dt记录详情.Rows[i]["包装袋热封线"].ToString().Equals("Yes") ? "√" : "×";
@@ -1192,6 +1249,20 @@ namespace mySystem.Process.Bag.LDPE
             //dt记录.Rows[0]["产品数量只数合计B"] = sum;
             outerDataSync(SumName, sum.ToString());
         }
+
+        private void getTotalColFloat(String ColName, String SumName)
+        {
+            //求合计
+            float sum = 0;
+            float numtemp;
+            for (int i = 0; i < dt记录详情.Rows.Count; i++)
+            {
+                if (float.TryParse(dt记录详情.Rows[i][ColName].ToString(), out numtemp) == true)
+                { sum += numtemp; }
+            }
+            //dt记录.Rows[0]["产品数量只数合计B"] = sum;
+            outerDataSync(SumName, sum.ToString());
+        }
         
         //求合计：行求合计，并对“不良合计”求和
         private void getTotalRow(Int32 RowCount)
@@ -1199,7 +1270,7 @@ namespace mySystem.Process.Bag.LDPE
             //求合计
             int sum = 0;
             int numtemp;
-            String[] ColName = { "热封线不合格数量", "黑点晶点数量", "指示剂不良数量", "其他数量" };
+            String[] ColName = { "热封线不合格数量", "黑点晶点数量", "其他数量" };
             for (int i = 0; i < 4; i++)
             {
                 if (Int32.TryParse(dt记录详情.Rows[RowCount][(ColName[i])].ToString(), out numtemp) == true)
@@ -1332,11 +1403,6 @@ namespace mySystem.Process.Bag.LDPE
                     getTotalCol("黑点晶点数量", "tb黑点晶点不合格合计");
                     getTotalRow(e.RowIndex);
                 }
-                else if (dataGridView1.Columns[e.ColumnIndex].Name == "指示剂不良数量")
-                {
-                    getTotalCol("指示剂不良数量", "tb指示剂不良合计");
-                    getTotalRow(e.RowIndex);
-                }
                 else if (dataGridView1.Columns[e.ColumnIndex].Name == "其他数量")
                 {
                     getTotalCol("其他数量", "tb其他合计");
@@ -1350,6 +1416,30 @@ namespace mySystem.Process.Bag.LDPE
                     {
                         dt记录详情.Rows[e.RowIndex]["操作员"] = mySystem.Parameter.userName;
                         MessageBox.Show("请重新输入" + (e.RowIndex + 1).ToString() + "行的『操作员』信息", "ERROR");
+                    }
+                }
+                else if (dataGridView1.Columns[e.ColumnIndex].Name == "生产开始时间" ||
+                    dataGridView1.Columns[e.ColumnIndex].Name == "生产结束时间")
+                {
+                    DateTime end, start;
+                    start = Convert.ToDateTime(dt记录详情.Rows[e.RowIndex]["生产开始时间"]);
+                    end = Convert.ToDateTime(dt记录详情.Rows[e.RowIndex]["生产结束时间"]);
+                    dt记录详情.Rows[e.RowIndex]["生产工时"] = Math.Round((end - start).TotalMinutes / 60.0, 1);
+                    getTotalColFloat("生产工时", "tb工时");
+                }
+                else if (dataGridView1.Columns[e.ColumnIndex].Name == "内包序号")
+                {
+                    String[] t = dt记录详情.Rows[e.RowIndex]["内包序号"].ToString().Split('-');
+                    try
+                    {
+                        int start = Convert.ToInt32(t[0]);
+                        int end = Convert.ToInt32(t[1]);
+                        dataGridView1.Rows[e.RowIndex].Cells["产品数量包"].Value = end - start + 1;
+                        //dt记录详情.Rows[e.RowIndex]["产品数量包"] = end - start + 1;
+                    }
+                    catch
+                    {
+                        dt记录详情.Rows[e.RowIndex]["产品数量包"] = 0;
                     }
                 }
                 //else if (dataGridView1.Columns[e.ColumnIndex].Name == "热封线不合格数量" ||
@@ -1378,6 +1468,95 @@ namespace mySystem.Process.Bag.LDPE
             if (dataGridView1.ColumnCount > 0)
             {
                 writeDGVWidthToSetting(dataGridView1);
+            }
+        }
+
+        private void dataGridView1_ColumnWidthChanged(object sender, DataGridViewColumnEventArgs e)
+        {
+            writeDGVWidthToSetting(dataGridView1);
+        }
+
+        private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex>=0 && e.ColumnIndex >= 0)
+            {
+                if (dataGridView1.Columns[e.ColumnIndex].Name == "产品数量包")
+                {
+                    getTotalCol("产品数量包", "tb产品数量包数合计A");
+                    getNum(e.RowIndex);
+                    /*getPercent();*/
+                }
+                //else if (dataGridView1.Columns[e.ColumnIndex].Name == "产品数量只")
+                //{
+                //    getTotalCol("产品数量只", "tb产品数量只数合计A"); 
+                //}
+                else if (dataGridView1.Columns[e.ColumnIndex].Name == "热封线不合格数量")
+                {
+                    getTotalCol("热封线不合格数量", "tb热封线不合格合计");
+                    getTotalRow(e.RowIndex);
+                }
+                else if (dataGridView1.Columns[e.ColumnIndex].Name == "黑点晶点数量")
+                {
+                    getTotalCol("黑点晶点数量", "tb黑点晶点不合格合计");
+                    getTotalRow(e.RowIndex);
+                }
+                else if (dataGridView1.Columns[e.ColumnIndex].Name == "其他数量")
+                {
+                    getTotalCol("其他数量", "tb其他合计");
+                    getTotalRow(e.RowIndex);
+                }
+                //else if (dataGridView1.Columns[e.ColumnIndex].Name == "不良合计")
+                //{ getTotalCol("不良合计", "tb不良合计"); }
+                else if (dataGridView1.Columns[e.ColumnIndex].Name == "操作员")
+                {
+                    if (mySystem.Parameter.NametoID(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString()) == 0)
+                    {
+                        dt记录详情.Rows[e.RowIndex]["操作员"] = mySystem.Parameter.userName;
+                        MessageBox.Show("请重新输入" + (e.RowIndex + 1).ToString() + "行的『操作员』信息", "ERROR");
+                    }
+                }
+                else if (dataGridView1.Columns[e.ColumnIndex].Name == "生产开始时间" ||
+                    dataGridView1.Columns[e.ColumnIndex].Name == "生产结束时间")
+                {
+                    DateTime end, start;
+                    start = Convert.ToDateTime(dt记录详情.Rows[e.RowIndex]["生产开始时间"]);
+                    end = Convert.ToDateTime(dt记录详情.Rows[e.RowIndex]["生产结束时间"]);
+                    dt记录详情.Rows[e.RowIndex]["生产工时"] = Math.Round((end - start).TotalMinutes / 60.0, 1);
+                    getTotalColFloat("生产工时", "tb工时");
+                }
+                else if (dataGridView1.Columns[e.ColumnIndex].Name == "内包序号")
+                {
+                    String[] t = dt记录详情.Rows[e.RowIndex]["内包序号"].ToString().Split('-');
+                    try
+                    {
+                        int start = Convert.ToInt32(t[0]);
+                        int end = Convert.ToInt32(t[1]);
+                        dataGridView1.Rows[e.RowIndex].Cells["产品数量包"].Value = end - start + 1;
+                        //dt记录详情.Rows[e.RowIndex]["产品数量包"] = end - start + 1;
+                    }
+                    catch
+                    {
+                        dt记录详情.Rows[e.RowIndex]["产品数量包"] = 0;
+                    }
+                }
+                //else if (dataGridView1.Columns[e.ColumnIndex].Name == "热封线不合格数量" ||
+                //    dataGridView1.Columns[e.ColumnIndex].Name == "黑点晶点数量" ||
+                //    dataGridView1.Columns[e.ColumnIndex].Name == "指示剂不良数量" ||
+                //    dataGridView1.Columns[e.ColumnIndex].Name == "其他数量")
+                //{
+                //    try
+                //    {
+                //        int sum = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["热封线不合格数量"].Value) +
+                //            Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["黑点晶点数量"].Value) +
+                //            Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["指示剂不良数量"].Value) +
+                //            Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["其他数量"].Value);
+                //        dataGridView1.Rows[e.RowIndex].Cells["不良合计"].Value = sum;
+                //    }
+                //    catch
+                //    {
+                //        dataGridView1.Rows[e.RowIndex].Cells["不良合计"].Value = 0;
+                //    }
+                //}
             }
         }
         

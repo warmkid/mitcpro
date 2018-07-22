@@ -317,8 +317,7 @@ namespace mySystem.Process.Bag.LDPE
             dr["生产日期"] = DateTime.Now.ToString("yyyy年MM月dd日");
             dr["生产时间"] = DateTime.Now.ToString("HH:mm");
             dr["判定"] = "Y";
-            dr["位置1"] = "东";
-            dr["位置2"] = "左";
+            dr["位置1"] = "底";
             dr["检测人"] = mySystem.Parameter.userName;
             dr["检测值1"] = 0;
             dr["检测值2"] = 0;
@@ -380,25 +379,26 @@ namespace mySystem.Process.Bag.LDPE
                     cbc.ValueType = dc.DataType;
                     cbc.DataPropertyName = dc.ColumnName;
                     cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                    cbc.Items.Add("东");
-                    cbc.Items.Add("西");
-                    dataGridView1.Columns.Add(cbc);
-                    continue;
-                }
-                if (dc.ColumnName == "位置2")
-                {
-                    cbc = new DataGridViewComboBoxColumn();
-                    cbc.HeaderText = dc.ColumnName;
-                    cbc.Name = dc.ColumnName;
-                    cbc.ValueType = dc.DataType;
-                    cbc.DataPropertyName = dc.ColumnName;
-                    cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                    cbc.Items.Add("底");
                     cbc.Items.Add("左");
                     cbc.Items.Add("右");
-                    cbc.Items.Add("底");
                     dataGridView1.Columns.Add(cbc);
                     continue;
                 }
+                //if (dc.ColumnName == "位置2")
+                //{
+                //    cbc = new DataGridViewComboBoxColumn();
+                //    cbc.HeaderText = dc.ColumnName;
+                //    cbc.Name = dc.ColumnName;
+                //    cbc.ValueType = dc.DataType;
+                //    cbc.DataPropertyName = dc.ColumnName;
+                //    cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                //    cbc.Items.Add("左");
+                //    cbc.Items.Add("右");
+                //    cbc.Items.Add("底");
+                //    dataGridView1.Columns.Add(cbc);
+                //    continue;
+                //}
 
                 // 根据数据类型自动生成列的关键信息
                 switch (dc.DataType.ToString())
@@ -577,6 +577,7 @@ namespace mySystem.Process.Bag.LDPE
             setDataGridViewBackColor();
             dataGridView1.Columns[0].Visible = false;
             dataGridView1.Columns[1].Visible = false;
+            dataGridView1.Columns["位置2"].Visible = false;
             int[] readonlyIdx = { 2, 3, 4, 14, 15, 16 };
             foreach (int i in readonlyIdx)
             {
@@ -601,6 +602,7 @@ namespace mySystem.Process.Bag.LDPE
         void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             List<int> idxes = new List<int>(new int[] { 8, 9, 10, 11, 12, 13 });
+            double sum = 0;
             if (idxes.IndexOf(e.ColumnIndex) >= 0)
             {
                 List<double> vals = new List<double>();
@@ -612,6 +614,11 @@ namespace mySystem.Process.Bag.LDPE
                 dtInner.Rows[e.RowIndex][15] = Double.Parse(vals.Min().ToString("0.0"));
                 dtInner.Rows[e.RowIndex][16] = Double.Parse(vals.Average().ToString("0.0"));
             }
+            foreach (DataRow dr in dtInner.Rows)
+            {
+                sum += Convert.ToDouble(dr["平均"]);
+            }
+            dtOuter.Rows[0]["平均值"] = Math.Round(sum / dtInner.Rows.Count, 2);
         }
         
         /// <summary>
@@ -719,6 +726,7 @@ namespace mySystem.Process.Bag.LDPE
 
         private void btn保存_Click(object sender, EventArgs e)
         {
+            readDGVWidthFromSettingAndSet(dataGridView1);
             if (setDataGridViewBackColor() == false)
             {
                 MessageBox.Show("红色的检测值不符合要求，不可保存！");
@@ -1136,6 +1144,11 @@ namespace mySystem.Process.Bag.LDPE
         }
 
         private void 产品热合强度检验记录_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            writeDGVWidthToSetting(dataGridView1);
+        }
+
+        private void dataGridView1_ColumnWidthChanged(object sender, DataGridViewColumnEventArgs e)
         {
             writeDGVWidthToSetting(dataGridView1);
         }

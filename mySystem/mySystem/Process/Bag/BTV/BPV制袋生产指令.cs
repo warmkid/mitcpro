@@ -249,6 +249,10 @@ namespace mySystem.Process.Bag.BTV
             }
 
 
+
+            cmb类型.Items.Add("正常");
+            cmb类型.Items.Add("返工");
+            cmb类型.SelectedIndex = 0;
         }
 
         /// <summary>

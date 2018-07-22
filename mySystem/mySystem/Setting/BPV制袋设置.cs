@@ -13,11 +13,23 @@ namespace mySystem.Setting
 {
     public partial class BPV制袋设置 : BaseForm
     {
+        string[] allpeople;
+
         public BPV制袋设置()
         {
             InitializeComponent();
+
+
+
             Initdgv();
             Bind();
+            setUserDropDown();
+        }
+
+        void setUserDropDown()
+        {
+            //allpeople = Utility.getAllPeople();
+            //dgv人员下拉框设置
         }
 
         private SqlDataAdapter da开机;
@@ -739,6 +751,21 @@ namespace mySystem.Setting
 
                     cbc.Items.Add("白班");
                     cbc.Items.Add("夜班");
+
+                    dgv人员.Columns.Add(cbc);
+                    continue;
+                }
+                else if(dc.ColumnName == "用户名")
+                {
+                    allpeople = Utility.getAllPeople();
+                    cbc = new DataGridViewComboBoxColumn();
+                    cbc.HeaderText = dc.ColumnName;
+                    cbc.Name = dc.ColumnName;
+                    cbc.ValueType = dc.DataType;
+                    cbc.DataPropertyName = dc.ColumnName;
+                    cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+
+                    cbc.Items.AddRange(allpeople);
 
                     dgv人员.Columns.Add(cbc);
                     continue;

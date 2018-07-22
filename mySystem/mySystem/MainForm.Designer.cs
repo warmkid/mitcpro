@@ -234,7 +234,7 @@
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "欢迎使用颇尔奥星管理系统    v0.9.16";
+            this.Text = "欢迎使用颇尔奥星管理系统    v0.9.17";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

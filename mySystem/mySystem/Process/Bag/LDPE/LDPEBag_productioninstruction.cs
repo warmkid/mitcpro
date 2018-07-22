@@ -162,14 +162,19 @@ namespace mySystem.Process.Bag.LDPE
                 ls负责人.Add(dr["用户名"].ToString());
                 cmb负责人.Items.Add(dr["用户名"].ToString());
             }
+
             //　产品名称
-            da = new SqlDataAdapter("select * from 设置LDPE产品", conn);
-            dt = new DataTable("temp");
+            string strConnect1 = "server=" + Parameter.IP_port + ";database=dingdan_kucun;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
+            SqlConnection Tconn1 = new SqlConnection(strConnect1);
+            Tconn1.Open();
+            da = new SqlDataAdapter("select * from 设置存货档案 where 类型 like '%成品%' and 属于工序 like '%PE制袋%'", Tconn1);
+            dt = new DataTable();
             da.Fill(dt);
+            
             foreach (DataRow dr in dt.Rows)
             {
-                ls产品名称.Add(dr["产品名称"].ToString());
-                cmb产品名称.Items.Add(dr["产品名称"].ToString());
+                ls产品名称.Add(dr["存货名称"].ToString());
+                cmb产品名称.Items.Add(dr["存货名称"].ToString());
             }
 
 
@@ -217,7 +222,7 @@ namespace mySystem.Process.Bag.LDPE
             string strConnect = "server=" + Parameter.IP_port + ";database=dingdan_kucun;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
             SqlConnection Tconn = new SqlConnection(strConnect);
             Tconn.Open();
-            da = new SqlDataAdapter("select * from 设置存货档案 where 类型 like '成品' and 属于工序 like '%PE制袋%'", Tconn);
+            da = new SqlDataAdapter("select * from 设置存货档案 where 类型 like '%成品%' and 属于工序 like '%PE制袋%'", Tconn);
             dt = new DataTable("temp");
             da.Fill(dt);
             foreach (DataRow dr in dt.Rows)
@@ -290,26 +295,27 @@ namespace mySystem.Process.Bag.LDPE
             dr["生产指令编号"] = _code;
             dr["生产设备"] = "制袋机 AA-EQU-001";
             dr["计划生产日期"] = DateTime.Now;
-            dr["制袋物料名称1"] = "Tyvek印刷卷材";
-            dr["制袋物料名称2"] = "药品包装用聚乙烯膜（XP1）";
-            dr["制袋物料名称3"] = "蒸汽灭菌指示剂";
-            dr["内包物料名称1"] = "内包装袋";
-            dr["内包物料名称2"] = "内标签";
-            dr["内包物料名称3"] = "内包物料名称3";
-            dr["内包物料名称4"] = "内包物料名称4";
+            dr["制袋物料名称1"] = "";
+            dr["制袋物料名称2"] = "";
+            dr["制袋物料名称3"] = "";
+            dr["内包物料名称1"] = "";
+            dr["内包物料名称2"] = "";
+            dr["内包物料名称3"] = "";
+            dr["内包物料名称4"] = "";
 
-            dr["外包物料名称1"] = "外标签";
-            dr["外包物料名称2"] = "纸箱";
-            dr["外包物料批号2"] = "————————";
-            dr["外包物料名称3"] = "内衬袋";
-            dr["外包物料代码3"] = "专用袋";
-            dr["外包物料批号3"] = "————————";
+            dr["外包物料名称1"] = "";
+            dr["外包物料名称2"] = "";
+            dr["外包物料批号2"] = "";
+            dr["外包物料名称3"] = "";
+            dr["外包物料代码3"] = "";
+            dr["外包物料批号3"] = "";
             dr["操作员"] = mySystem.Parameter.userName;
             dr["操作时间"] = DateTime.Now;
             dr["审核时间"] = DateTime.Now;
             dr["接收时间"] = DateTime.Now;
             dr["状态"] = 0;
             dr["类型"] = "正常";
+            dr["审核是否通过"] = false;
             return dr;
         }
 
@@ -606,9 +612,27 @@ namespace mySystem.Process.Bag.LDPE
                     c.Enabled = true;
                 }
             }
+
+
+            tb制袋物料名称1.ReadOnly = true;
+            tb制袋物料名称2.ReadOnly = true;
+            tb制袋物料名称3.ReadOnly = true;
+
+            tb内包物料名称1.ReadOnly = true;
+            tb内包物料名称2.ReadOnly = true;
+            tb内包物料名称3.ReadOnly = true;
+            tb内包物料名称4.ReadOnly = true;
+
+
+            tb外包物料名称1.ReadOnly = true;
+            tb外包物料名称2.ReadOnly = true;
+            tb外包物料名称3.ReadOnly = true;
+
+
             // 保证这两个按钮一直是false
             btn审核.Enabled = false;
             btn提交审核.Enabled = false;
+
 
         }
 
@@ -965,11 +989,14 @@ namespace mySystem.Process.Bag.LDPE
                 DataRow dr = dtOuter.NewRow();
                 dr = writeOuterDefault(dr);
                 dtOuter.Rows.Add(dr);
-                if (((DataTable)bsOuter.DataSource).Rows[0]["审核是否通过"] == DBNull.Value)
-                {
+                //if (((DataTable)bsOuter.DataSource).Rows[0]["审核是否通过"] == DBNull.Value)
+                //{
+                // 这里为什么不行了？必须写在writeouterdefault????????????/
                     ((DataTable)bsOuter.DataSource).Rows[0]["审核是否通过"] = 0;
-                }
-                daOuter.Update((DataTable)bsOuter.DataSource);
+                    dtOuter.Rows[0]["审核是否通过"] = false;
+                //}
+                //daOuter.Update((DataTable)bsOuter.DataSource);
+                daOuter.Update(dtOuter);
                 readOuterData(dtOuter.Rows[0]["生产指令编号"].ToString());
                 outerBind();
             }
@@ -1089,67 +1116,58 @@ namespace mySystem.Process.Bag.LDPE
             //TODO:  *****有待替换
             if (hs物料代码.Count > 0)
             {
-                if (!hs物料代码.Contains(tb制袋物料代码1.Text))
+                if (tb制袋物料代码1.Text.Trim()!="" && !hs物料代码.Contains(tb制袋物料代码1.Text))
                 {
                     MessageBox.Show("制袋 " + tb制袋物料名称1.Text + " 物料代码 有误！");
                     return;
                 }
-                //if (!hs物料代码.Contains(tb制袋物料代码2.Text))
-                //{
-                //    MessageBox.Show("制袋 " + tb制袋物料名称2.Text + " 物料代码 有误！");
-                //    return;
-                //}
-                //if (!hs物料代码.Contains(tb制袋物料代码3.Text))
-                //{
-                //    MessageBox.Show("制袋 " + tb制袋物料名称3.Text + " 物料代码 有误！");
-                //    return;
-                //}
-                if (!hs物料代码.Contains(tb内包物料代码1.Text))
+                if (tb制袋物料代码2.Text.Trim() != "" && !hs物料代码.Contains(tb制袋物料代码2.Text))
+                {
+                    MessageBox.Show("制袋 " + tb制袋物料名称2.Text + " 物料代码 有误！");
+                    return;
+                }
+                if (tb制袋物料代码3.Text.Trim() != "" && !hs物料代码.Contains(tb制袋物料代码3.Text))
+                {
+                    MessageBox.Show("制袋 " + tb制袋物料名称3.Text + " 物料代码 有误！");
+                    return;
+                }
+                if (tb内包物料代码1.Text.Trim() != "" && !hs物料代码.Contains(tb内包物料代码1.Text))
                 {
                     MessageBox.Show("内包装 " + tb内包物料名称1.Text + " 物料代码 有误！");
                     return;
                 }
-                if (!hs物料代码.Contains(tb内包物料代码2.Text))
+                if (tb内包物料代码2.Text.Trim() != "" && !hs物料代码.Contains(tb内包物料代码2.Text))
                 {
                     MessageBox.Show("内包装 " + tb内包物料名称2.Text + " 物料代码 有误！");
                     return;
                 }
-                //if (!hs物料代码.Contains(tb内包物料代码3.Text))
-                //{
-                //    MessageBox.Show("内包装 " + tb内包物料名称3.Text + " 物料代码 有误！");
-                //    return;
-                //}
-                //if (!hs物料代码.Contains(tb内包物料代码4.Text))
-                //{
-                //    MessageBox.Show("内包装 " + tb内包物料名称4.Text + " 物料代码 有误！");
-                //    return;
-                //}
-                if (!hs物料代码.Contains(tb内包物料代码1.Text))
+                if (tb内包物料代码3.Text.Trim() != "" && !hs物料代码.Contains(tb内包物料代码3.Text))
                 {
-                    MessageBox.Show("内包装 " + tb内包物料名称1.Text + " 物料代码 有误！");
+                    MessageBox.Show("内包装 " + tb内包物料名称3.Text + " 物料代码 有误！");
                     return;
                 }
-                if (!hs物料代码.Contains(tb内包物料代码2.Text))
+                if (tb内包物料代码4.Text.Trim() != "" && !hs物料代码.Contains(tb内包物料代码4.Text))
                 {
-                    MessageBox.Show("内包装 " + tb内包物料名称2.Text + " 物料代码 有误！");
+                    MessageBox.Show("内包装 " + tb内包物料名称4.Text + " 物料代码 有误！");
                     return;
                 }
-                if (!hs物料代码.Contains(tb外包物料代码1.Text))
+
+                if (tb外包物料代码1.Text.Trim() != "" && !hs物料代码.Contains(tb外包物料代码1.Text))
                 {
                     MessageBox.Show("外包装 " + tb外包物料名称1.Text + " 物料代码 有误！");
                     return;
                 }
-                if (!hs物料代码.Contains(tb外包物料代码2.Text))
+                if (tb外包物料代码2.Text.Trim() != "" && !hs物料代码.Contains(tb外包物料代码2.Text))
                 {
                     MessageBox.Show("外包装 " + tb外包物料名称2.Text + " 物料代码 有误！");
                     return;
                 }
-                // 这里是要填专用袋吗？？？？
-                //if (!hs物料代码.Contains(tb外包物料代码3.Text))
-                //{
-                //    MessageBox.Show("外包装 " + tb外包物料名称3.Text + " 物料代码 有误！");
-                //    return;
-                //}
+
+                if (tb外包物料代码3.Text.Trim() != "" && !hs物料代码.Contains(tb外包物料代码3.Text))
+                {
+                    MessageBox.Show("外包装 " + tb外包物料名称3.Text + " 物料代码 有误！");
+                    return;
+                }
             }
             else
             {
@@ -1442,7 +1460,7 @@ namespace mySystem.Process.Bag.LDPE
             SqlConnection connToOrder = new SqlConnection(strConnect);
             SqlDataAdapter da;
             DataTable dt;
-            da = new SqlDataAdapter("select * from 设置存货档案 where 类型 like '组件' and 属于工序 like '%LDPE制袋%'", connToOrder);
+            da = new SqlDataAdapter("select * from 设置存货档案 where 类型 like '%组件%' and 属于工序 like '%PE制袋%'", connToOrder);
             dt = new DataTable();
             da.Fill(dt);
             foreach (DataRow dr in dt.Rows)
@@ -1474,7 +1492,7 @@ namespace mySystem.Process.Bag.LDPE
                 TextBox tb = (sender as TextBox);
                 if (ls物料代码.IndexOf(tb.Text) >= 0)
                 {
-                    //tb制袋物料名称1.Text = ls物料名称[ls物料代码.IndexOf(tb.Text)];
+                    tb制袋物料名称1.Text = ls物料名称[ls物料代码.IndexOf(tb.Text)];
                 }
             }
             catch
@@ -1482,6 +1500,137 @@ namespace mySystem.Process.Bag.LDPE
         }
 
         private void LDPEBag_productioninstruction_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            writeDGVWidthToSetting(dataGridView1);
+        }
+
+        private void tb制袋物料代码2_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                TextBox tb = (sender as TextBox);
+                if (ls物料代码.IndexOf(tb.Text) >= 0)
+                {
+                    tb制袋物料名称2.Text = ls物料名称[ls物料代码.IndexOf(tb.Text)];
+                }
+            }
+            catch
+            { }
+        }
+
+        private void tb制袋物料代码3_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                TextBox tb = (sender as TextBox);
+                if (ls物料代码.IndexOf(tb.Text) >= 0)
+                {
+                    tb制袋物料名称3.Text = ls物料名称[ls物料代码.IndexOf(tb.Text)];
+                }
+            }
+            catch
+            { }
+        }
+
+        private void tb内包物料代码1_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                TextBox tb = (sender as TextBox);
+                if (ls物料代码.IndexOf(tb.Text) >= 0)
+                {
+                    tb内包物料名称1.Text = ls物料名称[ls物料代码.IndexOf(tb.Text)];
+                }
+            }
+            catch
+            { }
+        }
+
+        private void tb内包物料代码2_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                TextBox tb = (sender as TextBox);
+                if (ls物料代码.IndexOf(tb.Text) >= 0)
+                {
+                    tb内包物料名称2.Text = ls物料名称[ls物料代码.IndexOf(tb.Text)];
+                }
+            }
+            catch
+            { }
+        }
+
+        private void tb内包物料代码3_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                TextBox tb = (sender as TextBox);
+                if (ls物料代码.IndexOf(tb.Text) >= 0)
+                {
+                    tb内包物料名称3.Text = ls物料名称[ls物料代码.IndexOf(tb.Text)];
+                }
+            }
+            catch
+            { }
+        }
+
+        private void tb内包物料代码4_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                TextBox tb = (sender as TextBox);
+                if (ls物料代码.IndexOf(tb.Text) >= 0)
+                {
+                    tb内包物料名称4.Text = ls物料名称[ls物料代码.IndexOf(tb.Text)];
+                }
+            }
+            catch
+            { }
+        }
+
+        private void tb外包物料代码1_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                TextBox tb = (sender as TextBox);
+                if (ls物料代码.IndexOf(tb.Text) >= 0)
+                {
+                    tb外包物料名称1.Text = ls物料名称[ls物料代码.IndexOf(tb.Text)];
+                }
+            }
+            catch
+            { }
+        }
+
+        private void tb外包物料代码2_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                TextBox tb = (sender as TextBox);
+                if (ls物料代码.IndexOf(tb.Text) >= 0)
+                {
+                    tb外包物料名称2.Text = ls物料名称[ls物料代码.IndexOf(tb.Text)];
+                }
+            }
+            catch
+            { }
+        }
+
+        private void tb外包物料代码3_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                TextBox tb = (sender as TextBox);
+                if (ls物料代码.IndexOf(tb.Text) >= 0)
+                {
+                    tb外包物料名称3.Text = ls物料名称[ls物料代码.IndexOf(tb.Text)];
+                }
+            }
+            catch
+            { }
+        }
+
+        private void dataGridView1_ColumnWidthChanged(object sender, DataGridViewColumnEventArgs e)
         {
             writeDGVWidthToSetting(dataGridView1);
         }

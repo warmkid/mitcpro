@@ -47,13 +47,15 @@
             this.label2 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.tb平均值 = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // btn添加
             // 
             this.btn添加.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn添加.Location = new System.Drawing.Point(932, 540);
+            this.btn添加.Location = new System.Drawing.Point(694, 537);
             this.btn添加.Name = "btn添加";
             this.btn添加.Size = new System.Drawing.Size(75, 27);
             this.btn添加.TabIndex = 125;
@@ -64,7 +66,7 @@
             // btn删除
             // 
             this.btn删除.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn删除.Location = new System.Drawing.Point(1047, 540);
+            this.btn删除.Location = new System.Drawing.Point(809, 537);
             this.btn删除.Name = "btn删除";
             this.btn删除.Size = new System.Drawing.Size(75, 27);
             this.btn删除.TabIndex = 124;
@@ -139,7 +141,7 @@
             // dtp审核日期
             // 
             this.dtp审核日期.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dtp审核日期.Location = new System.Drawing.Point(360, 553);
+            this.dtp审核日期.Location = new System.Drawing.Point(302, 561);
             this.dtp审核日期.Name = "dtp审核日期";
             this.dtp审核日期.Size = new System.Drawing.Size(136, 23);
             this.dtp审核日期.TabIndex = 117;
@@ -148,7 +150,7 @@
             // 
             this.label28.AutoSize = true;
             this.label28.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label28.Location = new System.Drawing.Point(282, 557);
+            this.label28.Location = new System.Drawing.Point(224, 565);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(72, 16);
             this.label28.TabIndex = 116;
@@ -157,7 +159,7 @@
             // tb审核员
             // 
             this.tb审核员.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb审核员.Location = new System.Drawing.Point(108, 550);
+            this.tb审核员.Location = new System.Drawing.Point(95, 560);
             this.tb审核员.Name = "tb审核员";
             this.tb审核员.Size = new System.Drawing.Size(110, 23);
             this.tb审核员.TabIndex = 115;
@@ -166,7 +168,7 @@
             // 
             this.label27.AutoSize = true;
             this.label27.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label27.Location = new System.Drawing.Point(35, 551);
+            this.label27.Location = new System.Drawing.Point(22, 561);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(56, 16);
             this.label27.TabIndex = 114;
@@ -178,8 +180,9 @@
             this.dataGridView1.Location = new System.Drawing.Point(21, 49);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(1101, 471);
+            this.dataGridView1.Size = new System.Drawing.Size(1101, 418);
             this.dataGridView1.TabIndex = 113;
+            this.dataGridView1.ColumnWidthChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dataGridView1_ColumnWidthChanged);
             // 
             // label角色
             // 
@@ -221,7 +224,7 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("宋体", 12F);
-            this.button1.Location = new System.Drawing.Point(786, 540);
+            this.button1.Location = new System.Drawing.Point(1005, 537);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(116, 30);
             this.button1.TabIndex = 332;
@@ -232,7 +235,7 @@
             // button2
             // 
             this.button2.Font = new System.Drawing.Font("宋体", 12F);
-            this.button2.Location = new System.Drawing.Point(683, 540);
+            this.button2.Location = new System.Drawing.Point(902, 537);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(97, 30);
             this.button2.TabIndex = 331;
@@ -240,11 +243,31 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // tb平均值
+            // 
+            this.tb平均值.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb平均值.Location = new System.Drawing.Point(95, 491);
+            this.tb平均值.Name = "tb平均值";
+            this.tb平均值.Size = new System.Drawing.Size(110, 23);
+            this.tb平均值.TabIndex = 334;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label3.Location = new System.Drawing.Point(22, 492);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(56, 16);
+            this.label3.TabIndex = 333;
+            this.label3.Text = "平均值";
+            // 
             // 产品热合强度检验记录
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1133, 641);
+            this.Controls.Add(this.tb平均值);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.tb标准);
@@ -294,5 +317,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.TextBox tb平均值;
+        private System.Windows.Forms.Label label3;
     }
 }

@@ -563,5 +563,22 @@ namespace mySystem
             return uuid;
         }
 
+        public static String[] getAllPeople()
+        {
+            string strConnect = "server=" + Parameter.IP_port + ";database=user;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
+            SqlConnection connToOrder = new SqlConnection(strConnect);
+            String sql = "select * from users";
+            SqlDataAdapter da = new SqlDataAdapter(sql, connToOrder);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+
+            string[] ret = new string[dt.Rows.Count];
+            for (int i = 0; i < dt.Rows.Count; ++i)
+            {
+                ret[i] = dt.Rows[i]["姓名"].ToString();
+            }
+            return ret;
+        }
+
     }
 }

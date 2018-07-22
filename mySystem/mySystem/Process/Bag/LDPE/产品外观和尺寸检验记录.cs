@@ -599,7 +599,7 @@ namespace mySystem.Process.Bag.LDPE
             if (e.ColumnIndex >= 3 && e.ColumnIndex <= 7 )
             {
                 sum = 0;
-                for (int i = 3; i <= 7; ++i)
+                for (int i = 4; i <= 7; ++i)
                 {
                     sum += Convert.ToInt32(dtInner.Rows[e.RowIndex][i]);
                 }

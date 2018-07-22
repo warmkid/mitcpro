@@ -178,6 +178,26 @@ namespace mySystem.Process.Bag.LDPE
                     dt物料.Columns.Add("物料简称", typeof(String));   //新建第1列
                     dt物料.Columns.Add("物料代码", typeof(String));   //新建第2列
                     dt物料.Columns.Add("物料批号", typeof(String));   //新建第3列
+
+                    string strConnect = "server=" + Parameter.IP_port + ";database=dingdan_kucun;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
+                    SqlConnection connToOrder = new SqlConnection(strConnect);
+                    SqlDataAdapter da;
+                    DataTable dt;
+                    da = new SqlDataAdapter("select * from 设置存货档案 where 属于工序 like '%PE制袋%'", connToOrder);
+                    dt = new DataTable();
+                    da.Fill(dt);
+                    List<String> wldm生产指令中的物料代码 = new List<string>();
+                    wldm生产指令中的物料代码.Add(dt生产指令.Rows[0]["制袋物料代码1"].ToString());
+                    wldm生产指令中的物料代码.Add(dt生产指令.Rows[0]["制袋物料代码2"].ToString());
+                    wldm生产指令中的物料代码.Add(dt生产指令.Rows[0]["制袋物料代码3"].ToString());
+                    wldm生产指令中的物料代码.Add(dt生产指令.Rows[0]["内包物料代码1"].ToString());
+                    wldm生产指令中的物料代码.Add(dt生产指令.Rows[0]["内包物料代码2"].ToString());
+                    wldm生产指令中的物料代码.Add(dt生产指令.Rows[0]["内包物料代码3"].ToString());
+                    wldm生产指令中的物料代码.Add(dt生产指令.Rows[0]["内包物料代码4"].ToString());
+                    wldm生产指令中的物料代码.Add(dt生产指令.Rows[0]["外包物料代码1"].ToString());
+                    wldm生产指令中的物料代码.Add(dt生产指令.Rows[0]["外包物料代码2"].ToString());
+                    wldm生产指令中的物料代码.Add(dt生产指令.Rows[0]["外包物料代码3"].ToString());
+
                     dt物料.Rows.Add(dt生产指令.Rows[0]["制袋物料名称1"].ToString(), dt生产指令.Rows[0]["制袋物料代码1"].ToString(), dt生产指令.Rows[0]["制袋物料批号1"].ToString());
                     dt物料.Rows.Add(dt生产指令.Rows[0]["制袋物料名称2"].ToString(), dt生产指令.Rows[0]["制袋物料代码2"].ToString(), dt生产指令.Rows[0]["制袋物料批号2"].ToString());
                     dt物料.Rows.Add(dt生产指令.Rows[0]["制袋物料名称3"].ToString(), dt生产指令.Rows[0]["制袋物料代码3"].ToString(), dt生产指令.Rows[0]["制袋物料批号3"].ToString());
@@ -190,6 +210,18 @@ namespace mySystem.Process.Bag.LDPE
                     dt物料.Rows.Add(dt生产指令.Rows[0]["外包物料名称1"].ToString(), dt生产指令.Rows[0]["外包物料代码1"].ToString(), dt生产指令.Rows[0]["外包物料批号1"].ToString());
                     dt物料.Rows.Add(dt生产指令.Rows[0]["外包物料名称2"].ToString(), dt生产指令.Rows[0]["外包物料代码2"].ToString(), dt生产指令.Rows[0]["外包物料批号2"].ToString());
                     dt物料.Rows.Add(dt生产指令.Rows[0]["外包物料名称3"].ToString(), dt生产指令.Rows[0]["外包物料代码3"].ToString(), dt生产指令.Rows[0]["外包物料批号3"].ToString());
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        DataRow ndr = dt物料.NewRow();
+                        if (!wldm生产指令中的物料代码.Contains(dr["存货代码"].ToString()))
+                        {
+                            ndr["物料简称"] = dr["存货名称"];
+                            ndr["物料代码"] = dr["存货代码"];
+                            ndr["物料批号"] = "";
+                        }
+                        dt物料.Rows.Add(ndr);
+                        
+                    }
                     //内表代码批号
                     SqlCommand comm2 = new SqlCommand();
                     comm2.Connection = mySystem.Parameter.conn;
@@ -612,7 +644,9 @@ namespace mySystem.Process.Bag.LDPE
             //HeaderText
             dataGridView1.Columns["领料日期时间"].HeaderText = "领料日期、时间";
 
-            dataGridView1.Columns["物料代码"].DisplayIndex = dataGridView1.Columns["物料简称"].DisplayIndex;
+            dataGridView1.Columns["物料代码"].DisplayIndex = Math.Min(
+                dataGridView1.Columns["物料简称"].DisplayIndex,
+                dataGridView1.Columns["物料代码"].DisplayIndex);
         }
 
         //******************************按钮功能******************************//
@@ -1067,16 +1101,17 @@ namespace mySystem.Process.Bag.LDPE
                 s = Regex.Split(dt记录详情.Rows[i]["物料批号"].ToString(), ",|，");
                 for (int j = 0; j < s.Length; j++)
                 { if (s[j] != "") { ls批号.Add(s[j]); } }
+                // 批号不检查
                 //检查是否都是存在
-                for (int j = 0; j < ls批号.Count; j++)
-                {
-                    if (ls批号原始.IndexOf(ls批号[j]) == -1)
-                    {
-                        MessageBox.Show("第" + i.ToString() + "行『物料批号』填写不符合要求！");
-                        TypeCheck = false;
-                        return TypeCheck;
-                    }
-                }
+                //for (int j = 0; j < ls批号.Count; j++)
+                //{
+                //    if (ls批号原始.IndexOf(ls批号[j]) == -1)
+                //    {
+                //        MessageBox.Show("第" + i.ToString() + "行『物料批号』填写不符合要求！");
+                //        TypeCheck = false;
+                //        return TypeCheck;
+                //    }
+                //}
             }
             return TypeCheck;
         }
@@ -1221,6 +1256,11 @@ namespace mySystem.Process.Bag.LDPE
             tb.AutoCompleteSource = AutoCompleteSource.CustomSource;
             tb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             
+        }
+
+        private void dataGridView1_ColumnWidthChanged(object sender, DataGridViewColumnEventArgs e)
+        {
+            writeDGVWidthToSetting(dataGridView1);
         }
         
     }

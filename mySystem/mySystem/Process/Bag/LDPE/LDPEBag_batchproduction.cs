@@ -73,10 +73,11 @@ namespace mySystem.Process.Bag.LDPE
             fillPrinter();
             dataGridView1.DataError += dataGridView1_DataError;
             dataGridView2.DataError += dataGridView2_DataError;
-            _生产指令ID = id;
-            SqlDataAdapter da = new SqlDataAdapter("select * from 生产指令 where ID=" + id, mySystem.Parameter.conn);
+            SqlDataAdapter da = new SqlDataAdapter("select * from 批生产记录表 where ID=" + id, mySystem.Parameter.conn);
             DataTable dt = new DataTable();
             da.Fill(dt);
+            _生产指令ID = Convert.ToInt32(dt.Rows[0]["生产指令ID"]);
+            
             _生产指令 = dt.Rows[0]["生产指令编号"].ToString();
             tb生产指令编号.Text = _生产指令;
             init();
@@ -714,7 +715,7 @@ namespace mySystem.Process.Bag.LDPE
                                 GC.Collect();
                             }
                         }
-                        catch
+                        catch(Exception ee)
                         {
                             MessageBox.Show("请确认打印范围!");
                         }

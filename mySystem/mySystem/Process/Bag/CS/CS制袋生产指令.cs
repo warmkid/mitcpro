@@ -234,6 +234,9 @@ namespace mySystem.Process.Bag.CS
                 hs物料代码.Add(dr["存货代码"].ToString());
             }
 
+            cmb类型.Items.Add("正常");
+            cmb类型.Items.Add("返工");
+            cmb类型.SelectedIndex = 0;
         }
 
         /// <summary>

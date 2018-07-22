@@ -172,6 +172,7 @@
             this.label38.Size = new System.Drawing.Size(24, 16);
             this.label38.TabIndex = 243;
             this.label38.Text = "只";
+            this.label38.Visible = false;
             // 
             // label37
             // 
@@ -182,6 +183,7 @@
             this.label37.Size = new System.Drawing.Size(24, 16);
             this.label37.TabIndex = 242;
             this.label37.Text = "个";
+            this.label37.Visible = false;
             // 
             // label36
             // 
@@ -192,6 +194,7 @@
             this.label36.Size = new System.Drawing.Size(24, 16);
             this.label36.TabIndex = 241;
             this.label36.Text = "张";
+            this.label36.Visible = false;
             // 
             // label35
             // 
@@ -202,6 +205,7 @@
             this.label35.Size = new System.Drawing.Size(24, 16);
             this.label35.TabIndex = 240;
             this.label35.Text = "张";
+            this.label35.Visible = false;
             // 
             // label24
             // 
@@ -212,6 +216,7 @@
             this.label24.Size = new System.Drawing.Size(24, 16);
             this.label24.TabIndex = 239;
             this.label24.Text = "只";
+            this.label24.Visible = false;
             // 
             // label22
             // 
@@ -246,6 +251,7 @@
             this.label20.Size = new System.Drawing.Size(24, 16);
             this.label20.TabIndex = 236;
             this.label20.Text = "米";
+            this.label20.Visible = false;
             // 
             // tb外包物料名称3
             // 
@@ -275,13 +281,14 @@
             this.tb外包物料代码3.Name = "tb外包物料代码3";
             this.tb外包物料代码3.Size = new System.Drawing.Size(124, 21);
             this.tb外包物料代码3.TabIndex = 232;
+            this.tb外包物料代码3.TextChanged += new System.EventHandler(this.tb外包物料代码3_TextChanged);
             // 
             // cmb产品名称
             // 
             this.cmb产品名称.FormattingEnabled = true;
-            this.cmb产品名称.Location = new System.Drawing.Point(68, 45);
+            this.cmb产品名称.Location = new System.Drawing.Point(78, 13);
             this.cmb产品名称.Name = "cmb产品名称";
-            this.cmb产品名称.Size = new System.Drawing.Size(114, 20);
+            this.cmb产品名称.Size = new System.Drawing.Size(237, 20);
             this.cmb产品名称.TabIndex = 231;
             // 
             // btn添加
@@ -461,7 +468,6 @@
             // 
             // tb制袋物料名称3
             // 
-            this.tb制袋物料名称3.Enabled = false;
             this.tb制袋物料名称3.Location = new System.Drawing.Point(151, 253);
             this.tb制袋物料名称3.Name = "tb制袋物料名称3";
             this.tb制袋物料名称3.ReadOnly = true;
@@ -471,13 +477,11 @@
             // 
             // tb制袋物料名称2
             // 
-            this.tb制袋物料名称2.Enabled = false;
             this.tb制袋物料名称2.Location = new System.Drawing.Point(151, 226);
             this.tb制袋物料名称2.Name = "tb制袋物料名称2";
             this.tb制袋物料名称2.ReadOnly = true;
             this.tb制袋物料名称2.Size = new System.Drawing.Size(152, 21);
             this.tb制袋物料名称2.TabIndex = 210;
-            this.tb制袋物料名称2.Visible = false;
             // 
             // tb制袋物料名称1
             // 
@@ -490,7 +494,7 @@
             // cmb生产工艺
             // 
             this.cmb生产工艺.FormattingEnabled = true;
-            this.cmb生产工艺.Location = new System.Drawing.Point(507, 45);
+            this.cmb生产工艺.Location = new System.Drawing.Point(414, 49);
             this.cmb生产工艺.Name = "cmb生产工艺";
             this.cmb生产工艺.Size = new System.Drawing.Size(121, 20);
             this.cmb生产工艺.TabIndex = 208;
@@ -705,6 +709,7 @@
             this.tb外包物料代码2.Name = "tb外包物料代码2";
             this.tb外包物料代码2.Size = new System.Drawing.Size(124, 21);
             this.tb外包物料代码2.TabIndex = 183;
+            this.tb外包物料代码2.TextChanged += new System.EventHandler(this.tb外包物料代码2_TextChanged);
             // 
             // tb外包物料领料量1
             // 
@@ -726,6 +731,7 @@
             this.tb外包物料代码1.Name = "tb外包物料代码1";
             this.tb外包物料代码1.Size = new System.Drawing.Size(124, 21);
             this.tb外包物料代码1.TabIndex = 180;
+            this.tb外包物料代码1.TextChanged += new System.EventHandler(this.tb外包物料代码1_TextChanged);
             // 
             // label7
             // 
@@ -753,7 +759,6 @@
             // 
             // tb制袋物料领料量3
             // 
-            this.tb制袋物料领料量3.Enabled = false;
             this.tb制袋物料领料量3.Location = new System.Drawing.Point(684, 253);
             this.tb制袋物料领料量3.Name = "tb制袋物料领料量3";
             this.tb制袋物料领料量3.Size = new System.Drawing.Size(88, 21);
@@ -762,12 +767,10 @@
             // 
             // tb制袋物料领料量2
             // 
-            this.tb制袋物料领料量2.Enabled = false;
             this.tb制袋物料领料量2.Location = new System.Drawing.Point(684, 226);
             this.tb制袋物料领料量2.Name = "tb制袋物料领料量2";
             this.tb制袋物料领料量2.Size = new System.Drawing.Size(88, 21);
             this.tb制袋物料领料量2.TabIndex = 175;
-            this.tb制袋物料领料量2.Visible = false;
             // 
             // tb内包物料批号2
             // 
@@ -785,7 +788,6 @@
             // 
             // tb制袋物料批号3
             // 
-            this.tb制袋物料批号3.Enabled = false;
             this.tb制袋物料批号3.Location = new System.Drawing.Point(520, 253);
             this.tb制袋物料批号3.Name = "tb制袋物料批号3";
             this.tb制袋物料批号3.Size = new System.Drawing.Size(124, 21);
@@ -794,12 +796,10 @@
             // 
             // tb制袋物料批号2
             // 
-            this.tb制袋物料批号2.Enabled = false;
             this.tb制袋物料批号2.Location = new System.Drawing.Point(520, 226);
             this.tb制袋物料批号2.Name = "tb制袋物料批号2";
             this.tb制袋物料批号2.Size = new System.Drawing.Size(124, 21);
             this.tb制袋物料批号2.TabIndex = 171;
-            this.tb制袋物料批号2.Visible = false;
             // 
             // tb内包物料代码2
             // 
@@ -807,6 +807,7 @@
             this.tb内包物料代码2.Name = "tb内包物料代码2";
             this.tb内包物料代码2.Size = new System.Drawing.Size(124, 21);
             this.tb内包物料代码2.TabIndex = 170;
+            this.tb内包物料代码2.TextChanged += new System.EventHandler(this.tb内包物料代码2_TextChanged);
             // 
             // tb内包物料代码1
             // 
@@ -814,24 +815,24 @@
             this.tb内包物料代码1.Name = "tb内包物料代码1";
             this.tb内包物料代码1.Size = new System.Drawing.Size(124, 21);
             this.tb内包物料代码1.TabIndex = 169;
+            this.tb内包物料代码1.TextChanged += new System.EventHandler(this.tb内包物料代码1_TextChanged);
             // 
             // tb制袋物料代码3
             // 
-            this.tb制袋物料代码3.Enabled = false;
             this.tb制袋物料代码3.Location = new System.Drawing.Point(333, 253);
             this.tb制袋物料代码3.Name = "tb制袋物料代码3";
             this.tb制袋物料代码3.Size = new System.Drawing.Size(124, 21);
             this.tb制袋物料代码3.TabIndex = 168;
             this.tb制袋物料代码3.Visible = false;
+            this.tb制袋物料代码3.TextChanged += new System.EventHandler(this.tb制袋物料代码3_TextChanged);
             // 
             // tb制袋物料代码2
             // 
-            this.tb制袋物料代码2.Enabled = false;
             this.tb制袋物料代码2.Location = new System.Drawing.Point(333, 226);
             this.tb制袋物料代码2.Name = "tb制袋物料代码2";
             this.tb制袋物料代码2.Size = new System.Drawing.Size(124, 21);
             this.tb制袋物料代码2.TabIndex = 167;
-            this.tb制袋物料代码2.Visible = false;
+            this.tb制袋物料代码2.TextChanged += new System.EventHandler(this.tb制袋物料代码2_TextChanged);
             // 
             // tb制袋物料领料量1
             // 
@@ -938,7 +939,7 @@
             // 
             // btn查询插入
             // 
-            this.btn查询插入.Location = new System.Drawing.Point(367, 44);
+            this.btn查询插入.Location = new System.Drawing.Point(197, 45);
             this.btn查询插入.Name = "btn查询插入";
             this.btn查询插入.Size = new System.Drawing.Size(75, 23);
             this.btn查询插入.TabIndex = 155;
@@ -955,7 +956,7 @@
             // 
             // tb生产设备
             // 
-            this.tb生产设备.Location = new System.Drawing.Point(696, 46);
+            this.tb生产设备.Location = new System.Drawing.Point(644, 47);
             this.tb生产设备.Name = "tb生产设备";
             this.tb生产设备.Size = new System.Drawing.Size(113, 21);
             this.tb生产设备.TabIndex = 152;
@@ -972,7 +973,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(640, 49);
+            this.label5.Location = new System.Drawing.Point(588, 50);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(53, 12);
             this.label5.TabIndex = 150;
@@ -981,7 +982,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(448, 49);
+            this.label4.Location = new System.Drawing.Point(355, 53);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(53, 12);
             this.label4.TabIndex = 149;
@@ -989,7 +990,7 @@
             // 
             // tb生产指令编号
             // 
-            this.tb生产指令编号.Location = new System.Drawing.Point(271, 46);
+            this.tb生产指令编号.Location = new System.Drawing.Point(101, 47);
             this.tb生产指令编号.Name = "tb生产指令编号";
             this.tb生产指令编号.Size = new System.Drawing.Size(90, 21);
             this.tb生产指令编号.TabIndex = 148;
@@ -997,7 +998,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(188, 49);
+            this.label3.Location = new System.Drawing.Point(18, 50);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(77, 12);
             this.label3.TabIndex = 147;
@@ -1006,7 +1007,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(15, 48);
+            this.label2.Location = new System.Drawing.Point(25, 16);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(53, 12);
             this.label2.TabIndex = 146;
@@ -1022,7 +1023,7 @@
             this.label23.Size = new System.Drawing.Size(791, 14);
             this.label23.TabIndex = 200;
             this.label23.Text = "---------------------------------------------------------------------------------" +
-                "-------------------------------";
+    "-------------------------------";
             // 
             // label33
             // 
@@ -1034,7 +1035,7 @@
             this.label33.Size = new System.Drawing.Size(1092, 14);
             this.label33.TabIndex = 201;
             this.label33.Text = "---------------------------------------------------------------------------------" +
-                "--------------------------------------------------------------------------";
+    "--------------------------------------------------------------------------";
             // 
             // label15
             // 
@@ -1047,7 +1048,7 @@
             this.label15.Size = new System.Drawing.Size(791, 14);
             this.label15.TabIndex = 222;
             this.label15.Text = "---------------------------------------------------------------------------------" +
-                "-------------------------------";
+    "-------------------------------";
             // 
             // dataGridView1
             // 
@@ -1057,6 +1058,7 @@
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.Size = new System.Drawing.Size(1047, 75);
             this.dataGridView1.TabIndex = 245;
+            this.dataGridView1.ColumnWidthChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dataGridView1_ColumnWidthChanged);
             // 
             // cmb类型
             // 
@@ -1078,77 +1080,63 @@
             // 
             // tb内包物料名称4
             // 
-            this.tb内包物料名称4.Enabled = false;
             this.tb内包物料名称4.Location = new System.Drawing.Point(151, 382);
             this.tb内包物料名称4.Name = "tb内包物料名称4";
             this.tb内包物料名称4.ReadOnly = true;
             this.tb内包物料名称4.Size = new System.Drawing.Size(152, 21);
             this.tb内包物料名称4.TabIndex = 255;
-            this.tb内包物料名称4.Visible = false;
             // 
             // tb内包物料名称3
             // 
-            this.tb内包物料名称3.Enabled = false;
             this.tb内包物料名称3.Location = new System.Drawing.Point(151, 354);
             this.tb内包物料名称3.Name = "tb内包物料名称3";
             this.tb内包物料名称3.ReadOnly = true;
             this.tb内包物料名称3.Size = new System.Drawing.Size(152, 21);
             this.tb内包物料名称3.TabIndex = 254;
-            this.tb内包物料名称3.Visible = false;
             // 
             // tb内包物料领料量4
             // 
-            this.tb内包物料领料量4.Enabled = false;
             this.tb内包物料领料量4.Location = new System.Drawing.Point(684, 382);
             this.tb内包物料领料量4.Name = "tb内包物料领料量4";
             this.tb内包物料领料量4.Size = new System.Drawing.Size(88, 21);
             this.tb内包物料领料量4.TabIndex = 253;
-            this.tb内包物料领料量4.Visible = false;
             // 
             // tb内包物料领料量3
             // 
-            this.tb内包物料领料量3.Enabled = false;
             this.tb内包物料领料量3.Location = new System.Drawing.Point(684, 354);
             this.tb内包物料领料量3.Name = "tb内包物料领料量3";
             this.tb内包物料领料量3.Size = new System.Drawing.Size(88, 21);
             this.tb内包物料领料量3.TabIndex = 252;
-            this.tb内包物料领料量3.Visible = false;
             // 
             // tb内包物料批号4
             // 
-            this.tb内包物料批号4.Enabled = false;
             this.tb内包物料批号4.Location = new System.Drawing.Point(520, 382);
             this.tb内包物料批号4.Name = "tb内包物料批号4";
             this.tb内包物料批号4.Size = new System.Drawing.Size(124, 21);
             this.tb内包物料批号4.TabIndex = 251;
-            this.tb内包物料批号4.Visible = false;
             // 
             // tb内包物料批号3
             // 
-            this.tb内包物料批号3.Enabled = false;
             this.tb内包物料批号3.Location = new System.Drawing.Point(520, 354);
             this.tb内包物料批号3.Name = "tb内包物料批号3";
             this.tb内包物料批号3.Size = new System.Drawing.Size(124, 21);
             this.tb内包物料批号3.TabIndex = 250;
-            this.tb内包物料批号3.Visible = false;
             // 
             // tb内包物料代码4
             // 
-            this.tb内包物料代码4.Enabled = false;
             this.tb内包物料代码4.Location = new System.Drawing.Point(333, 382);
             this.tb内包物料代码4.Name = "tb内包物料代码4";
             this.tb内包物料代码4.Size = new System.Drawing.Size(124, 21);
             this.tb内包物料代码4.TabIndex = 249;
-            this.tb内包物料代码4.Visible = false;
+            this.tb内包物料代码4.TextChanged += new System.EventHandler(this.tb内包物料代码4_TextChanged);
             // 
             // tb内包物料代码3
             // 
-            this.tb内包物料代码3.Enabled = false;
             this.tb内包物料代码3.Location = new System.Drawing.Point(333, 354);
             this.tb内包物料代码3.Name = "tb内包物料代码3";
             this.tb内包物料代码3.Size = new System.Drawing.Size(124, 21);
             this.tb内包物料代码3.TabIndex = 248;
-            this.tb内包物料代码3.Visible = false;
+            this.tb内包物料代码3.TextChanged += new System.EventHandler(this.tb内包物料代码3_TextChanged);
             // 
             // label32
             // 

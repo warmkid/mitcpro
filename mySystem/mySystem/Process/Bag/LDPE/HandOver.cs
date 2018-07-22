@@ -51,6 +51,7 @@ namespace mySystem.Process.Bag.LDPE
         string __待审核 = "__待审核";
 
         bool isFirstBind = true;
+        bool isNewShown = false;
        
         int searchId;
         int status;
@@ -61,66 +62,86 @@ namespace mySystem.Process.Bag.LDPE
         public HandOver(mySystem.MainForm mainform)
             : base(mainform)
         {
-            InitializeComponent();
-            conn = mySystem.Parameter.conn;
-            fill_printer();
-            getPeople();
-            setUserState();
-            getOtherData();
-            __生产指令编号 = Parameter.ldpebagInstruction;
-            __生产日期 = DateTime.Now.Date;
-            
-            dtp生产日期.Value = __生产日期;
-            init();
-            readOuterData(__生产指令编号, __生产日期);
-            removeOuterBind();
-            outerBind();
-            if (0 == dtOuter.Rows.Count)
+
+            // 判断现在是该接班还是交班
+            // 如果是要接班，则调用待ID的函数
+            // 如果是交班，则往下走
+            int tmpid;
+            if (check需要接班(out tmpid) || check夜班交班(out tmpid))
             {
-                DataRow newrow = dtOuter.NewRow();
-                newrow = writeOuterDefault(newrow, (Convert.ToString(Parameter.userflight) == "白班") ? true : false);
-                dtOuter.Rows.Add(newrow);
+                HandOver h = new HandOver(mainform, tmpid);
+                h.ShowDialog();
+                isNewShown = true;
+                InitializeComponent();
+
+            }
+            else
+            {
+                InitializeComponent();
+                conn = mySystem.Parameter.conn;
+                fill_printer();
+                getPeople();
+                setUserState();
+                getOtherData();
+                __生产指令编号 = Parameter.ldpebagInstruction;
+                __生产日期 = DateTime.Now.Date;
+
+                dtp生产日期.Value = __生产日期;
+                init();
+                readOuterData(__生产指令编号, __生产日期);
+                removeOuterBind();
+                outerBind();
+                if (0 == dtOuter.Rows.Count)
+                {
+                    DataRow newrow = dtOuter.NewRow();
+                    newrow = writeOuterDefault(newrow, (Convert.ToString(Parameter.userflight) == "白班") ? true : false);
+                    dtOuter.Rows.Add(newrow);
+                    daOuter.Update((DataTable)bsOuter.DataSource);
+                    readOuterData(__生产指令编号, __生产日期);
+                    removeOuterBind();
+                    outerBind();
+                }
+                __生产指令ID = Convert.ToInt32(dtOuter.Rows[0]["生产指令ID"]);
+
+                readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
+                setDataGridViewColumns();
+
+                if (0 == dtInner.Rows.Count)
+                {
+                    writeInnerDefault(dtInner);
+                }
+                根据班次填写确认结果();
+                setDataGridViewRowNums();
+                InnerBind();
+                是否覆盖原有项目();
+
+
+                //update Outer
                 daOuter.Update((DataTable)bsOuter.DataSource);
                 readOuterData(__生产指令编号, __生产日期);
                 removeOuterBind();
                 outerBind();
+                填写交班员();
+                setEnableReadOnly(true);
             }
-            __生产指令ID = Convert.ToInt32(dtOuter.Rows[0]["生产指令ID"]);
 
-            readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
-            setDataGridViewColumns();
-
-            if (0 == dtInner.Rows.Count)
-            {
-                writeInnerDefault(dtInner);
-            }           
-            根据班次填写确认结果();
-            setDataGridViewRowNums();
-            InnerBind();            
-            是否覆盖原有项目();
             
-
-            //update Outer
-            daOuter.Update((DataTable)bsOuter.DataSource);
-            readOuterData(__生产指令编号, __生产日期);
-            removeOuterBind();
-            outerBind();
-            填写交班员();
-            setEnableReadOnly(true);
           
         }
 
         public HandOver(mySystem.MainForm mainform, int Id)
             : base(mainform)
         {
+
+
             InitializeComponent();
             conn = mySystem.Parameter.conn;
             fill_printer();
-            searchId=Id;
-            
+            searchId = Id;
+
             getPeople();
             setUserState();
-            settingItem= 获取交接班项目();
+            settingItem = 获取交接班项目();
 
             init();
             readOuterData(searchId);
@@ -129,7 +150,7 @@ namespace mySystem.Process.Bag.LDPE
             __生产指令ID = Convert.ToInt32(dtOuter.Rows[0]["生产指令ID"]);
             removeOuterBind();
             outerBind();
-           
+
             readInnerData(searchId);
             setDataGridViewColumns();
 
@@ -137,6 +158,8 @@ namespace mySystem.Process.Bag.LDPE
             {
                 writeInnerDefault(dtInner);
             }
+
+            根据班次填写确认结果();
             setDataGridViewRowNums();
             InnerBind();
             是否覆盖原有项目();
@@ -145,7 +168,9 @@ namespace mySystem.Process.Bag.LDPE
             readOuterData(searchId);
             removeOuterBind();
             outerBind();
-            setEnableReadOnly(true);            
+            setEnableReadOnly(true);
+
+
         }
 
         /// <summary>
@@ -403,11 +428,11 @@ namespace mySystem.Process.Bag.LDPE
         {
             for (int i = 0; i < dtInner.Rows.Count; i++)
             {
-                if ((Convert.ToString(Parameter.userflight) == "白班")&&(txb夜班接班员.Text==""))
+                if ((Convert.ToString(Parameter.userflight) == "白班") && (txb夜班接班员.Text == "") && (dtInner.Rows[i]["确认结果白班"] == null || dtInner.Rows[i]["确认结果白班"].ToString()==""))
                 {
                     dtInner.Rows[i]["确认结果白班"] = "是";
                 }
-                if ((Convert.ToString(Parameter.userflight) == "夜班") && (txb白班接班员.Text == ""))
+                if ((Convert.ToString(Parameter.userflight) == "夜班") && (txb白班接班员.Text == "") && (dtInner.Rows[i]["确认结果夜班"] == null || dtInner.Rows[i]["确认结果夜班"].ToString() == ""))
                 {
                     dtInner.Rows[i]["确认结果夜班"] = "是";
                 }
@@ -839,6 +864,29 @@ namespace mySystem.Process.Bag.LDPE
         }
         private void btn提交审核_Click(object sender, EventArgs e)
         {
+            String n;
+            if (!checkOuterData(out n))
+            {
+                MessageBox.Show("请填写完整的信息: " + n, "提示");
+                return;
+            }
+            if (!checkInnerData(dataGridView1))
+            {
+                MessageBox.Show("请填写完整的表单信息", "提示");
+                return;
+            }
+            // 判断 领料申请、生产检验记录、运行记录、清洁记录、开机确认表、预热参数表是否都审核完成
+            // 判断供料系统运行记录、供料记录、领料退料记录、废品记录 数据审核
+            String msg;
+            if (!check审核完成(out msg))
+            {
+                MessageBox.Show("请先完成审核：\n" + msg);
+                return;
+            }
+
+
+
+
             //read from database table and find current record
             string checkName = "待审核";
             DataTable dtCheck = new DataTable(checkName);
@@ -1089,7 +1137,260 @@ namespace mySystem.Process.Bag.LDPE
         }
 
         //leave datagridview check the right things
-        
+
+        bool check需要接班(out int id)
+        {
+            String sql = "select top 1 * from 岗位交接班记录 where 生产指令ID={0} order by ID desc";
+            SqlDataAdapter da;
+            da = new SqlDataAdapter(String.Format(sql, mySystem.Parameter.proInstruID), mySystem.Parameter.conn);
+            DataTable dt;
+            dt = new DataTable();
+            da.Fill(dt);
+            id = 0;
+            if (dt.Rows.Count == 0)
+            {
+                return false;
+            }
+
+            if (Parameter.userflight == "白班")
+            {
+                if (dt.Rows[0]["白班接班员"].ToString() == "__待审核")
+                {
+                    id = Convert.ToInt32(dt.Rows[0]["ID"].ToString());
+                    return true;
+                }
+            }
+            else
+            {
+                if (dt.Rows[0]["夜班接班员"].ToString() == "__待审核")
+                {
+                    id = Convert.ToInt32(dt.Rows[0]["ID"].ToString());
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        bool check夜班交班(out int id)
+        {
+            id = 0;
+            if (mySystem.Parameter.userflight == "夜班")
+            {
+                String sql = "select top 1 * from 岗位交接班记录 where 生产指令ID={0} order by ID desc";
+                SqlDataAdapter da;
+                da = new SqlDataAdapter(String.Format(sql, mySystem.Parameter.ldpebagInstruID), mySystem.Parameter.conn);
+                DataTable dt;
+                dt = new DataTable();
+                da.Fill(dt);
+                if (dt.Rows.Count == 0)
+                {
+
+                    return false;
+                }
+                //if (dt.Rows[0]["夜班交班员"].ToString() != "" &&
+                //    (dt.Rows[0]["夜班接班员"].ToString() != "" || dt.Rows[0]["夜班接班员"].ToString() != __待审核))
+                // 只要白班接班员是一个人名，则表示上一个单子的这个过程已经完成了
+                if (dt.Rows[0]["白班接班员"].ToString() != "" && dt.Rows[0]["白班接班员"].ToString() != __待审核)
+                {
+                    return false;
+                }
+                id = Convert.ToInt32(dt.Rows[0]["ID"].ToString());
+                return true;
+            }
+            return false;
+        }
+
+        protected bool checkOuterData(out String name)
+        {
+            System.Text.RegularExpressions.Regex regx = new System.Text.RegularExpressions.Regex("^[a-zA-Z]+");
+            // 获取所有控件
+            List<Control> cons = base.GetControls(this);
+            foreach (Control c in cons)
+            {
+                if (c is TextBox)
+                {
+                    TextBox tb = c as TextBox;
+                    if (tb.Text.Trim() == "")
+                    {
+                        if (tb.Name.Contains("审")) continue;
+                        if (tb.Name.Contains("批准")) continue;
+                        if (tb.Name.Contains("备注")) continue;
+                        if (tb.Name.Contains("接班员")) continue;
+                        if (mySystem.Parameter.userflight == "白班")
+                        {
+                            if (tb.Name.Contains("夜班")) continue;
+                        }
+                        if (mySystem.Parameter.userflight == "夜班")
+                        {
+                            if (tb.Name.Contains("白班")) continue;
+                        }
+                        name = regx.Replace(tb.Name, ""); ;
+                        return false;
+                    }
+                }
+                if (c is ComboBox)
+                {
+                    ComboBox cb = c as ComboBox;
+                    if (c.Text.Trim() == "")
+                    {
+                        name = cb.Name;
+                        return false;
+                    }
+                }
+            }
+            name = "";
+            return true;
+            // textbox, combobox, 
+        }
+
+
+        protected bool checkInnerData(DataGridView dgv)
+        {
+            foreach (DataGridViewRow dgvr in dgv.Rows)
+            {
+                foreach (DataGridViewCell dgvc in dgvr.Cells)
+                {
+                    if (dgvc.OwningColumn.Name == "ID")
+                    {
+                        continue;
+                    }
+                    if (dgvc.OwningColumn.Name.Contains("审")) continue;
+                    if (mySystem.Parameter.userflight == "白班")
+                    {
+                        if (dgvc.OwningColumn.Name.Contains("夜班")) continue;
+                    }
+                    if (mySystem.Parameter.userflight == "夜班")
+                    {
+                        if (dgvc.OwningColumn.Name.Contains("白班")) continue;
+                    }
+                    if (dgvc.Value.ToString() == "")
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+
+
+        bool check审核完成(out String msg)
+        {
+            String sql;
+            SqlDataAdapter da;
+            DataTable dt;
+            // TODO 以下表单还要判断那些没有点提交审核的
+            sql = "select distinct 表名 from 待审核 where 表名='生产领料申请单表' or 表名='吹膜生产和检验记录表' or 表名='吹膜机组运行记录' or 表名='吹膜机组清洁记录表' or 表名='吹膜开机前确认表' or 表名='吹膜预热参数记录表'";
+            da = new SqlDataAdapter(sql, Parameter.conn);
+            dt = new DataTable();
+            da.Fill(dt);
+            msg = "";
+            if (dt.Rows.Count > 0)
+            {
+                foreach (DataRow dr in dt.Rows) msg += dr["表名"].ToString() + "\n";
+                return false;
+            }
+
+            //sql = "select * from 生产领料申请单表 where 生产指令ID={0}";
+            //da = new SqlDataAdapter(String.Format(sql, __生产指令ID), mySystem.Parameter.conn);
+            //da.Fill(dt);
+            //foreach (DataRow dr in dt.Rows)
+            //{
+            //    if (dr["审核员"].ToString() == "")
+            //    {
+            //        msg += "有生产领料申请单表未提交审核" + "\n";
+            //        return false;
+            //    }
+            //}
+
+            //sql = "select * from 吹膜生产和检验记录表 where 生产指令ID={0}";
+            //da = new SqlDataAdapter(String.Format(sql, __生产指令ID), mySystem.Parameter.conn);
+            //da.Fill(dt);
+            //foreach (DataRow dr in dt.Rows)
+            //{
+            //    if (dr["审核人"].ToString() == "")
+            //    {
+            //        msg += "有吹膜生产和检验记录表未提交审核" + "\n";
+            //        return false;
+            //    }
+            //}
+
+            //sql = "select * from 吹膜机组运行记录 where 生产指令ID={0}";
+            //da = new SqlDataAdapter(String.Format(sql, __生产指令ID), mySystem.Parameter.conn);
+            //da.Fill(dt);
+            //foreach (DataRow dr in dt.Rows)
+            //{
+            //    if (dr["审核员"].ToString() == "")
+            //    {
+            //        msg += "有吹膜机组运行记录未提交审核" + "\n";
+            //        return false;
+            //    }
+            //}
+
+
+
+
+
+
+            // {0} 内表名字 {1} 外表名字  {2}生产指令表,{3}外表ID,{4}生产指令ID列名,{5}生产指令ID，{6}审核员列名
+            sql = "select distinct {0}.ID as ID from {0},{1},{2} where {0}.{3}={1}.ID and {1}.{4}={5} and ({0}.{6}='__待审核' or {0}.{6}='')";
+            //// 供料系统运行记录
+            //da = new SqlDataAdapter(String.Format(sql, "吹膜供料系统运行记录详细信息", "吹膜供料系统运行记录",
+            //    "生产指令信息表", "T吹膜供料系统运行记录ID", "生产指令ID", __生产指令ID, "审核员"), mySystem.Parameter.conn);
+            //dt = new DataTable();
+            //da.Fill(dt);
+            //if (dt.Rows.Count > 0)
+            //{
+            //    msg += "供料系统运行记录\n";
+            //    return false;
+            //}
+            //// 供料记录
+            //da = new SqlDataAdapter(String.Format(sql, "吹膜供料记录详细信息", "吹膜供料记录",
+            //    "生产指令信息表", "T吹膜供料记录ID", "生产指令ID", __生产指令ID, "审核员"), mySystem.Parameter.conn);
+            //dt = new DataTable();
+            //da.Fill(dt);
+            //if (dt.Rows.Count > 0)
+            //{
+            //    msg += "供料记录\n";
+            //    return false;
+            //}
+            //// 领料退料记录
+            //da = new SqlDataAdapter(String.Format(sql, "吹膜工序领料详细记录", "吹膜工序领料退料记录",
+            //    "生产指令信息表", "T吹膜工序领料退料记录ID", "生产指令ID", __生产指令ID, "审核人"), mySystem.Parameter.conn);
+            //dt = new DataTable();
+            //da.Fill(dt);
+            //if (dt.Rows.Count > 0)
+            //{
+            //    msg += "领料退料记录\n";
+            //    return false;
+            //}
+            //// 废品记录
+            //da = new SqlDataAdapter(String.Format(sql, "吹膜工序废品记录详细信息", "吹膜工序废品记录",
+            //    "生产指令信息表", "T吹膜工序废品记录ID", "生产指令ID", __生产指令ID, "审核员"), mySystem.Parameter.conn);
+            //dt = new DataTable();
+            //da.Fill(dt);
+            //if (dt.Rows.Count > 0)
+            //{
+            //    msg += "废品记录\n";
+            //    return false;
+            //}
+            return true;
+        }
+
+        private void HandOver_Enter(object sender, EventArgs e)
+        {
+            //if (isNewShown) this.Close();
+        }
+
+        private void HandOver_Activated(object sender, EventArgs e)
+        {
+            if (isNewShown) this.Close();
+        }
+
+        private void dataGridView1_ColumnWidthChanged(object sender, DataGridViewColumnEventArgs e)
+        {
+            writeDGVWidthToSetting(dataGridView1);
+        }
         
     }
 }

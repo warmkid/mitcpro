@@ -239,7 +239,7 @@ namespace mySystem.Process.Bag.LDPE
 
         private void A3Btn_Click(object sender, EventArgs e)
         {
-            LDPEBag_dailyreport daily = new LDPEBag_dailyreport();
+            LDPEBag_dailyreport daily = new LDPEBag_dailyreport(mainform);
             daily.ShowDialog();
             
         }
@@ -328,13 +328,74 @@ namespace mySystem.Process.Bag.LDPE
         {
             if (DialogResult.Yes == MessageBox.Show("是否确认结束工序？", "提示", MessageBoxButtons.YesNo))
             {
+                string msg = "";
+                // TODO: 完成这里
+                //if (check是否都提交审核(out msg))
+                //{
+                //    MessageBox.Show("请先提交审核：\n" + msg);
+                //    return;
+                //}
                 SqlDataAdapter da = new SqlDataAdapter("select * from 生产指令 where ID=" + mySystem.Parameter.ldpebagInstruID, mySystem.Parameter.conn);
                 SqlCommandBuilder cb = new SqlCommandBuilder(da);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
                 dt.Rows[0]["状态"] = 4;
                 da.Update(dt);
+                otherBtnInit(false);
+                comboInit();
             }
+        }
+
+        bool check是否都提交审核(out String msg)
+        {
+            String sql1, sql2;
+            SqlDataAdapter da;
+            DataTable dt;
+            String[] table_names = {"产品内包装记录表","产品外包装记录表","吹膜工序废品记录",
+                                       "吹膜工序领料退料记录","吹膜工序生产和检验记录","吹膜供料记录",
+                                       "吹膜供料系统运行记录","吹膜机组开机前确认表","吹膜机组清洁记录表",
+                                       "吹膜机组预热参数记录表","吹膜机组运行记录","生产领料申请单表"
+                                   };
+            sql1 = "select 审核员 from {0} where 生产指令ID={1}";
+            sql2 = "select 审核人 from {0} where 生产指令ID={1}";
+            // 下列表不用判断
+            // "生产指令信息表"，"批生产记录表"，"吹膜生产日报表","吹膜工序物料平衡记录","吹膜岗位交接班记录","吹膜工序清场记录"
+            msg = "";
+            foreach (String t in table_names)
+            {
+                try
+                {
+                    da = new SqlDataAdapter(String.Format(sql1, t, Parameter.ldpebagInstruID), Parameter.conn);
+                    dt = new DataTable();
+                    da.Fill(dt);
+                    for (int i = 0; i < dt.Rows.Count; ++i)
+                    {
+                        if (dt.Rows[i]["审核员"] == DBNull.Value || dt.Rows[i]["审核员"] == "")
+                        {
+                            msg = t;
+                            return false;
+                        }
+                    }
+                }
+                catch
+                {
+                    da = new SqlDataAdapter(String.Format(sql2, t, Parameter.ldpebagInstruID), Parameter.conn);
+                    dt = new DataTable();
+                    da.Fill(dt);
+                    for (int i = 0; i < dt.Rows.Count; ++i)
+                    {
+                        if (dt.Rows[i]["审核人"] == DBNull.Value || dt.Rows[i]["审核人"] == "")
+                        {
+                            msg = t;
+                            return false;
+                        }
+                    }
+                }
+
+            }
+            // 交接班？？
+            return true;
+
         }
 
         private void Btn交接班_Click(object sender, EventArgs e)
