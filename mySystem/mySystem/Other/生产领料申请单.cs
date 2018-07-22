@@ -1189,7 +1189,7 @@ namespace mySystem.Other
             {
                 String Columnsname = dgv.CurrentCell.OwningColumn.Name;
                 String rowsname = dgv.CurrentCell.OwningRow.Index.ToString();
-                MessageBox.Show("第" + rowsname + "行的『" + Columnsname + "』填写错误");
+                MessageBox.Show("第" + e.RowIndex + "行的『" +  dgv.Columns[e.ColumnIndex].Name + "』填写错误");
             }
         }
 

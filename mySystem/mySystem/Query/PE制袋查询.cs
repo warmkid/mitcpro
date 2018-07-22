@@ -292,6 +292,7 @@ namespace mySystem.Query
             }
 
             Bind();
+            readDGVWidthFromSettingAndSet(dgv, comboBox2.Text);
         }
 
         //双击弹出界面
@@ -408,6 +409,11 @@ namespace mySystem.Query
                     dgv.Rows[i].DefaultCellStyle.BackColor = Color.Gray;
                 }
             }
+        }
+
+        private void dgv_ColumnWidthChanged(object sender, DataGridViewColumnEventArgs e)
+        {
+            writeDGVWidthToSetting(dgv, comboBox2.Text);
         }
 
 

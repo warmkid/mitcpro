@@ -41,13 +41,14 @@ namespace mySystem
         {
             AppSettingsSection appSettings = ConfigurationManager.OpenExeConfiguration(System.Windows.Forms.Application.ExecutablePath).AppSettings;
             String key = dgv.Name + "@" + this.GetType().ToString() + "@ColumnWidths";
-            if (appSettings.Settings[key] != null)
+            if (appSettings.Settings[key] == null || appSettings.Settings[key].Value.Trim()=="")
             {
-                return appSettings.Settings[key].Value;
+                return DEFAULT_DGV_COLUMN_WIDTH;
+                
             }
             else
             {
-                return DEFAULT_DGV_COLUMN_WIDTH;
+                return appSettings.Settings[key].Value;
             }
             
         }

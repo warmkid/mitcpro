@@ -64,8 +64,8 @@
             this.groupBox1.Controls.Add(this.Btn清场);
             this.groupBox1.Controls.Add(this.Btn运行记录);
             this.groupBox1.Controls.Add(this.Btn内标签);
-            this.groupBox1.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
-            this.groupBox1.Location = new System.Drawing.Point(443, 105);
+            this.groupBox1.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold);
+            this.groupBox1.Location = new System.Drawing.Point(361, 94);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.groupBox1.Size = new System.Drawing.Size(260, 460);
@@ -75,7 +75,7 @@
             // 
             // Btn外标签
             // 
-            this.Btn外标签.Font = new System.Drawing.Font("SimSun", 12F);
+            this.Btn外标签.Font = new System.Drawing.Font("宋体", 12F);
             this.Btn外标签.Location = new System.Drawing.Point(31, 383);
             this.Btn外标签.Name = "Btn外标签";
             this.Btn外标签.Size = new System.Drawing.Size(200, 38);
@@ -86,7 +86,7 @@
             // 
             // Btn生产指令
             // 
-            this.Btn生产指令.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Btn生产指令.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Btn生产指令.Location = new System.Drawing.Point(31, 40);
             this.Btn生产指令.Name = "Btn生产指令";
             this.Btn生产指令.Size = new System.Drawing.Size(200, 38);
@@ -97,7 +97,7 @@
             // 
             // Btn开机确认
             // 
-            this.Btn开机确认.Font = new System.Drawing.Font("SimSun", 12F);
+            this.Btn开机确认.Font = new System.Drawing.Font("宋体", 12F);
             this.Btn开机确认.Location = new System.Drawing.Point(31, 110);
             this.Btn开机确认.Name = "Btn开机确认";
             this.Btn开机确认.Size = new System.Drawing.Size(200, 38);
@@ -108,7 +108,7 @@
             // 
             // Btn清场
             // 
-            this.Btn清场.Font = new System.Drawing.Font("SimSun", 12F);
+            this.Btn清场.Font = new System.Drawing.Font("宋体", 12F);
             this.Btn清场.Location = new System.Drawing.Point(31, 250);
             this.Btn清场.Name = "Btn清场";
             this.Btn清场.Size = new System.Drawing.Size(200, 38);
@@ -119,7 +119,7 @@
             // 
             // Btn运行记录
             // 
-            this.Btn运行记录.Font = new System.Drawing.Font("SimSun", 12F);
+            this.Btn运行记录.Font = new System.Drawing.Font("宋体", 12F);
             this.Btn运行记录.Location = new System.Drawing.Point(31, 180);
             this.Btn运行记录.Name = "Btn运行记录";
             this.Btn运行记录.Size = new System.Drawing.Size(200, 38);
@@ -130,7 +130,7 @@
             // 
             // Btn内标签
             // 
-            this.Btn内标签.Font = new System.Drawing.Font("SimSun", 12F);
+            this.Btn内标签.Font = new System.Drawing.Font("宋体", 12F);
             this.Btn内标签.Location = new System.Drawing.Point(31, 314);
             this.Btn内标签.Name = "Btn内标签";
             this.Btn内标签.Size = new System.Drawing.Size(200, 38);
@@ -141,7 +141,7 @@
             // 
             // Btn热合强度
             // 
-            this.Btn热合强度.Font = new System.Drawing.Font("SimSun", 12F);
+            this.Btn热合强度.Font = new System.Drawing.Font("宋体", 12F);
             this.Btn热合强度.Location = new System.Drawing.Point(28, 314);
             this.Btn热合强度.Name = "Btn热合强度";
             this.Btn热合强度.Size = new System.Drawing.Size(200, 38);
@@ -157,8 +157,8 @@
             this.groupBox2.Controls.Add(this.Btn领料记录);
             this.groupBox2.Controls.Add(this.Btn内包装);
             this.groupBox2.Controls.Add(this.Btn日报表);
-            this.groupBox2.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
-            this.groupBox2.Location = new System.Drawing.Point(112, 105);
+            this.groupBox2.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold);
+            this.groupBox2.Location = new System.Drawing.Point(30, 94);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.groupBox2.Size = new System.Drawing.Size(260, 460);
@@ -168,7 +168,7 @@
             // 
             // Btn外观及检验
             // 
-            this.Btn外观及检验.Font = new System.Drawing.Font("SimSun", 12F);
+            this.Btn外观及检验.Font = new System.Drawing.Font("宋体", 12F);
             this.Btn外观及检验.Location = new System.Drawing.Point(28, 250);
             this.Btn外观及检验.Name = "Btn外观及检验";
             this.Btn外观及检验.Size = new System.Drawing.Size(200, 38);
@@ -179,7 +179,7 @@
             // 
             // Btn领料记录
             // 
-            this.Btn领料记录.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Btn领料记录.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Btn领料记录.Location = new System.Drawing.Point(28, 40);
             this.Btn领料记录.Name = "Btn领料记录";
             this.Btn领料记录.Size = new System.Drawing.Size(200, 38);
@@ -190,7 +190,7 @@
             // 
             // Btn内包装
             // 
-            this.Btn内包装.Font = new System.Drawing.Font("SimSun", 12F);
+            this.Btn内包装.Font = new System.Drawing.Font("宋体", 12F);
             this.Btn内包装.Location = new System.Drawing.Point(28, 110);
             this.Btn内包装.Name = "Btn内包装";
             this.Btn内包装.Size = new System.Drawing.Size(200, 38);
@@ -201,7 +201,7 @@
             // 
             // Btn日报表
             // 
-            this.Btn日报表.Font = new System.Drawing.Font("SimSun", 12F);
+            this.Btn日报表.Font = new System.Drawing.Font("宋体", 12F);
             this.Btn日报表.Location = new System.Drawing.Point(28, 180);
             this.Btn日报表.Name = "Btn日报表";
             this.Btn日报表.Size = new System.Drawing.Size(200, 38);
@@ -212,7 +212,7 @@
             // 
             // comboBox1
             // 
-            this.comboBox1.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.comboBox1.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Location = new System.Drawing.Point(97, 22);
             this.comboBox1.Name = "comboBox1";
@@ -223,7 +223,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label1.Font = new System.Drawing.Font("宋体", 12F);
             this.label1.Location = new System.Drawing.Point(16, 27);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(88, 16);
@@ -238,8 +238,8 @@
             this.groupBox3.Controls.Add(this.Btn退料);
             this.groupBox3.Controls.Add(this.Btn外包装);
             this.groupBox3.Controls.Add(this.Btn批生产);
-            this.groupBox3.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
-            this.groupBox3.Location = new System.Drawing.Point(796, 105);
+            this.groupBox3.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold);
+            this.groupBox3.Location = new System.Drawing.Point(714, 94);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.groupBox3.Size = new System.Drawing.Size(260, 486);
@@ -249,7 +249,7 @@
             // 
             // Btn交接班
             // 
-            this.Btn交接班.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Btn交接班.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Btn交接班.Location = new System.Drawing.Point(28, 324);
             this.Btn交接班.Name = "Btn交接班";
             this.Btn交接班.Size = new System.Drawing.Size(200, 38);
@@ -260,7 +260,7 @@
             // 
             // Btn结束
             // 
-            this.Btn结束.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Btn结束.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Btn结束.Location = new System.Drawing.Point(28, 399);
             this.Btn结束.Name = "Btn结束";
             this.Btn结束.Size = new System.Drawing.Size(200, 38);
@@ -271,7 +271,7 @@
             // 
             // Btn洁净
             // 
-            this.Btn洁净.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Btn洁净.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Btn洁净.Location = new System.Drawing.Point(28, 250);
             this.Btn洁净.Name = "Btn洁净";
             this.Btn洁净.Size = new System.Drawing.Size(200, 38);
@@ -282,7 +282,7 @@
             // 
             // Btn退料
             // 
-            this.Btn退料.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Btn退料.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Btn退料.Location = new System.Drawing.Point(28, 180);
             this.Btn退料.Name = "Btn退料";
             this.Btn退料.Size = new System.Drawing.Size(200, 38);
@@ -293,7 +293,7 @@
             // 
             // Btn外包装
             // 
-            this.Btn外包装.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Btn外包装.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Btn外包装.Location = new System.Drawing.Point(28, 110);
             this.Btn外包装.Name = "Btn外包装";
             this.Btn外包装.Size = new System.Drawing.Size(200, 38);
@@ -304,7 +304,7 @@
             // 
             // Btn批生产
             // 
-            this.Btn批生产.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Btn批生产.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Btn批生产.Location = new System.Drawing.Point(28, 40);
             this.Btn批生产.Name = "Btn批生产";
             this.Btn批生产.Size = new System.Drawing.Size(200, 38);
@@ -315,8 +315,8 @@
             // 
             // btn生产领料申请单
             // 
-            this.btn生产领料申请单.Font = new System.Drawing.Font("SimSun", 12F);
-            this.btn生产领料申请单.Location = new System.Drawing.Point(140, 488);
+            this.btn生产领料申请单.Font = new System.Drawing.Font("宋体", 12F);
+            this.btn生产领料申请单.Location = new System.Drawing.Point(58, 477);
             this.btn生产领料申请单.Name = "btn生产领料申请单";
             this.btn生产领料申请单.Size = new System.Drawing.Size(200, 38);
             this.btn生产领料申请单.TabIndex = 24;
@@ -335,7 +335,7 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.label1);
-            this.Font = new System.Drawing.Font("SimSun", 12F);
+            this.Font = new System.Drawing.Font("宋体", 12F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "CSBagMainForm";

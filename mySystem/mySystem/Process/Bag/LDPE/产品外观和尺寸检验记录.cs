@@ -69,6 +69,10 @@ namespace mySystem.Process.Bag.LDPE
                 DataRow dr = dtOuter.NewRow();
                 dr = writeOuterDefault(dr);
                 dtOuter.Rows.Add(dr);
+                if (((DataTable)bsOuter.DataSource).Rows[0]["审核是否通过"] == DBNull.Value)
+                {
+                    ((DataTable)bsOuter.DataSource).Rows[0]["审核是否通过"] = 0;
+                }
                 daOuter.Update((DataTable)bsOuter.DataSource);
                 readOuterData();
                 outerBind();

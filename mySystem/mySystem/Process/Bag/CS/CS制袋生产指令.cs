@@ -1071,6 +1071,32 @@ namespace mySystem.Process.Bag.CS
             if (ckform.ischeckOk)
             {
                 dtOuter.Rows[0]["状态"] = 1;
+                //如果审核通过，更新数据库用户表的班次信息
+                DataTable dt_用户 = new DataTable("用户");
+                BindingSource bs_用户 = new BindingSource();
+                SqlDataAdapter da_用户 = new SqlDataAdapter(@"select * from 用户", mySystem.Parameter.conn);
+                SqlCommandBuilder cb_用户 = new SqlCommandBuilder(da_用户);
+                da_用户.Fill(dt_用户);
+                List<String> baibans = new List<string>(tb外包白班负责人.Text.Split(','));
+
+                List<String> yebans = new List<string>(tb外包白班负责人.Text.Split(','));
+                baibans.AddRange(tb制袋内包白班负责人.Text.Split(','));
+                yebans.AddRange(tb制袋内包夜班负责人.Text.Split(','));
+
+                //遍历白班，夜班负责人表
+                for (int i = 0; i < dt_用户.Rows.Count; i++)
+                {
+                    string name = dt_用户.Rows[i]["用户名"].ToString();
+                    if (baibans.Contains(name))
+                        dt_用户.Rows[i]["班次"] = "白班";
+                    else if (yebans.Contains(name))
+                        dt_用户.Rows[i]["班次"] = "夜班";
+                    else { }
+                }
+
+                bs_用户.DataSource = dt_用户;
+                da_用户.Update((DataTable)bs_用户.DataSource);
+
             }
             String log = "===================================\n";
             log += DateTime.Now.ToString("yyyy年MM月dd日 HH:mm:ss");

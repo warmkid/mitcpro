@@ -511,6 +511,7 @@ namespace mySystem.Process.Bag
         private void bt保存_Click(object sender, EventArgs e)
         {
             bool rt = save();
+            readDGVWidthFromSettingAndSet(dataGridView1);
             //控件可见性
             if (rt && _userState == Parameter.UserState.操作员)
                 bt提交审核.Enabled = true;
@@ -913,6 +914,11 @@ namespace mySystem.Process.Bag
         }
 
         private void RunningRecord_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            writeDGVWidthToSetting(dataGridView1);
+        }
+
+        private void dataGridView1_ColumnWidthChanged(object sender, DataGridViewColumnEventArgs e)
         {
             writeDGVWidthToSetting(dataGridView1);
         }

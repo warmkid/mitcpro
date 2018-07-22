@@ -182,6 +182,7 @@
             this.dgv交接班.RowTemplate.Height = 23;
             this.dgv交接班.Size = new System.Drawing.Size(813, 165);
             this.dgv交接班.TabIndex = 2;
+            this.dgv交接班.ColumnWidthChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dgv开机_ColumnWidthChanged);
             // 
             // del交接班
             // 
@@ -244,6 +245,7 @@
             this.dgv清场.RowTemplate.Height = 23;
             this.dgv清场.Size = new System.Drawing.Size(813, 165);
             this.dgv清场.TabIndex = 2;
+            this.dgv清场.ColumnWidthChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dgv开机_ColumnWidthChanged);
             // 
             // button1
             // 
@@ -327,6 +329,7 @@
             this.dgv开机.RowTemplate.Height = 23;
             this.dgv开机.Size = new System.Drawing.Size(813, 165);
             this.dgv开机.TabIndex = 2;
+            this.dgv开机.ColumnWidthChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dgv开机_ColumnWidthChanged);
             // 
             // del开机
             // 
@@ -509,6 +512,7 @@
             this.dgv封边.RowTemplate.Height = 23;
             this.dgv封边.Size = new System.Drawing.Size(419, 165);
             this.dgv封边.TabIndex = 2;
+            this.dgv封边.ColumnWidthChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dgv开机_ColumnWidthChanged);
             // 
             // del封边
             // 
@@ -648,6 +652,7 @@
             this.dgv工艺.RowTemplate.Height = 23;
             this.dgv工艺.Size = new System.Drawing.Size(490, 165);
             this.dgv工艺.TabIndex = 2;
+            this.dgv工艺.ColumnWidthChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dgv开机_ColumnWidthChanged);
             // 
             // del工艺
             // 
@@ -777,6 +782,7 @@
             this.dgv权限.RowTemplate.Height = 23;
             this.dgv权限.Size = new System.Drawing.Size(772, 187);
             this.dgv权限.TabIndex = 2;
+            this.dgv权限.ColumnWidthChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dgv开机_ColumnWidthChanged);
             // 
             // button3
             // 
@@ -827,6 +833,7 @@
             this.dgv人员.RowTemplate.Height = 23;
             this.dgv人员.Size = new System.Drawing.Size(772, 184);
             this.dgv人员.TabIndex = 2;
+            this.dgv人员.ColumnWidthChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dgv开机_ColumnWidthChanged);
             // 
             // del人员
             // 

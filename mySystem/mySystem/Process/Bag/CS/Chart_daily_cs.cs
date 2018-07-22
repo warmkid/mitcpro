@@ -81,6 +81,24 @@ namespace mySystem.Process.CleanCut
                 ndr["产品数量（只）"] = dr["产品数量只数合计B"];
                 ndr["工时(h)"] = dr["工时"];
                 ndr["生产指令ID"] = dr["生产指令ID"];
+                // ---
+                ndr["产品数量（只）"] = 0;
+                ndr["产品数量（平米）"] = 0;
+                ndr["TY膜用量（米）"]=0;
+                ndr["TY膜用量（平米）"]=0;
+                ndr["XP1膜用量（米）"]=0;
+                ndr["XP1膜用量（平米）"]=0;
+                ndr["制袋收率(%)"]=0;
+                ndr["工时(h)"]=0;
+                ndr["产品系数"]=0;
+                ndr["换算后产品数量"]=0;
+                ndr["工时效率"]=0;
+                ndr["内包装袋代码"]=0;
+                ndr["内包装袋用量（只）"]=0;
+                ndr["外包装袋规格"]=0;
+                ndr["外包装袋代码"]=0;
+                ndr["外包装袋用量"] = 0;
+
                 ret.Rows.Add(ndr);
             }
 
@@ -97,7 +115,10 @@ namespace mySystem.Process.CleanCut
                 else
                 {
                     dr["客户或订单号"] = dt.Rows[0]["客户或订单号"];
-                    dr["产品系数"] = dt.Rows[0]["生产系数"];
+                    if (dt.Rows[0]["生产系数"] != DBNull.Value)
+                        dr["产品系数"] = dt.Rows[0]["生产系数"];
+                    else
+                        dr["产品系数"] = 0;
                     dr["外包装袋规格"] = dt.Rows[0]["外包规格"];
                     
                 }

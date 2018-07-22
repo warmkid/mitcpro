@@ -41,7 +41,6 @@ namespace mySystem.Process.Bag.LDPE
             InitializeComponent();
 
             conn = Parameter.conn;
-            mySystem.Parameter.conn = mySystem.Parameter.conn;
             isSqlOk = Parameter.isSqlOk;
             InstruID = Parameter.ldpebagInstruID;
             Instruction = Parameter.ldpebagInstruction;
@@ -620,6 +619,8 @@ namespace mySystem.Process.Bag.LDPE
             dataGridView1.Columns["物料简称"].ReadOnly = true;
             //dataGridView1.Columns["物料批号"].ReadOnly = true;
             //dataGridView1.Columns["物料简称"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dataGridView1.Columns["物料代码"].DisplayIndex = Math.Min(
+                dataGridView1.Columns["物料简称"].DisplayIndex, dataGridView1.Columns["物料代码"].DisplayIndex);
         }
 
         //******************************按钮功能******************************//
@@ -1146,6 +1147,40 @@ namespace mySystem.Process.Bag.LDPE
         private void LDPE生产退料记录_FormClosing(object sender, FormClosingEventArgs e)
         {
             writeDGVWidthToSetting(dataGridView1);
+        }
+
+        private void dataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            DataGridView dgv = (sender as DataGridView);
+            if (dgv.SelectedCells.Count == 0) return;
+            int colIdx = dgv.SelectedCells[0].ColumnIndex;
+            TextBox tb = (e.Control as TextBox);
+            if (tb != null)
+            {
+                tb.AutoCompleteCustomSource = null;
+            }
+            if (dgv.Columns[colIdx].Name != "物料代码")
+            {
+                return;
+            }
+
+
+
+            List<String> a = new List<String>();
+            foreach (DataRow dr in dt物料简称批号代码.Rows)
+            {
+                String s = dr["物料代码"].ToString();
+                if (s.Trim() != "")
+                    a.Add(dr["物料代码"].ToString());
+            }
+
+            AutoCompleteStringCollection acsc;
+            if (tb == null) return;
+            acsc = new AutoCompleteStringCollection();
+            acsc.AddRange(a.ToArray<String>());
+            tb.AutoCompleteCustomSource = acsc;
+            tb.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            tb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
         }
           
     }

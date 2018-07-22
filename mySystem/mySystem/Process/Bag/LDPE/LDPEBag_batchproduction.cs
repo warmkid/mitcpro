@@ -679,7 +679,7 @@ namespace mySystem.Process.Bag.LDPE
                 {
                     case 0: // 制袋工序批生产记录封面
                         PF0();
-                        MessageBox.Show("test");
+                        GC.Collect();
                         break;
                     case 1: // 生产指令
                         da = new SqlDataAdapter("select * from 生产指令 where  ID=" + _生产指令ID, mySystem.Parameter.conn);
@@ -726,20 +726,23 @@ namespace mySystem.Process.Bag.LDPE
 
         private void PF0()
         {
-            //dataGridView1.Rows[idx-1].Cells[totalPage].Value
+            
+            
+            
+                //dataGridView1.Rows[idx-1].Cells[totalPage].Value
             var data = dataGridView1.DataSource;
-
             int[] accumu = new int[dataGridView1.Rows.Count];
-            // 打开一个Excel进程
+                
+                // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
-            // 利用这个进程打开一个Excel文件
-            //System.IO.Directory.GetCurrentDirectory;
+                // 利用这个进程打开一个Excel文件
+                //System.IO.Directory.GetCurrentDirectory;
             Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\LDPE\0 SOP-MFG-105-R01 制袋工序批生产记录封面.xlsx");
-            // 选择一个Sheet，注意Sheet的序号是从1开始的
+                // 选择一个Sheet，注意Sheet的序号是从1开始的
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
-            // 设置该进程是否可见
-            //oXL.Visible = true;
-
+                // 设置该进程是否可见
+            oXL.Visible = false;
+            
             int rowStartAt = 5;
             // 修改Sheet中某行某列的值
             my.Cells[3, 8].Value = dtOuter.Rows[0]["生产指令编号"];
@@ -776,39 +779,59 @@ namespace mySystem.Process.Bag.LDPE
                     break;
                 }
             }
+            my.PrintOut();
+
+            // 关闭文件，false表示不保存
+            wb.Close(false);
+            // 关闭Excel进程
+            oXL.Quit();
+            // 释放COM资源
+            Marshal.ReleaseComObject(wb);
+            Marshal.ReleaseComObject(oXL);
+            wb = null;
+            oXL = null;
+            my = null;
         }
 
         private void PF2(int idParam)
         {
             new mySystem.Process.Bag.LDPE.LDPEBag_checklist(mainform, idParam).print(false);
+            GC.Collect();
         }
         private void PF3(int idParam)
         {
             new mySystem.Process.Bag.LDPE.LDPEBag_materialrecord(mainform, idParam).print(false);
+            GC.Collect();
         }
         private void PF4(int idParam)
         {
             new mySystem.Process.Bag.LDPE.LDPE生产退料记录(mainform, idParam).print(false);
+            GC.Collect();
         }
         private void PF5(int idParam)
         {
             new mySystem.Process.Bag.LDPE.LDPEBag_innerpackaging(mainform, idParam).print(false);
+            GC.Collect();
         }
         private void PF6(int idParam)
         {
             new mySystem.Process.Bag.LDPE.LDPE产品外包装记录(mainform, idParam).print(false);
+            GC.Collect();
         }
         private void PF7(int idParam)
         {
             new mySystem.Process.Bag.LDPE.LDPEBag_runningrecord(mainform, idParam).print(false);
+            GC.Collect();
         }
         private void PF8(int idParam)
         {
             new mySystem.Process.Bag.LDPE.LDPEBag_cleanrance(mainform, idParam).print(false);
+            GC.Collect();
         }
         private void PF9(int idParam)
         {
             new mySystem.Process.Bag.LDPE.HandOver(mainform, idParam).print(false);
+            GC.Collect();
         }
         //private void PF10(int idParam)
         //{
@@ -821,10 +844,12 @@ namespace mySystem.Process.Bag.LDPE
         private void PF12(int idParam)
         {
             new mySystem.Process.Bag.LDPE.产品外观和尺寸检验记录(mainform, idParam).print(false);
+            GC.Collect();
         }
         private void PF13(int idParam)
         {
             new mySystem.Process.Bag.LDPE.产品热合强度检验记录(mainform, idParam).print(false);
+            GC.Collect();
         }
         
         // 处理DataGridView中数据类型输错的函数

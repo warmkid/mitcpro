@@ -227,7 +227,7 @@ namespace mySystem.Process.Bag.LDPE
                     dataGridView1.ReadOnly = false;
                     for (int i = 0; i < dataGridView1.Rows.Count; i++)
                     {
-                        if (dataGridView1.Rows[i].Cells["审核员"].Value.ToString() != "")
+                        if (dataGridView1.Rows[i].Cells["审核员"].Value!=null && dataGridView1.Rows[i].Cells["审核员"].Value.ToString() != "")
                             dataGridView1.Rows[i].ReadOnly = true;
                         else
                             dataGridView1.Rows[i].ReadOnly = false;

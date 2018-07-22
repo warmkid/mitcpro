@@ -965,6 +965,10 @@ namespace mySystem.Process.Bag.LDPE
                 DataRow dr = dtOuter.NewRow();
                 dr = writeOuterDefault(dr);
                 dtOuter.Rows.Add(dr);
+                if (((DataTable)bsOuter.DataSource).Rows[0]["审核是否通过"] == DBNull.Value)
+                {
+                    ((DataTable)bsOuter.DataSource).Rows[0]["审核是否通过"] = 0;
+                }
                 daOuter.Update((DataTable)bsOuter.DataSource);
                 readOuterData(dtOuter.Rows[0]["生产指令编号"].ToString());
                 outerBind();
@@ -1030,17 +1034,46 @@ namespace mySystem.Process.Bag.LDPE
             da.Update(dt);
 
             dtOuter.Rows[0]["审核员"] = mySystem.Parameter.userName;
-            dtOuter.Rows[0]["审核是否通过"] = true;
+            dtOuter.Rows[0]["审核是否通过"] = ckform.ischeckOk;
             dtOuter.Rows[0]["审核意见"] = ckform.opinion;
             if (ckform.ischeckOk)
             {
                 dtOuter.Rows[0]["状态"] = 1;
+                //如果审核通过，更新数据库用户表的班次信息
+                DataTable dt_用户 = new DataTable("用户");
+                BindingSource bs_用户 = new BindingSource();
+                SqlDataAdapter da_用户 = new SqlDataAdapter(@"select * from 用户", mySystem.Parameter.conn);
+                SqlCommandBuilder cb_用户 = new SqlCommandBuilder(da_用户);
+                da_用户.Fill(dt_用户);
+                List<String> baibans = new List<string>(tb外包白班负责人.Text.Split(','));
+                
+                List<String> yebans = new List<string>(tb外包白班负责人.Text.Split(','));
+                baibans.AddRange(tb制袋内包白班负责人.Text.Split(','));
+                yebans.AddRange(tb制袋内包夜班负责人.Text.Split(','));
+
+                //遍历白班，夜班负责人表
+                for (int i = 0; i < dt_用户.Rows.Count; i++)
+                {
+                    string name = dt_用户.Rows[i]["用户名"].ToString();
+                    if (baibans.Contains(name))
+                        dt_用户.Rows[i]["班次"] = "白班";
+                    else if (yebans.Contains(name))
+                        dt_用户.Rows[i]["班次"] = "夜班";
+                    else { }
+                }
+
+                bs_用户.DataSource = dt_用户;
+                da_用户.Update((DataTable)bs_用户.DataSource);
             }
+            
+                
+                    
+
             String log = "===================================\n";
             log += DateTime.Now.ToString("yyyy年MM月dd日 HH:mm:ss");
             log += "\n审核员：" + mySystem.Parameter.userName + " 审核完毕\n";
-            log += "审核结果为：通过\n";
-            log += "审核意见为：无\n";
+            log += "审核结果：" + (ckform.ischeckOk == true ? "通过\n" : "不通过\n");
+            log += "审核意见为：" + ckform.opinion + "\n";
             dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
             btn保存.PerformClick();
             setFormState();
@@ -1061,16 +1094,16 @@ namespace mySystem.Process.Bag.LDPE
                     MessageBox.Show("制袋 " + tb制袋物料名称1.Text + " 物料代码 有误！");
                     return;
                 }
-                if (!hs物料代码.Contains(tb制袋物料代码2.Text))
-                {
-                    MessageBox.Show("制袋 " + tb制袋物料名称2.Text + " 物料代码 有误！");
-                    return;
-                }
-                if (!hs物料代码.Contains(tb制袋物料代码3.Text))
-                {
-                    MessageBox.Show("制袋 " + tb制袋物料名称3.Text + " 物料代码 有误！");
-                    return;
-                }
+                //if (!hs物料代码.Contains(tb制袋物料代码2.Text))
+                //{
+                //    MessageBox.Show("制袋 " + tb制袋物料名称2.Text + " 物料代码 有误！");
+                //    return;
+                //}
+                //if (!hs物料代码.Contains(tb制袋物料代码3.Text))
+                //{
+                //    MessageBox.Show("制袋 " + tb制袋物料名称3.Text + " 物料代码 有误！");
+                //    return;
+                //}
                 if (!hs物料代码.Contains(tb内包物料代码1.Text))
                 {
                     MessageBox.Show("内包装 " + tb内包物料名称1.Text + " 物料代码 有误！");
@@ -1081,16 +1114,16 @@ namespace mySystem.Process.Bag.LDPE
                     MessageBox.Show("内包装 " + tb内包物料名称2.Text + " 物料代码 有误！");
                     return;
                 }
-                if (!hs物料代码.Contains(tb内包物料代码3.Text))
-                {
-                    MessageBox.Show("内包装 " + tb内包物料名称3.Text + " 物料代码 有误！");
-                    return;
-                }
-                if (!hs物料代码.Contains(tb内包物料代码4.Text))
-                {
-                    MessageBox.Show("内包装 " + tb内包物料名称4.Text + " 物料代码 有误！");
-                    return;
-                }
+                //if (!hs物料代码.Contains(tb内包物料代码3.Text))
+                //{
+                //    MessageBox.Show("内包装 " + tb内包物料名称3.Text + " 物料代码 有误！");
+                //    return;
+                //}
+                //if (!hs物料代码.Contains(tb内包物料代码4.Text))
+                //{
+                //    MessageBox.Show("内包装 " + tb内包物料名称4.Text + " 物料代码 有误！");
+                //    return;
+                //}
                 if (!hs物料代码.Contains(tb内包物料代码1.Text))
                 {
                     MessageBox.Show("内包装 " + tb内包物料名称1.Text + " 物料代码 有误！");
@@ -1111,11 +1144,12 @@ namespace mySystem.Process.Bag.LDPE
                     MessageBox.Show("外包装 " + tb外包物料名称2.Text + " 物料代码 有误！");
                     return;
                 }
-                if (!hs物料代码.Contains(tb外包物料代码3.Text))
-                {
-                    MessageBox.Show("外包装 " + tb外包物料名称3.Text + " 物料代码 有误！");
-                    return;
-                }
+                // 这里是要填专用袋吗？？？？
+                //if (!hs物料代码.Contains(tb外包物料代码3.Text))
+                //{
+                //    MessageBox.Show("外包装 " + tb外包物料名称3.Text + " 物料代码 有误！");
+                //    return;
+                //}
             }
             else
             {
