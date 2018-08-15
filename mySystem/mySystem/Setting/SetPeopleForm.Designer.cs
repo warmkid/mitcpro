@@ -66,12 +66,12 @@
             this.SetPeoplePanelTop.Controls.Add(this.groupBox1);
             this.SetPeoplePanelTop.Location = new System.Drawing.Point(13, 13);
             this.SetPeoplePanelTop.Name = "SetPeoplePanelTop";
-            this.SetPeoplePanelTop.Size = new System.Drawing.Size(1145, 184);
+            this.SetPeoplePanelTop.Size = new System.Drawing.Size(1081, 184);
             this.SetPeoplePanelTop.TabIndex = 0;
             // 
             // CancelBtn
             // 
-            this.CancelBtn.Location = new System.Drawing.Point(954, 139);
+            this.CancelBtn.Location = new System.Drawing.Point(836, 139);
             this.CancelBtn.Name = "CancelBtn";
             this.CancelBtn.Size = new System.Drawing.Size(96, 30);
             this.CancelBtn.TabIndex = 8;
@@ -81,7 +81,7 @@
             // 
             // SaveBtn
             // 
-            this.SaveBtn.Location = new System.Drawing.Point(836, 139);
+            this.SaveBtn.Location = new System.Drawing.Point(836, 90);
             this.SaveBtn.Name = "SaveBtn";
             this.SaveBtn.Size = new System.Drawing.Size(96, 30);
             this.SaveBtn.TabIndex = 7;
@@ -219,7 +219,7 @@
             this.SetPeoplePanelBottom.Controls.Add(this.dgvUser);
             this.SetPeoplePanelBottom.Location = new System.Drawing.Point(12, 203);
             this.SetPeoplePanelBottom.Name = "SetPeoplePanelBottom";
-            this.SetPeoplePanelBottom.Size = new System.Drawing.Size(1145, 344);
+            this.SetPeoplePanelBottom.Size = new System.Drawing.Size(1082, 344);
             this.SetPeoplePanelBottom.TabIndex = 1;
             // 
             // SaveEditBtn

@@ -364,7 +364,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "LDPEBag_cleanrance";
-            this.Text = "LDPEBag_cleanrance";
+            this.Text = "清场记录";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LDPEBag_cleanrance_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);

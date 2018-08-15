@@ -853,7 +853,7 @@ namespace mySystem.Process.Bag.LDPE
 
         private void LDPEBag_checklist_FormClosing(object sender, FormClosingEventArgs e)
         {
-            writeDGVWidthToSetting(dataGridView1);
+            //writeDGVWidthToSetting(dataGridView1);
         }
 
         private void dataGridView1_ColumnWidthChanged(object sender, DataGridViewColumnEventArgs e)

@@ -34,7 +34,9 @@ namespace mySystem.Process.Bag.LDPE
         Parameter.FormState _formState;
         Int32 InstruID;
         String Instruction;
+        string _leixing;
         bool isFirstBind = true;
+        List<string> 膜代码 = null, 内包代码 = null, 外包代码 = null;
 
         public LDPEBag_materialrecord(MainForm mainform) : base(mainform)
         {
@@ -52,15 +54,7 @@ namespace mySystem.Process.Bag.LDPE
             addOtherEvnetHandler();  // 其他事件，datagridview：DataError、CellEndEdit、DataBindingComplete
             addDataEventHandler();  // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged
 
-            if (dt代码批号.Rows.Count > 0)
-            { DataShow(InstruID); }
-            else
-            { 
-                MessageBox.Show("该生产指令信息不完善！");
-                setControlFalse();
-                btn查看日志.Enabled = false;
-                btn打印.Enabled = false;
-            }
+            
         }
 
         public LDPEBag_materialrecord(MainForm mainform, Int32 ID) : base(mainform)
@@ -68,7 +62,6 @@ namespace mySystem.Process.Bag.LDPE
             InitializeComponent();
 
             conn = Parameter.conn;
-            mySystem.Parameter.conn = mySystem.Parameter.conn;
             isSqlOk = Parameter.isSqlOk;
 
             fill_printer(); //添加打印机
@@ -79,6 +72,7 @@ namespace mySystem.Process.Bag.LDPE
             addDataEventHandler();  // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged
 
             IDShow(ID);
+            
         }
         
         //******************************初始化******************************//
@@ -162,6 +156,27 @@ namespace mySystem.Process.Bag.LDPE
 
             if (isSqlOk)
             {
+                膜代码 = null;
+                内包代码 = null;
+                外包代码 = null;
+                string sql1 = "select * from 生产指令 where ID={0}";
+                SqlDataAdapter da1 = new SqlDataAdapter(string.Format(sql1, InstruID), mySystem.Parameter.conn);
+                DataTable dt1 = new DataTable();
+                da1.Fill(dt1);
+                膜代码 = new List<string>();
+                膜代码.Add(dt1.Rows[0]["制袋物料代码1"].ToString());
+                膜代码.Add(dt1.Rows[0]["制袋物料代码2"].ToString());
+                膜代码.Add(dt1.Rows[0]["制袋物料代码3"].ToString());
+                内包代码 = new List<string>();
+                内包代码.Add(dt1.Rows[0]["内包物料代码1"].ToString());
+                内包代码.Add(dt1.Rows[0]["内包物料代码2"].ToString());
+                外包代码 = new List<string>();
+                外包代码.Add(dt1.Rows[0]["外包物料代码1"].ToString());
+                外包代码.Add(dt1.Rows[0]["外包物料代码2"].ToString());
+                外包代码.Add(dt1.Rows[0]["外包物料代码3"].ToString());
+
+
+
                 SqlCommand comm1 = new SqlCommand();
                 comm1.Connection = mySystem.Parameter.conn;
                 comm1.CommandText = "select * from 生产指令 where 生产指令编号 = '" + Instruction + "' ";//这里应有生产指令编码
@@ -266,6 +281,7 @@ namespace mySystem.Process.Bag.LDPE
                     //控件都不能点，只有打印,日志可点
                     setControlFalse();
                     btn数据审核.Enabled = true;
+                    btn退回数据审核.Enabled = true;
                     //遍历datagridview，如果有一行为待审核，则该行可以修改
                     dataGridView1.ReadOnly = false;
                     for (int i = 0; i < dataGridView1.Rows.Count; i++)
@@ -345,6 +361,7 @@ namespace mySystem.Process.Bag.LDPE
         {
             foreach (Control c in this.Controls)
             {
+                if (c.Name == "cmb类型") continue;
                 if (c is TextBox)
                 {
                     (c as TextBox).ReadOnly = false;
@@ -364,6 +381,7 @@ namespace mySystem.Process.Bag.LDPE
             tb审核员.Enabled = false;
             btn数据审核.Enabled = false;
             btn提交数据审核.Enabled = false;
+            btn退回数据审核.Enabled = false;
             //部分空间防作弊，不可改
             tb生产指令编号.ReadOnly = true;
             tb产品代码.ReadOnly = true;
@@ -380,6 +398,7 @@ namespace mySystem.Process.Bag.LDPE
         {
             foreach (Control c in this.Controls)
             {
+                if (c.Name == "cmb类型") continue;
                 if (c is TextBox)
                 {
                     (c as TextBox).ReadOnly = true;
@@ -479,6 +498,8 @@ namespace mySystem.Process.Bag.LDPE
             addComputerEventHandler();  // 设置自动计算类事件
             setFormState();  // 获取当前窗体状态：窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过
             setEnableReadOnly();  //根据状态设置可读写性  
+
+            cmb类型.Enabled = false;
         }
 
         //根据主键显示
@@ -491,6 +512,7 @@ namespace mySystem.Process.Bag.LDPE
             {
                 InstruID = Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString());
                 Instruction = dt1.Rows[0]["生产指令编号"].ToString();
+                _leixing = dt1.Rows[0]["类型"].ToString();
                 getOtherData();  //读取设置内容
                 DataShow(Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString()));
             }
@@ -501,9 +523,15 @@ namespace mySystem.Process.Bag.LDPE
         //外表读数据，填datatable
         private void readOuterData(Int32 InstruID)
         {
+            if (_leixing == "")
+            {
+                MessageBox.Show("请先选择领料类型");
+                return;
+            }
             bs记录 = new BindingSource();
             dt记录 = new DataTable(table);
-            da记录 = new SqlDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID.ToString(), mySystem.Parameter.conn);
+            da记录 = new SqlDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID.ToString() +
+                " and 类型='" + _leixing + "'", mySystem.Parameter.conn);
             cb记录 = new SqlCommandBuilder(da记录);
             da记录.Fill(dt记录);
         }
@@ -524,6 +552,13 @@ namespace mySystem.Process.Bag.LDPE
             tb审核员.DataBindings.Add("Text", bs记录.DataSource, "审核员");
             dtp审核日期.DataBindings.Clear();
             dtp审核日期.DataBindings.Add("Text", bs记录.DataSource, "审核日期");
+
+            tb合计.DataBindings.Clear();
+            tb合计.DataBindings.Add("Text", bs记录.DataSource, "合计");
+
+
+            cmb类型.DataBindings.Clear();
+            cmb类型.DataBindings.Add("Text", bs记录.DataSource, "类型");
         }
 
         //添加外表默认信息
@@ -533,6 +568,7 @@ namespace mySystem.Process.Bag.LDPE
             dr["生产指令编号"] = Instruction;
             dr["产品代码"] = tb产品代码.Text;
             dr["产品批号"] = tb产品批号.Text;
+            dr["类型"] = cmb类型.Text;
             dr["审核员"] = "";
             dr["审核日期"] = Convert.ToDateTime(dtp审核日期.Value.ToString("yyyy/MM/dd"));
             dr["审核是否通过"] = false;
@@ -568,9 +604,19 @@ namespace mySystem.Process.Bag.LDPE
             dr["T生产领料使用记录ID"] = ID;
             dr["领料日期时间"] = DateTime.Now;
             dr["班次"] = mySystem.Parameter.userflight;
-            dr["物料简称"] = dt物料.Rows[0]["物料简称"];
-            dr["物料代码"] = dt物料.Rows[0]["物料代码"];
-            dr["物料批号"] = dt物料.Rows[0]["物料批号"];
+            if (dt记录详情.Rows.Count == 0)
+            {
+                dr["物料简称"] = dt物料.Rows[0]["物料简称"];
+                dr["物料代码"] = dt物料.Rows[0]["物料代码"];
+                dr["物料批号"] = dt物料.Rows[0]["物料批号"];
+            }
+            else
+            {
+                dr["物料简称"] = dt记录详情.Rows[dt记录详情.Rows.Count-1]["物料简称"];
+                dr["物料代码"] = dt记录详情.Rows[dt记录详情.Rows.Count - 1]["物料代码"];
+                dr["物料批号"] = dt记录详情.Rows[dt记录详情.Rows.Count - 1]["物料批号"];
+            }
+            dr["卷号"] = 0;
             dr["领取数量"] = 0;
             dr["操作员"] = mySystem.Parameter.userName;
             dr["操作员备注"] = "";
@@ -661,6 +707,7 @@ namespace mySystem.Process.Bag.LDPE
             setEnableReadOnly();
             if (dataGridView1.Rows.Count > 0)
                 dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.Rows.Count - 1;
+            calcSum();
         }
 
         //删除按钮
@@ -684,16 +731,25 @@ namespace mySystem.Process.Bag.LDPE
                     setEnableReadOnly();
                 }
             }
+            calcSum();
         }
 
         //内表移交审核按钮
         private void btn提交数据审核_Click(object sender, EventArgs e)
         {
+            calcSum();
             //find the uncheck item in inner list and tag the revoewer __待审核
             for (int i = 0; i < dt记录详情.Rows.Count; i++)
             {
                 if (Convert.ToString(dt记录详情.Rows[i]["审核员"]).ToString().Trim() == "")
                 {
+                    // 如果数量为0，则跳过
+                    if (Convert.ToDouble(dt记录详情.Rows[i]["领取数量"]) == 0)
+                    {
+                        MessageBox.Show("跳过领取数量为0的行！");
+                        continue;
+                    }
+                        
                     dt记录详情.Rows[i]["审核员"] = "__待审核";
                     dataGridView1.Rows[i].ReadOnly = true;
                 }
@@ -791,6 +847,10 @@ namespace mySystem.Process.Bag.LDPE
         //提交审核按钮
         private void btn提交审核_Click(object sender, EventArgs e)
         {
+            if (DialogResult.Yes != MessageBox.Show("提交最后审核后本表单数据不可修改，是否确定？", "提示", MessageBoxButtons.YesNo))
+            {
+                return;
+            }
             //判断内表是否完全提交审核
             for (int i = 0; i < dt记录详情.Rows.Count; i++)
             {
@@ -1030,7 +1090,7 @@ namespace mySystem.Process.Bag.LDPE
                 //mysheet.Cells[5 + i, 10].Value = dt记录详情.Rows[i]["操作员备注"].ToString();
                 mysheet.Cells[5 + i, 10].Value = dt记录详情.Rows[i]["审核员"].ToString();
             }
-            
+            mysheet.Cells[16 + ind, 1].Value = "合计：" + dt记录.Rows[0]["合计"].ToString();
             
             //加页脚
             int sheetnum;
@@ -1212,6 +1272,10 @@ namespace mySystem.Process.Bag.LDPE
                         //MessageBox.Show("ERROR");
                     }
                 }
+                else if (dataGridView1.Columns[e.ColumnIndex].Name == "领取数量")
+                {
+                    calcSum();
+                }
                 else
                 { }
             }
@@ -1261,6 +1325,74 @@ namespace mySystem.Process.Bag.LDPE
         private void dataGridView1_ColumnWidthChanged(object sender, DataGridViewColumnEventArgs e)
         {
             writeDGVWidthToSetting(dataGridView1);
+        }
+
+        void calcSum()
+        {
+            DataRow[] drs;
+            double sum;
+            // 膜材用量
+            drs = dt记录详情.Select(String.Format("物料代码='{0}' or 物料代码='{1}' or 物料代码='{2}'",
+                膜代码[0], 膜代码[1], 膜代码[2]));
+            sum = 0;
+            foreach (DataRow ddr in dt记录详情.Rows)
+            {
+                sum += Convert.ToDouble(ddr["领取数量"]);
+            }
+            dt记录.Rows[0]["合计"] = Math.Round(sum,2);
+            //tb合计.Text = sum.ToString("F2");
+
+            //// 内包用量
+            //drs = dt记录详情.Select(String.Format("物料代码='{0}' or 物料代码='{1}'",
+            //   内包代码[0], 内包代码[1]));
+            //sum = 0;
+            //foreach (DataRow ddr in drs)
+            //{
+            //    sum += Convert.ToDouble(ddr["领取数量"]);
+            //}
+            //textbox内包合计.Text = sum.ToString("F2");
+
+            //// 外包装袋用量
+            //drs = dt记录详情.Select(String.Format("物料代码='{0}' or 物料代码='{1}' or 物料代码='{2}'",
+            //   外包代码[0], 外包代码[1], 外包代码[2]));
+            //sum = 0;
+            //foreach (DataRow ddr in drs)
+            //{
+            //    sum += Convert.ToDouble(ddr["领取数量"]);
+            //}
+            //textbox外包合计.Text = sum.ToString("F2");
+        }
+
+        private void btn退回数据审核_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dataGridView1.SelectedCells.Count <= 0) return;
+                int iid = Convert.ToInt32(dataGridView1.SelectedCells[0].OwningRow.Cells["ID"].Value);
+                Utility.t退回数据审核(dt记录详情, iid, "审核员");
+                //btn确认.PerformClick();
+                Save();
+                //innerBind();
+            }
+            catch
+            {
+                return;
+            }
+        }
+
+        private void cmb类型_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _leixing = cmb类型.Text.ToString();
+            if (dt代码批号.Rows.Count > 0)
+            { DataShow(InstruID); }
+            else
+            {
+                MessageBox.Show("该生产指令信息不完善！");
+                setControlFalse();
+                btn查看日志.Enabled = false;
+                btn打印.Enabled = false;
+            }
+            cmb类型.Enabled = false;
         }
         
     }

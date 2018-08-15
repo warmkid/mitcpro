@@ -177,6 +177,7 @@ namespace mySystem.Process.Bag.LDPE
                     //控件都不能点，只有打印,日志可点
                     setControlFalse();
                     btn数据审核.Enabled = true;
+                    btn退回数据审核.Enabled = true;
                     //遍历datagridview，如果有一行为待审核，则该行可以修改
                     dataGridView1.ReadOnly = false;
                     for (int i = 0; i < dataGridView1.Rows.Count; i++)
@@ -269,6 +270,7 @@ namespace mySystem.Process.Bag.LDPE
             btn提交审核.Enabled = false;
             btn数据审核.Enabled = false;
             btn提交数据审核.Enabled = false;
+            btn退回数据审核.Enabled = false;
             tb审核员.Enabled = false;
             //部分空间防作弊，不可改
             //查询条件始终不可编辑
@@ -546,22 +548,30 @@ namespace mySystem.Process.Bag.LDPE
         {
             if (dt记录详情.Rows.Count >= 2)
             {
+                
                 int deletenum = dataGridView1.CurrentRow.Index;
-                //dt记录详情.Rows.RemoveAt(deletenum);
-                dt记录详情.Rows[deletenum].Delete();
+                if (dataGridView1.Rows[deletenum].Cells["审核员"].Value.ToString() == "")
+                {
+                    //dt记录详情.Rows.RemoveAt(deletenum);
+                    dt记录详情.Rows[deletenum].Delete();
 
-                // 保存
-                da记录详情.Update((DataTable)bs记录详情.DataSource);
-                readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
-                innerBind();
+                    // 保存
+                    da记录详情.Update((DataTable)bs记录详情.DataSource);
+                    readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
+                    innerBind();
 
-                setDataGridViewRowNums();
+                    setDataGridViewRowNums();
+                }
             }
         }
 
         //内表提交审核按钮
         private void btn提交数据审核_Click(object sender, EventArgs e)
         {
+            if (!check数字范围())
+            {
+                return;
+            }
             //find the uncheck item in inner list and tag the revoewer __待审核
             for (int i = 0; i < dt记录详情.Rows.Count; i++)
             {
@@ -612,10 +622,35 @@ namespace mySystem.Process.Bag.LDPE
         //保存按钮
         private void btn确认_Click(object sender, EventArgs e)
         {
+            if (!check数字范围())
+            {
+                return;
+            }
             bool isSaved = Save();
             //控件可见性
             if (_userState == Parameter.UserState.操作员 && isSaved == true)
                 btn提交审核.Enabled = true;
+        }
+
+
+        bool check数字范围()
+        {
+            for (int i = 0; i < dt记录详情.Rows.Count; ++i)
+            {
+                if (Convert.ToInt32(dt记录详情.Rows[i]["温度"]) > 27 ||
+                   Convert.ToInt32(dt记录详情.Rows[i]["温度"]) < 17)
+                {
+                    MessageBox.Show(string.Format("第{0}行温度填写有误", i + 1));
+                    return false;
+                }
+                if (Convert.ToInt32(dt记录详情.Rows[i]["相对湿度"]) > 70 ||
+                   Convert.ToInt32(dt记录详情.Rows[i]["相对湿度"]) < 0)
+                {
+                    MessageBox.Show(string.Format("第{0}行湿度填写有误", i + 1));
+                    return false;
+                }
+            }
+            return true;
         }
 
         //保存功能
@@ -648,6 +683,10 @@ namespace mySystem.Process.Bag.LDPE
         //提交审核按钮
         private void btn提交审核_Click(object sender, EventArgs e)
         {
+            if (DialogResult.Yes != MessageBox.Show("提交最后审核后本表单数据不可修改，是否确定？", "提示", MessageBoxButtons.YesNo))
+            {
+                return;
+            }
             //判断内表是否完全提交审核
             for (int i = 0; i < dt记录详情.Rows.Count; i++)
             {
@@ -960,6 +999,28 @@ namespace mySystem.Process.Bag.LDPE
         private void LDPE洁净区温湿度记录_FormClosing(object sender, FormClosingEventArgs e)
         {
             writeDGVWidthToSetting(dataGridView1);
+        }
+
+        private void LDPE洁净区温湿度记录_Load(object sender, EventArgs e)
+        {
+            btn查询新建.PerformClick();
+        }
+
+        private void btn退回数据审核_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dataGridView1.SelectedCells.Count <= 0) return;
+                int iid = Convert.ToInt32(dataGridView1.SelectedCells[0].OwningRow.Cells["ID"].Value);
+                Utility.t退回数据审核(dt记录详情, iid, "审核员");
+                //btn确认.PerformClick();
+                Save();
+                //innerBind();
+            }
+            catch
+            {
+                return;
+            }
         }
 
 

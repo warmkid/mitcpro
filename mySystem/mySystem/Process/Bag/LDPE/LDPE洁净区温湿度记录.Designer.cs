@@ -52,6 +52,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
+            this.btn退回数据审核 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -79,7 +80,7 @@
             // btn提交数据审核
             // 
             this.btn提交数据审核.Font = new System.Drawing.Font("宋体", 12F);
-            this.btn提交数据审核.Location = new System.Drawing.Point(758, 365);
+            this.btn提交数据审核.Location = new System.Drawing.Point(655, 365);
             this.btn提交数据审核.Name = "btn提交数据审核";
             this.btn提交数据审核.Size = new System.Drawing.Size(116, 30);
             this.btn提交数据审核.TabIndex = 349;
@@ -90,7 +91,7 @@
             // btn数据审核
             // 
             this.btn数据审核.Font = new System.Drawing.Font("宋体", 12F);
-            this.btn数据审核.Location = new System.Drawing.Point(655, 365);
+            this.btn数据审核.Location = new System.Drawing.Point(777, 365);
             this.btn数据审核.Name = "btn数据审核";
             this.btn数据审核.Size = new System.Drawing.Size(97, 30);
             this.btn数据审核.TabIndex = 348;
@@ -258,7 +259,7 @@
             // tb审核员
             // 
             this.tb审核员.Font = new System.Drawing.Font("宋体", 12F);
-            this.tb审核员.Location = new System.Drawing.Point(774, 419);
+            this.tb审核员.Location = new System.Drawing.Point(99, 416);
             this.tb审核员.Name = "tb审核员";
             this.tb审核员.Size = new System.Drawing.Size(100, 26);
             this.tb审核员.TabIndex = 332;
@@ -267,7 +268,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("宋体", 12F);
-            this.label5.Location = new System.Drawing.Point(712, 423);
+            this.label5.Location = new System.Drawing.Point(37, 420);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(72, 16);
             this.label5.TabIndex = 331;
@@ -293,11 +294,23 @@
             this.label1.TabIndex = 329;
             this.label1.Text = "洁净区温湿度记录";
             // 
+            // btn退回数据审核
+            // 
+            this.btn退回数据审核.Font = new System.Drawing.Font("宋体", 12F);
+            this.btn退回数据审核.Location = new System.Drawing.Point(745, 401);
+            this.btn退回数据审核.Name = "btn退回数据审核";
+            this.btn退回数据审核.Size = new System.Drawing.Size(129, 30);
+            this.btn退回数据审核.TabIndex = 352;
+            this.btn退回数据审核.Text = "退回数据审核";
+            this.btn退回数据审核.UseVisualStyleBackColor = true;
+            this.btn退回数据审核.Click += new System.EventHandler(this.btn退回数据审核_Click);
+            // 
             // LDPE洁净区温湿度记录
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(915, 505);
+            this.Controls.Add(this.btn退回数据审核);
             this.Controls.Add(this.lb生产工序);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.btn提交数据审核);
@@ -324,6 +337,7 @@
             this.Name = "LDPE洁净区温湿度记录";
             this.Text = "LDPE洁净区温湿度记录";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LDPE洁净区温湿度记录_FormClosing);
+            this.Load += new System.EventHandler(this.LDPE洁净区温湿度记录_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
@@ -356,6 +370,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btn退回数据审核;
 
     }
 }

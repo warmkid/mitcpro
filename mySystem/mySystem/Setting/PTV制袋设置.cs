@@ -612,6 +612,7 @@ namespace mySystem.Setting
                         Boolean c = checkPeopleRight(); //判断用户是否在PTV制袋用户表中
                         if (c)
                         {
+                            rewritecomma();
                             da权限.Update((DataTable)bs权限.DataSource);
                             dt权限.Clear();
                             da权限.Fill(dt权限);
@@ -626,6 +627,17 @@ namespace mySystem.Setting
             catch
             { MessageBox.Show("保存失败！", "错误"); }
         }
+
+
+        void rewritecomma()
+        {
+            foreach (DataRow dr in dt权限.Rows)
+            {
+                dr["操作员"] = dr["操作员"].ToString().Replace('，', ',');
+                dr["审核员"] = dr["审核员"].ToString().Replace('，', ',');
+            }
+        }
+
 
         //检查添加的人员是否在总的用户表中
         private Boolean checkPeopleExist()

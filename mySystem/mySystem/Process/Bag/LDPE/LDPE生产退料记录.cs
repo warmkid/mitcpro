@@ -181,7 +181,7 @@ namespace mySystem.Process.Bag.LDPE
             dt生产指令 = new DataTable("生产指令");
             dt生产指令详情 = new DataTable("生产指令详情");
             dt物料简称批号代码 = new DataTable("物料简称批号代码");
-            dt物料简称批号代码.Columns.Add("物料简称", Type.GetType("System.String"));
+            dt物料简称批号代码.Columns.Add("物料名称", Type.GetType("System.String"));
             dt物料简称批号代码.Columns.Add("物料代码", Type.GetType("System.String"));
             dt物料简称批号代码.Columns.Add("物料批号", Type.GetType("System.String"));
 
@@ -254,6 +254,7 @@ namespace mySystem.Process.Bag.LDPE
                     //控件都不能点，只有打印,日志可点
                     setControlFalse();
                     btn数据审核.Enabled = true;
+                    btn退回数据审核.Enabled = true;
                     //遍历datagridview，如果有一行为待审核，则该行可以修改
                     dataGridView1.ReadOnly = false;
                     for (int i = 0; i < dataGridView1.Rows.Count; i++)
@@ -346,6 +347,7 @@ namespace mySystem.Process.Bag.LDPE
             btn提交审核.Enabled = false;
             btn数据审核.Enabled = false;
             btn提交数据审核.Enabled = false;
+            btn退回数据审核.Enabled = false;
             tb审核员.Enabled = false;
             //部分空间防作弊，不可改
             //查询条件始终不可编辑
@@ -526,10 +528,10 @@ namespace mySystem.Process.Bag.LDPE
             //DataRow dr = dt记录详情.NewRow();
             dr["T生产退料记录ID"] = ID;
             dr["序号"] = 0;
-            dr["领料日期"] = Convert.ToDateTime(DateTime.Now.ToString("yyyy/MM/dd"));
+            dr["退料日期"] = Convert.ToDateTime(DateTime.Now.ToString("yyyy/MM/dd"));
             dr["时间"] = Convert.ToDateTime(DateTime.Now.ToString("HH:mm:ss"));
             dr["班次"] = Flight == "" ? "白班" : Flight;
-            dr["物料简称"] = dt物料简称批号代码.Rows[0]["物料简称"].ToString();
+            dr["物料名称"] = dt物料简称批号代码.Rows[0]["物料名称"].ToString();
             dr["物料代码"] = dt物料简称批号代码.Rows[0]["物料代码"].ToString();
             dr["物料批号"] = dt物料简称批号代码.Rows[0]["物料批号"].ToString();
             dr["退库数量"] = 0;
@@ -616,11 +618,11 @@ namespace mySystem.Process.Bag.LDPE
             //不可用
             dataGridView1.Columns["序号"].ReadOnly = true;
             //dataGridView1.Columns["物料代码"].ReadOnly = true;
-            dataGridView1.Columns["物料简称"].ReadOnly = true;
+            dataGridView1.Columns["物料名称"].ReadOnly = true;
             //dataGridView1.Columns["物料批号"].ReadOnly = true;
             //dataGridView1.Columns["物料简称"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dataGridView1.Columns["物料代码"].DisplayIndex = Math.Min(
-                dataGridView1.Columns["物料简称"].DisplayIndex, dataGridView1.Columns["物料代码"].DisplayIndex);
+                dataGridView1.Columns["物料名称"].DisplayIndex, dataGridView1.Columns["物料代码"].DisplayIndex);
         }
 
         //******************************按钮功能******************************//
@@ -750,6 +752,10 @@ namespace mySystem.Process.Bag.LDPE
         //提交审核按钮
         private void btn提交审核_Click(object sender, EventArgs e)
         {
+            if (DialogResult.Yes != MessageBox.Show("提交最后审核后本表单数据不可修改，是否确定？", "提示", MessageBoxButtons.YesNo))
+            {
+                return;
+            }
             //判断内表是否完全提交审核
             for (int i = 0; i < dt记录详情.Rows.Count; i++)
             {
@@ -899,7 +905,7 @@ namespace mySystem.Process.Bag.LDPE
 			DateTime 退库日期时间 = DateTime.Now;
             Outer1 = dt记录.Copy();
             Inner1 = dt记录详情.Copy();
-            Inner1.Columns["领料日期"].ColumnName = "退库日期时间";
+            Inner1.Columns["退料日期"].ColumnName = "退库日期时间";
             for (int i = 0; i < Inner1.Rows.Count; i++)
             {
                 Inner1.Rows[i]["退库日期时间"] = 退库日期时间;
@@ -1033,10 +1039,10 @@ namespace mySystem.Process.Bag.LDPE
             for (int i = 0; i < rownum; i++)
             {
                 mysheet.Cells[5 + i, 1].Value = dt记录详情.Rows[i]["序号"].ToString();
-                mysheet.Cells[5 + i, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["领料日期"].ToString()).ToString("yyyy/MM/dd");
-                mysheet.Cells[5 + i, 3].Value = Convert.ToDateTime(dt记录详情.Rows[i]["时间"].ToString()).ToString("HH:mm:ss");
+                mysheet.Cells[5 + i, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["退料日期"].ToString()).ToString("yyyy/MM/dd");
+                mysheet.Cells[5 + i, 3].Value = Convert.ToDateTime(dt记录详情.Rows[i]["时间"].ToString()).ToString("HH:mm");
                 mysheet.Cells[5 + i, 4].Value = dt记录详情.Rows[i]["班次"].ToString();
-                mysheet.Cells[5 + i, 5].Value = dt记录详情.Rows[i]["物料简称"].ToString();
+                mysheet.Cells[5 + i, 5].Value = dt记录详情.Rows[i]["物料名称"].ToString();
                 mysheet.Cells[5 + i, 6].Value = dt记录详情.Rows[i]["物料代码"].ToString();
                 mysheet.Cells[5 + i, 7].Value = dt记录详情.Rows[i]["物料批号"].ToString();
                 mysheet.Cells[5 + i, 8].Value = dt记录详情.Rows[i]["退库数量"].ToString();
@@ -1098,7 +1104,7 @@ namespace mySystem.Process.Bag.LDPE
                     DataRow[] rows = dt物料简称批号代码.Select("物料代码 = '" + dt记录详情.Rows[e.RowIndex]["物料代码"].ToString() + "'"); 
                     if (rows.Length > 0)
                     {
-                        dt记录详情.Rows[e.RowIndex]["物料简称"] = rows[0]["物料简称"];
+                        dt记录详情.Rows[e.RowIndex]["物料名称"] = rows[0]["物料名称"];
                         dt记录详情.Rows[e.RowIndex]["物料批号"] = rows[0]["物料批号"];
                     }
                     else
@@ -1142,6 +1148,7 @@ namespace mySystem.Process.Bag.LDPE
                 readDGVWidthFromSettingAndSet(dataGridView1);
                 isFirstBind = false;
             }
+            dataGridView1.Columns["时间"].DefaultCellStyle.Format = "HH:mm";
         }
 
         private void LDPE生产退料记录_FormClosing(object sender, FormClosingEventArgs e)
@@ -1181,6 +1188,28 @@ namespace mySystem.Process.Bag.LDPE
             tb.AutoCompleteCustomSource = acsc;
             tb.AutoCompleteSource = AutoCompleteSource.CustomSource;
             tb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+        }
+
+        private void btn退回数据审核_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dataGridView1.SelectedCells.Count <= 0) return;
+                int iid = Convert.ToInt32(dataGridView1.SelectedCells[0].OwningRow.Cells["ID"].Value);
+                Utility.t退回数据审核(dt记录详情, iid, "审核员");
+                //btn确认.PerformClick();
+                Save();
+                //innerBind();
+            }
+            catch
+            {
+                return;
+            }
+        }
+
+        private void cb产品代码_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btn查询新建.PerformClick();
         }
           
     }

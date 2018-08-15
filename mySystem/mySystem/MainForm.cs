@@ -248,8 +248,8 @@ namespace mySystem
                 //list清洁分切 = EachSearchUnchecked(strCon清洁分切);
                 //String strConCS制袋 = "server=" + mySystem.Parameter.IP_port + ";database=csbag;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
                 //listCS制袋 = EachSearchUnchecked(strConCS制袋);
-                //String strConPE制袋 = "server=" + mySystem.Parameter.IP_port + ";database=LDPE;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
-                //listPE制袋 = EachSearchUnchecked(strConPE制袋);
+                String strConPE制袋 = "server=" + mySystem.Parameter.IP_port + ";database=LDPE;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
+                listPE制袋 = EachSearchUnchecked(strConPE制袋);
                 //String strConBPV制袋 = "server=" + mySystem.Parameter.IP_port + ";database=BPV;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
                 //listBPV制袋 = EachSearchUnchecked(strConBPV制袋);
                 //String strConPTV制袋 = "server=" + mySystem.Parameter.IP_port + ";database=PTV;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
@@ -260,7 +260,7 @@ namespace mySystem
 
                 list清洁分切 = new List<string>();
                 listCS制袋 = new List<string>();
-                listPE制袋 = new List<string>();
+                //listPE制袋 = new List<string>();
                 listBPV制袋 = new List<string>();
                 listPTV制袋 = new List<string>();
             }
@@ -369,7 +369,14 @@ namespace mySystem
                 List<String> rightlist = new List<String>();
                 while (reader1.Read())
                 {
-                    rightlist.Add(reader1["步骤"].ToString());
+                    if (reader1["步骤"].ToString() == "LDPE制袋生产指令")
+                    {
+                        rightlist.Add("生产指令");
+                    }
+                    else
+                    {
+                        rightlist.Add(reader1["步骤"].ToString());
+                    }
                 }
                 reader1.Dispose();
 

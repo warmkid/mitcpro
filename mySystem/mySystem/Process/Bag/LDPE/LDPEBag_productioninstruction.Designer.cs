@@ -140,6 +140,8 @@
             this.tb内包物料代码3 = new System.Windows.Forms.TextBox();
             this.label32 = new System.Windows.Forms.Label();
             this.label40 = new System.Windows.Forms.Label();
+            this.cmb外包规格 = new System.Windows.Forms.ComboBox();
+            this.label41 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -494,7 +496,7 @@
             // cmb生产工艺
             // 
             this.cmb生产工艺.FormattingEnabled = true;
-            this.cmb生产工艺.Location = new System.Drawing.Point(414, 49);
+            this.cmb生产工艺.Location = new System.Drawing.Point(345, 48);
             this.cmb生产工艺.Name = "cmb生产工艺";
             this.cmb生产工艺.Size = new System.Drawing.Size(121, 20);
             this.cmb生产工艺.TabIndex = 208;
@@ -956,7 +958,7 @@
             // 
             // tb生产设备
             // 
-            this.tb生产设备.Location = new System.Drawing.Point(644, 47);
+            this.tb生产设备.Location = new System.Drawing.Point(548, 48);
             this.tb生产设备.Name = "tb生产设备";
             this.tb生产设备.Size = new System.Drawing.Size(113, 21);
             this.tb生产设备.TabIndex = 152;
@@ -973,7 +975,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(588, 50);
+            this.label5.Location = new System.Drawing.Point(492, 51);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(53, 12);
             this.label5.TabIndex = 150;
@@ -982,7 +984,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(355, 53);
+            this.label4.Location = new System.Drawing.Point(286, 52);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(53, 12);
             this.label4.TabIndex = 149;
@@ -1162,11 +1164,31 @@
             this.label40.Text = "只";
             this.label40.Visible = false;
             // 
+            // cmb外包规格
+            // 
+            this.cmb外包规格.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmb外包规格.FormattingEnabled = true;
+            this.cmb外包规格.Location = new System.Drawing.Point(732, 48);
+            this.cmb外包规格.Name = "cmb外包规格";
+            this.cmb外包规格.Size = new System.Drawing.Size(77, 20);
+            this.cmb外包规格.TabIndex = 259;
+            // 
+            // label41
+            // 
+            this.label41.AutoSize = true;
+            this.label41.Location = new System.Drawing.Point(673, 53);
+            this.label41.Name = "label41";
+            this.label41.Size = new System.Drawing.Size(53, 12);
+            this.label41.TabIndex = 258;
+            this.label41.Text = "外包规格";
+            // 
             // LDPEBag_productioninstruction
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1146, 689);
+            this.Controls.Add(this.cmb外包规格);
+            this.Controls.Add(this.label41);
             this.Controls.Add(this.label32);
             this.Controls.Add(this.label40);
             this.Controls.Add(this.tb内包物料名称4);
@@ -1280,7 +1302,7 @@
             this.Controls.Add(this.label15);
             this.Controls.Add(this.label1);
             this.Name = "LDPEBag_productioninstruction";
-            this.Text = "LDPEBag_productioninstruction";
+            this.Text = "PE制袋生产指令";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LDPEBag_productioninstruction_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
@@ -1402,5 +1424,7 @@
         private System.Windows.Forms.TextBox tb内包物料代码3;
         private System.Windows.Forms.Label label32;
         private System.Windows.Forms.Label label40;
+        private System.Windows.Forms.ComboBox cmb外包规格;
+        private System.Windows.Forms.Label label41;
     }
 }

@@ -89,6 +89,22 @@ namespace mySystem.Process.Bag.LDPE
             tc产品编码.Text = 编码;
             批号 = dt.Rows[0]["产品批号"].ToString();
             tc产品批号.Text = 批号;
+
+            string[] ss = 编码.ToString().Split('-');
+            string guige = ss[ss.Length - 1];
+            string[] nums = guige.Split('X');
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < nums.Length - 1; ++i)
+            {
+                sb.Append(nums[i]);
+                sb.Append("mmX");
+            }
+            double last = Math.Round( Convert.ToDouble( nums[nums.Length - 1])/1000.0,2);
+
+            sb.Append(last.ToString("F2"));
+            sb.Append("mm");
+            tc产品规格.Text = sb.ToString();
+
         }
 
         private void c打印机_SelectedIndexChanged(object sender, EventArgs e)
@@ -103,8 +119,34 @@ namespace mySystem.Process.Bag.LDPE
                 MessageBox.Show("请选择一个模板再打印");
                 return;
             }
-
-            printLable(is内标签);
+            
+            //
+            int xuhao;
+            if (Int32.TryParse(tc包装序号.Text, out xuhao))
+            {
+                printLable(is内标签);
+            }
+            else
+            {
+                try
+                {
+                    int start, end;
+                    string[] ss = tc包装序号.Text.Split('-');
+                    start = Convert.ToInt32(ss[0]);
+                    end = Convert.ToInt32(ss[1]);
+                    for (int i = start; i <= end; ++i)
+                    {
+                        tc包装序号.Text = i.ToString();
+                        printLable(is内标签);
+                    }
+                }
+                catch
+                {
+                    MessageBox.Show("包装序号有误！");
+                    return;
+                }
+            }
+            
             GC.Collect();
         }
 

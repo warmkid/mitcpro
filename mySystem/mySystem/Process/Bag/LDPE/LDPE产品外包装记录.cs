@@ -226,6 +226,7 @@ namespace mySystem.Process.Bag.LDPE
                     //控件都不能点，只有打印,日志可点
                     setControlFalse();
                     btn数据审核.Enabled = true;
+                    btn退回数据审核.Enabled = true;
                     //遍历datagridview，如果有一行为待审核，则该行可以修改
                     dataGridView1.ReadOnly = false;
                     for (int i = 0; i < dataGridView1.Rows.Count; i++)
@@ -318,6 +319,7 @@ namespace mySystem.Process.Bag.LDPE
             btn提交审核.Enabled = false;
             btn数据审核.Enabled = false;
             btn提交数据审核.Enabled = false;
+            btn退回数据审核.Enabled = false;
             tb审核员.Enabled = false;
             //部分空间防作弊，不可改
             //查询条件始终不可编辑
@@ -764,6 +766,10 @@ namespace mySystem.Process.Bag.LDPE
         //提交审核按钮
         private void btn提交审核_Click(object sender, EventArgs e)
         {
+            if (DialogResult.Yes != MessageBox.Show("提交最后审核后本表单数据不可修改，是否确定？", "提示", MessageBoxButtons.YesNo))
+            {
+                return;
+            }
             //判断内表是否完全提交审核
             for (int i = 0; i < dt记录详情.Rows.Count; i++)
             {
@@ -1046,13 +1052,13 @@ namespace mySystem.Process.Bag.LDPE
             {
                 mysheet.Cells[7 + i, 1].Value = dt记录详情.Rows[i]["序号"].ToString();
                 mysheet.Cells[7 + i, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["包装日期"].ToString()).ToString("yyyy/MM/dd");
-                mysheet.Cells[7 + i, 3].Value = Convert.ToDateTime(dt记录详情.Rows[i]["时间"].ToString()).ToString("HH:mm:ss");
+                mysheet.Cells[7 + i, 3].Value = Convert.ToDateTime(dt记录详情.Rows[i]["时间"].ToString()).ToString("HH:mm");
                 mysheet.Cells[7 + i, 4].Value = dt记录详情.Rows[i]["包装箱号"].ToString();
                 mysheet.Cells[7 + i, 5].Value = dt记录详情.Rows[i]["包装明细"].ToString();
                 mysheet.Cells[7 + i, 6].Value = dt记录详情.Rows[i]["包装数量箱数"].ToString();
                 mysheet.Cells[7 + i, 7].Value = dt记录详情.Rows[i]["产品数量只数"].ToString();
-                mysheet.Cells[7 + i, 8].Value = dt记录详情.Rows[i]["是否贴标签"].ToString() == "Yes" ? "√" : "×";
-                mysheet.Cells[7 + i, 9].Value = dt记录详情.Rows[i]["是否打包封箱"].ToString() == "Yes" ? "√" : "×";
+                mysheet.Cells[7 + i, 8].Value = dt记录详情.Rows[i]["是否贴标签"].ToString() == "Yes" ? "Y" : "N";
+                mysheet.Cells[7 + i, 9].Value = dt记录详情.Rows[i]["是否打包封箱"].ToString() == "Yes" ? "Y" : "N";
                 mysheet.Cells[7 + i, 10].Value = dt记录详情.Rows[i]["操作员"].ToString();
                 mysheet.Cells[7 + i, 11].Value = dt记录详情.Rows[i]["审核员"].ToString();
                 mysheet.Cells[7 + i, 12].Value = dt记录详情.Rows[i]["备注"].ToString();
@@ -1135,6 +1141,11 @@ namespace mySystem.Process.Bag.LDPE
             {
                 if (dataGridView1.Columns[e.ColumnIndex].Name == "包装数量箱数")
                 {
+                    int guige = 0;
+                    int xiang = 0;
+                    Int32.TryParse(dt记录.Rows[0]["包装规格每箱只数"].ToString(), out guige);
+                    Int32.TryParse(dt记录详情.Rows[e.RowIndex]["包装数量箱数"].ToString(), out xiang);
+                    dt记录详情.Rows[e.RowIndex]["产品数量只数"] = guige * xiang;
                     getTotal();
                 }
                 else if (dataGridView1.Columns[e.ColumnIndex].Name == "产品数量只数")
@@ -1163,6 +1174,8 @@ namespace mySystem.Process.Bag.LDPE
                 readDGVWidthFromSettingAndSet(dataGridView1);
                 isFirstBind = false;
             }
+            dataGridView1.Columns["时间"].DefaultCellStyle.Format = "HH:mm";
+
         }
 
         private void LDPE产品外包装记录_FormClosing(object sender, FormClosingEventArgs e)
@@ -1173,6 +1186,28 @@ namespace mySystem.Process.Bag.LDPE
         private void dataGridView1_ColumnWidthChanged(object sender, DataGridViewColumnEventArgs e)
         {
             writeDGVWidthToSetting(dataGridView1);
+        }
+
+        private void cb产品代码_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btn查询新建.PerformClick();
+        }
+
+        private void btn退回数据审核_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dataGridView1.SelectedCells.Count <= 0) return;
+                int iid = Convert.ToInt32(dataGridView1.SelectedCells[0].OwningRow.Cells["ID"].Value);
+                Utility.t退回数据审核(dt记录详情, iid, "审核员");
+                //btn确认.PerformClick();
+                Save();
+                //innerBind();
+            }
+            catch
+            {
+                return;
+            }
         }
 
 

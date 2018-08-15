@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.btn退回数据审核 = new System.Windows.Forms.Button();
             this.tb环境湿度 = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.tb环境温度 = new System.Windows.Forms.TextBox();
@@ -57,6 +58,17 @@
             this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
+            // 
+            // btn退回数据审核
+            // 
+            this.btn退回数据审核.Font = new System.Drawing.Font("宋体", 12F);
+            this.btn退回数据审核.Location = new System.Drawing.Point(782, 339);
+            this.btn退回数据审核.Name = "btn退回数据审核";
+            this.btn退回数据审核.Size = new System.Drawing.Size(129, 30);
+            this.btn退回数据审核.TabIndex = 333;
+            this.btn退回数据审核.Text = "退回数据审核";
+            this.btn退回数据审核.UseVisualStyleBackColor = true;
+            this.btn退回数据审核.Click += new System.EventHandler(this.btn退回数据审核_Click);
             // 
             // tb环境湿度
             // 
@@ -101,7 +113,7 @@
             // btn提交数据审核
             // 
             this.btn提交数据审核.Font = new System.Drawing.Font("宋体", 12F);
-            this.btn提交数据审核.Location = new System.Drawing.Point(795, 298);
+            this.btn提交数据审核.Location = new System.Drawing.Point(692, 299);
             this.btn提交数据审核.Name = "btn提交数据审核";
             this.btn提交数据审核.Size = new System.Drawing.Size(116, 30);
             this.btn提交数据审核.TabIndex = 328;
@@ -112,7 +124,7 @@
             // btn数据审核
             // 
             this.btn数据审核.Font = new System.Drawing.Font("宋体", 12F);
-            this.btn数据审核.Location = new System.Drawing.Point(692, 298);
+            this.btn数据审核.Location = new System.Drawing.Point(814, 298);
             this.btn数据审核.Name = "btn数据审核";
             this.btn数据审核.Size = new System.Drawing.Size(97, 30);
             this.btn数据审核.TabIndex = 327;
@@ -305,6 +317,7 @@
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(25, 98);
             this.dataGridView1.Name = "dataGridView1";
@@ -338,6 +351,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(938, 432);
+            this.Controls.Add(this.btn退回数据审核);
             this.Controls.Add(this.tb环境湿度);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.tb环境温度);
@@ -366,8 +380,9 @@
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label1);
             this.Name = "LDPEBag_runningrecord";
-            this.Text = "LDPEBag_runningrecord";
+            this.Text = "PE制袋运行记录";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LDPEBag_runningrecord_FormClosing);
+            this.Load += new System.EventHandler(this.LDPEBag_runningrecord_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -403,5 +418,6 @@
         private System.Windows.Forms.TextBox tb环境温度;
         private System.Windows.Forms.TextBox tb环境湿度;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button btn退回数据审核;
     }
 }

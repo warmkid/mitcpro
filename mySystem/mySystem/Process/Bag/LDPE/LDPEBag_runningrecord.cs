@@ -52,6 +52,8 @@ namespace mySystem.Process.Bag.LDPE
             bt插入查询.Enabled = true;
             str生产指令 = mySystem.Parameter.ldpebagInstruction;
             lb生产指令编号.Text = str生产指令;
+
+           
         }
 
         public LDPEBag_runningrecord(MainForm mainform, Int32 ID)
@@ -184,6 +186,7 @@ namespace mySystem.Process.Bag.LDPE
                     //控件都不能点，只有打印,日志可点
                     setControlFalse();
                     btn数据审核.Enabled = true;
+                    btn退回数据审核.Enabled = true;
                     //遍历datagridview，如果有一行为待审核，则该行可以修改
                     dataGridView1.ReadOnly = false;
                     for (int i = 0; i < dataGridView1.Rows.Count; i++)
@@ -281,6 +284,7 @@ namespace mySystem.Process.Bag.LDPE
             btn提交审核.Enabled = false;
             btn数据审核.Enabled = false;
             btn提交数据审核.Enabled = false;
+            btn退回数据审核.Enabled = false;
             tb审核员.ReadOnly = true;
             //部分空间防作弊，不可改
             //查询条件始终不可编辑
@@ -433,6 +437,8 @@ namespace mySystem.Process.Bag.LDPE
             dr["T制袋机组运行记录ID"] = dt记录.Rows[0]["ID"];
             //dr["生产日期"] = DateTime.Now.Date.ToString("yyyy/MM/dd");
             dr["检查时间"] = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
+            dr["温度"] = 0;
+            dr["湿度"] = 0;
             dr["热封刀温度（300-340）"] = 0;
             dr["底座温度（40-60）"] = 0;
             dr["制袋速度（个/分钟）（30-50）"] = 0;
@@ -568,11 +574,59 @@ namespace mySystem.Process.Bag.LDPE
         //保存按钮
         private void btn确认_Click(object sender, EventArgs e)
         {
+            if (!check数字范围()) return;
             bool isSaved = Save();
             //控件可见性
             if (_userState == Parameter.UserState.操作员 && isSaved == true)
                 btn提交审核.Enabled = true;
         }
+
+        bool check数字范围()
+        {
+            try
+            {
+                for (int i = 0; i < dt记录详情.Rows.Count; ++i)
+                {
+                    if (Convert.ToInt32(dt记录详情.Rows[i]["温度"]) > 27 ||
+                       Convert.ToInt32(dt记录详情.Rows[i]["温度"]) < 17)
+                    {
+                        MessageBox.Show(String.Format("第{0}行温度填写有误", i + 1));
+                        return false;
+                    }
+                    if (Convert.ToInt32(dt记录详情.Rows[i]["湿度"]) > 70 ||
+                       Convert.ToInt32(dt记录详情.Rows[i]["湿度"]) < 0)
+                    {
+                        MessageBox.Show(String.Format("第{0}行湿度填写有误", i + 1));
+                        return false;
+                    }
+                    if (Convert.ToInt32(dt记录详情.Rows[i]["热封刀温度（300-340）"]) > 340 ||
+                       Convert.ToInt32(dt记录详情.Rows[i]["热封刀温度（300-340）"]) < 300)
+                    {
+                        MessageBox.Show(String.Format("第{0}行热封刀温度填写有误", i + 1));
+                        return false;
+                    }
+                    if (Convert.ToInt32(dt记录详情.Rows[i]["底座温度（40-60）"]) > 60 ||
+                       Convert.ToInt32(dt记录详情.Rows[i]["底座温度（40-60）"]) < 40)
+                    {
+                        MessageBox.Show(String.Format("第{0}行底座温度填写有误", i + 1));
+                        return false;
+                    }
+                    if (Convert.ToInt32(dt记录详情.Rows[i]["制袋速度（个/分钟）（30-50）"]) > 50 ||
+                       Convert.ToInt32(dt记录详情.Rows[i]["制袋速度（个/分钟）（30-50）"]) < 30)
+                    {
+                        MessageBox.Show(String.Format("第{0}行制袋速度填写有误", i + 1));
+                        return false;
+                    }
+                }
+            }
+            catch
+            {
+                MessageBox.Show("数据填写有误！");
+                return false;
+            }
+            return true;
+        }
+
 
         //保存功能
         private bool Save()
@@ -608,6 +662,10 @@ namespace mySystem.Process.Bag.LDPE
         //提交审核按钮
         private void btn提交审核_Click_1(object sender, EventArgs e)
         {
+            if (DialogResult.Yes != MessageBox.Show("提交最后审核后本表单数据不可修改，是否确定？", "提示", MessageBoxButtons.YesNo))
+            {
+                return;
+            }
             //判断内表是否完全提交审核
             for (int i = 0; i < dt记录详情.Rows.Count; i++)
             {
@@ -812,7 +870,8 @@ namespace mySystem.Process.Bag.LDPE
                     "年 " + DateTime.Now.Month.ToString() 
                     + "月 " + DateTime.Now.Day.ToString() + "日";
             }
-            String str温度湿度 = "环境温度：" + Convert.ToDouble(dt记录.Rows[0]["环境温度"]).ToString() + " ℃      环境湿度：" + Convert.ToDouble(dt记录.Rows[0]["环境湿度"]).ToString() + "%";
+            //String str温度湿度 = "环境温度：" + Convert.ToDouble(dt记录.Rows[0]["环境温度"]).ToString() + " ℃      环境湿度：" + Convert.ToDouble(dt记录.Rows[0]["环境湿度"]).ToString() + "%";
+            String str温度湿度 = "";
             mysheet.Cells[5, 1].Value = str生产日期 + str温度湿度;
             //mysheet.Cells[3, 18].Value = dt记录.Rows[0]["生产指令编号"].ToString();
             //mysheet.Cells[20, 11].Value = "审核员：" + dt记录.Rows[0]["审核员"].ToString() + "   审核日期：" + Convert.ToDateTime(dt记录.Rows[0]["审核日期"].ToString()).ToString("yyyy/MM/dd");
@@ -822,19 +881,22 @@ namespace mySystem.Process.Bag.LDPE
             //无需插入的部分
             for (int i = 0; i < (rownum > 6 ? 6 : rownum); i++)
             {
-                mysheet.Cells[8 + i, 1].Value = Convert.ToDateTime(dt记录详情.Rows[i]["检查时间"].ToString()).ToString("yyyy/MM/dd");
+                mysheet.Cells[8 + i, 1].Value = Convert.ToDateTime(dt记录详情.Rows[i]["检查时间"].ToString()).ToString("yyyy/MM/dd HH:mm:ss");
                 //mysheet.Cells[8 + i, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["检查时间"].ToString()).ToString("HH：mm");
-                mysheet.Cells[8 + i, 2].Value = dt记录详情.Rows[i]["热封刀温度（300-340）"].ToString();
-                mysheet.Cells[8 + i, 3].Value = dt记录详情.Rows[i]["底座温度（40-60）"].ToString();
-                mysheet.Cells[8 + i, 4].Value = dt记录详情.Rows[i]["制袋速度（个/分钟）（30-50）"].ToString();
-                mysheet.Cells[8 + i, 5].Value = dt记录详情.Rows[i]["切刀工作是否正常"].ToString();
-                mysheet.Cells[8 + i, 6].Value = dt记录详情.Rows[i]["张力控制是否正常"].ToString();
-                mysheet.Cells[8 + i, 7].Value = dt记录详情.Rows[i]["膜材运转是否平整"].ToString();
-                mysheet.Cells[8 + i, 8].Value = dt记录详情.Rows[i]["操作员"].ToString();
+                mysheet.Cells[8 + i, 2].Value = dt记录详情.Rows[i]["温度"].ToString();
+                mysheet.Cells[8 + i, 3].Value = dt记录详情.Rows[i]["湿度"].ToString();
+                mysheet.Cells[8 + i, 4].Value = dt记录详情.Rows[i]["热封刀温度（300-340）"].ToString();
+                mysheet.Cells[8 + i, 5].Value = dt记录详情.Rows[i]["底座温度（40-60）"].ToString();
+                mysheet.Cells[8 + i, 6].Value = dt记录详情.Rows[i]["制袋速度（个/分钟）（30-50）"].ToString();
+                mysheet.Cells[8 + i, 7].Value = dt记录详情.Rows[i]["切刀工作是否正常"].ToString();
+                mysheet.Cells[8 + i, 8].Value = dt记录详情.Rows[i]["张力控制是否正常"].ToString();
+                mysheet.Cells[8 + i, 9].Value = dt记录详情.Rows[i]["膜材运转是否平整"].ToString();
+                mysheet.Cells[8 + i, 10].Value = dt记录详情.Rows[i]["操作员"].ToString();
             }
             //需要插入的部分
             if (rownum > 6)
             {
+                ind = rownum - 6;
                 for (int i = 6; i < rownum; i++)
                 {
                     Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[6 + i, Type.Missing];
@@ -842,18 +904,22 @@ namespace mySystem.Process.Bag.LDPE
                     range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
                         Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
 
-                    mysheet.Cells[8 + i, 1].Value = Convert.ToDateTime(dt记录详情.Rows[i]["检查时间"].ToString()).ToString("yyyy/MM/dd");
+                    mysheet.Cells[8 + i, 1].Value = Convert.ToDateTime(dt记录详情.Rows[i]["检查时间"].ToString()).ToString("yyyy/MM/dd HH:mm:ss");
                     //mysheet.Cells[8 + i, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["检查时间"].ToString()).ToString("HH：mm");
-                    mysheet.Cells[8 + i, 2].Value = dt记录详情.Rows[i]["热封刀温度（300-340）"].ToString();
-                    mysheet.Cells[8 + i, 3].Value = dt记录详情.Rows[i]["底座温度（40-60）"].ToString();
-                    mysheet.Cells[8 + i, 4].Value = dt记录详情.Rows[i]["制袋速度（个/分钟）（30-50）"].ToString();
-                    mysheet.Cells[8 + i, 5].Value = dt记录详情.Rows[i]["切刀工作是否正常"].ToString();
-                    mysheet.Cells[8 + i, 6].Value = dt记录详情.Rows[i]["张力控制是否正常"].ToString();
-                    mysheet.Cells[8 + i, 7].Value = dt记录详情.Rows[i]["膜材运转是否平整"].ToString();
-                    mysheet.Cells[8 + i, 8].Value = dt记录详情.Rows[i]["操作员"].ToString();
+                    mysheet.Cells[8 + i, 2].Value = dt记录详情.Rows[i]["温度"].ToString();
+                    mysheet.Cells[8 + i, 3].Value = dt记录详情.Rows[i]["湿度"].ToString();
+                    mysheet.Cells[8 + i, 4].Value = dt记录详情.Rows[i]["热封刀温度（300-340）"].ToString();
+                    mysheet.Cells[8 + i, 5].Value = dt记录详情.Rows[i]["底座温度（40-60）"].ToString();
+                    mysheet.Cells[8 + i, 6].Value = dt记录详情.Rows[i]["制袋速度（个/分钟）（30-50）"].ToString();
+                    mysheet.Cells[8 + i, 7].Value = dt记录详情.Rows[i]["切刀工作是否正常"].ToString();
+                    mysheet.Cells[8 + i, 8].Value = dt记录详情.Rows[i]["张力控制是否正常"].ToString();
+                    mysheet.Cells[8 + i, 9].Value = dt记录详情.Rows[i]["膜材运转是否平整"].ToString();
+                    mysheet.Cells[8 + i, 10].Value = dt记录详情.Rows[i]["操作员"].ToString();
                 }
                 
-            }           
+            }
+            mysheet.Cells[15 + ind, 7].Value = "复核人: " + dt记录.Rows[0]["审核员"].ToString() + "   " +
+                Convert.ToDateTime(dt记录.Rows[0]["审核日期"]).ToString("yyyy年MM月dd日");
             //加页脚
             int sheetnum;
             SqlDataAdapter da = new SqlDataAdapter("select ID from 制袋机组运行记录  where 生产指令ID=" + InstruID.ToString(), mySystem.Parameter.conn);
@@ -952,6 +1018,7 @@ namespace mySystem.Process.Bag.LDPE
                     return;
                 dataGridView1.Rows.RemoveAt(dataGridView1.SelectedCells[0].RowIndex);
             }
+            Save();
         }
 
         private void btn数据审核_Click(object sender, EventArgs e)
@@ -985,6 +1052,7 @@ namespace mySystem.Process.Bag.LDPE
 
         private void btn提交数据审核_Click(object sender, EventArgs e)
         {
+            if (!check数字范围()) return;
             //find the uncheck item in inner list and tag the revoewer __待审核
             for (int i = 0; i < dt记录详情.Rows.Count; i++)
             {
@@ -1010,6 +1078,28 @@ namespace mySystem.Process.Bag.LDPE
         private void dataGridView1_ColumnWidthChanged(object sender, DataGridViewColumnEventArgs e)
         {
             writeDGVWidthToSetting(dataGridView1);
+        }
+
+        private void LDPEBag_runningrecord_Load(object sender, EventArgs e)
+        {
+            bt插入查询.PerformClick();
+        }
+
+        private void btn退回数据审核_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dataGridView1.SelectedCells.Count <= 0) return;
+                int iid = Convert.ToInt32(dataGridView1.SelectedCells[0].OwningRow.Cells["ID"].Value);
+                Utility.t退回数据审核(dt记录详情, iid, "审核员");
+                //btn确认.PerformClick();
+                Save();
+                //innerBind();
+            }
+            catch
+            {
+                return;
+            }
         }
 
             

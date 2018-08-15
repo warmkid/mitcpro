@@ -580,5 +580,29 @@ namespace mySystem
             return ret;
         }
 
+
+        public static void t退回数据审核(DataTable dt, int id, string colname)
+        {
+            DataRow[] drs =  dt.Select("ID="+id);
+            foreach (DataRow dr in drs)
+            {
+                dr[colname] = "";
+            }
+        }
+
+
+        public static string find主计量单位by代码(string code)
+        {
+            string strConnect = "server=" + Parameter.IP_port + ";database=dingdan_kucun;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
+            SqlConnection conn = new SqlConnection(strConnect);
+            SqlDataAdapter da;
+            DataTable dt = new DataTable();
+            string sql = "select 主计量单位名称 from 设置存货档案 where 存货代码='{0}'";
+            da = new SqlDataAdapter(string.Format(sql, code), conn);
+            da.Fill(dt);
+            if (dt.Rows.Count == 0) return "";
+            return dt.Rows[0]["主计量单位名称"].ToString();
+        }
+            
     }
 }

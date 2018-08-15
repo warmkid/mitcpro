@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LDPE生产退料记录));
+            this.btn退回数据审核 = new System.Windows.Forms.Button();
             this.btn提交数据审核 = new System.Windows.Forms.Button();
             this.btn数据审核 = new System.Windows.Forms.Button();
             this.tb备注 = new System.Windows.Forms.TextBox();
@@ -60,10 +61,21 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
+            // btn退回数据审核
+            // 
+            this.btn退回数据审核.Font = new System.Drawing.Font("宋体", 12F);
+            this.btn退回数据审核.Location = new System.Drawing.Point(779, 404);
+            this.btn退回数据审核.Name = "btn退回数据审核";
+            this.btn退回数据审核.Size = new System.Drawing.Size(129, 30);
+            this.btn退回数据审核.TabIndex = 335;
+            this.btn退回数据审核.Text = "退回数据审核";
+            this.btn退回数据审核.UseVisualStyleBackColor = true;
+            this.btn退回数据审核.Click += new System.EventHandler(this.btn退回数据审核_Click);
+            // 
             // btn提交数据审核
             // 
             this.btn提交数据审核.Font = new System.Drawing.Font("宋体", 12F);
-            this.btn提交数据审核.Location = new System.Drawing.Point(791, 368);
+            this.btn提交数据审核.Location = new System.Drawing.Point(688, 368);
             this.btn提交数据审核.Name = "btn提交数据审核";
             this.btn提交数据审核.Size = new System.Drawing.Size(116, 30);
             this.btn提交数据审核.TabIndex = 326;
@@ -74,7 +86,7 @@
             // btn数据审核
             // 
             this.btn数据审核.Font = new System.Drawing.Font("宋体", 12F);
-            this.btn数据审核.Location = new System.Drawing.Point(688, 368);
+            this.btn数据审核.Location = new System.Drawing.Point(811, 368);
             this.btn数据审核.Name = "btn数据审核";
             this.btn数据审核.Size = new System.Drawing.Size(97, 30);
             this.btn数据审核.TabIndex = 325;
@@ -85,10 +97,10 @@
             // tb备注
             // 
             this.tb备注.Font = new System.Drawing.Font("宋体", 12F);
-            this.tb备注.Location = new System.Drawing.Point(89, 405);
+            this.tb备注.Location = new System.Drawing.Point(89, 451);
             this.tb备注.Multiline = true;
             this.tb备注.Name = "tb备注";
-            this.tb备注.Size = new System.Drawing.Size(818, 39);
+            this.tb备注.Size = new System.Drawing.Size(652, 39);
             this.tb备注.TabIndex = 324;
             this.tb备注.Text = "物料单位---膜材用米，管用米，其余物料用个。";
             // 
@@ -96,7 +108,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("宋体", 12F);
-            this.label4.Location = new System.Drawing.Point(27, 412);
+            this.label4.Location = new System.Drawing.Point(27, 458);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(56, 16);
             this.label4.TabIndex = 323;
@@ -295,6 +307,7 @@
             this.cb产品代码.Name = "cb产品代码";
             this.cb产品代码.Size = new System.Drawing.Size(207, 24);
             this.cb产品代码.TabIndex = 304;
+            this.cb产品代码.SelectedIndexChanged += new System.EventHandler(this.cb产品代码_SelectedIndexChanged);
             // 
             // dataGridView1
             // 
@@ -342,6 +355,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(940, 561);
+            this.Controls.Add(this.btn退回数据审核);
             this.Controls.Add(this.btn提交数据审核);
             this.Controls.Add(this.btn数据审核);
             this.Controls.Add(this.tb备注);
@@ -408,6 +422,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btn退回数据审核;
 
     }
 }

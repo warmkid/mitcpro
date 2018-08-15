@@ -54,6 +54,11 @@
             this.btn确认 = new System.Windows.Forms.Button();
             this.label27 = new System.Windows.Forms.Label();
             this.label角色 = new System.Windows.Forms.Label();
+            this.tb合计 = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.btn退回数据审核 = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.cmb类型 = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -127,7 +132,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(28, 94);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(1056, 303);
+            this.dataGridView1.Size = new System.Drawing.Size(1056, 267);
             this.dataGridView1.TabIndex = 197;
             this.dataGridView1.ColumnWidthChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dataGridView1_ColumnWidthChanged);
             this.dataGridView1.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dataGridView1_EditingControlShowing);
@@ -316,11 +321,71 @@
             this.label角色.TabIndex = 228;
             this.label角色.Text = "角色";
             // 
+            // tb合计
+            // 
+            this.tb合计.Font = new System.Drawing.Font("宋体", 12F);
+            this.tb合计.Location = new System.Drawing.Point(113, 369);
+            this.tb合计.Name = "tb合计";
+            this.tb合计.ReadOnly = true;
+            this.tb合计.Size = new System.Drawing.Size(100, 26);
+            this.tb合计.TabIndex = 231;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("宋体", 12F);
+            this.label3.Location = new System.Drawing.Point(30, 373);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(40, 16);
+            this.label3.TabIndex = 230;
+            this.label3.Text = "合计";
+            // 
+            // btn退回数据审核
+            // 
+            this.btn退回数据审核.Font = new System.Drawing.Font("宋体", 12F);
+            this.btn退回数据审核.Location = new System.Drawing.Point(955, 440);
+            this.btn退回数据审核.Name = "btn退回数据审核";
+            this.btn退回数据审核.Size = new System.Drawing.Size(129, 30);
+            this.btn退回数据审核.TabIndex = 257;
+            this.btn退回数据审核.Text = "退回数据审核";
+            this.btn退回数据审核.UseVisualStyleBackColor = true;
+            this.btn退回数据审核.Click += new System.EventHandler(this.btn退回数据审核_Click);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("宋体", 12F);
+            this.label4.Location = new System.Drawing.Point(25, 25);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(56, 16);
+            this.label4.TabIndex = 258;
+            this.label4.Text = "类型：";
+            // 
+            // cmb类型
+            // 
+            this.cmb类型.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmb类型.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cmb类型.FormattingEnabled = true;
+            this.cmb类型.Items.AddRange(new object[] {
+            "膜材",
+            "内包",
+            "外包"});
+            this.cmb类型.Location = new System.Drawing.Point(107, 21);
+            this.cmb类型.Name = "cmb类型";
+            this.cmb类型.Size = new System.Drawing.Size(121, 24);
+            this.cmb类型.TabIndex = 259;
+            this.cmb类型.SelectedIndexChanged += new System.EventHandler(this.cmb类型_SelectedIndexChanged);
+            // 
             // LDPEBag_materialrecord
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1119, 542);
+            this.Controls.Add(this.cmb类型);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.btn退回数据审核);
+            this.Controls.Add(this.tb合计);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.label27);
             this.Controls.Add(this.label角色);
             this.Controls.Add(this.tb审核员);
@@ -348,7 +413,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label11);
             this.Name = "LDPEBag_materialrecord";
-            this.Text = "s";
+            this.Text = "生产领料使用记录";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LDPEBag_materialrecord_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
@@ -384,5 +449,10 @@
         private System.Windows.Forms.Button btn确认;
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.Label label角色;
+        private System.Windows.Forms.TextBox tb合计;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button btn退回数据审核;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ComboBox cmb类型;
     }
 }

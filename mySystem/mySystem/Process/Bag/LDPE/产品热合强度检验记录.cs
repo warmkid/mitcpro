@@ -946,7 +946,7 @@ namespace mySystem.Process.Bag.LDPE
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
-            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\PTV\18 QB-PA-PP-03-R02A 产品热合强度检验记录.xlsx");
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\LDPEBag\18 QB-PA-PP-03-R02A 产品热合强度检验记录.xlsx");
             // 选择一个Sheet，注意Sheet的序号是从1开始的
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
             // 修改Sheet中某行某列的值
@@ -1037,7 +1037,7 @@ namespace mySystem.Process.Bag.LDPE
                 mysheet.Cells[6 + i, 14].Value = dtInner.Rows[i]["平均"].ToString();
                 mysheet.Cells[6 + i, 15].Value = dtInner.Rows[i]["判定"].ToString() == "Y" ? "√" : "×";
                 mysheet.Cells[6 + i, 16].Value = dtInner.Rows[i]["检测人"].ToString();
-                mysheet.Cells[6 + i, 17].Value = dtInner.Rows[i]["审核员"].ToString();
+                //mysheet.Cells[6 + i, 17].Value = dtInner.Rows[i]["审核员"].ToString();
             }
             //需要插入的部分
             if (rownum > 15)
@@ -1065,7 +1065,7 @@ namespace mySystem.Process.Bag.LDPE
                     mysheet.Cells[6 + i, 14].Value = dtInner.Rows[i]["平均"].ToString();
                     mysheet.Cells[6 + i, 15].Value = dtInner.Rows[i]["判定"].ToString() == "Y" ? "√" : "×";
                     mysheet.Cells[6 + i, 16].Value = dtInner.Rows[i]["检测人"].ToString();
-                    mysheet.Cells[6 + i, 17].Value = dtInner.Rows[i]["审核员"].ToString();
+                    //mysheet.Cells[6 + i, 17].Value = dtInner.Rows[i]["审核员"].ToString();
                 }
             }
             //加页脚

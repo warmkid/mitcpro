@@ -79,6 +79,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.btn退回数据审核 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -126,7 +127,7 @@
             // btn提交数据审核
             // 
             this.btn提交数据审核.Font = new System.Drawing.Font("宋体", 12F);
-            this.btn提交数据审核.Location = new System.Drawing.Point(909, 405);
+            this.btn提交数据审核.Location = new System.Drawing.Point(909, 388);
             this.btn提交数据审核.Name = "btn提交数据审核";
             this.btn提交数据审核.Size = new System.Drawing.Size(116, 30);
             this.btn提交数据审核.TabIndex = 299;
@@ -137,7 +138,7 @@
             // btn数据审核
             // 
             this.btn数据审核.Font = new System.Drawing.Font("宋体", 12F);
-            this.btn数据审核.Location = new System.Drawing.Point(806, 405);
+            this.btn数据审核.Location = new System.Drawing.Point(806, 388);
             this.btn数据审核.Name = "btn数据审核";
             this.btn数据审核.Size = new System.Drawing.Size(97, 30);
             this.btn数据审核.TabIndex = 298;
@@ -458,7 +459,7 @@
             // DelLineBtn
             // 
             this.DelLineBtn.Font = new System.Drawing.Font("宋体", 12F);
-            this.DelLineBtn.Location = new System.Drawing.Point(720, 405);
+            this.DelLineBtn.Location = new System.Drawing.Point(720, 388);
             this.DelLineBtn.Name = "DelLineBtn";
             this.DelLineBtn.Size = new System.Drawing.Size(80, 30);
             this.DelLineBtn.TabIndex = 265;
@@ -469,7 +470,7 @@
             // AddLineBtn
             // 
             this.AddLineBtn.Font = new System.Drawing.Font("宋体", 12F);
-            this.AddLineBtn.Location = new System.Drawing.Point(634, 405);
+            this.AddLineBtn.Location = new System.Drawing.Point(634, 388);
             this.AddLineBtn.Name = "AddLineBtn";
             this.AddLineBtn.Size = new System.Drawing.Size(80, 30);
             this.AddLineBtn.TabIndex = 264;
@@ -536,6 +537,7 @@
             this.cb产品代码.Name = "cb产品代码";
             this.cb产品代码.Size = new System.Drawing.Size(211, 24);
             this.cb产品代码.TabIndex = 258;
+            this.cb产品代码.SelectedIndexChanged += new System.EventHandler(this.cb产品代码_SelectedIndexChanged);
             // 
             // dataGridView1
             // 
@@ -543,7 +545,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(30, 211);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(995, 188);
+            this.dataGridView1.Size = new System.Drawing.Size(995, 169);
             this.dataGridView1.TabIndex = 257;
             this.dataGridView1.ColumnWidthChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dataGridView1_ColumnWidthChanged);
             // 
@@ -578,11 +580,23 @@
             this.label1.TabIndex = 254;
             this.label1.Text = "产品外包装记录";
             // 
+            // btn退回数据审核
+            // 
+            this.btn退回数据审核.Font = new System.Drawing.Font("宋体", 12F);
+            this.btn退回数据审核.Location = new System.Drawing.Point(897, 424);
+            this.btn退回数据审核.Name = "btn退回数据审核";
+            this.btn退回数据审核.Size = new System.Drawing.Size(129, 30);
+            this.btn退回数据审核.TabIndex = 334;
+            this.btn退回数据审核.Text = "退回数据审核";
+            this.btn退回数据审核.UseVisualStyleBackColor = true;
+            this.btn退回数据审核.Click += new System.EventHandler(this.btn退回数据审核_Click);
+            // 
             // LDPE产品外包装记录
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1063, 560);
+            this.Controls.Add(this.btn退回数据审核);
             this.Controls.Add(this.lb产品数量只数合计);
             this.Controls.Add(this.lb包装数量箱数合计);
             this.Controls.Add(this.label7);
@@ -695,6 +709,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btn退回数据审核;
 
     }
 }

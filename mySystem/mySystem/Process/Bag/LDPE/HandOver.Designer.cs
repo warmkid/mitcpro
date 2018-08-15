@@ -29,13 +29,18 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HandOver));
+            this.btn上一条记录 = new System.Windows.Forms.Button();
+            this.lbl生产指令编号 = new System.Windows.Forms.Label();
+            this.label角色 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.cmb打印机选择 = new System.Windows.Forms.ComboBox();
             this.btn查看日志 = new System.Windows.Forms.Button();
             this.btn提交审核 = new System.Windows.Forms.Button();
             this.dtp夜班交接班时间 = new System.Windows.Forms.DateTimePicker();
             this.btn打印 = new System.Windows.Forms.Button();
             this.夜班交接班时间 = new System.Windows.Forms.Label();
-            this.btn审核 = new System.Windows.Forms.Button();
             this.txb夜班接班员 = new System.Windows.Forms.TextBox();
+            this.btn审核 = new System.Windows.Forms.Button();
             this.btn保存 = new System.Windows.Forms.Button();
             this.lb夜班接班员 = new System.Windows.Forms.Label();
             this.txb夜班交班员 = new System.Windows.Forms.TextBox();
@@ -55,14 +60,56 @@
             this.txb白班交班员 = new System.Windows.Forms.TextBox();
             this.txb白班异常情况处理 = new System.Windows.Forms.TextBox();
             this.lb白班交班人 = new System.Windows.Forms.Label();
-            this.cmb打印机选择 = new System.Windows.Forms.ComboBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label角色 = new System.Windows.Forms.Label();
-            this.lbl生产指令编号 = new System.Windows.Forms.Label();
-            this.btn上一条记录 = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
+            // 
+            // btn上一条记录
+            // 
+            this.btn上一条记录.Location = new System.Drawing.Point(657, 85);
+            this.btn上一条记录.Name = "btn上一条记录";
+            this.btn上一条记录.Size = new System.Drawing.Size(117, 23);
+            this.btn上一条记录.TabIndex = 165;
+            this.btn上一条记录.Text = "上一条记录";
+            this.btn上一条记录.UseVisualStyleBackColor = true;
+            this.btn上一条记录.Click += new System.EventHandler(this.btn上一条记录_Click);
+            // 
+            // lbl生产指令编号
+            // 
+            this.lbl生产指令编号.AutoSize = true;
+            this.lbl生产指令编号.Location = new System.Drawing.Point(195, 92);
+            this.lbl生产指令编号.Name = "lbl生产指令编号";
+            this.lbl生产指令编号.Size = new System.Drawing.Size(104, 16);
+            this.lbl生产指令编号.TabIndex = 163;
+            this.lbl生产指令编号.Text = "生产指令编号";
+            // 
+            // label角色
+            // 
+            this.label角色.AutoSize = true;
+            this.label角色.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label角色.Location = new System.Drawing.Point(654, 23);
+            this.label角色.Name = "label角色";
+            this.label角色.Size = new System.Drawing.Size(42, 16);
+            this.label角色.TabIndex = 162;
+            this.label角色.Text = "角色";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(256, 12);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(134, 42);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 161;
+            this.pictureBox1.TabStop = false;
+            // 
+            // cmb打印机选择
+            // 
+            this.cmb打印机选择.FormattingEnabled = true;
+            this.cmb打印机选择.Location = new System.Drawing.Point(235, 678);
+            this.cmb打印机选择.Name = "cmb打印机选择";
+            this.cmb打印机选择.Size = new System.Drawing.Size(240, 24);
+            this.cmb打印机选择.TabIndex = 160;
             // 
             // btn查看日志
             // 
@@ -111,6 +158,13 @@
             this.夜班交接班时间.TabIndex = 76;
             this.夜班交接班时间.Text = "夜班交接班时间";
             // 
+            // txb夜班接班员
+            // 
+            this.txb夜班接班员.Location = new System.Drawing.Point(910, 288);
+            this.txb夜班接班员.Name = "txb夜班接班员";
+            this.txb夜班接班员.Size = new System.Drawing.Size(100, 26);
+            this.txb夜班接班员.TabIndex = 75;
+            // 
             // btn审核
             // 
             this.btn审核.Location = new System.Drawing.Point(53, 679);
@@ -120,13 +174,6 @@
             this.btn审核.Text = "接班";
             this.btn审核.UseVisualStyleBackColor = true;
             this.btn审核.Click += new System.EventHandler(this.btn审核_Click);
-            // 
-            // txb夜班接班员
-            // 
-            this.txb夜班接班员.Location = new System.Drawing.Point(910, 288);
-            this.txb夜班接班员.Name = "txb夜班接班员";
-            this.txb夜班接班员.Size = new System.Drawing.Size(100, 26);
-            this.txb夜班接班员.TabIndex = 75;
             // 
             // btn保存
             // 
@@ -299,53 +346,6 @@
             this.lb白班交班人.TabIndex = 64;
             this.lb白班交班人.Text = "白班交班员";
             // 
-            // cmb打印机选择
-            // 
-            this.cmb打印机选择.FormattingEnabled = true;
-            this.cmb打印机选择.Location = new System.Drawing.Point(235, 678);
-            this.cmb打印机选择.Name = "cmb打印机选择";
-            this.cmb打印机选择.Size = new System.Drawing.Size(121, 24);
-            this.cmb打印机选择.TabIndex = 160;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(256, 12);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(134, 42);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 161;
-            this.pictureBox1.TabStop = false;
-            // 
-            // label角色
-            // 
-            this.label角色.AutoSize = true;
-            this.label角色.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label角色.Location = new System.Drawing.Point(654, 23);
-            this.label角色.Name = "label角色";
-            this.label角色.Size = new System.Drawing.Size(42, 16);
-            this.label角色.TabIndex = 162;
-            this.label角色.Text = "角色";
-            // 
-            // lbl生产指令编号
-            // 
-            this.lbl生产指令编号.AutoSize = true;
-            this.lbl生产指令编号.Location = new System.Drawing.Point(195, 92);
-            this.lbl生产指令编号.Name = "lbl生产指令编号";
-            this.lbl生产指令编号.Size = new System.Drawing.Size(104, 16);
-            this.lbl生产指令编号.TabIndex = 163;
-            this.lbl生产指令编号.Text = "生产指令编号";
-            // 
-            // btn上一条记录
-            // 
-            this.btn上一条记录.Location = new System.Drawing.Point(657, 85);
-            this.btn上一条记录.Name = "btn上一条记录";
-            this.btn上一条记录.Size = new System.Drawing.Size(117, 23);
-            this.btn上一条记录.TabIndex = 165;
-            this.btn上一条记录.Text = "上一条记录";
-            this.btn上一条记录.UseVisualStyleBackColor = true;
-            this.btn上一条记录.Click += new System.EventHandler(this.btn上一条记录_Click);
-            // 
             // HandOver
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -389,8 +389,8 @@
             this.Activated += new System.EventHandler(this.HandOver_Activated);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandOver_FormClosing);
             this.Enter += new System.EventHandler(this.HandOver_Enter);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

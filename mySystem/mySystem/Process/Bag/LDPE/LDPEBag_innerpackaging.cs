@@ -264,6 +264,7 @@ namespace mySystem.Process.Bag.LDPE
                     //控件都不能点，只有打印,日志可点
                     setControlFalse();
                     btn数据审核.Enabled = true;
+                    btn退回数据审核.Enabled = true;
                     //遍历datagridview，如果有一行为待审核，则该行可以修改
                     dataGridView1.ReadOnly = false;
                     for (int i = 0; i < dataGridView1.Rows.Count; i++)
@@ -362,6 +363,7 @@ namespace mySystem.Process.Bag.LDPE
             tb审核员.Enabled = false;
             btn数据审核.Enabled = false;
             btn提交数据审核.Enabled = false;
+            btn退回数据审核.Enabled = false;
             //部分空间防作弊，不可改
             tb生产指令编号.ReadOnly = true;
             tb生产批号.ReadOnly = true;
@@ -569,6 +571,19 @@ namespace mySystem.Process.Bag.LDPE
 
             tb联产品数量.DataBindings.Clear();
             tb联产品数量.DataBindings.Add("Text", bs记录.DataSource, "联产品数量");
+
+            tb联产品批号.DataBindings.Clear();
+            tb联产品批号.DataBindings.Add("Text", bs记录.DataSource, "联产品批号");
+
+            tb制袋人.DataBindings.Clear();
+            tb制袋人.DataBindings.Add("Text", bs记录.DataSource, "制袋人");
+            tb分检人.DataBindings.Clear();
+            tb分检人.DataBindings.Add("Text", bs记录.DataSource, "分检人");
+            tb包装人.DataBindings.Clear();
+            tb包装人.DataBindings.Add("Text", bs记录.DataSource, "包装人");
+
+            tb备注.DataBindings.Clear();
+            tb备注.DataBindings.Add("Text", bs记录.DataSource, "备注");
         }
 
         //添加外表默认信息
@@ -835,10 +850,15 @@ namespace mySystem.Process.Bag.LDPE
                 continue;
             }
             // 保存数据的方法，每次保存之后重新读取数据，重新绑定控件
-            da记录详情.Update((DataTable)bs记录详情.DataSource);
-            readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
-            innerBind();
-            setEnableReadOnly();
+            //da记录详情.Update((DataTable)bs记录详情.DataSource);
+            //readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
+            //innerBind();
+            //setEnableReadOnly();
+
+            bool isSaved = Save();
+            //控件可见性
+            if (_userState == Parameter.UserState.操作员 && isSaved == true)
+                btn提交审核.Enabled = true;
         }
 
         //内表审核按钮
@@ -896,7 +916,7 @@ namespace mySystem.Process.Bag.LDPE
             else
             {
                 // 内表保存
-                da记录详情.Update((DataTable)bs记录详情.DataSource);
+                int ret = da记录详情.Update((DataTable)bs记录详情.DataSource);
                 readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
                 innerBind();
 
@@ -915,6 +935,10 @@ namespace mySystem.Process.Bag.LDPE
         //提交审核按钮
         private void btn提交审核_Click(object sender, EventArgs e)
         {
+            if (DialogResult.Yes != MessageBox.Show("提交最后审核后本表单数据不可修改，是否确定？", "提示", MessageBoxButtons.YesNo))
+            {
+                return;
+            }
             //判断内表是否完全提交审核
             for (int i = 0; i < dt记录详情.Rows.Count; i++)
             {
@@ -1149,8 +1173,14 @@ namespace mySystem.Process.Bag.LDPE
             mysheet.Cells[20 + ind, 10].Value = dt记录.Rows[0]["不良合计"].ToString();
             mysheet.Cells[20 + ind, 10].Value = dt记录.Rows[0]["不良合计"].ToString();
             mysheet.Cells[20 + ind, 12].Value = dt记录.Rows[0]["废品重量"].ToString();
-
-            mysheet.Cells[21 + ind, 6].Value = "其他操作人员：" + dt记录.Rows[0]["操作员备注"].ToString();
+            StringBuilder sb = new StringBuilder();
+            sb.Append("其他操作人员：\n").Append("制袋：").Append(
+                dt记录.Rows[0]["制袋人"].ToString() == "" ? "     " : dt记录.Rows[0]["制袋人"].ToString()).Append(
+                "  分检:").Append(dt记录.Rows[0]["分检人"].ToString() == "" ? "     " : dt记录.Rows[0]["分检人"].ToString()).Append(
+                "   包装：").Append(dt记录.Rows[0]["包装人"].ToString() == "" ? "     " : dt记录.Rows[0]["包装人"].ToString());
+            String t = sb.ToString();
+            mysheet.Cells[21 + ind, 6].Value = t;
+            mysheet.Cells[21 + ind, 13].Value = "备注:\n"+dt记录.Rows[0]["备注"];
             //mysheet.Cells[20 + ind, 11].Value = "审核员：" + dt记录.Rows[0]["审核员"].ToString();
 
             //内表信息
@@ -1158,7 +1188,7 @@ namespace mySystem.Process.Bag.LDPE
             {
                 mysheet.Cells[7 + i, 1] = i + 1;
                 mysheet.Cells[7 + i, 2] = Convert.ToDateTime(dt记录详情.Rows[i]["生产开始时间"].ToString()).ToString("HH:mm:ss") + "~" + Convert.ToDateTime(dt记录详情.Rows[i]["生产结束时间"].ToString()).ToString("HH:mm:ss");
-                mysheet.Cells[7 + i, 3] = dt记录详情.Rows[i]["内包序号"].ToString();
+                mysheet.Cells[7 + i, 3] = process内包序号(dt记录详情.Rows[i]["内包序号"].ToString());
                 //mysheet.Cells[7 + i, 4] = dt记录详情.Rows[i]["包装规格每包只数"].ToString(); 
                 mysheet.Cells[7 + i, 4] = dt记录详情.Rows[i]["产品数量包"].ToString();
                 mysheet.Cells[7 + i, 5] = dt记录详情.Rows[i]["产品数量只"].ToString();
@@ -1271,7 +1301,7 @@ namespace mySystem.Process.Bag.LDPE
             int sum = 0;
             int numtemp;
             String[] ColName = { "热封线不合格数量", "黑点晶点数量", "其他数量" };
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 3; i++)
             {
                 if (Int32.TryParse(dt记录详情.Rows[RowCount][(ColName[i])].ToString(), out numtemp) == true)
                 { sum += numtemp; }
@@ -1341,11 +1371,11 @@ namespace mySystem.Process.Bag.LDPE
         {
             bool TypeCheck = true;
             List<TextBox> TextBoxList = new List<TextBox>(new TextBox[] { tb废品重量 });
-            List<String> StringList = new List<String>(new String[] { "理论产量" });
-            int numtemp = 0;
+            List<String> StringList = new List<String>(new String[] { "废品重量" });
+            float numtemp = 0;
             for (int i = 0; i < TextBoxList.Count; i++)
             {
-                if (Int32.TryParse(TextBoxList[i].Text.ToString(), out numtemp) == false)
+                if (float.TryParse(TextBoxList[i].Text.ToString(), out numtemp) == false)
                 {
                     MessageBox.Show("『" + StringList[i] + "』框内应填数字，请重新填入！");
                     TypeCheck = false;
@@ -1559,7 +1589,52 @@ namespace mySystem.Process.Bag.LDPE
                 //}
             }
         }
-        
 
+        private void LDPEBag_innerpackaging_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cb产品代码_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btn查询新建.PerformClick();
+        }
+
+        string process内包序号(String xuhao)
+        {
+            int start,end;
+            if (int.TryParse(xuhao, out start)) return start.ToString();
+            else
+            {
+                try
+                {
+                    string[] nums = xuhao.Split('-');
+                    start = Convert.ToInt32(nums[0]);
+                    end = Convert.ToInt32(nums[1]);
+                    return start.ToString() + "-" + end.ToString();
+                }
+                catch
+                {
+                    return "?";
+                }
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dataGridView1.SelectedCells.Count <= 0) return;
+                int iid = Convert.ToInt32(dataGridView1.SelectedCells[0].OwningRow.Cells["ID"].Value);
+                Utility.t退回数据审核(dt记录详情, iid, "审核员");
+                //btn确认.PerformClick();
+                Save();
+                //innerBind();
+            }
+            catch
+            {
+                return;
+            }
+        }
     }
 }

@@ -392,7 +392,7 @@
             this.Controls.Add(this.b打印);
             this.Controls.Add(this.label1);
             this.Name = "LDPEBag_dailyreport";
-            this.Text = "LDPEBag_dailyreport";
+            this.Text = "PE日报表";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -428,13 +428,17 @@ namespace mySystem.Process.Bag.LDPE
         {
             for (int i = 0; i < dtInner.Rows.Count; i++)
             {
-                if ((Convert.ToString(Parameter.userflight) == "白班") && (txb夜班接班员.Text == "") && (dtInner.Rows[i]["确认结果白班"] == null || dtInner.Rows[i]["确认结果白班"].ToString()==""))
+                if ((Convert.ToString(Parameter.userflight) == "白班") &&
+                    (txb夜班接班员.Text == "") && (dtInner.Rows[i]["白班确认结果"] == null ||
+                    dtInner.Rows[i]["白班确认结果"].ToString() == ""))
                 {
-                    dtInner.Rows[i]["确认结果白班"] = "是";
+                    dtInner.Rows[i]["白班确认结果"] = "是";
                 }
-                if ((Convert.ToString(Parameter.userflight) == "夜班") && (txb白班接班员.Text == "") && (dtInner.Rows[i]["确认结果夜班"] == null || dtInner.Rows[i]["确认结果夜班"].ToString() == ""))
+                if ((Convert.ToString(Parameter.userflight) == "夜班") &&
+                    (txb白班接班员.Text == "") && (dtInner.Rows[i]["夜班确认结果"] == null ||
+                    dtInner.Rows[i]["夜班确认结果"].ToString() == ""))
                 {
-                    dtInner.Rows[i]["确认结果夜班"] = "是";
+                    dtInner.Rows[i]["夜班确认结果"] = "是";
                 }
             }
         }
@@ -511,7 +515,7 @@ namespace mySystem.Process.Bag.LDPE
 
                 switch (dc.ColumnName)
                 {
-                    case "确认结果白班":
+                    case "白班确认结果":
                         cbc = new DataGridViewComboBoxColumn();
                         cbc.DataPropertyName = dc.ColumnName;
                         cbc.HeaderText = dc.ColumnName;
@@ -523,7 +527,7 @@ namespace mySystem.Process.Bag.LDPE
                         }
                         dataGridView1.Columns.Add(cbc);
                         break;
-                    case "确认结果夜班":
+                    case "夜班确认结果":
                         cbc = new DataGridViewComboBoxColumn();
                         cbc.DataPropertyName = dc.ColumnName;
                         cbc.HeaderText = dc.ColumnName;
@@ -793,8 +797,8 @@ namespace mySystem.Process.Bag.LDPE
             {
                 my.Cells[i + 6, 1].Value = dtInner.Rows[i]["序号"];
                 my.Cells[i + 6, 2].Value = dtInner.Rows[i]["确认项目"];
-                my.Cells[i + 6, 3].Value = dtInner.Rows[i]["确认结果白班"];
-                my.Cells[i + 6, 4].Value = dtInner.Rows[i]["确认结果夜班"];
+                my.Cells[i + 6, 3].Value = dtInner.Rows[i]["白班确认结果"];
+                my.Cells[i + 6, 4].Value = dtInner.Rows[i]["夜班确认结果"];
 
             }
             my.Cells[8 + ind, 5].Value = "交班人：" + dtOuter.Rows[0]["白班交班员"].ToString() + "   接班人：" + dtOuter.Rows[0]["夜班接班员"].ToString() + "   时间：" + Convert.ToDateTime(dtOuter.Rows[0]["白班交接班时间"]).ToString("yyyy年MM月dd日");

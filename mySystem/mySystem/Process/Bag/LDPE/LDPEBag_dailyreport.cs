@@ -312,8 +312,8 @@ namespace mySystem.Process.Bag.LDPE
                 dr["客户或订单号"] = info[0];
                 dr["产品代码"] = info[1];
                 dr["批号"] = info[2];
-                dr["入库量（只）"] = dt.Rows[0]["产品数量包合计A"];
-                dr["内包产品数量（只）"] = dt.Rows[0]["产品数量包合计A"];
+                dr["入库量（只）"] = dt.Rows[0]["产品数量只合计B"];
+                dr["内包产品数量（只）"] = dt.Rows[0]["产品数量只合计B"];
                 dr["工时（小时）"] = dt.Rows[0]["工时"];
                 try
                 {
@@ -402,7 +402,8 @@ namespace mySystem.Process.Bag.LDPE
                 int id = Convert.ToInt32(dr["生产指令ID"]);
                 DateTime currDateTime = Convert.ToDateTime(dr["生产日期"]);
                 string fight = dr["班次"].ToString();
-                sql = "select * from 生产领料使用记录,生产领料使用记录详细信息 where 生产领料使用记录详细信息.T生产领料使用记录ID=生产领料使用记录.ID and 生产领料使用记录.生产指令ID={0} and 生产领料使用记录详细信息.领料日期时间 between '{1}' and '{2}' and 生产领料使用记录详细信息.班次='{3}'";
+                // 膜材
+                sql = "select * from 生产领料使用记录,生产领料使用记录详细信息 where 生产领料使用记录详细信息.T生产领料使用记录ID=生产领料使用记录.ID and 生产领料使用记录.生产指令ID={0} and 生产领料使用记录详细信息.领料日期时间 between '{1}' and '{2}' and 生产领料使用记录详细信息.班次='{3}' and 类型='膜材'";
                 if (fight == "白班") {
                     da = new SqlDataAdapter(string.Format(sql, id, currDateTime.Date, currDateTime.AddDays(1).Date, fight), mySystem.Parameter.conn);
                 }
@@ -419,40 +420,107 @@ namespace mySystem.Process.Bag.LDPE
                 dr["纸箱用量"] = 0;
                 if (dt.Rows.Count == 0)
                 {
-                    MessageBox.Show("生产指令ID为" + id + "的生产指令详细信息读取错误（无对应的领料日期）");
+                    MessageBox.Show("生产指令ID为" + id + "的膜材领料信息读取错误");
                 }
                 else
                 {
                     // 膜材用量
-                    drs = dt.Select(String.Format("物料代码='{0}' or 物料代码='{1}' or 物料代码='{2}'",
-                        膜代码[0], 膜代码[1], 膜代码[2]));
                     sum = 0;
-                    foreach (DataRow ddr in drs)
+                    foreach (DataRow ddr in dt.Rows)
                     {
                         sum += Convert.ToDouble(ddr["领取数量"]);
                     }
                     dr["膜材用量（米）"] = sum;
 
+                    //// 内包用量
+                    //drs = dt.Select(String.Format("物料代码='{0}' or 物料代码='{1}'",
+                    //   内包代码[0], 内包代码[1]));
+                    //sum = 0;
+                    //foreach (DataRow ddr in drs)
+                    //{
+                    //    sum += Convert.ToDouble(ddr["领取数量"]);
+                    //}
+                    //dr["内包装袋用量（只）"] = sum;
+                    
+                    //// 外包装袋用量
+                    //drs = dt.Select(String.Format("物料代码='{0}' or 物料代码='{1}' or 物料代码='{2}'",
+                    //   外包代码[0], 外包代码[1], 外包代码[2]));
+                    //sum = 0;
+                    //foreach (DataRow ddr in drs)
+                    //{
+                    //    sum += Convert.ToDouble(ddr["领取数量"]);
+                    //}
+                    //dr["纸箱用量"] = sum;
+                }
+                //内包
+                sql = "select * from 生产领料使用记录,生产领料使用记录详细信息 where 生产领料使用记录详细信息.T生产领料使用记录ID=生产领料使用记录.ID and 生产领料使用记录.生产指令ID={0} and 生产领料使用记录详细信息.领料日期时间 between '{1}' and '{2}' and 生产领料使用记录详细信息.班次='{3}' and 类型='内包'";
+                if (fight == "白班")
+                {
+                    da = new SqlDataAdapter(string.Format(sql, id, currDateTime.Date, currDateTime.AddDays(1).Date, fight), mySystem.Parameter.conn);
+                }
+                else
+                {
+                    da = new SqlDataAdapter(string.Format(sql, id, currDateTime.Date.AddHours(12), currDateTime.AddDays(1).Date.AddHours(12), fight), mySystem.Parameter.conn);
+                }
+                da = new SqlDataAdapter(string.Format(sql, id, currDateTime.Date.AddHours(-12), currDateTime.AddDays(1).Date.AddHours(12), fight), mySystem.Parameter.conn);
+                dt = new DataTable();
+                da.Fill(dt);
+
+                if (dt.Rows.Count == 0)
+                {
+                    MessageBox.Show("生产指令ID为" + id + "的内包领料详细信息读取错误");
+                }
+                else
+                {
+
+
                     // 内包用量
-                    drs = dt.Select(String.Format("物料代码='{0}' or 物料代码='{1}'",
-                       内包代码[0], 内包代码[1]));
+                    //drs = dt.Select(String.Format("物料代码='{0}' or 物料代码='{1}'",
+                    //   内包代码[0], 内包代码[1]));
                     sum = 0;
-                    foreach (DataRow ddr in drs)
+                    foreach (DataRow ddr in dt.Rows)
                     {
                         sum += Convert.ToDouble(ddr["领取数量"]);
                     }
                     dr["内包装袋用量（只）"] = sum;
+
+                }
+
+                //外包
+                sql = "select * from 生产领料使用记录,生产领料使用记录详细信息 where 生产领料使用记录详细信息.T生产领料使用记录ID=生产领料使用记录.ID and 生产领料使用记录.生产指令ID={0} and 生产领料使用记录详细信息.领料日期时间 between '{1}' and '{2}' and 生产领料使用记录详细信息.班次='{3}' and 类型='外包'";
+                if (fight == "白班")
+                {
+                    da = new SqlDataAdapter(string.Format(sql, id, currDateTime.Date, currDateTime.AddDays(1).Date, fight), mySystem.Parameter.conn);
+                }
+                else
+                {
+                    da = new SqlDataAdapter(string.Format(sql, id, currDateTime.Date.AddHours(12), currDateTime.AddDays(1).Date.AddHours(12), fight), mySystem.Parameter.conn);
+                }
+                da = new SqlDataAdapter(string.Format(sql, id, currDateTime.Date.AddHours(-12), currDateTime.AddDays(1).Date.AddHours(12), fight), mySystem.Parameter.conn);
+                dt = new DataTable();
+                da.Fill(dt);
+
+                if (dt.Rows.Count == 0)
+                {
+                    MessageBox.Show("生产指令ID为" + id + "的外包领料信息读取错误");
+                }
+                else
+                {
+
+
+                    // 外包用量
                     
-                    // 外包装袋用量
-                    drs = dt.Select(String.Format("物料代码='{0}' or 物料代码='{1}' or 物料代码='{2}'",
-                       外包代码[0], 外包代码[1], 外包代码[2]));
                     sum = 0;
-                    foreach (DataRow ddr in drs)
+                    foreach (DataRow ddr in dt.Rows)
                     {
                         sum += Convert.ToDouble(ddr["领取数量"]);
                     }
                     dr["纸箱用量"] = sum;
+
                 }
+
+
+
                 // 计算平方米之类的
                 // TODO：判断是否要乘2
                 dr["膜材用量（平方米）"] = Convert.ToDouble(dr["膜材规格（mm）"])

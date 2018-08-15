@@ -103,7 +103,7 @@
             this.MainPanel.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.MainPanel.Location = new System.Drawing.Point(9, 76);
             this.MainPanel.Name = "MainPanel";
-            this.MainPanel.Size = new System.Drawing.Size(1252, 592);
+            this.MainPanel.Size = new System.Drawing.Size(1249, 592);
             this.MainPanel.TabIndex = 4;
             this.MainPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.MainPanel_Paint);
             // 
@@ -122,7 +122,7 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(13, 2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1248, 74);
+            this.groupBox1.Size = new System.Drawing.Size(1251, 74);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             // 
@@ -154,7 +154,7 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(561, 32);
+            this.textBox1.Location = new System.Drawing.Point(479, 33);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(31, 23);
             this.textBox1.TabIndex = 9;
@@ -162,7 +162,7 @@
             // 
             // btn导入
             // 
-            this.btn导入.Location = new System.Drawing.Point(622, 30);
+            this.btn导入.Location = new System.Drawing.Point(540, 31);
             this.btn导入.Name = "btn导入";
             this.btn导入.Size = new System.Drawing.Size(103, 23);
             this.btn导入.TabIndex = 8;
@@ -173,7 +173,7 @@
             // 
             // btn浏览
             // 
-            this.btn浏览.Location = new System.Drawing.Point(598, 31);
+            this.btn浏览.Location = new System.Drawing.Point(516, 32);
             this.btn浏览.Name = "btn浏览";
             this.btn浏览.Size = new System.Drawing.Size(75, 23);
             this.btn浏览.TabIndex = 7;
@@ -185,7 +185,7 @@
             // ExitBtn
             // 
             this.ExitBtn.Font = new System.Drawing.Font("宋体", 15F);
-            this.ExitBtn.Location = new System.Drawing.Point(1140, 31);
+            this.ExitBtn.Location = new System.Drawing.Point(1088, 26);
             this.ExitBtn.Name = "ExitBtn";
             this.ExitBtn.Size = new System.Drawing.Size(99, 30);
             this.ExitBtn.TabIndex = 6;
@@ -197,7 +197,7 @@
             // 
             this.userLabel.AutoSize = true;
             this.userLabel.Font = new System.Drawing.Font("宋体", 15F);
-            this.userLabel.Location = new System.Drawing.Point(1030, 36);
+            this.userLabel.Location = new System.Drawing.Point(978, 31);
             this.userLabel.Name = "userLabel";
             this.userLabel.Size = new System.Drawing.Size(0, 20);
             this.userLabel.TabIndex = 5;
@@ -206,7 +206,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("宋体", 15F);
-            this.label1.Location = new System.Drawing.Point(947, 36);
+            this.label1.Location = new System.Drawing.Point(895, 31);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(89, 20);
             this.label1.TabIndex = 4;
@@ -225,7 +225,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(1271, 680);
+            this.ClientSize = new System.Drawing.Size(1276, 670);
             this.Controls.Add(this.MainPanel);
             this.Controls.Add(this.groupBox1);
             this.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -234,7 +234,7 @@
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "欢迎使用颇尔奥星管理系统    v0.9.17";
+            this.Text = "欢迎使用颇尔奥星管理系统    v0.9.17  201808151500";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

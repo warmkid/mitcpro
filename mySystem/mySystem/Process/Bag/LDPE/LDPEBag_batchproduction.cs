@@ -24,6 +24,8 @@ namespace mySystem.Process.Bag.LDPE
         printF[] prtBatch = null;
         mySystem.Parameter.UserState _userState;
         mySystem.Parameter.FormState _formState;
+        
+        int[] printedPages;
 
 
         SqlDataAdapter daOuter;
@@ -119,11 +121,15 @@ namespace mySystem.Process.Bag.LDPE
             record.Add("12 LDPE 制袋外包标签.xlsx"); tableName.Add("null");
             record.Add("QB-PA-PP-03-R01A 产品外观和尺寸检验记录.xlsx"); tableName.Add("产品外观和尺寸检验记录"); prtBatch[12] = new printF(PF12);
             record.Add("QB-PA-PP-03-R02A 产品热合强度检验记录.xlsx"); tableName.Add("产品热合强度检验记录"); prtBatch[13] = new printF(PF13);
-            
 
 
 
 
+            printedPages = new int[tableName.Count + 2];
+            for (int i = 0; i < printedPages.Length; ++i)
+            {
+                printedPages[i] = 0;
+            }
 
             initrecord();
             initly();
@@ -656,6 +662,8 @@ namespace mySystem.Process.Bag.LDPE
         /// <param name="e"></param>
         private void btn打印_Click(object sender, EventArgs e)
         {
+            SetDefaultPrinter(comboBox打印机选择.Text);
+            
             List<Int32> checkedRows = new List<int>();
             for (int i = 0; i < dataGridView1.Rows.Count; ++i)
             {
@@ -679,6 +687,7 @@ namespace mySystem.Process.Bag.LDPE
                 switch (r)
                 {
                     case 0: // 制袋工序批生产记录封面
+                        printedPages[0] = 1;
                         PF0();
                         GC.Collect();
                         break;
@@ -690,6 +699,7 @@ namespace mySystem.Process.Bag.LDPE
                             id = Convert.ToInt32(dt.Rows[0]["ID"]);
                             (new mySystem.Process.Bag.LDPE.LDPEBag_productioninstruction(mainform, id)).print(false);
                             GC.Collect();
+                            printedPages[1] = 1;
                         }
                         break;
                     case 10: // BPV-内标签
@@ -707,6 +717,7 @@ namespace mySystem.Process.Bag.LDPE
                             da = new SqlDataAdapter("select * from " + tableName[r - 2] + " where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
                             dt = new DataTable("制袋机组运行记录");
                             da.Fill(dt);
+                            printedPages[r] = pages.Count;
                             foreach (int page in pages)
                             {
                                 id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
@@ -718,6 +729,7 @@ namespace mySystem.Process.Bag.LDPE
                         catch(Exception ee)
                         {
                             MessageBox.Show("请确认打印范围!");
+                            return;
                         }
                         break;
 
@@ -751,9 +763,11 @@ namespace mySystem.Process.Bag.LDPE
             my.Cells[14, 7].Value = dtOuter.Rows[0]["汇总员"];
             my.Cells[14, 9].Value = Convert.ToDateTime(dtOuter.Rows[0]["汇总时间"]).ToString("yyyy年MM月dd日");
             my.Cells[16, 7].Value = dtOuter.Rows[0]["审核员"];
-            my.Cells[16, 9].Value = Convert.ToDateTime(dtOuter.Rows[0]["审核时间"]).ToString("yyyy年MM月dd日");
+            //my.Cells[16, 9].Value = Convert.ToDateTime(dtOuter.Rows[0]["审核时间"]).ToString("yyyy年MM月dd日");
+            my.Cells[16, 9].Value = "";
             my.Cells[18, 7].Value = dtOuter.Rows[0]["批准员"];
-            my.Cells[18, 9].Value = Convert.ToDateTime(dtOuter.Rows[0]["批准时间"]).ToString("yyyy年MM月dd日");
+            //my.Cells[18, 9].Value = Convert.ToDateTime(dtOuter.Rows[0]["批准时间"]).ToString("yyyy年MM月dd日");
+            my.Cells[18, 9].Value = "";
 
 
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
@@ -763,9 +777,17 @@ namespace mySystem.Process.Bag.LDPE
                     accumu[0] = 1;
 
                 }
+                else if (10 == i || 11 == i)
+                {
+                    accumu[i] = 0;
+                }
+                else if (i > 11)
+                {
+                    accumu[i] = printedPages[i];
+                }
                 else
                 {
-                    accumu[i] = Convert.ToInt32(dataGridView1.Rows[i].Cells[totalPage].Value) + accumu[i - 1];
+                    accumu[i] = printedPages[i];
                 }
                 my.Cells[i + rowStartAt, 3] = accumu[i];
             }
@@ -869,6 +891,11 @@ namespace mySystem.Process.Bag.LDPE
             String Columnsname = ((DataGridView)sender).Columns[((DataGridView)sender).SelectedCells[0].ColumnIndex].Name;
             String rowsname = (((DataGridView)sender).SelectedCells[0].RowIndex + 1).ToString(); ;
             MessageBox.Show("第" + rowsname + "行的『" + Columnsname + "』填写错误");
+        }
+
+        private void comboBox打印机选择_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
         
     }

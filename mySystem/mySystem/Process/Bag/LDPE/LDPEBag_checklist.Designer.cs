@@ -319,7 +319,7 @@
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label1);
             this.Name = "LDPEBag_checklist";
-            this.Text = "LDPEBag_checklist";
+            this.Text = "开机确认表";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LDPEBag_checklist_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
