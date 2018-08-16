@@ -1,0 +1,193 @@
+xls/LDPEBag/10 SOP-MFG-108-R01A 制袋岗位交接班记录.xlsx	../../xls/LDPEBag/10 SOP-MFG-108-R01A 制袋岗位交接班记录.xlsx
+xls/LDPEBag/5 SOP-MFG-109-R01A 产品内包装记录.xlsx	../../xls/LDPEBag/5 SOP-MFG-109-R01A 产品内包装记录.xlsx
+xls/LDPEBag/11 LDPE 制袋内包标签.xlsx	../../xls/LDPEBag/11 LDPE 制袋内包标签.xlsx
+xls/LDPEBag/SOP-MFG-304-R01A 1#制袋工序生产指令.xlsx	../../xls/LDPEBag/SOP-MFG-304-R01A 1#制袋工序生产指令.xlsx
+xls/LDPEBag/LDPE 制袋内包标签.xlsx	../../xls/LDPEBag/LDPE 制袋内包标签.xlsx
+xls/LDPEBag/3 SOP-MFG-102-R01A 生产领料记录.xlsx	../../xls/LDPEBag/3 SOP-MFG-102-R01A 生产领料记录.xlsx
+xls/LDPEBag/12 LDPE 制袋外包标签.xlsx	../../xls/LDPEBag/12 LDPE 制袋外包标签.xlsx
+xls/LDPEBag/1 SOP-MFG-304-R01A 1#制袋工序生产指令.xlsx	../../xls/LDPEBag/1 SOP-MFG-304-R01A 1#制袋工序生产指令.xlsx
+xls/LDPEBag/7 SOP-MFG-304-R03A 1#制袋机运行记录.xlsx	../../xls/LDPEBag/7 SOP-MFG-304-R03A 1#制袋机运行记录.xlsx
+xls/LDPEBag/SOP-MFG-102-R01A 生产领料记录.xlsx	../../xls/LDPEBag/SOP-MFG-102-R01A 生产领料记录.xlsx
+xls/LDPEBag/SOP-MFG-108-R01A  制袋岗位交接班记录.xlsx	../../xls/LDPEBag/SOP-MFG-108-R01A  制袋岗位交接班记录.xlsx
+xls/LDPEBag/8 SOP-MFG-110-R01A 清场记录.xlsx	../../xls/LDPEBag/8 SOP-MFG-110-R01A 清场记录.xlsx
+xls/LDPEBag/SOP-MFG-109-R01A 产品内包装记录-1.xlsx	../../xls/LDPEBag/SOP-MFG-109-R01A 产品内包装记录-1.xlsx
+xls/LDPEBag/SOP-MFG-303-R03A 2# 制袋机运行记录.xlsx	../../xls/LDPEBag/SOP-MFG-303-R03A 2# 制袋机运行记录.xlsx
+xls/LDPEBag/SOP-MFG-109-R01A 产品内包装记录.xlsx	../../xls/LDPEBag/SOP-MFG-109-R01A 产品内包装记录.xlsx
+xls/LDPEBag/18 QB-PA-PP-03-R02A 产品热合强度检验记录.xlsx	../../xls/LDPEBag/18 QB-PA-PP-03-R02A 产品热合强度检验记录.xlsx
+xls/LDPEBag/SOP-MFG-110-R01A 清场记录.xlsx	../../xls/LDPEBag/SOP-MFG-110-R01A 清场记录.xlsx
+xls/LDPEBag/LDPE 制袋外包标签.xlsx	../../xls/LDPEBag/LDPE 制袋外包标签.xlsx
+xls/Extrusion/SOP-MFG-101-R06A 领料申请单.xlsx	../../xls/Extrusion/SOP-MFG-101-R06A 领料申请单.xlsx
+xls/Extrusion/A/SOP-MFG-301-R03 吹膜机组清洁记录.xlsx	../../xls/Extrusion/A/SOP-MFG-301-R03 吹膜机组清洁记录.xlsx
+xls/Extrusion/A/SOP-MFG-301-R01 吹膜工序生产指令.xlsx	../../xls/Extrusion/A/SOP-MFG-301-R01 吹膜工序生产指令.xlsx
+xls/Extrusion/A/SOP-MFG-105-R02A 吹膜工序批生产记录封面.xlsx	../../xls/Extrusion/A/SOP-MFG-105-R02A 吹膜工序批生产记录封面.xlsx
+xls/Extrusion/A/SOP-MFG-301-R11 吹膜工序清场记录.xlsx	../../xls/Extrusion/A/SOP-MFG-301-R11 吹膜工序清场记录.xlsx
+xls/Extrusion/A/SOP-MFG-301-R01 吹膜工序生产指令 - 副本.xlsx	../../xls/Extrusion/A/SOP-MFG-301-R01 吹膜工序生产指令 - 副本.xlsx
+xls/Extrusion/A/SOP-MFG-301-R13 吹膜岗位交接班记录.xlsx	../../xls/Extrusion/A/SOP-MFG-301-R13 吹膜岗位交接班记录.xlsx
+xls/Extrusion/吹膜标签.xlsx	../../xls/Extrusion/吹膜标签.xlsx
+xls/Extrusion/C/SOP-MFG-301-R07 吹膜供料系统运行记录.xlsx	../../xls/Extrusion/C/SOP-MFG-301-R07 吹膜供料系统运行记录.xlsx
+xls/Extrusion/C/SOP-MFG-301-R05 吹膜机组预热参数记录表.docx	../../xls/Extrusion/C/SOP-MFG-301-R05 吹膜机组预热参数记录表.docx
+xls/Extrusion/C/SOP-MFG-301-R05 挤出机预热参数记录表.xlsx	../../xls/Extrusion/C/SOP-MFG-301-R05 挤出机预热参数记录表.xlsx
+xls/Extrusion/C/SOP-MFG-301-R05 挤出机预热参数记录表.docx	../../xls/Extrusion/C/SOP-MFG-301-R05 挤出机预热参数记录表.docx
+xls/Extrusion/C/SOP-MFG-301-R08 吹膜机组运行记录.xlsx	../../xls/Extrusion/C/SOP-MFG-301-R08 吹膜机组运行记录.xlsx
+xls/Extrusion/C/SOP-MFG-301-R05 吹膜机组预热参数记录表.xlsx	../../xls/Extrusion/C/SOP-MFG-301-R05 吹膜机组预热参数记录表.xlsx
+xls/Extrusion/C/SOP-MFG-301-R04 吹膜机组开机前确认表.xlsx	../../xls/Extrusion/C/SOP-MFG-301-R04 吹膜机组开机前确认表.xlsx
+xls/Extrusion/D/SOP-MFG-403-R03A 吹膜机更换过滤网记录表.xlsx	../../xls/Extrusion/D/SOP-MFG-403-R03A 吹膜机更换过滤网记录表.xlsx
+xls/Extrusion/D/SOP-MFG-403-R02A 吹膜机组换模芯检查表.xlsx	../../xls/Extrusion/D/SOP-MFG-403-R02A 吹膜机组换模芯检查表.xlsx
+xls/Extrusion/D/QP-HR-11-F04A 吹膜机安全培训记录.xlsx	../../xls/Extrusion/D/QP-HR-11-F04A 吹膜机安全培训记录.xlsx
+xls/Extrusion/D/SOP-MFG-403-R01A 吹膜机组换模头检查表.xlsx	../../xls/Extrusion/D/SOP-MFG-403-R01A 吹膜机组换模头检查表.xlsx
+xls/Extrusion/B/SOP-MFG-301-R14 吹膜工序领料退料记录.xlsx	../../xls/Extrusion/B/SOP-MFG-301-R14 吹膜工序领料退料记录.xlsx
+xls/Extrusion/B/SOP-MFG-301-R12 吹膜工序物料平衡记录.xlsx	../../xls/Extrusion/B/SOP-MFG-301-R12 吹膜工序物料平衡记录.xlsx
+xls/Extrusion/B/SOP-MFG-301-R02A 吹膜生产日报表.xlsx	../../xls/Extrusion/B/SOP-MFG-301-R02A 吹膜生产日报表.xlsx
+xls/Extrusion/B/SOP-MFG-301-R09 吹膜工序生产和检验记录.xlsx	../../xls/Extrusion/B/SOP-MFG-301-R09 吹膜工序生产和检验记录.xlsx
+xls/Extrusion/B/SOP-MFG-301-R06 吹膜供料记录.xlsx	../../xls/Extrusion/B/SOP-MFG-301-R06 吹膜供料记录.xlsx
+xls/Extrusion/B/SOP-MFG-301-R10 吹膜工序废品记录.xlsx	../../xls/Extrusion/B/SOP-MFG-301-R10 吹膜工序废品记录.xlsx
+xls/Extrusion/B/SOP-MFG-301-R14 吹膜工序传料记录.xlsx	../../xls/Extrusion/B/SOP-MFG-301-R14 吹膜工序传料记录.xlsx
+xls/Extrusion/B/SOP-MFG-109-R01A 产品内包装记录.xlsx	../../xls/Extrusion/B/SOP-MFG-109-R01A 产品内包装记录.xlsx
+xls/Extrusion/B/SOP-MFG-111-R01A  产品外包装记录.xlsx	../../xls/Extrusion/B/SOP-MFG-111-R01A  产品外包装记录.xlsx
+xls/Extrusion/B/吹膜标签.xlsx	../../xls/Extrusion/B/吹膜标签.xlsx
+xls/CSBag/SOP-MFG-303-R02A 2# 制袋机开机前确认表.xlsx	../../xls/CSBag/SOP-MFG-303-R02A 2# 制袋机开机前确认表.xlsx
+xls/CSBag/SOP-MFG-201-R01A 洁净区温湿度记录.xlsx	../../xls/CSBag/SOP-MFG-201-R01A 洁净区温湿度记录.xlsx
+xls/CSBag/QB-PA-PP-03-R02A 产品热合强度检验记录.xlsx	../../xls/CSBag/QB-PA-PP-03-R02A 产品热合强度检验记录.xlsx
+xls/CSBag/SOP-MFG-102-R02A 生产退料记录.xlsx	../../xls/CSBag/SOP-MFG-102-R02A 生产退料记录.xlsx
+xls/CSBag/新建 Microsoft Excel 工作表.xlsx	../../xls/CSBag/新建 Microsoft Excel 工作表.xlsx
+xls/CSBag/SOP-MFG-111-R01A 产品外包装记录.xlsx	../../xls/CSBag/SOP-MFG-111-R01A 产品外包装记录.xlsx
+xls/CSBag/SOP-MFG-303-R04A CS制袋生产台帐.xlsx	../../xls/CSBag/SOP-MFG-303-R04A CS制袋生产台帐.xlsx
+xls/CSBag/SOP-MFG-108-R01A 制袋岗位交接班记录.xlsx	../../xls/CSBag/SOP-MFG-108-R01A 制袋岗位交接班记录.xlsx
+xls/CSBag/SOP-MFG-102-R01A 生产领料记录.xlsx	../../xls/CSBag/SOP-MFG-102-R01A 生产领料记录.xlsx
+xls/CSBag/标签 CS 制袋 外包标签.xlsx	../../xls/CSBag/标签 CS 制袋 外包标签.xlsx
+xls/CSBag/SOP-MFG-105-R01A 制袋工序批生产记录封面.xlsx	../../xls/CSBag/SOP-MFG-105-R01A 制袋工序批生产记录封面.xlsx
+xls/CSBag/标签 CS 制袋 内标签.xlsx	../../xls/CSBag/标签 CS 制袋 内标签.xlsx
+xls/CSBag/SOP-MFG-303-R03A 2# 制袋机运行记录.xlsx	../../xls/CSBag/SOP-MFG-303-R03A 2# 制袋机运行记录.xlsx
+xls/CSBag/SOP-MFG-303-R01A 2#制袋工序生产指令.xlsx	../../xls/CSBag/SOP-MFG-303-R01A 2#制袋工序生产指令.xlsx
+xls/CSBag/标签 UP1 内标签 外标签.xlsx	../../xls/CSBag/标签 UP1 内标签 外标签.xlsx
+xls/CSBag/SOP-MFG-109-R01A 产品内包装记录.xlsx	../../xls/CSBag/SOP-MFG-109-R01A 产品内包装记录.xlsx
+xls/CSBag/SOP-MFG-110-R01A 清场记录.xlsx	../../xls/CSBag/SOP-MFG-110-R01A 清场记录.xlsx
+xls/CSBag/QB-PA-PP-03-R01A 产品外观和尺寸检验记录.xlsx	../../xls/CSBag/QB-PA-PP-03-R01A 产品外观和尺寸检验记录.xlsx
+xls/PTV/SOP-MFG-201-R01A 洁净区温湿度记录.xlsx	../../xls/PTV/SOP-MFG-201-R01A 洁净区温湿度记录.xlsx
+xls/PTV/SOP-MFG-305-R04A PTV生产日报表.xlsx	../../xls/PTV/SOP-MFG-305-R04A PTV生产日报表.xlsx
+xls/PTV/SOP-MFG-412-R01A 底封机运行记录.xlsx	../../xls/PTV/SOP-MFG-412-R01A 底封机运行记录.xlsx
+xls/PTV/SOP-MFG-415-R01A  泄漏测试记录.xlsx	../../xls/PTV/SOP-MFG-415-R01A  泄漏测试记录.xlsx
+xls/PTV/11 SOP-MFG-415-R01A 泄漏测试记录.xlsx	../../xls/PTV/11 SOP-MFG-415-R01A 泄漏测试记录.xlsx
+xls/PTV/6 SOP-MFG-111-R01A 产品外包装记录_旧.xlsx	../../xls/PTV/6 SOP-MFG-111-R01A 产品外包装记录_旧.xlsx
+xls/PTV/5 SOP-MFG-109-R01A 产品内包装记录.xlsx	../../xls/PTV/5 SOP-MFG-109-R01A 产品内包装记录.xlsx
+xls/PTV/13 SOP-MFG-305-R04A PTV生产台帐.xlsx	../../xls/PTV/13 SOP-MFG-305-R04A PTV生产台帐.xlsx
+xls/PTV/8 SOP-MFG-412-R01A 底封机运行记录.xlsx	../../xls/PTV/8 SOP-MFG-412-R01A 底封机运行记录.xlsx
+xls/PTV/0 SOP-MFG-105-R01A 制袋工序批生产记录封面-PTV.xlsx	../../xls/PTV/0 SOP-MFG-105-R01A 制袋工序批生产记录封面-PTV.xlsx
+xls/PTV/SOP-MFG-305-R01A PTV生产指令.xlsx	../../xls/PTV/SOP-MFG-305-R01A PTV生产指令.xlsx
+xls/PTV/6 SOP-MFG-111-R01A 产品外包装记录.xlsx	../../xls/PTV/6 SOP-MFG-111-R01A 产品外包装记录.xlsx
+xls/PTV/3 SOP-MFG-102-R01A 生产领料记录.xlsx	../../xls/PTV/3 SOP-MFG-102-R01A 生产领料记录.xlsx
+xls/PTV/SOP-MFG-418-R01A  瓶口焊接机运行记录.xlsx	../../xls/PTV/SOP-MFG-418-R01A  瓶口焊接机运行记录.xlsx
+xls/PTV/SOP-MFG-416-R01A 超声波焊接记录.xlsx	../../xls/PTV/SOP-MFG-416-R01A 超声波焊接记录.xlsx
+xls/PTV/10 SOP-MFG-416-R01A 超声波焊接记录.xlsx	../../xls/PTV/10 SOP-MFG-416-R01A 超声波焊接记录.xlsx
+xls/PTV/1 SOP-MFG-305-R01A PTV生产指令.xlsx	../../xls/PTV/1 SOP-MFG-305-R01A PTV生产指令.xlsx
+xls/PTV/SOP-MFG-108-R01A  制袋岗位交接班记录.xlsx	../../xls/PTV/SOP-MFG-108-R01A  制袋岗位交接班记录.xlsx
+xls/PTV/SOP-MFG-303-R04A PTV生产台帐.xlsx	../../xls/PTV/SOP-MFG-303-R04A PTV生产台帐.xlsx
+xls/PTV/4 SOP-MFG-102-R02A 生产退料记录.xlsx	../../xls/PTV/4 SOP-MFG-102-R02A 生产退料记录.xlsx
+xls/PTV/12 SOP-MFG-110-R01A 清场记录.xlsx	../../xls/PTV/12 SOP-MFG-110-R01A 清场记录.xlsx
+xls/PTV/SOP-MFG-303-R03A 2# 制袋机运行记录.xlsx	../../xls/PTV/SOP-MFG-303-R03A 2# 制袋机运行记录.xlsx
+xls/PTV/标签 PTV 制袋 内标签.xlsx	../../xls/PTV/标签 PTV 制袋 内标签.xlsx
+xls/PTV/2 SOP-MFG-305-R03A PTV生产开机确认表.xlsx	../../xls/PTV/2 SOP-MFG-305-R03A PTV生产开机确认表.xlsx
+xls/PTV/标签 PTV 制袋 外包标签.xlsx	../../xls/PTV/标签 PTV 制袋 外包标签.xlsx
+xls/PTV/9 SOP-MFG-413-R01A 圆口焊接机运行记录.xlsx	../../xls/PTV/9 SOP-MFG-413-R01A 圆口焊接机运行记录.xlsx
+xls/PTV/SOP-MFG-109-R01A 产品内包装记录.xlsx	../../xls/PTV/SOP-MFG-109-R01A 产品内包装记录.xlsx
+xls/PTV/18 QB-PA-PP-03-R02A 产品热合强度检验记录.xlsx	../../xls/PTV/18 QB-PA-PP-03-R02A 产品热合强度检验记录.xlsx
+xls/PTV/17 QB-PA-PP-03-R01A 产品外观和尺寸检验记.xlsx	../../xls/PTV/17 QB-PA-PP-03-R01A 产品外观和尺寸检验记.xlsx
+xls/PTV/14 SOP-MFG-108-R01A 制袋岗位交接班记录.xlsx	../../xls/PTV/14 SOP-MFG-108-R01A 制袋岗位交接班记录.xlsx
+xls/PTV/SOP-MFG-110-R01A 清场记录.xlsx	../../xls/PTV/SOP-MFG-110-R01A 清场记录.xlsx
+xls/PTV/7 SOP-MFG-418-R01A 瓶口焊接机运行记录.xlsx	../../xls/PTV/7 SOP-MFG-418-R01A 瓶口焊接机运行记录.xlsx
+xls/PTV/SOP-MFG-413-R01A 圆口焊接机运行记录.xlsx	../../xls/PTV/SOP-MFG-413-R01A 圆口焊接机运行记录.xlsx
+xls/PTV/SOP-MFG-305-R03A PTV生产开机确认表 - 副本.xlsx	../../xls/PTV/SOP-MFG-305-R03A PTV生产开机确认表 - 副本.xlsx
+xls/PTV/15 PTV BPV-内标签.xlsx	../../xls/PTV/15 PTV BPV-内标签.xlsx
+xls/BPVBag/SOP-MFG-201-R01A 洁净区温湿度记录.xlsx	../../xls/BPVBag/SOP-MFG-201-R01A 洁净区温湿度记录.xlsx
+xls/BPVBag/15 SOP-MFG-508-R01A  打孔及与图纸确认记录.xlsx	../../xls/BPVBag/15 SOP-MFG-508-R01A  打孔及与图纸确认记录.xlsx
+xls/BPVBag/1 SOP-MFG-306-R01A  BPV 制袋生产指令.xlsx	../../xls/BPVBag/1 SOP-MFG-306-R01A  BPV 制袋生产指令.xlsx
+xls/BPVBag/SOP-MFG-306-R06A  2D袋体生产记录.xlsx	../../xls/BPVBag/SOP-MFG-306-R06A  2D袋体生产记录.xlsx
+xls/BPVBag/13 SOP-MFG-506-R01A  封口热合机运行记录.xlsx	../../xls/BPVBag/13 SOP-MFG-506-R01A  封口热合机运行记录.xlsx
+xls/BPVBag/SOP-MFG-415-R01A  泄漏测试记录.xlsx	../../xls/BPVBag/SOP-MFG-415-R01A  泄漏测试记录.xlsx
+xls/BPVBag/11 SOP-MFG-501-R01A  多功能热合机运行记录.xlsx	../../xls/BPVBag/11 SOP-MFG-501-R01A  多功能热合机运行记录.xlsx
+xls/BPVBag/QB-PA-PP-03-R02A 产品热合强度检验记录.xlsx	../../xls/BPVBag/QB-PA-PP-03-R02A 产品热合强度检验记录.xlsx
+xls/BPVBag/12 SOP-MFG-505-R01A  90度热合机运行记录1.xlsx	../../xls/BPVBag/12 SOP-MFG-505-R01A  90度热合机运行记录1.xlsx
+xls/BPVBag/5 SOP-MFG-109-R01A 产品内包装记录.xlsx	../../xls/BPVBag/5 SOP-MFG-109-R01A 产品内包装记录.xlsx
+xls/BPVBag/SOP-MFG-417-R01A  2D袋体与船型接口热合记录.xlsx	../../xls/BPVBag/SOP-MFG-417-R01A  2D袋体与船型接口热合记录.xlsx
+xls/BPVBag/16 SOP-MFG-306-R04A  BPV切管记录.xlsx	../../xls/BPVBag/16 SOP-MFG-306-R04A  BPV切管记录.xlsx
+xls/BPVBag/SOP-MFG-102-R02A 生产退料记录.xlsx	../../xls/BPVBag/SOP-MFG-102-R02A 生产退料记录.xlsx
+xls/BPVBag/22 QB-PA-PP-03-R02A 产品热合强度检验记录.xlsx	../../xls/BPVBag/22 QB-PA-PP-03-R02A 产品热合强度检验记录.xlsx
+xls/BPVBag/8 SOP-MFG-412-R01A 底封机运行记录.xlsx	../../xls/BPVBag/8 SOP-MFG-412-R01A 底封机运行记录.xlsx
+xls/BPVBag/6 SOP-MFG-111-R01A 产品外包装记录.xlsx	../../xls/BPVBag/6 SOP-MFG-111-R01A 产品外包装记录.xlsx
+xls/BPVBag/SOP-MFG-306-R10A  BPV生产日报表.xlsx	../../xls/BPVBag/SOP-MFG-306-R10A  BPV生产日报表.xlsx
+xls/BPVBag/3 SOP-MFG-102-R01A 生产领料记录.xlsx	../../xls/BPVBag/3 SOP-MFG-102-R01A 生产领料记录.xlsx
+xls/BPVBag/SOP-MFG-503-R01A  单管口热合机运行记录.xlsx	../../xls/BPVBag/SOP-MFG-503-R01A  单管口热合机运行记录.xlsx
+xls/BPVBag/SOP-MFG-105-R01 制袋工序批生产记录封面.xlsx	../../xls/BPVBag/SOP-MFG-105-R01 制袋工序批生产记录封面.xlsx
+xls/BPVBag/2 SOP-MFG-306-R02A  BPV生产前确认记录.xlsx	../../xls/BPVBag/2 SOP-MFG-306-R02A  BPV生产前确认记录.xlsx
+xls/BPVBag/SOP-MFG-111-R01A 产品外包装记录.xlsx	../../xls/BPVBag/SOP-MFG-111-R01A 产品外包装记录.xlsx
+xls/BPVBag/SOP-MFG-508-R01A  打孔及与图纸确认记录.xlsx	../../xls/BPVBag/SOP-MFG-508-R01A  打孔及与图纸确认记录.xlsx
+xls/BPVBag/SOP-MFG-505-R01A  90度热合机运行记录.xlsx	../../xls/BPVBag/SOP-MFG-505-R01A  90度热合机运行记录.xlsx
+xls/BPVBag/SOP-MFG-418-R01A  瓶口焊接机运行记录.xlsx	../../xls/BPVBag/SOP-MFG-418-R01A  瓶口焊接机运行记录.xlsx
+xls/BPVBag/SOP-MFG-306-R02A  BPV生产前确认记录.xlsx	../../xls/BPVBag/SOP-MFG-306-R02A  BPV生产前确认记录.xlsx
+xls/BPVBag/17 SOP-MFG-306-R05A  BPV装配确认记录.xlsx	../../xls/BPVBag/17 SOP-MFG-306-R05A  BPV装配确认记录.xlsx
+xls/BPVBag/SOP-MFG-306-R01A  BPV 制袋生产指令.xlsx	../../xls/BPVBag/SOP-MFG-306-R01A  BPV 制袋生产指令.xlsx
+xls/BPVBag/0 SOP-MFG-105-R01A 制袋工序批生产记录封面BPV.xlsx	../../xls/BPVBag/0 SOP-MFG-105-R01A 制袋工序批生产记录封面BPV.xlsx
+xls/BPVBag/SOP-MFG-501-R01A  多功能热合机运行记录.xlsx	../../xls/BPVBag/SOP-MFG-501-R01A  多功能热合机运行记录.xlsx
+xls/BPVBag/SOP-MFG-412-R01A  底封机运行记录.xlsx	../../xls/BPVBag/SOP-MFG-412-R01A  底封机运行记录.xlsx
+xls/BPVBag/9 SOP-MFG-417-R01A  2D袋体与船型接口热合记录.xlsx	../../xls/BPVBag/9 SOP-MFG-417-R01A  2D袋体与船型接口热合记录.xlsx
+xls/BPVBag/19 BPV-内标签.xlsx	../../xls/BPVBag/19 BPV-内标签.xlsx
+xls/BPVBag/4 SOP-MFG-102-R02A 生产退料记录.xlsx	../../xls/BPVBag/4 SOP-MFG-102-R02A 生产退料记录.xlsx
+xls/BPVBag/10 SOP-MFG-503-R01A  单管口热合机运行记录.xlsx	../../xls/BPVBag/10 SOP-MFG-503-R01A  单管口热合机运行记录.xlsx
+xls/BPVBag/18 SOP-MFG-306-R08A  关键尺寸确认记录.xlsx	../../xls/BPVBag/18 SOP-MFG-306-R08A  关键尺寸确认记录.xlsx
+xls/BPVBag/14 SOP-MFG-502-R01A  BPV袋体生产记录.xlsx	../../xls/BPVBag/14 SOP-MFG-502-R01A  BPV袋体生产记录.xlsx
+xls/BPVBag/SOP-MFG-306-R09A  原材料分装记录.xlsx	../../xls/BPVBag/SOP-MFG-306-R09A  原材料分装记录.xlsx
+xls/BPVBag/SOP-MFG-109-R01A 产品内包装记录.xlsx	../../xls/BPVBag/SOP-MFG-109-R01A 产品内包装记录.xlsx
+xls/BPVBag/SOP-MFG-306-R05A  BPV装配确认记录.xlsx	../../xls/BPVBag/SOP-MFG-306-R05A  BPV装配确认记录.xlsx
+xls/BPVBag/SOP-MFG-502-R01A  3D袋体生产记录.xlsx	../../xls/BPVBag/SOP-MFG-502-R01A  3D袋体生产记录.xlsx
+xls/BPVBag/SOP-MFG-110-R01A 清场记录.xlsx	../../xls/BPVBag/SOP-MFG-110-R01A 清场记录.xlsx
+xls/BPVBag/QB-PA-PP-03-R01A 产品外观和尺寸检验记录.xlsx	../../xls/BPVBag/QB-PA-PP-03-R01A 产品外观和尺寸检验记录.xlsx
+xls/BPVBag/7 SOP-MFG-418-R01A 瓶口焊接机运行记录.xlsx	../../xls/BPVBag/7 SOP-MFG-418-R01A 瓶口焊接机运行记录.xlsx
+xls/BPVBag/SOP-MFG-102-R01A  生产领料使用记录.xlsx	../../xls/BPVBag/SOP-MFG-102-R01A  生产领料使用记录.xlsx
+xls/BPVBag/SOP-MFG-306-R08A  关键尺寸确认记录.xlsx	../../xls/BPVBag/SOP-MFG-306-R08A  关键尺寸确认记录.xlsx
+xls/BPVBag/SOP-MFG-306-R04A  BPV切管记录.xlsx	../../xls/BPVBag/SOP-MFG-306-R04A  BPV切管记录.xlsx
+xls/BPVBag/21 SOP-MFG-306-R10A  BPV生产日报表.xlsx	../../xls/BPVBag/21 SOP-MFG-306-R10A  BPV生产日报表.xlsx
+xls/BPVBag/SOP-MFG-506-R01A  封口热合机运行记录.xlsx	../../xls/BPVBag/SOP-MFG-506-R01A  封口热合机运行记录.xlsx
+xls/miejun/SOP-MFG-106-R02B 辐照灭菌产品验收记录.xlsx	../../xls/miejun/SOP-MFG-106-R02B 辐照灭菌产品验收记录.xlsx
+xls/miejun/SOP-MFG-106-R01B Gamma射线辐射灭菌委托单.xlsx	../../xls/miejun/SOP-MFG-106-R01B Gamma射线辐射灭菌委托单.xlsx
+xls/miejun/SOP-MFG-106-R03A 辐照灭菌台帐.xlsx	../../xls/miejun/SOP-MFG-106-R03A 辐照灭菌台帐.xlsx
+xls/LDPE/SOP-MFG-201-R01A 洁净区温湿度记录.xlsx	../../xls/LDPE/SOP-MFG-201-R01A 洁净区温湿度记录.xlsx
+xls/LDPE/QB-PA-PP-03-R02A 产品热合强度检验记录.xlsx	../../xls/LDPE/QB-PA-PP-03-R02A 产品热合强度检验记录.xlsx
+xls/LDPE/SOP-MFG-102-R02A 生产退料记录.xlsx	../../xls/LDPE/SOP-MFG-102-R02A 生产退料记录.xlsx
+xls/LDPE/SOP-MFG-111-R01A 产品外包装记录.xlsx	../../xls/LDPE/SOP-MFG-111-R01A 产品外包装记录.xlsx
+xls/LDPE/SOP-MFG-304-R03A 1#制袋机运行记录.xlsx	../../xls/LDPE/SOP-MFG-304-R03A 1#制袋机运行记录.xlsx
+xls/LDPE/7 SOP-MFG-304-R03A 1#制袋机运行记录.xlsx	../../xls/LDPE/7 SOP-MFG-304-R03A 1#制袋机运行记录.xlsx
+xls/LDPE/SOP-MFG-304-R02A 1#制袋机开机前确认表.xlsx	../../xls/LDPE/SOP-MFG-304-R02A 1#制袋机开机前确认表.xlsx
+xls/LDPE/8 SOP-MFG-110-R01A 清场记录.xlsx	../../xls/LDPE/8 SOP-MFG-110-R01A 清场记录.xlsx
+xls/LDPE/2 SOP-MFG-304-R02A 1#制袋机开机前确认表.xlsx	../../xls/LDPE/2 SOP-MFG-304-R02A 1#制袋机开机前确认表.xlsx
+xls/LDPE/0 SOP-MFG-105-R01 制袋工序批生产记录封面.xlsx	../../xls/LDPE/0 SOP-MFG-105-R01 制袋工序批生产记录封面.xlsx
+xls/LDPE/13 QB-PA-PP-03-R01A 产品外观和尺寸检验记.xlsx	../../xls/LDPE/13 QB-PA-PP-03-R01A 产品外观和尺寸检验记.xlsx
+xls/LDPE/QB-PA-PP-03-R01A 产品外观和尺寸检验记录.xlsx	../../xls/LDPE/QB-PA-PP-03-R01A 产品外观和尺寸检验记录.xlsx
+xls/LDPE/SOP-MFG-102-R01A  生产领料使用记录.xlsx	../../xls/LDPE/SOP-MFG-102-R01A  生产领料使用记录.xlsx
+xls/订单/表90. PALL AUSTAR采购需求单.xlsx	../../xls/订单/表90. PALL AUSTAR采购需求单.xlsx
+xls/订单/表93. PALL AUSTAR采购订单.xlsx	../../xls/订单/表93. PALL AUSTAR采购订单.xlsx
+xls/订单/PALL AUSTAR 采购申请--20170825.xlsx	../../xls/订单/PALL AUSTAR 采购申请--20170825.xlsx
+xls/cleancut/7 标签-清洁分切.xlsx	../../xls/cleancut/7 标签-清洁分切.xlsx
+xls/cleancut/5 SOP-MFG-302-R05A 清洁分切工序清场记录.xlsx	../../xls/cleancut/5 SOP-MFG-302-R05A 清洁分切工序清场记录.xlsx
+xls/cleancut/0 SOP-MFG-105-R03A 清洁分切批生产记录封面.xlsx	../../xls/cleancut/0 SOP-MFG-105-R03A 清洁分切批生产记录封面.xlsx
+xls/cleancut/4 SOP-MFG-302-R04A 清洁分切机运行记录.xlsx	../../xls/cleancut/4 SOP-MFG-302-R04A 清洁分切机运行记录.xlsx
+xls/cleancut/SOP-MFG-302-R02A 清洁分切机运行记录.xlsx	../../xls/cleancut/SOP-MFG-302-R02A 清洁分切机运行记录.xlsx
+xls/cleancut/SOP-MFG-302-R04A 清场记录.xlsx	../../xls/cleancut/SOP-MFG-302-R04A 清场记录.xlsx
+xls/cleancut/标签-清洁分切.xlsx	../../xls/cleancut/标签-清洁分切.xlsx
+xls/cleancut/SOP-MFG-302-R04A+清洁分切日报表.xlsx	../../xls/cleancut/SOP-MFG-302-R04A+清洁分切日报表.xlsx
+xls/cleancut/SOP-MFG-302-R01A 清洁分切生产指令.xlsx	../../xls/cleancut/SOP-MFG-302-R01A 清洁分切生产指令.xlsx
+xls/cleancut/6 SOP-MFG-302-R06A 清洁分切日报表.xlsx	../../xls/cleancut/6 SOP-MFG-302-R06A 清洁分切日报表.xlsx
+xls/cleancut/SOP-MFG-302-R03A 清洁分切生产记录表.xlsx	../../xls/cleancut/SOP-MFG-302-R03A 清洁分切生产记录表.xlsx
+xls/cleancut/SOP-MFG-302-R02A 清洁分切机开机确认.xlsx	../../xls/cleancut/SOP-MFG-302-R02A 清洁分切机开机确认.xlsx
+xls/库存/表3产品退货审批单（2）.xlsx	../../xls/库存/表3产品退货审批单（2）.xlsx
+xls/库存/SOP-WH-003-R04A 材料退库单.xlsx	../../xls/库存/SOP-WH-003-R04A 材料退库单.xlsx
+xls/库存/SOP-WH-003-R03A 材料出库单.xlsx	../../xls/库存/SOP-WH-003-R03A 材料出库单.xlsx
+xls/库存/表1产品退货申请单.xlsx	../../xls/库存/表1产品退货申请单.xlsx
+xls/库存/表7退货产品评审单.xlsx	../../xls/库存/表7退货产品评审单.xlsx
+xls/库存/PA-QMS-P-13-R  退货程序记录  20170704.xlsx	../../xls/库存/PA-QMS-P-13-R  退货程序记录  20170704.xlsx
+xls/库存/表9产品退货台帐.xlsx	../../xls/库存/表9产品退货台帐.xlsx
+xls/库存/表2产品退货审批单（1）.xlsx	../../xls/库存/表2产品退货审批单（1）.xlsx
+xls/库存/表8产品退货记录表.xlsx	../../xls/库存/表8产品退货记录表.xlsx
+xls/库存/表5产品退货接请验单.xlsx	../../xls/库存/表5产品退货接请验单.xlsx
+xls/库存/表6退货产品评审单.xlsx	../../xls/库存/表6退货产品评审单.xlsx
+xls/库存/表4产品退货接收单.xlsx	../../xls/库存/表4产品退货接收单.xlsx
+mySystem.exe mySystem.exe
