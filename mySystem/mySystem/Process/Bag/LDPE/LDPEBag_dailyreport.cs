@@ -138,7 +138,7 @@ namespace mySystem.Process.Bag.LDPE
         }
 
 
-        int[] getChangAndKuan(string code)
+        public static int[] getChangAndKuan(string code)
         {
             string[] s = code.Split('-');
             string num = s[s.Length - 1];
@@ -425,14 +425,31 @@ namespace mySystem.Process.Bag.LDPE
                 else
                 {
                     // 膜材用量
+                    string mat_code = "";
                     sum = 0;
                     foreach (DataRow ddr in dt.Rows)
                     {
-                        sum += Convert.ToDouble(ddr["领取数量"]);
+                        sum += Convert.ToDouble(ddr["领取数量"]) - Convert.ToDouble(ddr["退库数量"]);
+                        mat_code = ddr["物料代码"].ToString();
                     }
                     dr["膜材用量（米）"] = sum;
 
-                    //// 内包用量
+                    // 计算平方米之类的
+                    // TODO：判断是否要乘2
+                    // TODO: 是否要乘2？ 
+                    string[] codes = mat_code.Split('-');
+                    if (codes.Length <= 1 || (codes[1].StartsWith("S")))
+                    {
+                        dr["膜材用量（平方米）"] = Convert.ToDouble(dr["膜材规格（mm）"])
+                        * Convert.ToDouble(dr["膜材用量（米）"]) / 1000.0;
+                    }
+                    else
+                    {
+                        dr["膜材用量（平方米）"] = Convert.ToDouble(dr["膜材规格（mm）"])
+                        * Convert.ToDouble(dr["膜材用量（米）"]) / 1000.0*2;
+                    }
+                    // 内包用量
+                    
                     //drs = dt.Select(String.Format("物料代码='{0}' or 物料代码='{1}'",
                     //   内包代码[0], 内包代码[1]));
                     //sum = 0;
@@ -441,8 +458,9 @@ namespace mySystem.Process.Bag.LDPE
                     //    sum += Convert.ToDouble(ddr["领取数量"]);
                     //}
                     //dr["内包装袋用量（只）"] = sum;
+
+                    // 外包装袋用量
                     
-                    //// 外包装袋用量
                     //drs = dt.Select(String.Format("物料代码='{0}' or 物料代码='{1}' or 物料代码='{2}'",
                     //   外包代码[0], 外包代码[1], 外包代码[2]));
                     //sum = 0;
@@ -480,7 +498,7 @@ namespace mySystem.Process.Bag.LDPE
                     sum = 0;
                     foreach (DataRow ddr in dt.Rows)
                     {
-                        sum += Convert.ToDouble(ddr["领取数量"]);
+                        sum += Convert.ToDouble(ddr["领取数量"]) - Convert.ToDouble(ddr["退库数量"]);
                     }
                     dr["内包装袋用量（只）"] = sum;
 
@@ -513,7 +531,7 @@ namespace mySystem.Process.Bag.LDPE
                     sum = 0;
                     foreach (DataRow ddr in dt.Rows)
                     {
-                        sum += Convert.ToDouble(ddr["领取数量"]);
+                        sum += Convert.ToDouble(ddr["领取数量"]) - Convert.ToDouble(ddr["退库数量"]);
                     }
                     dr["纸箱用量"] = sum;
 
@@ -521,14 +539,11 @@ namespace mySystem.Process.Bag.LDPE
 
 
 
-                // 计算平方米之类的
-                // TODO：判断是否要乘2
-                dr["膜材用量（平方米）"] = Convert.ToDouble(dr["膜材规格（mm）"])
-                    *Convert.ToDouble( dr["膜材用量（米）"])/1000.0;
+                
                 try
                 {
                     dr["制袋收率（%）"] = Math.Round(Convert.ToDouble(dr["数量（平方米）"]) /
-                        Convert.ToDouble(dr["膜材用量（平方米）"]), 2);
+                        Convert.ToDouble(dr["膜材用量（平方米）"])*100, 2);
                 }
                 catch
                 {
@@ -577,7 +592,7 @@ namespace mySystem.Process.Bag.LDPE
             lbl入库量合计.Text = 入库量合计.ToString("F2");
             lbl工时合计.Text = 工时.ToString("F2");
             lbl工时效率.Text =(入库量合计/工时*100).ToString("F2");
-                lbl成品数量合计.Text=产品数量.ToString("F2");
+            lbl成品数量合计.Text = 产品数量.ToString("F2");
             lbl膜材用量合计.Text=膜材用量.ToString("F2");
             lbl制袋收率.Text = (产品数量/膜材用量*100).ToString("F2");
             lbl内包装用量.Text=内包用量.ToString("F2");
@@ -624,7 +639,7 @@ namespace mySystem.Process.Bag.LDPE
             if (isFirstBind)
             {
                 readDGVWidthFromSettingAndSet(dataGridView1);
-                isFirstBind = false;
+                isFirstBind = true;
             }
         }
 
@@ -634,9 +649,6 @@ namespace mySystem.Process.Bag.LDPE
         {
             writeDGVWidthToSetting(dataGridView1);
         }
-
-       
-
 
     }
 }

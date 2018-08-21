@@ -294,18 +294,20 @@ namespace mySystem.Process.Bag.LDPE
 
         private void Btn退料_Click(object sender, EventArgs e)
         {
-            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "生产退料记录表");
-            if (b)
-            {
-                LDPE.LDPE生产退料记录 myform = new LDPE.LDPE生产退料记录(mainform);
-                myform.ShowDialog();
-            }
-            else
-            {
-                MessageBox.Show("您无权查看该页面！");
-                return;
-            } 
-            
+            //MessageBox.Show("请去领料记录中退料"); return;
+            //Boolean b = checkUser(Parameter.userName, Parameter.userRole, "生产退料记录表");
+            //if (b)
+            //{
+            //    LDPE.LDPE生产退料记录 myform = new LDPE.LDPE生产退料记录(mainform);
+            //    myform.ShowDialog();
+            //}
+            //else
+            //{
+            //    MessageBox.Show("您无权查看该页面！");
+            //    return;
+            //} 
+            查询 form = new 查询();
+            form.ShowDialog();
         }
 
         private void Btn洁净_Click(object sender, EventArgs e)

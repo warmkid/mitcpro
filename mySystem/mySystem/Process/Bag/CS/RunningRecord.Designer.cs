@@ -51,6 +51,7 @@
             this.label21 = new System.Windows.Forms.Label();
             this.btn数据审核 = new System.Windows.Forms.Button();
             this.btn提交数据审核 = new System.Windows.Forms.Button();
+            this.btn退回数据审核 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -114,7 +115,7 @@
             // 
             this.label40.AutoSize = true;
             this.label40.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label40.Location = new System.Drawing.Point(107, 452);
+            this.label40.Location = new System.Drawing.Point(107, 484);
             this.label40.Name = "label40";
             this.label40.Size = new System.Drawing.Size(91, 14);
             this.label40.TabIndex = 36;
@@ -123,7 +124,7 @@
             // cb打印机
             // 
             this.cb打印机.FormattingEnabled = true;
-            this.cb打印机.Location = new System.Drawing.Point(200, 449);
+            this.cb打印机.Location = new System.Drawing.Point(200, 481);
             this.cb打印机.Name = "cb打印机";
             this.cb打印机.Size = new System.Drawing.Size(152, 24);
             this.cb打印机.TabIndex = 35;
@@ -131,7 +132,7 @@
             // bt打印
             // 
             this.bt打印.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt打印.Location = new System.Drawing.Point(358, 448);
+            this.bt打印.Location = new System.Drawing.Point(358, 480);
             this.bt打印.Name = "bt打印";
             this.bt打印.Size = new System.Drawing.Size(75, 23);
             this.bt打印.TabIndex = 34;
@@ -142,7 +143,7 @@
             // bt审核
             // 
             this.bt审核.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt审核.Location = new System.Drawing.Point(12, 448);
+            this.bt审核.Location = new System.Drawing.Point(12, 480);
             this.bt审核.Name = "bt审核";
             this.bt审核.Size = new System.Drawing.Size(75, 23);
             this.bt审核.TabIndex = 33;
@@ -153,7 +154,7 @@
             // bt日志
             // 
             this.bt日志.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt日志.Location = new System.Drawing.Point(887, 448);
+            this.bt日志.Location = new System.Drawing.Point(887, 480);
             this.bt日志.Name = "bt日志";
             this.bt日志.Size = new System.Drawing.Size(75, 23);
             this.bt日志.TabIndex = 39;
@@ -164,7 +165,7 @@
             // bt提交审核
             // 
             this.bt提交审核.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt提交审核.Location = new System.Drawing.Point(794, 448);
+            this.bt提交审核.Location = new System.Drawing.Point(794, 480);
             this.bt提交审核.Name = "bt提交审核";
             this.bt提交审核.Size = new System.Drawing.Size(75, 23);
             this.bt提交审核.TabIndex = 38;
@@ -175,7 +176,7 @@
             // bt保存
             // 
             this.bt保存.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt保存.Location = new System.Drawing.Point(700, 448);
+            this.bt保存.Location = new System.Drawing.Point(700, 480);
             this.bt保存.Name = "bt保存";
             this.bt保存.Size = new System.Drawing.Size(75, 23);
             this.bt保存.TabIndex = 37;
@@ -215,7 +216,7 @@
             // 
             // bt删除
             // 
-            this.bt删除.Location = new System.Drawing.Point(890, 401);
+            this.bt删除.Location = new System.Drawing.Point(624, 396);
             this.bt删除.Name = "bt删除";
             this.bt删除.Size = new System.Drawing.Size(63, 23);
             this.bt删除.TabIndex = 44;
@@ -225,7 +226,7 @@
             // 
             // bt添加
             // 
-            this.bt添加.Location = new System.Drawing.Point(805, 401);
+            this.bt添加.Location = new System.Drawing.Point(539, 396);
             this.bt添加.Name = "bt添加";
             this.bt添加.Size = new System.Drawing.Size(63, 23);
             this.bt添加.TabIndex = 43;
@@ -251,7 +252,7 @@
             // 
             // btn数据审核
             // 
-            this.btn数据审核.Location = new System.Drawing.Point(668, 402);
+            this.btn数据审核.Location = new System.Drawing.Point(864, 396);
             this.btn数据审核.Name = "btn数据审核";
             this.btn数据审核.Size = new System.Drawing.Size(101, 23);
             this.btn数据审核.TabIndex = 48;
@@ -261,7 +262,7 @@
             // 
             // btn提交数据审核
             // 
-            this.btn提交数据审核.Location = new System.Drawing.Point(523, 402);
+            this.btn提交数据审核.Location = new System.Drawing.Point(719, 396);
             this.btn提交数据审核.Name = "btn提交数据审核";
             this.btn提交数据审核.Size = new System.Drawing.Size(123, 23);
             this.btn提交数据审核.TabIndex = 47;
@@ -269,11 +270,23 @@
             this.btn提交数据审核.UseVisualStyleBackColor = true;
             this.btn提交数据审核.Click += new System.EventHandler(this.btn提交数据审核_Click);
             // 
+            // btn退回数据审核
+            // 
+            this.btn退回数据审核.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn退回数据审核.Location = new System.Drawing.Point(839, 434);
+            this.btn退回数据审核.Name = "btn退回数据审核";
+            this.btn退回数据审核.Size = new System.Drawing.Size(123, 22);
+            this.btn退回数据审核.TabIndex = 334;
+            this.btn退回数据审核.Text = "退回数据审核";
+            this.btn退回数据审核.UseVisualStyleBackColor = true;
+            this.btn退回数据审核.Click += new System.EventHandler(this.btn退回数据审核_Click);
+            // 
             // RunningRecord
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(975, 484);
+            this.ClientSize = new System.Drawing.Size(975, 527);
+            this.Controls.Add(this.btn退回数据审核);
             this.Controls.Add(this.btn数据审核);
             this.Controls.Add(this.btn提交数据审核);
             this.Controls.Add(this.label21);
@@ -333,5 +346,6 @@
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Button btn数据审核;
         private System.Windows.Forms.Button btn提交数据审核;
+        private System.Windows.Forms.Button btn退回数据审核;
     }
 }

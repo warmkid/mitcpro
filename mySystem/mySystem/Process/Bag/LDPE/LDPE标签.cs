@@ -22,6 +22,7 @@ namespace mySystem.Process.Bag.LDPE
         string 名称, 编码, 规格, 批号;
         double 数量, 序号;
         DateTime 生产日期, 有效期;
+        bool isSavedInDatabase;
 
         [DllImport("winspool.drv")]
         public static extern bool SetDefaultPrinter(string Name);
@@ -112,6 +113,83 @@ namespace mySystem.Process.Bag.LDPE
             SetDefaultPrinter(c打印机.SelectedItem.ToString());
         }
 
+        bool checkIsSavedToDatabase()
+        {
+            string sql = "select * from {0} where 生产指令ID={1}";
+            SqlDataAdapter da;
+            System.Data.DataTable dt;
+            if (is内标签)
+            {
+                sql = string.Format(sql, "内标签", Parameter.ldpebagInstruID);
+            }
+            else
+            {
+                sql = string.Format(sql, "外标签", Parameter.ldpebagInstruID);
+            }
+            da = new SqlDataAdapter(sql, Parameter.conn);
+            dt = new System.Data.DataTable();
+            da.Fill(dt);
+            if (dt.Rows.Count == 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        void saveToDateBase()
+        {
+            // 中英文存一样的东西
+            // 根据cmb决定
+            string sql = "";
+            SqlCommand comm = null;
+            if (is内标签)
+            {
+                sql = "INSERT INTO 内标签 (生产指令ID,产品名称,产品代码,产品规格,产品批号 ,生产日期,有效期,数量 ,包装序号" +
+                  ",Name,Code,Size,BatchNo,MfgDate ,Expiry,Quantity,NO,模板) " +
+                  "values ({0},'{1}','{2}','{3}','{4}','{5}','{6}',{7},{8}," +
+                  "'{1}','{2}','{3}','{4}','{5}','{6}',{7},{8},'{9}')";
+                if(c标签模板.SelectedIndex==0){
+                    // 中文
+                    sql = string.Format(sql, Parameter.ldpebagInstruID, tc产品名称.Text, tc产品编码.Text, tc产品规格.Text,
+                        tc产品批号.Text, dc生产日期.Value, dc有效期至.Value, tc数量.Text, tc包装序号.Text,"中文");
+                }else{
+                    sql = string.Format(sql, Parameter.ldpebagInstruID, teName.Text, teCode.Text, teSize.Text,
+                        teBatch.Text, deMfg.Value, deExpiry.Value, teQuantity.Text, tePack.Text,"英文");
+                }
+                
+                comm = new SqlCommand(sql,Parameter.conn);
+            }
+            else
+            {
+                sql = "INSERT INTO 外标签 (生产指令ID,产品名称,产品代码,产品规格,产品批号 ,生产日期,有效期,数量 ,包装序号" +
+                  ",Name,Code,Size,BatchNo,MfgDate ,Expiry,Quantity,NO" +
+                  ",毛重,箱体规格,注册证号" +
+                  ",GrossWeight,CartonSize,模板) " +
+                  "values ({0},'{1}','{2}','{3}','{4}','{5}','{6}',{7},{8}," +
+                  "'{1}','{2}','{3}','{4}','{5}','{6}',{7},{8}," +
+                  "{9},'{10}','{11}',{9},'{10}','{12}')";
+                if (c标签模板.SelectedIndex == 0)
+                {
+                    // 中文
+                    sql = string.Format(sql, Parameter.ldpebagInstruID, tc产品名称.Text, tc产品编码.Text, tc产品规格.Text,
+                        tc产品批号.Text, dc生产日期.Value, dc有效期至.Value, tc数量.Text, tc包装序号.Text,
+                        tc毛重.Text, tc箱体规格.Text, tc注册证号.Text,"中文");
+                }
+                else
+                {
+                    sql = string.Format(sql, Parameter.ldpebagInstruID, teName.Text, teCode.Text, teSize.Text,
+                        teBatch.Text, deMfg.Value, deExpiry.Value, teQuantity.Text, tePack.Text,
+                        tegross.Text, teCarton.Text, "","英文");
+                }
+
+                comm = new SqlCommand(sql, Parameter.conn);
+            }
+            comm.ExecuteNonQuery();
+        }
+
         private void BtnPrint_Click(object sender, EventArgs e)
         {
             if (c标签模板.SelectedIndex < 0)
@@ -120,23 +198,46 @@ namespace mySystem.Process.Bag.LDPE
                 return;
             }
             
-            //
+            // 查询是否已经打印，并设置isPrinted
+            isSavedInDatabase = checkIsSavedToDatabase();
+            //isSavedInDatabase = false;
+           
+
+
+            // 单次打印
             int xuhao;
-            if (Int32.TryParse(tc包装序号.Text, out xuhao))
+            if (Int32.TryParse(c标签模板.SelectedIndex == 0 ? tc包装序号.Text : tePack.Text, out xuhao))
             {
                 printLable(is内标签);
+                if (!isSavedInDatabase)
+                {
+                    saveToDateBase();
+                }
             }
+            // 多次打印
             else
             {
                 try
                 {
                     int start, end;
-                    string[] ss = tc包装序号.Text.Split('-');
+                    string[] ss = (c标签模板.SelectedIndex == 0 ? tc包装序号.Text.Split('-') : tePack.Text.Split('-'));
                     start = Convert.ToInt32(ss[0]);
                     end = Convert.ToInt32(ss[1]);
                     for (int i = start; i <= end; ++i)
                     {
-                        tc包装序号.Text = i.ToString();
+                        if (c标签模板.SelectedIndex == 0)
+                        {
+                            tc包装序号.Text = i.ToString();
+                        }
+                        else
+                        {
+                            tePack.Text = i.ToString();
+                        }
+                        
+                        if (!isSavedInDatabase && i == start)
+                        {
+                            saveToDateBase();
+                        }
                         printLable(is内标签);
                     }
                 }

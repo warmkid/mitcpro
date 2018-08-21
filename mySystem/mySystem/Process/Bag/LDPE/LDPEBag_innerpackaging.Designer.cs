@@ -98,13 +98,16 @@
             this.label28 = new System.Windows.Forms.Label();
             this.tb备注 = new System.Windows.Forms.TextBox();
             this.label29 = new System.Windows.Forms.Label();
+            this.texbox工时效率 = new System.Windows.Forms.TextBox();
+            this.label30 = new System.Windows.Forms.Label();
+            this.label31 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // tb包装人
             // 
             this.tb包装人.Font = new System.Drawing.Font("宋体", 12F);
-            this.tb包装人.Location = new System.Drawing.Point(982, 516);
+            this.tb包装人.Location = new System.Drawing.Point(1046, 516);
             this.tb包装人.Name = "tb包装人";
             this.tb包装人.Size = new System.Drawing.Size(80, 26);
             this.tb包装人.TabIndex = 255;
@@ -113,7 +116,7 @@
             // 
             this.label26.AutoSize = true;
             this.label26.Font = new System.Drawing.Font("宋体", 12F);
-            this.label26.Location = new System.Drawing.Point(911, 519);
+            this.label26.Location = new System.Drawing.Point(975, 519);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(72, 16);
             this.label26.TabIndex = 254;
@@ -122,7 +125,7 @@
             // tb分检人
             // 
             this.tb分检人.Font = new System.Drawing.Font("宋体", 12F);
-            this.tb分检人.Location = new System.Drawing.Point(811, 516);
+            this.tb分检人.Location = new System.Drawing.Point(875, 516);
             this.tb分检人.Name = "tb分检人";
             this.tb分检人.Size = new System.Drawing.Size(80, 26);
             this.tb分检人.TabIndex = 253;
@@ -131,7 +134,7 @@
             // 
             this.label25.AutoSize = true;
             this.label25.Font = new System.Drawing.Font("宋体", 12F);
-            this.label25.Location = new System.Drawing.Point(740, 519);
+            this.label25.Location = new System.Drawing.Point(804, 519);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(72, 16);
             this.label25.TabIndex = 252;
@@ -140,7 +143,7 @@
             // tb制袋人
             // 
             this.tb制袋人.Font = new System.Drawing.Font("宋体", 12F);
-            this.tb制袋人.Location = new System.Drawing.Point(657, 516);
+            this.tb制袋人.Location = new System.Drawing.Point(721, 516);
             this.tb制袋人.Name = "tb制袋人";
             this.tb制袋人.Size = new System.Drawing.Size(80, 26);
             this.tb制袋人.TabIndex = 251;
@@ -149,7 +152,7 @@
             // 
             this.label24.AutoSize = true;
             this.label24.Font = new System.Drawing.Font("宋体", 12F);
-            this.label24.Location = new System.Drawing.Point(586, 519);
+            this.label24.Location = new System.Drawing.Point(650, 519);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(72, 16);
             this.label24.TabIndex = 250;
@@ -194,7 +197,7 @@
             // tb操作员备注
             // 
             this.tb操作员备注.Font = new System.Drawing.Font("宋体", 12F);
-            this.tb操作员备注.Location = new System.Drawing.Point(962, 81);
+            this.tb操作员备注.Location = new System.Drawing.Point(1026, 79);
             this.tb操作员备注.Name = "tb操作员备注";
             this.tb操作员备注.Size = new System.Drawing.Size(100, 26);
             this.tb操作员备注.TabIndex = 244;
@@ -206,9 +209,9 @@
             this.label14.Font = new System.Drawing.Font("宋体", 12F);
             this.label14.Location = new System.Drawing.Point(887, 81);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(72, 32);
+            this.label14.Size = new System.Drawing.Size(112, 16);
             this.label14.TabIndex = 245;
-            this.label14.Text = "其他操作\r\n人员：";
+            this.label14.Text = "其他操作人员:\r\n";
             this.label14.Visible = false;
             // 
             // tb班次
@@ -223,7 +226,7 @@
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("宋体", 12F);
-            this.label11.Location = new System.Drawing.Point(656, 606);
+            this.label11.Location = new System.Drawing.Point(549, 609);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(24, 16);
             this.label11.TabIndex = 242;
@@ -232,7 +235,7 @@
             // tb工时
             // 
             this.tb工时.Font = new System.Drawing.Font("宋体", 12F);
-            this.tb工时.Location = new System.Drawing.Point(770, 600);
+            this.tb工时.Location = new System.Drawing.Point(644, 603);
             this.tb工时.Name = "tb工时";
             this.tb工时.Size = new System.Drawing.Size(55, 26);
             this.tb工时.TabIndex = 241;
@@ -241,7 +244,7 @@
             // 
             this.label22.AutoSize = true;
             this.label22.Font = new System.Drawing.Font("宋体", 12F);
-            this.label22.Location = new System.Drawing.Point(714, 606);
+            this.label22.Location = new System.Drawing.Point(588, 609);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(56, 16);
             this.label22.TabIndex = 240;
@@ -258,7 +261,7 @@
             // tb不良合计
             // 
             this.tb不良合计.Font = new System.Drawing.Font("宋体", 12F);
-            this.tb不良合计.Location = new System.Drawing.Point(1007, 565);
+            this.tb不良合计.Location = new System.Drawing.Point(1071, 563);
             this.tb不良合计.Name = "tb不良合计";
             this.tb不良合计.Size = new System.Drawing.Size(55, 26);
             this.tb不良合计.TabIndex = 238;
@@ -283,7 +286,7 @@
             // 
             this.label16.AutoSize = true;
             this.label16.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label16.Location = new System.Drawing.Point(938, 572);
+            this.label16.Location = new System.Drawing.Point(1002, 570);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(72, 16);
             this.label16.TabIndex = 234;
@@ -415,7 +418,7 @@
             // tb审核员
             // 
             this.tb审核员.Font = new System.Drawing.Font("宋体", 12F);
-            this.tb审核员.Location = new System.Drawing.Point(962, 600);
+            this.tb审核员.Location = new System.Drawing.Point(1026, 603);
             this.tb审核员.Name = "tb审核员";
             this.tb审核员.Size = new System.Drawing.Size(100, 26);
             this.tb审核员.TabIndex = 213;
@@ -424,7 +427,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("宋体", 12F);
-            this.label10.Location = new System.Drawing.Point(898, 606);
+            this.label10.Location = new System.Drawing.Point(962, 609);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(72, 16);
             this.label10.TabIndex = 212;
@@ -434,7 +437,7 @@
             // 
             this.tb废品重量.BackColor = System.Drawing.SystemColors.ControlDark;
             this.tb废品重量.Font = new System.Drawing.Font("宋体", 12F);
-            this.tb废品重量.Location = new System.Drawing.Point(592, 600);
+            this.tb废品重量.Location = new System.Drawing.Point(488, 603);
             this.tb废品重量.Name = "tb废品重量";
             this.tb废品重量.Size = new System.Drawing.Size(55, 26);
             this.tb废品重量.TabIndex = 211;
@@ -443,7 +446,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("宋体", 12F);
-            this.label9.Location = new System.Drawing.Point(513, 606);
+            this.label9.Location = new System.Drawing.Point(409, 609);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(88, 16);
             this.label9.TabIndex = 210;
@@ -452,7 +455,7 @@
             // btn数据审核
             // 
             this.btn数据审核.Font = new System.Drawing.Font("宋体", 12F);
-            this.btn数据审核.Location = new System.Drawing.Point(972, 446);
+            this.btn数据审核.Location = new System.Drawing.Point(1036, 444);
             this.btn数据审核.Name = "btn数据审核";
             this.btn数据审核.Size = new System.Drawing.Size(90, 30);
             this.btn数据审核.TabIndex = 209;
@@ -463,7 +466,7 @@
             // btn提交数据审核
             // 
             this.btn提交数据审核.Font = new System.Drawing.Font("宋体", 12F);
-            this.btn提交数据审核.Location = new System.Drawing.Point(846, 447);
+            this.btn提交数据审核.Location = new System.Drawing.Point(910, 445);
             this.btn提交数据审核.Name = "btn提交数据审核";
             this.btn提交数据审核.Size = new System.Drawing.Size(120, 30);
             this.btn提交数据审核.TabIndex = 208;
@@ -474,7 +477,7 @@
             // tb产品数量只数合计B
             // 
             this.tb产品数量只数合计B.Font = new System.Drawing.Font("宋体", 12F);
-            this.tb产品数量只数合计B.Location = new System.Drawing.Point(369, 600);
+            this.tb产品数量只数合计B.Location = new System.Drawing.Point(292, 603);
             this.tb产品数量只数合计B.Name = "tb产品数量只数合计B";
             this.tb产品数量只数合计B.Size = new System.Drawing.Size(55, 26);
             this.tb产品数量只数合计B.TabIndex = 207;
@@ -482,7 +485,7 @@
             // tb产品数量包数合计A
             // 
             this.tb产品数量包数合计A.Font = new System.Drawing.Font("宋体", 12F);
-            this.tb产品数量包数合计A.Location = new System.Drawing.Point(159, 600);
+            this.tb产品数量包数合计A.Location = new System.Drawing.Point(102, 603);
             this.tb产品数量包数合计A.Name = "tb产品数量包数合计A";
             this.tb产品数量包数合计A.Size = new System.Drawing.Size(55, 26);
             this.tb产品数量包数合计A.TabIndex = 205;
@@ -498,7 +501,7 @@
             // btn查看日志
             // 
             this.btn查看日志.Font = new System.Drawing.Font("宋体", 12F);
-            this.btn查看日志.Location = new System.Drawing.Point(982, 692);
+            this.btn查看日志.Location = new System.Drawing.Point(1046, 696);
             this.btn查看日志.Name = "btn查看日志";
             this.btn查看日志.Size = new System.Drawing.Size(80, 30);
             this.btn查看日志.TabIndex = 201;
@@ -509,7 +512,7 @@
             // btn提交审核
             // 
             this.btn提交审核.Font = new System.Drawing.Font("宋体", 12F);
-            this.btn提交审核.Location = new System.Drawing.Point(890, 692);
+            this.btn提交审核.Location = new System.Drawing.Point(954, 696);
             this.btn提交审核.Name = "btn提交审核";
             this.btn提交审核.Size = new System.Drawing.Size(80, 30);
             this.btn提交审核.TabIndex = 200;
@@ -542,7 +545,7 @@
             // btn确认
             // 
             this.btn确认.Font = new System.Drawing.Font("宋体", 12F);
-            this.btn确认.Location = new System.Drawing.Point(796, 693);
+            this.btn确认.Location = new System.Drawing.Point(860, 697);
             this.btn确认.Name = "btn确认";
             this.btn确认.Size = new System.Drawing.Size(80, 30);
             this.btn确认.TabIndex = 197;
@@ -553,7 +556,7 @@
             // btn查询新建
             // 
             this.btn查询新建.Font = new System.Drawing.Font("宋体", 12F);
-            this.btn查询新建.Location = new System.Drawing.Point(966, 121);
+            this.btn查询新建.Location = new System.Drawing.Point(1030, 121);
             this.btn查询新建.Name = "btn查询新建";
             this.btn查询新建.Size = new System.Drawing.Size(96, 30);
             this.btn查询新建.TabIndex = 196;
@@ -585,7 +588,7 @@
             // btn删除记录
             // 
             this.btn删除记录.Font = new System.Drawing.Font("宋体", 12F);
-            this.btn删除记录.Location = new System.Drawing.Point(770, 447);
+            this.btn删除记录.Location = new System.Drawing.Point(834, 445);
             this.btn删除记录.Name = "btn删除记录";
             this.btn删除记录.Size = new System.Drawing.Size(70, 30);
             this.btn删除记录.TabIndex = 193;
@@ -596,7 +599,7 @@
             // btn添加记录
             // 
             this.btn添加记录.Font = new System.Drawing.Font("宋体", 12F);
-            this.btn添加记录.Location = new System.Drawing.Point(694, 447);
+            this.btn添加记录.Location = new System.Drawing.Point(758, 445);
             this.btn添加记录.Name = "btn添加记录";
             this.btn添加记录.Size = new System.Drawing.Size(70, 30);
             this.btn添加记录.TabIndex = 192;
@@ -688,7 +691,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(29, 161);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(1033, 277);
+            this.dataGridView1.Size = new System.Drawing.Size(1097, 277);
             this.dataGridView1.TabIndex = 183;
             this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
             this.dataGridView1.ColumnWidthChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dataGridView1_ColumnWidthChanged);
@@ -707,7 +710,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("宋体", 12F);
-            this.label8.Location = new System.Drawing.Point(290, 606);
+            this.label8.Location = new System.Drawing.Point(213, 609);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(200, 16);
             this.label8.TabIndex = 206;
@@ -717,7 +720,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("宋体", 12F);
-            this.label7.Location = new System.Drawing.Point(80, 606);
+            this.label7.Location = new System.Drawing.Point(23, 609);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(200, 16);
             this.label7.TabIndex = 204;
@@ -736,7 +739,7 @@
             // btn退回数据审核
             // 
             this.btn退回数据审核.Font = new System.Drawing.Font("宋体", 12F);
-            this.btn退回数据审核.Location = new System.Drawing.Point(933, 482);
+            this.btn退回数据审核.Location = new System.Drawing.Point(997, 480);
             this.btn退回数据审核.Name = "btn退回数据审核";
             this.btn退回数据审核.Size = new System.Drawing.Size(129, 30);
             this.btn退回数据审核.TabIndex = 256;
@@ -768,7 +771,7 @@
             this.tb备注.Location = new System.Drawing.Point(82, 647);
             this.tb备注.Multiline = true;
             this.tb备注.Name = "tb备注";
-            this.tb备注.Size = new System.Drawing.Size(980, 40);
+            this.tb备注.Size = new System.Drawing.Size(1044, 40);
             this.tb备注.TabIndex = 260;
             // 
             // label29
@@ -781,11 +784,42 @@
             this.label29.TabIndex = 259;
             this.label29.Text = "备注：";
             // 
+            // texbox工时效率
+            // 
+            this.texbox工时效率.Font = new System.Drawing.Font("宋体", 12F);
+            this.texbox工时效率.Location = new System.Drawing.Point(808, 602);
+            this.texbox工时效率.Name = "texbox工时效率";
+            this.texbox工时效率.Size = new System.Drawing.Size(55, 26);
+            this.texbox工时效率.TabIndex = 262;
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Font = new System.Drawing.Font("宋体", 12F);
+            this.label30.Location = new System.Drawing.Point(718, 608);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(88, 16);
+            this.label30.TabIndex = 261;
+            this.label30.Text = "工时效率：";
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Font = new System.Drawing.Font("宋体", 12F);
+            this.label31.Location = new System.Drawing.Point(869, 608);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(64, 16);
+            this.label31.TabIndex = 263;
+            this.label31.Text = "只/小时";
+            // 
             // LDPEBag_innerpackaging
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1094, 738);
+            this.ClientSize = new System.Drawing.Size(1138, 738);
+            this.Controls.Add(this.label31);
+            this.Controls.Add(this.texbox工时效率);
+            this.Controls.Add(this.label30);
             this.Controls.Add(this.tb备注);
             this.Controls.Add(this.label29);
             this.Controls.Add(this.tb联产品批号);
@@ -938,6 +972,9 @@
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.TextBox tb备注;
         private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.TextBox texbox工时效率;
+        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.Label label31;
 
     }
 }

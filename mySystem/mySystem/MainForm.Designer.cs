@@ -35,6 +35,7 @@
             this.MainQueryBtn = new System.Windows.Forms.Button();
             this.MainPanel = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnUpdate = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -103,12 +104,13 @@
             this.MainPanel.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.MainPanel.Location = new System.Drawing.Point(9, 76);
             this.MainPanel.Name = "MainPanel";
-            this.MainPanel.Size = new System.Drawing.Size(1249, 592);
+            this.MainPanel.Size = new System.Drawing.Size(1287, 592);
             this.MainPanel.TabIndex = 4;
             this.MainPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.MainPanel_Paint);
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnUpdate);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.MainQueryBtn);
@@ -122,9 +124,21 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(13, 2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1251, 74);
+            this.groupBox1.Size = new System.Drawing.Size(1283, 74);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
+            // 
+            // btnUpdate
+            // 
+            this.btnUpdate.Font = new System.Drawing.Font("宋体", 15F);
+            this.btnUpdate.Location = new System.Drawing.Point(769, 25);
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.Size = new System.Drawing.Size(99, 30);
+            this.btnUpdate.TabIndex = 13;
+            this.btnUpdate.Text = "检查更新";
+            this.btnUpdate.UseVisualStyleBackColor = true;
+            this.btnUpdate.Visible = false;
+            this.btnUpdate.Click += new System.EventHandler(this.button2_Click);
             // 
             // label2
             // 
@@ -162,7 +176,7 @@
             // 
             // btn导入
             // 
-            this.btn导入.Location = new System.Drawing.Point(540, 31);
+            this.btn导入.Location = new System.Drawing.Point(597, 33);
             this.btn导入.Name = "btn导入";
             this.btn导入.Size = new System.Drawing.Size(103, 23);
             this.btn导入.TabIndex = 8;
@@ -225,7 +239,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(1276, 670);
+            this.ClientSize = new System.Drawing.Size(1299, 674);
             this.Controls.Add(this.MainPanel);
             this.Controls.Add(this.groupBox1);
             this.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -234,7 +248,7 @@
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "欢迎使用颇尔奥星管理系统    v0.9.17  201808151500";
+            this.Text = "欢迎使用颇尔奥星管理系统    v0.9.17  201808171730";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -259,6 +273,7 @@
         private System.Windows.Forms.Timer timer2;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnUpdate;
 
 
     }

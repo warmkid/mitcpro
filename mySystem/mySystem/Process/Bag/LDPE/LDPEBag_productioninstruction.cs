@@ -641,6 +641,10 @@ namespace mySystem.Process.Bag.LDPE
             tb外包物料名称2.ReadOnly = true;
             tb外包物料名称3.ReadOnly = true;
 
+            tb制袋内包白班负责人.ReadOnly = true;
+            tb制袋内包夜班负责人.ReadOnly = true;
+            tb外包夜班负责人.ReadOnly = true;
+            tb外包白班负责人.ReadOnly = true;
 
             // 保证这两个按钮一直是false
             btn审核.Enabled = false;
@@ -802,7 +806,7 @@ namespace mySystem.Process.Bag.LDPE
             if (isFirstBind)
             {
                 readDGVWidthFromSettingAndSet(dataGridView1);
-                isFirstBind = false;
+                isFirstBind = true;
             }
         }
 
@@ -881,7 +885,11 @@ namespace mySystem.Process.Bag.LDPE
                 switch (e.ColumnIndex)
                 {
                     // 计划产量
+                    case 2:
+                        calc膜材领料量();
+                        break;
                     case 3:
+                        calc膜材领料量();
                         //灭菌指示剂
                         //dtOuter.Rows[0]["制袋物料领料量3"] = i计划产量只.ToString();
                         outerDataSync("tb制袋物料领料量3", i计划产量只.ToString());
@@ -905,6 +913,7 @@ namespace mySystem.Process.Bag.LDPE
                         //dtOuter.Rows[0]["外包物料领料量3"] = (i计划产量只 / i外包装规格).ToString();
                         outerDataSync("tb外包物料领料量3", (i计划产量只 / i外包装规格).ToString());
                         //tb外包物料领料量3.Text = (i计划产量只 / i外包装规格).ToString();
+                        
                         break;
                     // 内包装规格
                     case 4:
@@ -918,6 +927,9 @@ namespace mySystem.Process.Bag.LDPE
                         outerDataSync("tb内包物料领料量2", (i计划产量只 / i内包装规格).ToString());
                         break;
                     // 外包装规格
+                    case 8:
+                        calc膜材领料量();
+                        break;
                     case 9:
                         // 外标签
                         //tb外包物料领料量1.Text = (i计划产量只 / i外包装规格 * 2).ToString();
@@ -1338,6 +1350,31 @@ namespace mySystem.Process.Bag.LDPE
             comboBox1.SelectedItem = print.PrinterSettings.PrinterName;
         }
 
+        void calc膜材领料量()
+        {
+            try
+            {
+                double meter = 0;
+                if (dtInner.Rows[0]["封边"].ToString() == "底封")
+                {
+                    string[] ss = dtInner.Rows[0]["产品代码"].ToString().Split('-');
+                    string tt = ss[ss.Length - 1];
+                    meter = (Convert.ToInt32(tt.Split('X')[1]) + 12)/1000.0;
+                }
+                else if (dtInner.Rows[0]["封边"].ToString() == "边封")
+                {
+                    string[] ss = dtInner.Rows[0]["产品代码"].ToString().Split('-');
+                    string tt = ss[ss.Length - 1];
+                    meter = (Convert.ToInt32(tt.Split('X')[0]) + 20) / 1000.0;
+                }
+                dtOuter.Rows[0]["制袋物料领料量1"] = Convert.ToInt32( meter * Convert.ToInt32(dtInner.Rows[0]["计划产量只"]));
+                outerDataSync("tb制袋物料领料量1", Convert.ToInt32(meter * Convert.ToInt32(dtInner.Rows[0]["计划产量只"])).ToString());
+            }
+            catch
+            {
+            }
+        }
+
         public int print(bool b)
         {
             int label_打印成功 = 1;
@@ -1448,18 +1485,49 @@ namespace mySystem.Process.Bag.LDPE
             }
 
             my.Cells[9 + ind, 2].Value = dtOuter.Rows[0]["制袋物料名称1"].ToString();
-            //my.Cells[10 + ind, 2].Value = dtOuter.Rows[0]["制袋物料名称2"].ToString();
+            my.Cells[10 + ind, 2].Value = dtOuter.Rows[0]["制袋物料名称2"].ToString();
             //my.Cells[11 + ind, 2].Value = dtOuter.Rows[0]["制袋物料名称3"].ToString();
             my.Cells[9 + ind, 3].Value = dtOuter.Rows[0]["制袋物料代码1"].ToString();
-            //my.Cells[10 + ind, 3].Value = dtOuter.Rows[0]["制袋物料代码2"].ToString();
+            my.Cells[10 + ind, 3].Value = dtOuter.Rows[0]["制袋物料代码2"].ToString();
             //my.Cells[11 + ind, 3].Value = dtOuter.Rows[0]["制袋物料代码3"].ToString();
             my.Cells[9 + ind, 5].Value = dtOuter.Rows[0]["制袋物料批号1"].ToString();
-            //my.Cells[10 + ind, 5].Value = dtOuter.Rows[0]["制袋物料批号2"].ToString();
+            my.Cells[10 + ind, 5].Value = dtOuter.Rows[0]["制袋物料批号2"].ToString();
             //my.Cells[11 + ind, 5].Value = dtOuter.Rows[0]["制袋物料批号3"].ToString();
             my.Cells[9 + ind, 8].Value = dtOuter.Rows[0]["制袋物料领料量1"].ToString();
-            //my.Cells[10 + ind, 8].Value = dtOuter.Rows[0]["制袋物料领料量2"].ToString();
+            my.Cells[10 + ind, 8].Value = dtOuter.Rows[0]["制袋物料领料量2"].ToString();
             //my.Cells[11 + ind, 8].Value = dtOuter.Rows[0]["制袋物料领料量3"].ToString();
             my.Cells[9 + ind, 9].Value = Utility.find主计量单位by代码(dtOuter.Rows[0]["制袋物料代码1"].ToString());
+            my.Cells[9 + ind, 9].Value = Utility.find主计量单位by代码(dtOuter.Rows[0]["制袋物料代码1"].ToString());
+
+            for (int i = 0; i < 2; ++i)
+            {
+                string code = "制袋物料代码{0}";
+                string name = "制袋物料名称{0}";
+                string pihao = "制袋物料批号{0}";
+                string num = "制袋物料领料量{0}";
+                if (dtOuter.Rows[0][string.Format(code, i + 1)].ToString() != "")
+                {
+                    my.Cells[9 + ind + i, 3].Value = dtOuter.Rows[0][string.Format(code, i + 1)].ToString();
+                    my.Cells[9 + ind + i, 2].Value = dtOuter.Rows[0][string.Format(name, i + 1)].ToString();
+                    my.Cells[9 + ind + i, 5].Value = dtOuter.Rows[0][string.Format(pihao, i + 1)].ToString();
+                    my.Cells[9 + ind + i, 8].Value = dtOuter.Rows[0][string.Format(num, i + 1)].ToString();
+                    string dw = Utility.find辅计量单位by代码(dtOuter.Rows[0][string.Format(code, i + 1)].ToString());
+                    if (dw == "")
+                    {
+                        dw = Utility.find主计量单位by代码(dtOuter.Rows[0][string.Format(code, i + 1)].ToString());
+                    }
+                    my.Cells[9 + ind + i, 9].Value = dw;
+
+                }
+                else
+                {
+                    my.Cells[9 + ind + i, 2].Value = "---";
+                    my.Cells[9 + ind + i, 3].Value = "---";
+                    my.Cells[9 + ind + i, 5].Value = "---";
+                    my.Cells[9 + ind + i, 8].Value = "---";
+                    my.Cells[9 + ind + i, 9].Value = "---";
+                }
+            }
 
             for (int i = 0; i < 4; ++i)
             {
@@ -1469,20 +1537,24 @@ namespace mySystem.Process.Bag.LDPE
                 string num = "内包物料领料量{0}";
                 if (dtOuter.Rows[0][string.Format(code, i + 1)].ToString() != "")
                 {
-                    my.Cells[10 + ind + i, 3].Value = dtOuter.Rows[0][string.Format(code, i + 1)].ToString();
-                    my.Cells[10 + ind + i, 2].Value = dtOuter.Rows[0][string.Format(name, i + 1)].ToString();
-                    my.Cells[10 + ind + i, 5].Value = dtOuter.Rows[0][string.Format(pihao, i + 1)].ToString();
-                    my.Cells[10 + ind + i, 8].Value = dtOuter.Rows[0][string.Format(num, i + 1)].ToString();
-                    my.Cells[10 + ind + i, 9].Value =
-                        Utility.find主计量单位by代码(dtOuter.Rows[0][string.Format(code, i + 1)].ToString());
+                    my.Cells[11 + ind + i, 3].Value = dtOuter.Rows[0][string.Format(code, i + 1)].ToString();
+                    my.Cells[11 + ind + i, 2].Value = dtOuter.Rows[0][string.Format(name, i + 1)].ToString();
+                    my.Cells[11 + ind + i, 5].Value = dtOuter.Rows[0][string.Format(pihao, i + 1)].ToString();
+                    my.Cells[11 + ind + i, 8].Value = dtOuter.Rows[0][string.Format(num, i + 1)].ToString();
+                    string dw = Utility.find辅计量单位by代码(dtOuter.Rows[0][string.Format(code, i + 1)].ToString());
+                    if (dw == "")
+                    {
+                        dw = Utility.find主计量单位by代码(dtOuter.Rows[0][string.Format(code, i + 1)].ToString());
+                    }
+                    my.Cells[11 + ind + i, 9].Value = dw;
                 }
                 else
                 {
-                    my.Cells[10 + ind + i, 2].Value = "---";
-                    my.Cells[10 + ind + i, 3].Value = "---";
-                    my.Cells[10 + ind + i, 5].Value = "---";
-                    my.Cells[10 + ind + i, 8].Value = "---";
-                    my.Cells[10 + ind + i, 9].Value = "---";
+                    my.Cells[11 + ind + i, 2].Value = "---";
+                    my.Cells[11 + ind + i, 3].Value = "---";
+                    my.Cells[11 + ind + i, 5].Value = "---";
+                    my.Cells[11 + ind + i, 8].Value = "---";
+                    my.Cells[11 + ind + i, 9].Value = "---";
                 }
             }
             //my.Cells[10 + ind, 2].Value = dtOuter.Rows[0]["内包物料名称1"].ToString();
@@ -1509,20 +1581,24 @@ namespace mySystem.Process.Bag.LDPE
                 string num = "外包物料领料量{0}";
                 if (dtOuter.Rows[0][string.Format(code, i + 1)].ToString() != "")
                 {
-                    my.Cells[14 + ind + i, 3].Value = dtOuter.Rows[0][string.Format(code, i + 1)].ToString();
-                    my.Cells[14 + ind + i, 2].Value = dtOuter.Rows[0][string.Format(name, i + 1)].ToString();
-                    my.Cells[14 + ind + i, 5].Value = dtOuter.Rows[0][string.Format(pihao, i + 1)].ToString();
-                    my.Cells[14 + ind + i, 8].Value = dtOuter.Rows[0][string.Format(num, i + 1)].ToString();
-                    my.Cells[14 + ind + i, 9].Value =
-                        Utility.find主计量单位by代码(dtOuter.Rows[0][string.Format(code, i + 1)].ToString());
+                    my.Cells[15 + ind + i, 3].Value = dtOuter.Rows[0][string.Format(code, i + 1)].ToString();
+                    my.Cells[15 + ind + i, 2].Value = dtOuter.Rows[0][string.Format(name, i + 1)].ToString();
+                    my.Cells[15 + ind + i, 5].Value = dtOuter.Rows[0][string.Format(pihao, i + 1)].ToString();
+                    my.Cells[15 + ind + i, 8].Value = dtOuter.Rows[0][string.Format(num, i + 1)].ToString();
+                    string dw = Utility.find辅计量单位by代码(dtOuter.Rows[0][string.Format(code, i + 1)].ToString());
+                    if (dw == "")
+                    {
+                        dw = Utility.find主计量单位by代码(dtOuter.Rows[0][string.Format(code, i + 1)].ToString());
+                    }
+                    my.Cells[15 + ind + i, 9].Value = dw;
                 }
                 else
                 {
-                    my.Cells[14 + ind + i, 2].Value = "---";
-                    my.Cells[14 + ind + i, 3].Value = "---";
-                    my.Cells[14 + ind + i, 5].Value = "---";
-                    my.Cells[14 + ind + i, 8].Value = "---";
-                    my.Cells[14 + ind + i, 9].Value = "---";
+                    my.Cells[15 + ind + i, 2].Value = "---";
+                    my.Cells[15 + ind + i, 3].Value = "---";
+                    my.Cells[15 + ind + i, 5].Value = "---";
+                    my.Cells[15 + ind + i, 8].Value = "---";
+                    my.Cells[15 + ind + i, 9].Value = "---";
                 }
             }
 
@@ -1558,15 +1634,15 @@ namespace mySystem.Process.Bag.LDPE
             {
                 sb.Append("夜班：\n").Append(dtOuter.Rows[0]["外包夜班负责人"].ToString() + "\n");
             }
-            my.Cells[14 + ind, 10].Value = sb.ToString();
-            my.Cells[18 + ind, 1].Value = "备注：" + dtOuter.Rows[0]["备注"].ToString();
-            my.Cells[19 + ind, 1].Value = String.Format("编制人：{0}\n日期：{1}",
+            my.Cells[15 + ind, 10].Value = sb.ToString();
+            my.Cells[19 + ind, 1].Value = "备注：" + dtOuter.Rows[0]["备注"].ToString();
+            my.Cells[20 + ind, 1].Value = String.Format("编制人：{0}\n日期：{1}",
                 dtOuter.Rows[0]["操作员"].ToString(),
                 Convert.ToDateTime(dtOuter.Rows[0]["操作时间"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dtOuter.Rows[0]["操作时间"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dtOuter.Rows[0]["操作时间"].ToString()).Day.ToString() + "日");
-            my.Cells[19 + ind, 3].Value = String.Format("审批人：{0}\n日期：{1}",
+            my.Cells[20 + ind, 3].Value = String.Format("审批人：{0}\n日期：{1}",
                 dtOuter.Rows[0]["审核员"].ToString(),
             Convert.ToDateTime(dtOuter.Rows[0]["审核时间"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dtOuter.Rows[0]["审核时间"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dtOuter.Rows[0]["审核时间"].ToString()).Day.ToString() + "日");
-            my.Cells[19 + ind, 7].Value = String.Format("接收人：{0}\n日期：{1}",
+            my.Cells[20 + ind, 7].Value = String.Format("接收人：{0}\n日期：{1}",
                 dtOuter.Rows[0]["接收人"].ToString(),
             Convert.ToDateTime(dtOuter.Rows[0]["接收时间"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dtOuter.Rows[0]["接收时间"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dtOuter.Rows[0]["接收时间"].ToString()).Day.ToString() + "日");
 
@@ -1661,6 +1737,10 @@ namespace mySystem.Process.Bag.LDPE
                 {
                     tb内包物料名称1.Text = ls物料名称[ls物料代码.IndexOf(tb.Text)];
                 }
+                if (tb.Text.StartsWith("LAB"))
+                {
+                    tb内包物料批号1.Text = "附样本";
+                }
             }
             catch
             { }
@@ -1674,6 +1754,10 @@ namespace mySystem.Process.Bag.LDPE
                 if (ls物料代码.IndexOf(tb.Text) >= 0)
                 {
                     tb内包物料名称2.Text = ls物料名称[ls物料代码.IndexOf(tb.Text)];
+                }
+                if (tb.Text.StartsWith("LAB"))
+                {
+                    tb内包物料批号2.Text = "附样本";
                 }
             }
             catch
@@ -1689,6 +1773,10 @@ namespace mySystem.Process.Bag.LDPE
                 {
                     tb内包物料名称3.Text = ls物料名称[ls物料代码.IndexOf(tb.Text)];
                 }
+                if (tb.Text.StartsWith("LAB"))
+                {
+                    tb内包物料批号3.Text = "附样本";
+                }
             }
             catch
             { }
@@ -1702,6 +1790,10 @@ namespace mySystem.Process.Bag.LDPE
                 if (ls物料代码.IndexOf(tb.Text) >= 0)
                 {
                     tb内包物料名称4.Text = ls物料名称[ls物料代码.IndexOf(tb.Text)];
+                }
+                if (tb.Text.StartsWith("LAB"))
+                {
+                    tb内包物料批号4.Text = "附样本";
                 }
             }
             catch
@@ -1717,6 +1809,10 @@ namespace mySystem.Process.Bag.LDPE
                 {
                     tb外包物料名称1.Text = ls物料名称[ls物料代码.IndexOf(tb.Text)];
                 }
+                if (tb.Text.StartsWith("LAB"))
+                {
+                    tb外包物料批号1.Text = "附样本";
+                }
             }
             catch
             { }
@@ -1731,6 +1827,10 @@ namespace mySystem.Process.Bag.LDPE
                 {
                     tb外包物料名称2.Text = ls物料名称[ls物料代码.IndexOf(tb.Text)];
                 }
+                if (tb.Text.StartsWith("LAB"))
+                {
+                    tb外包物料批号2.Text = "附样本";
+                }
             }
             catch
             { }
@@ -1744,6 +1844,10 @@ namespace mySystem.Process.Bag.LDPE
                 if (ls物料代码.IndexOf(tb.Text) >= 0)
                 {
                     tb外包物料名称3.Text = ls物料名称[ls物料代码.IndexOf(tb.Text)];
+                }
+                if (tb.Text.StartsWith("LAB"))
+                {
+                    tb外包物料批号3.Text = "附样本";
                 }
             }
             catch

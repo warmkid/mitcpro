@@ -157,6 +157,12 @@ namespace mySystem
                 MessageBox.Show("数据库异常！");
                 this.Close();
             }
+
+
+            if (Parameter.userName == "123")
+            {
+                btn导入.Visible = true;
+            }
         }
 
         void readSQLConfig()
@@ -246,8 +252,8 @@ namespace mySystem
                 list吹膜 = EachSearchUnchecked(strCon吹膜);
                 String strCon清洁分切 = "server=" + mySystem.Parameter.IP_port + ";database=welding;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
                 //list清洁分切 = EachSearchUnchecked(strCon清洁分切);
-                //String strConCS制袋 = "server=" + mySystem.Parameter.IP_port + ";database=csbag;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
-                //listCS制袋 = EachSearchUnchecked(strConCS制袋);
+                String strConCS制袋 = "server=" + mySystem.Parameter.IP_port + ";database=csbag;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
+                listCS制袋 = EachSearchUnchecked(strConCS制袋);
                 String strConPE制袋 = "server=" + mySystem.Parameter.IP_port + ";database=LDPE;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
                 listPE制袋 = EachSearchUnchecked(strConPE制袋);
                 //String strConBPV制袋 = "server=" + mySystem.Parameter.IP_port + ";database=BPV;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
@@ -259,7 +265,7 @@ namespace mySystem
                 list库存 = EachSearchUnchecked(strCon订单库存, "库存用户权限");
 
                 list清洁分切 = new List<string>();
-                listCS制袋 = new List<string>();
+                //listCS制袋 = new List<string>();
                 //listPE制袋 = new List<string>();
                 listBPV制袋 = new List<string>();
                 listPTV制袋 = new List<string>();
@@ -552,8 +558,154 @@ namespace mySystem
         {
             //import供应商();
             //import存货档案();
-            import库存台账();
-           
+            //import库存台账();
+            truncate清空表数据();
+        }
+
+        void truncate清空表数据()
+        {
+            AppSettingsSection appSettings = ConfigurationManager.OpenExeConfiguration(System.Windows.Forms.Application.ExecutablePath).AppSettings;
+            String key = "ProcessToTruncate";
+            if (appSettings.Settings[key] != null)
+            {
+                switch (appSettings.Settings[key].Value.ToString())
+                {
+                    case "PE":
+                        if (DialogResult.OK == MessageBox.Show("确认要清空PE制袋表数据吗？", "提示", MessageBoxButtons.OKCancel))
+                        {
+                            清空PE表数据();
+                        }
+                        break;
+                    default:
+                        MessageBox.Show("请先在配置文件中说明需要清空的工序");
+                        break;
+                }
+            }
+            else
+            {
+                appSettings.Settings.Add(key, "NONE");
+                MessageBox.Show("请先在配置文件中说明需要清空的工序");
+            }
+            appSettings.CurrentConfiguration.Save();
+        }
+
+        void 清空PE表数据()
+        {
+            string connstr = "server=" + Parameter.IP_port + ";database=LDPE;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
+            SqlConnection conn = new SqlConnection(connstr);
+            conn.Open();
+            List<String> PE表名 = new List<string>();
+            PE表名.Add("LDPE制袋日报表");
+            PE表名.Add("LDPE制袋日报表详细信息");
+            PE表名.Add("产品内包装记录");
+            PE表名.Add("产品内包装记录详细信息");
+            PE表名.Add("产品热合强度检验记录");
+            PE表名.Add("产品热合强度检验记录详细记录");
+            PE表名.Add("产品外包装记录表");
+            PE表名.Add("产品外包装详细记录");
+            PE表名.Add("产品外观和尺寸检验记录");
+            PE表名.Add("产品外观和尺寸检验记录详细信息");
+            PE表名.Add("待审核");
+            PE表名.Add("岗位交接班记录");
+            PE表名.Add("岗位交接班项目记录");
+            PE表名.Add("洁净区温湿度记录表");
+            PE表名.Add("洁净区温湿度记录详细信息");
+            PE表名.Add("内标签");
+            PE表名.Add("批生产记录表");
+            PE表名.Add("批生产记录产品详细信息");
+            PE表名.Add("批生产记录目录详细信息");
+            PE表名.Add("清场记录");
+            PE表名.Add("清场记录详细信息");
+            PE表名.Add("生产领料申请单表");
+            PE表名.Add("生产领料申请单详细信息");
+            PE表名.Add("生产领料使用记录");
+            PE表名.Add("生产领料使用记录详细信息");
+            PE表名.Add("生产退料记录表");
+            PE表名.Add("生产退料记录详细信息");
+            PE表名.Add("生产指令");
+            PE表名.Add("生产指令详细信息");
+            PE表名.Add("外标签");
+            PE表名.Add("制袋机组开机前确认表");
+            PE表名.Add("制袋机组开机前确认项目记录");
+            PE表名.Add("制袋机组运行记录");
+            PE表名.Add("制袋机组运行记录详细信息");
+            清空很多表的数据(PE表名, conn);
+        }
+
+        void 清空吹膜表数据()
+        {
+            string connstr = "server=" + Parameter.IP_port + ";database=extrusionnew;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
+            SqlConnection conn = new SqlConnection(connstr);
+            conn.Open();
+            List<String> 吹膜表名 = new List<string>();
+            吹膜表名.Add("标签");
+            吹膜表名.Add("产品内包装记录表");
+            吹膜表名.Add("产品内包装详细记录");
+            吹膜表名.Add("产品外包装记录表");
+            吹膜表名.Add("产品外包装详细记录");
+            吹膜表名.Add("吹膜岗位交接班记录");
+            吹膜表名.Add("吹膜岗位交接班项目记录");
+            吹膜表名.Add("吹膜工序废品记录");
+            吹膜表名.Add("吹膜工序废品记录详细信息");
+            吹膜表名.Add("吹膜工序领料退料记录");
+            吹膜表名.Add("吹膜工序领料详细记录");
+            吹膜表名.Add("吹膜工序清场吹膜工序项目记录");
+            吹膜表名.Add("吹膜工序清场记录");
+            吹膜表名.Add("吹膜工序清场项目记录");
+            吹膜表名.Add("吹膜工序生产和检验记录");
+            吹膜表名.Add("吹膜工序生产和检验记录详细信息");
+            吹膜表名.Add("吹膜工序物料平衡记录");
+            吹膜表名.Add("吹膜供料记录");
+            吹膜表名.Add("吹膜供料记录详细信息");
+            吹膜表名.Add("吹膜供料系统运行记录");
+            吹膜表名.Add("吹膜供料系统运行记录详细信息");
+            吹膜表名.Add("吹膜机安全培训记录");
+            吹膜表名.Add("吹膜机安全培训记录人员情况");
+            吹膜表名.Add("吹膜机更换过滤网记录表");
+            吹膜表名.Add("吹膜机组换模头检查表");
+            吹膜表名.Add("吹膜机组换模头检查项目");
+            吹膜表名.Add("吹膜机组换模芯检查表");
+            吹膜表名.Add("吹膜机组换模芯检查项目");
+            吹膜表名.Add("吹膜机组开机前确认表");
+            吹膜表名.Add("吹膜机组开机前确认项目记录");
+            吹膜表名.Add("吹膜机组清洁记录表");
+            吹膜表名.Add("吹膜机组清洁项目记录表");
+            吹膜表名.Add("吹膜机组预热参数记录表");
+            吹膜表名.Add("吹膜机组运行记录");
+            吹膜表名.Add("吹膜生产日报表");
+            吹膜表名.Add("吹膜生产日报表详细信息");
+            吹膜表名.Add("待审核");
+            吹膜表名.Add("批生产记录表");
+            吹膜表名.Add("批生产记录产品详细信息");
+            吹膜表名.Add("批生产记录目录详细信息");
+            吹膜表名.Add("生产领料申请单表");
+            吹膜表名.Add("生产领料申请单详细信息");
+            吹膜表名.Add("生产指令产品列表");
+            吹膜表名.Add("生产指令信息表");
+            吹膜表名.Add("是否可以新建生产检验记录");
+            吹膜表名.Add("已打印标签");
+            清空很多表的数据(吹膜表名, conn);
+
+        }
+
+        void 清空很多表的数据(List<string> tbls, SqlConnection conn)
+        {
+            foreach (string tblname in tbls)
+            {
+                清空表数据(tblname, conn);
+            }
+        }
+
+        void 清空表数据(string tblname, SqlConnection conn)
+        {
+            if (DialogResult.OK != MessageBox.Show("清空表  " + tblname + "  ?", "提示", MessageBoxButtons.OKCancel))
+            {
+                return;
+            }
+            string sql = "truncate table {0}";
+            SqlCommand comm;
+            comm = new SqlCommand(string.Format(sql, tblname), conn);
+            comm.ExecuteNonQuery();
         }
 
         void import库存台账()
@@ -1143,6 +1295,103 @@ namespace mySystem
 
         }
 
+
+        # region 自动更新
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            // 获取版本信息
+            string localVersion = getLocalVersion();
+            string remoteVersion = getRemoteVersion();
+            if (string.Compare(remoteVersion, localVersion) > 0)
+            {
+                // 确认是否更新
+                if (DialogResult.OK ==
+                    MessageBox.Show(String.Format("检测到新版本: {0}(当前版本{1})，是否更新？",
+                    remoteVersion, localVersion), "提示", MessageBoxButtons.OKCancel))
+                {
+                    // 弹出进度对话框
+                    Other.AutoUpdate form = new Other.AutoUpdate();
+                    form.ShowDialog();
+                }
+            }
+            else
+            {
+                MessageBox.Show("已经是最新版本");
+            }
+            
+            
+        }
+
+        public static void DownloadFile(string URL, string filename, 
+            System.Windows.Forms.ProgressBar prog=null, 
+            System.Windows.Forms.Label label1=null)
+        {
+            float percent = 0;
+            try
+            {
+                System.Net.HttpWebRequest Myrq = (System.Net.HttpWebRequest)System.Net.HttpWebRequest.Create(URL);
+                System.Net.HttpWebResponse myrp = (System.Net.HttpWebResponse)Myrq.GetResponse();
+                long totalBytes = myrp.ContentLength;
+                if (prog != null)
+                {
+                    prog.Maximum = (int)totalBytes;
+                }
+                System.IO.Stream st = myrp.GetResponseStream();
+                System.IO.Stream so = new System.IO.FileStream(filename, System.IO.FileMode.Create);
+                long totalDownloadedByte = 0;
+                byte[] by = new byte[1024];
+                int osize = st.Read(by, 0, (int)by.Length);
+                while (osize > 0)
+                {
+                    totalDownloadedByte = osize + totalDownloadedByte;
+                    System.Windows.Forms.Application.DoEvents();
+                    so.Write(by, 0, osize);
+                    if (prog != null)
+                    {
+                        prog.Value = (int)totalDownloadedByte;
+                    }
+                    osize = st.Read(by, 0, (int)by.Length);
+
+                    percent = (float)totalDownloadedByte / (float)totalBytes * 100;
+                    if (label1 != null)
+                    {
+                        label1.Text = String.Format("当前文件({0})\n下载进度",
+                            System.IO.Path.GetFileName(filename)) + percent.ToString("F2") + "%";
+                    }
+                    System.Windows.Forms.Application.DoEvents(); //必须加注这句代码，否则label1将因为循环执行太快而来不及显示信息
+                }
+                so.Close();
+                st.Close();
+            }
+            catch (System.Exception)
+            {
+                throw;
+            }
+        }
+
+        string getRemoteVersion()
+        {
+            //AppSettingsSection appSettings = ConfigurationManager.OpenExeConfiguration(System.Windows.Forms.Application.ExecutablePath).AppSettings;
+            //String key = "version_url";
+            //if (appSettings.Settings[key] == null || appSettings.Settings[key].Value.Trim() == "")
+            //{
+            //    return "";
+            //}
+            String filepath = @"r_version.txt";
+            DownloadFile(@"http://123.206.90.229/erp/version.txt", filepath);
+            return getLocalVersion(filepath);
+        }
+
+        string getLocalVersion(String filepath = @"version.txt")
+        {
+            using (System.IO.StreamReader sr = new System.IO.StreamReader(filepath))
+            {
+                return sr.ReadLine();
+            }
+        }
+
+        # endregion
 
     }
 }

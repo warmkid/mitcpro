@@ -40,7 +40,6 @@ namespace mySystem.Process.Bag.LDPE
             InitializeComponent();
 
             conn = Parameter.conn;
-            mySystem.Parameter.conn = mySystem.Parameter.conn;
             isSqlOk = Parameter.isSqlOk;
             InstruID = Parameter.ldpebagInstruID;
             Instruction = Parameter.ldpebagInstruction;
@@ -67,7 +66,6 @@ namespace mySystem.Process.Bag.LDPE
             InitializeComponent();
 
             conn = Parameter.conn;
-            mySystem.Parameter.conn = mySystem.Parameter.conn;
             isSqlOk = Parameter.isSqlOk;
 
             fill_printer(); //添加打印机
@@ -170,7 +168,7 @@ namespace mySystem.Process.Bag.LDPE
                 {
                     //外面的信息填写
                     lb纸箱代码.Text = reader1["外包物料代码2"].ToString();
-                    lb纸箱批号.Text = reader1["外包物料批号2"].ToString();
+                    tb纸箱批号.Text = reader1["外包物料批号2"].ToString();
                     lb标签代码.Text = reader1["外包物料代码1"].ToString();
                     //读取详细信息
                     SqlCommand comm2 = new SqlCommand();
@@ -225,8 +223,7 @@ namespace mySystem.Process.Bag.LDPE
                 {
                     //控件都不能点，只有打印,日志可点
                     setControlFalse();
-                    btn数据审核.Enabled = true;
-                    btn退回数据审核.Enabled = true;
+                    
                     //遍历datagridview，如果有一行为待审核，则该行可以修改
                     dataGridView1.ReadOnly = false;
                     for (int i = 0; i < dataGridView1.Rows.Count; i++)
@@ -252,6 +249,12 @@ namespace mySystem.Process.Bag.LDPE
                         else
                             dataGridView1.Rows[i].ReadOnly = true;
                     }
+                }
+                btn数据审核.Enabled = true;
+                btn退回数据审核.Enabled = true;
+                if (_formState == Parameter.FormState.审核通过 || _formState == Parameter.FormState.待审核)
+                {
+                    btn退回数据审核.Enabled = false;
                 }
             }
             else//操作员
@@ -467,8 +470,8 @@ namespace mySystem.Process.Bag.LDPE
 
             lb纸箱代码.DataBindings.Clear();
             lb纸箱代码.DataBindings.Add("Text", bs记录.DataSource, "纸箱代码");
-            lb纸箱批号.DataBindings.Clear();
-            lb纸箱批号.DataBindings.Add("Text", bs记录.DataSource, "纸箱批号");
+            tb纸箱批号.DataBindings.Clear();
+            tb纸箱批号.DataBindings.Add("Text", bs记录.DataSource, "纸箱批号");
             tb领用数量.DataBindings.Clear();
             tb领用数量.DataBindings.Add("Text", bs记录.DataSource, "领用数量");
             tb退库数量.DataBindings.Clear();
@@ -504,7 +507,7 @@ namespace mySystem.Process.Bag.LDPE
             dr["产品代码"] = cb产品代码.Text;
             dr["产品批号"] = dt生产指令详情.Rows[cb产品代码.FindString(cb产品代码.Text)]["产品批号"].ToString();
             dr["纸箱代码"] = lb纸箱代码.Text;
-            dr["纸箱批号"] = lb纸箱批号.Text;
+            dr["纸箱批号"] = tb纸箱批号.Text;
             dr["领用数量"] = 0;
             dr["退库数量"] = 0;
             dr["外包标签"] = dt生产指令详情.Rows[cb产品代码.FindString(cb产品代码.Text)]["外标签"].ToString();
@@ -824,6 +827,7 @@ namespace mySystem.Process.Bag.LDPE
         //审核功能
         private void btn审核_Click(object sender, EventArgs e)
         {
+            if (!Utility.check内表审核是否完成(dt记录详情)) return;
             if (mySystem.Parameter.userName == dt记录详情.Rows[0]["操作员"].ToString())
             {
                 MessageBox.Show("当前登录的审核员与操作员为同一人，不可进行审核！");
@@ -958,7 +962,8 @@ namespace mySystem.Process.Bag.LDPE
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
-            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\LDPE\SOP-MFG-111-R01A 产品外包装记录.xlsx");
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + 
+                @"\..\..\xls\LDPE\SOP-MFG-111-R01A 产品外包装记录.xlsx");
             // 选择一个Sheet，注意Sheet的序号是从1开始的
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[wb.Worksheets.Count];
             // 修改Sheet中某行某列的值
@@ -1026,9 +1031,9 @@ namespace mySystem.Process.Bag.LDPE
             mysheet.Cells[4, 9].Value = "标签代码：" + dt记录.Rows[0]["标签代码"].ToString();
             mysheet.Cells[4, 12].Value = dt记录.Rows[0]["包装规格每箱千克"].ToString() + " Kg/箱";
             mysheet.Cells[5, 1].Value = "产品批号：" + dt记录.Rows[0]["产品批号"].ToString();
-            mysheet.Cells[5, 6].Value = " " + dt记录.Rows[0]["领用数量"].ToString();
-            mysheet.Cells[5, 8].Value = " " + dt记录.Rows[0]["退库数量"].ToString();
-            mysheet.Cells[5, 9].Value = "标签领用数量：" + dt记录.Rows[0]["标签领用数量"].ToString();
+            //mysheet.Cells[5, 6].Value = " " + dt记录.Rows[0]["领用数量"].ToString();
+            //mysheet.Cells[5, 8].Value = " " + dt记录.Rows[0]["退库数量"].ToString();
+            //mysheet.Cells[5, 9].Value = "标签领用数量：" + dt记录.Rows[0]["标签领用数量"].ToString();
             mysheet.Cells[5, 12].Value = dt记录.Rows[0]["包装规格每箱只数"].ToString() + " 只/箱";
             
            // mysheet.Cells[22, 1].Value = "审核员：" + dt记录.Rows[0]["审核员"].ToString();
@@ -1172,7 +1177,7 @@ namespace mySystem.Process.Bag.LDPE
             if (isFirstBind)
             {
                 readDGVWidthFromSettingAndSet(dataGridView1);
-                isFirstBind = false;
+                isFirstBind = true;
             }
             dataGridView1.Columns["时间"].DefaultCellStyle.Format = "HH:mm";
 
@@ -1207,6 +1212,17 @@ namespace mySystem.Process.Bag.LDPE
             catch
             {
                 return;
+            }
+        }
+
+        private void LDPE产品外包装记录_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                cb产品代码.SelectedIndex = 0;
+            }
+            catch
+            {
             }
         }
 

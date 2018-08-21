@@ -68,7 +68,6 @@ namespace mySystem.Process.Bag.LDPE
             InitializeComponent();
 
             conn = Parameter.conn;
-            mySystem.Parameter.conn = mySystem.Parameter.conn;
             isSqlOk = Parameter.isSqlOk;
             InstruID = Parameter.ldpebagInstruID;
             Instruction = Parameter.ldpebagInstruction;
@@ -254,6 +253,8 @@ namespace mySystem.Process.Bag.LDPE
             }
             else if (_userState == Parameter.UserState.审核员)//审核人
             {
+                btn数据审核.Enabled = true;
+                btn退回数据审核.Enabled = true;
                 if (_formState == Parameter.FormState.审核通过 || _formState == Parameter.FormState.审核未通过)  //2审核通过||3审核未通过
                 {
                     //控件都不能点，只有打印,日志可点
@@ -264,7 +265,7 @@ namespace mySystem.Process.Bag.LDPE
                     //控件都不能点，只有打印,日志可点
                     setControlFalse();
                     btn数据审核.Enabled = true;
-                    btn退回数据审核.Enabled = true;
+                    
                     //遍历datagridview，如果有一行为待审核，则该行可以修改
                     dataGridView1.ReadOnly = false;
                     for (int i = 0; i < dataGridView1.Rows.Count; i++)
@@ -290,7 +291,13 @@ namespace mySystem.Process.Bag.LDPE
                         else
                             dataGridView1.Rows[i].ReadOnly = true;
                     }
-                }                
+                }
+                btn数据审核.Enabled = true;
+                btn退回数据审核.Enabled = true;
+                if (_formState == Parameter.FormState.审核通过 || _formState == Parameter.FormState.待审核)
+                {
+                    btn退回数据审核.Enabled = false;
+                }
             }
             else//操作员
             {
@@ -375,6 +382,8 @@ namespace mySystem.Process.Bag.LDPE
             tb其他合计.ReadOnly = true;
             tb不良合计.ReadOnly = true;
             tb产品数量包数合计A.ReadOnly = true;
+            tb工时.ReadOnly = true;
+            texbox工时效率.ReadOnly = true;
             tb产品数量只数合计B.ReadOnly = true;
             //tb成品率.ReadOnly = true;
             //查询条件始终不可编辑
@@ -650,7 +659,8 @@ namespace mySystem.Process.Bag.LDPE
             {
                 int numtemp;
                 dr["生产开始时间"] = dt记录详情.Rows[dt记录详情.Rows.Count - 1]["生产结束时间"];  //根据上一行填写
-                if (Int32.TryParse(dt记录详情.Rows[dt记录详情.Rows.Count - 1]["内包序号"].ToString().Split('-')[1], out numtemp) == true)
+                string[] t = dt记录详情.Rows[dt记录详情.Rows.Count - 1]["内包序号"].ToString().Split('-');
+                if (t.Length>1 &&  Int32.TryParse(t[1], out numtemp) == true)
                 {
                     dr["内包序号"] = (numtemp + 1).ToString("D4");
                 }
@@ -993,6 +1003,7 @@ namespace mySystem.Process.Bag.LDPE
         //审核功能
         private void btn审核_Click(object sender, EventArgs e)
         {
+            if (!Utility.check内表审核是否完成(dt记录详情)) return;
             if (mySystem.Parameter.userName == dt记录详情.Rows[0]["操作员"].ToString())
             {
                 MessageBox.Show("当前登录的审核员与操作员为同一人，不可进行审核！");
@@ -1187,7 +1198,7 @@ namespace mySystem.Process.Bag.LDPE
             for (int i = 0; i < dt记录详情.Rows.Count; i++)
             {
                 mysheet.Cells[7 + i, 1] = i + 1;
-                mysheet.Cells[7 + i, 2] = Convert.ToDateTime(dt记录详情.Rows[i]["生产开始时间"].ToString()).ToString("HH:mm:ss") + "~" + Convert.ToDateTime(dt记录详情.Rows[i]["生产结束时间"].ToString()).ToString("HH:mm:ss");
+                mysheet.Cells[7 + i, 2] = Convert.ToDateTime(dt记录详情.Rows[i]["生产开始时间"].ToString()).ToString("HH:mm") + "~" + Convert.ToDateTime(dt记录详情.Rows[i]["生产结束时间"].ToString()).ToString("HH:mm");
                 mysheet.Cells[7 + i, 3] = process内包序号(dt记录详情.Rows[i]["内包序号"].ToString());
                 //mysheet.Cells[7 + i, 4] = dt记录详情.Rows[i]["包装规格每包只数"].ToString(); 
                 mysheet.Cells[7 + i, 4] = dt记录详情.Rows[i]["产品数量包"].ToString();
@@ -1404,8 +1415,11 @@ namespace mySystem.Process.Bag.LDPE
             if (isFirstBind)
             {
                 readDGVWidthFromSettingAndSet(dataGridView1);
-                isFirstBind = false;
+                isFirstBind = true;
             }
+            // 每次都重新计算一下工时
+            //getTotalColFloat("生产工时", "tb工时");
+            合计工时和工时效率();
         }
 
         //实时求合计、检查人名合法性
@@ -1455,7 +1469,8 @@ namespace mySystem.Process.Bag.LDPE
                     start = Convert.ToDateTime(dt记录详情.Rows[e.RowIndex]["生产开始时间"]);
                     end = Convert.ToDateTime(dt记录详情.Rows[e.RowIndex]["生产结束时间"]);
                     dt记录详情.Rows[e.RowIndex]["生产工时"] = Math.Round((end - start).TotalMinutes / 60.0, 1);
-                    getTotalColFloat("生产工时", "tb工时");
+                    合计工时和工时效率();
+                    //getTotalColFloat("生产工时", "tb工时");
                 }
                 else if (dataGridView1.Columns[e.ColumnIndex].Name == "内包序号")
                 {
@@ -1592,7 +1607,11 @@ namespace mySystem.Process.Bag.LDPE
 
         private void LDPEBag_innerpackaging_Load(object sender, EventArgs e)
         {
-
+            try
+            {
+                cb产品代码.SelectedIndex = 0;
+            }
+            catch { }
         }
 
         private void cb产品代码_SelectedIndexChanged(object sender, EventArgs e)
@@ -1620,6 +1639,20 @@ namespace mySystem.Process.Bag.LDPE
             }
         }
 
+        void 合计工时和工时效率()
+        {
+            getTotalColFloat("生产工时", "tb工时");
+            try
+            {
+                double xiaolv = Convert.ToInt32(dt记录.Rows[0]["产品数量只合计B"]) /Convert.ToDouble(tb工时.Text);
+
+                texbox工时效率.Text = Math.Round(xiaolv, 2).ToString();
+            }
+            catch {
+                texbox工时效率.Text = "未知";
+            }
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             try
@@ -1636,5 +1669,7 @@ namespace mySystem.Process.Bag.LDPE
                 return;
             }
         }
+
+        
     }
 }

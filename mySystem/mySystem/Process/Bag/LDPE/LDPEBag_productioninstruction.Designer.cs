@@ -288,9 +288,9 @@
             // cmb产品名称
             // 
             this.cmb产品名称.FormattingEnabled = true;
-            this.cmb产品名称.Location = new System.Drawing.Point(78, 13);
+            this.cmb产品名称.Location = new System.Drawing.Point(64, 47);
             this.cmb产品名称.Name = "cmb产品名称";
-            this.cmb产品名称.Size = new System.Drawing.Size(237, 20);
+            this.cmb产品名称.Size = new System.Drawing.Size(216, 20);
             this.cmb产品名称.TabIndex = 231;
             // 
             // btn添加
@@ -339,7 +339,6 @@
             // 
             // tb外包夜班负责人
             // 
-            this.tb外包夜班负责人.Enabled = false;
             this.tb外包夜班负责人.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tb外包夜班负责人.Location = new System.Drawing.Point(941, 421);
             this.tb外包夜班负责人.Name = "tb外包夜班负责人";
@@ -349,7 +348,6 @@
             // 
             // tb外包白班负责人
             // 
-            this.tb外包白班负责人.Enabled = false;
             this.tb外包白班负责人.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tb外包白班负责人.Location = new System.Drawing.Point(941, 379);
             this.tb外包白班负责人.Name = "tb外包白班负责人";
@@ -379,7 +377,6 @@
             // 
             // tb制袋内包夜班负责人
             // 
-            this.tb制袋内包夜班负责人.Enabled = false;
             this.tb制袋内包夜班负责人.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tb制袋内包夜班负责人.Location = new System.Drawing.Point(941, 335);
             this.tb制袋内包夜班负责人.Name = "tb制袋内包夜班负责人";
@@ -389,7 +386,6 @@
             // 
             // tb制袋内包白班负责人
             // 
-            this.tb制袋内包白班负责人.Enabled = false;
             this.tb制袋内包白班负责人.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tb制袋内包白班负责人.Location = new System.Drawing.Point(940, 296);
             this.tb制袋内包白班负责人.Name = "tb制袋内包白班负责人";
@@ -941,7 +937,7 @@
             // 
             // btn查询插入
             // 
-            this.btn查询插入.Location = new System.Drawing.Point(197, 45);
+            this.btn查询插入.Location = new System.Drawing.Point(187, 11);
             this.btn查询插入.Name = "btn查询插入";
             this.btn查询插入.Size = new System.Drawing.Size(75, 23);
             this.btn查询插入.TabIndex = 155;
@@ -992,7 +988,7 @@
             // 
             // tb生产指令编号
             // 
-            this.tb生产指令编号.Location = new System.Drawing.Point(101, 47);
+            this.tb生产指令编号.Location = new System.Drawing.Point(91, 13);
             this.tb生产指令编号.Name = "tb生产指令编号";
             this.tb生产指令编号.Size = new System.Drawing.Size(90, 21);
             this.tb生产指令编号.TabIndex = 148;
@@ -1000,7 +996,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(18, 50);
+            this.label3.Location = new System.Drawing.Point(8, 16);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(77, 12);
             this.label3.TabIndex = 147;
@@ -1009,7 +1005,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(25, 16);
+            this.label2.Location = new System.Drawing.Point(11, 50);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(53, 12);
             this.label2.TabIndex = 146;

@@ -41,6 +41,7 @@ namespace mySystem.Process.Bag.CS
         SqlCommandBuilder cbOuter, cbInner;
         DataTable dtOuter, dtInner;
         BindingSource bsOuter, bsInner;
+        List<String> ls物料代码, ls物料名称, ls单位;
 
         CheckForm ckform;
         bool isFirstBind = true;
@@ -51,6 +52,7 @@ namespace mySystem.Process.Bag.CS
             fillPrinter();
             variableInit();
             getOuterOtherData();
+            getMaterialOtherData();
             getPeople();
             setUseState();
             setFormState(true);
@@ -65,6 +67,7 @@ namespace mySystem.Process.Bag.CS
             fillPrinter();
             variableInit();
             getOuterOtherData();
+            getMaterialOtherData();
             getPeople();
             setUseState();
 
@@ -202,13 +205,33 @@ namespace mySystem.Process.Bag.CS
                 cmb负责人.Items.Add(dr["用户名"].ToString());
             }
             //　产品名称
-            da = new SqlDataAdapter("select * from 设置CS制袋产品", conn);
-            dt = new DataTable("temp");
+            //da = new SqlDataAdapter("select * from 设置CS制袋产品", conn);
+            //dt = new DataTable("temp");
+            //da.Fill(dt);
+            //foreach(DataRow dr in dt.Rows){
+            //    ls产品名称.Add(dr["产品名称"].ToString());
+            //    if (!cmb产品名称.Items.Contains(dr["产品名称"].ToString()))
+            //    {
+            //        cmb产品名称.Items.Add(dr["产品名称"].ToString());
+            //    }
+                
+            //}
+
+            string strConnect1 = "server=" + Parameter.IP_port + ";database=dingdan_kucun;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
+            SqlConnection Tconn1 = new SqlConnection(strConnect1);
+            Tconn1.Open();
+            da = new SqlDataAdapter("select * from 设置存货档案 where 类型 like '%成品%' and 属于工序 like '%CS制袋%'", Tconn1);
+            dt = new DataTable();
             da.Fill(dt);
-            foreach(DataRow dr in dt.Rows){
-                ls产品名称.Add(dr["产品名称"].ToString());
-                cmb产品名称.Items.Add(dr["产品名称"].ToString());
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                ls产品名称.Add(dr["存货名称"].ToString());
+                if (!cmb产品名称.Items.Contains(dr["存货名称"].ToString()))
+
+                    cmb产品名称.Items.Add(dr["存货名称"].ToString());
             }
+
             
             
             // 工艺
@@ -253,7 +276,7 @@ namespace mySystem.Process.Bag.CS
             string strConnect = "server=" + Parameter.IP_port + ";database=dingdan_kucun;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
             SqlConnection Tconn = new SqlConnection(strConnect);
             Tconn.Open();
-            da = new SqlDataAdapter("select * from 设置存货档案 where 类型 like '成品' and 属于工序 like '%CS制袋%'", Tconn);
+            da = new SqlDataAdapter("select * from 设置存货档案 where 类型 like '%成品%' and 属于工序 like '%CS制袋%'", Tconn);
             dt = new DataTable("temp");
             da.Fill(dt);
             foreach (DataRow dr in dt.Rows)
@@ -476,6 +499,7 @@ namespace mySystem.Process.Bag.CS
                     cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
                     cbc.Items.Add("中文");
                     cbc.Items.Add("英文");
+                    cbc.Items.Add("无");
                     dataGridView1.Columns.Add(cbc);
                     continue;
                 }
@@ -489,6 +513,7 @@ namespace mySystem.Process.Bag.CS
                     cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
                     cbc.Items.Add("中文");
                     cbc.Items.Add("英文");
+                    cbc.Items.Add("无");
                     dataGridView1.Columns.Add(cbc);
                     continue;
                 }
@@ -888,52 +913,52 @@ namespace mySystem.Process.Bag.CS
         {
             if (hs物料代码.Count > 0)
             {
-                if (!hs物料代码.Contains(tb制袋物料代码1.Text))
+                if (tb制袋物料代码1.Text!="" && !hs物料代码.Contains(tb制袋物料代码1.Text))
                 {
                     MessageBox.Show("制袋 " + tb制袋物料名称1.Text + " 物料代码 有误！");
                     return;
                 }
-                if (!hs物料代码.Contains(tb制袋物料代码2.Text))
+                if (tb制袋物料代码2.Text != "" && !hs物料代码.Contains(tb制袋物料代码2.Text))
                 {
                     MessageBox.Show("制袋 " + tb制袋物料名称2.Text + " 物料代码 有误！");
                     return;
                 }
-                if (!hs物料代码.Contains(tb制袋物料代码3.Text))
+                if (tb制袋物料代码3.Text != "" && !hs物料代码.Contains(tb制袋物料代码3.Text))
                 {
                     MessageBox.Show("制袋 " + tb制袋物料名称3.Text + " 物料代码 有误！");
                     return;
                 }
-                if (!hs物料代码.Contains(tb内包物料代码1.Text))
+                if (tb内包物料代码1.Text != "" && !hs物料代码.Contains(tb内包物料代码1.Text))
                 {
                     MessageBox.Show("内包装 " + tb内包物料名称1.Text + " 物料代码 有误！");
                     return;
                 }
-                if (!hs物料代码.Contains(tb内包物料代码2.Text))
+                if (tb内包物料代码2.Text != "" && !hs物料代码.Contains(tb内包物料代码2.Text))
                 {
                     MessageBox.Show("内包装 " + tb内包物料名称2.Text + " 物料代码 有误！");
                     return;
                 }
-                if (!hs物料代码.Contains(tb内包物料代码3.Text))
+                if (tb内包物料代码3.Text != "" && !hs物料代码.Contains(tb内包物料代码3.Text))
                 {
                     MessageBox.Show("内包装 " + tb内包物料名称3.Text + " 物料代码 有误！");
                     return;
                 }
-                if (!hs物料代码.Contains(tb内包物料代码4.Text))
+                if (tb内包物料代码4.Text != "" && !hs物料代码.Contains(tb内包物料代码4.Text))
                 {
                     MessageBox.Show("内包装 " + tb内包物料名称4.Text + " 物料代码 有误！");
                     return;
                 }
-                if (!hs物料代码.Contains(tb外包物料代码1.Text))
+                if (tb外包物料代码1.Text != "" && !hs物料代码.Contains(tb外包物料代码1.Text))
                 {
                     MessageBox.Show("外包装 " + tb外包物料名称1.Text + " 物料代码 有误！");
                     return;
                 }
-                if (!hs物料代码.Contains(tb外包物料代码2.Text))
+                if (tb外包物料代码2.Text != "" && !hs物料代码.Contains(tb外包物料代码2.Text))
                 {
                     MessageBox.Show("外包装 " + tb外包物料名称2.Text + " 物料代码 有误！");
                     return;
                 }
-                if (!hs物料代码.Contains(tb外包物料代码3.Text))
+                if (tb外包物料代码3.Text != "" && !hs物料代码.Contains(tb外包物料代码3.Text))
                 {
                     MessageBox.Show("外包装 " + tb外包物料名称3.Text + " 物料代码 有误！");
                     return;
@@ -961,7 +986,14 @@ namespace mySystem.Process.Bag.CS
 
         private void btn外包白班_Click(object sender, EventArgs e)
         {
-            hs外包白班负责人.Add(cmb负责人.SelectedItem.ToString());
+            if (hs外包白班负责人.Contains(cmb负责人.SelectedItem.ToString()))
+            {
+                hs外包白班负责人.Remove(cmb负责人.SelectedItem.ToString());
+            }
+            else
+            {
+                hs外包白班负责人.Add(cmb负责人.SelectedItem.ToString());
+            }          
             //dtOuter.Rows[0]["外包白班负责人"] = String.Join(",", hs外包白班负责人.ToList<String>().ToArray());
             outerDataSync("tb外包白班负责人", String.Join(",", hs外包白班负责人.ToList<String>().ToArray()));
             //tb外包白班负责人.Text = 
@@ -969,7 +1001,14 @@ namespace mySystem.Process.Bag.CS
 
         private void btn外包夜班_Click(object sender, EventArgs e)
         {
-            hs外包夜班负责人.Add(cmb负责人.SelectedItem.ToString());
+            if (hs外包夜班负责人.Contains(cmb负责人.SelectedItem.ToString()))
+            {
+                hs外包夜班负责人.Remove(cmb负责人.SelectedItem.ToString());
+            }
+            else
+            {
+                hs外包夜班负责人.Add(cmb负责人.SelectedItem.ToString());
+            } 
             //dtOuter.Rows[0]["外包夜班负责人"] = String.Join(",", hs外包夜班负责人.ToList<String>().ToArray());
             outerDataSync("tb外包夜班负责人", String.Join(",", hs外包夜班负责人.ToList<String>().ToArray()));
             //tb外包夜班负责人.Text = String.Join(",", hs外包夜班负责人.ToList<String>().ToArray());
@@ -977,7 +1016,14 @@ namespace mySystem.Process.Bag.CS
 
         private void btn制袋内包白班_Click(object sender, EventArgs e)
         {
-            hs制袋内包白班负责人.Add(cmb负责人.SelectedItem.ToString());
+            if (hs制袋内包白班负责人.Contains(cmb负责人.SelectedItem.ToString()))
+            {
+                hs制袋内包白班负责人.Remove(cmb负责人.SelectedItem.ToString());
+            }
+            else
+            {
+                hs制袋内包白班负责人.Add(cmb负责人.SelectedItem.ToString());
+            }
             //dtOuter.Rows[0]["制袋内包白班负责人"] = String.Join(",", hs制袋内包白班负责人.ToList<String>().ToArray());
             outerDataSync("tb制袋内包白班负责人", String.Join(",", hs制袋内包白班负责人.ToList<String>().ToArray()));
             //tb制袋内包白班负责人.Text = String.Join(",", hs制袋内包白班负责人.ToList<String>().ToArray());
@@ -985,7 +1031,14 @@ namespace mySystem.Process.Bag.CS
 
         private void btn制袋内包夜班_Click(object sender, EventArgs e)
         {
-            hs制袋内包夜班负责人.Add(cmb负责人.SelectedItem.ToString());
+            if (hs制袋内包夜班负责人.Contains(cmb负责人.SelectedItem.ToString()))
+            {
+                hs制袋内包夜班负责人.Remove(cmb负责人.SelectedItem.ToString());
+            }
+            else
+            {
+                hs制袋内包夜班负责人.Add(cmb负责人.SelectedItem.ToString());
+            }
             //dtOuter.Rows[0]["制袋内包夜班负责人"] = String.Join(",", hs制袋内包夜班负责人.ToList<String>().ToArray());
             outerDataSync("tb制袋内包夜班负责人", String.Join(",", hs制袋内包夜班负责人.ToList<String>().ToArray()));
             //tb制袋内包夜班负责人.Text = String.Join(",", hs制袋内包夜班负责人.ToList<String>().ToArray());
@@ -1162,6 +1215,7 @@ namespace mySystem.Process.Bag.CS
                 MessageBox.Show("选择一台打印机");
                 return;
             }
+            if (dtOuter == null) return;
             SetDefaultPrinter(comboBox1.Text);
             print(false);
             GC.Collect();
@@ -1347,6 +1401,169 @@ namespace mySystem.Process.Bag.CS
             }
         }
 
+
+        void getMaterialOtherData()
+        {
+            ls物料代码 = new List<string>();
+            ls物料名称 = new List<string>();
+            ls单位 = new List<string>();
+            string strConnect = "server=" + Parameter.IP_port + ";database=dingdan_kucun;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
+            SqlConnection connToOrder = new SqlConnection(strConnect);
+            SqlDataAdapter da;
+            DataTable dt;
+            da = new SqlDataAdapter("select * from 设置存货档案 where 类型 like '%组件%' and 属于工序 like '%CS制袋%'", connToOrder);
+            dt = new DataTable();
+            da.Fill(dt);
+            foreach (DataRow dr in dt.Rows)
+            {
+                ls物料代码.Add(dr["存货代码"].ToString());
+                ls物料名称.Add(dr["存货名称"].ToString());
+                ls单位.Add(dr["主计量单位名称"].ToString());
+            }
+            da.Dispose();
+        }
+
+        private void tb制袋物料代码1_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                TextBox tb = (sender as TextBox);
+                if (ls物料代码.IndexOf(tb.Text) >= 0)
+                {
+                    tb制袋物料名称1.Text = ls物料名称[ls物料代码.IndexOf(tb.Text)];
+                }
+            }
+            catch
+            { }
+        }
+
+        private void tb制袋物料代码2_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                TextBox tb = (sender as TextBox);
+                if (ls物料代码.IndexOf(tb.Text) >= 0)
+                {
+                    tb制袋物料名称2.Text = ls物料名称[ls物料代码.IndexOf(tb.Text)];
+                }
+            }
+            catch
+            { }
+        }
+
+        private void tb制袋物料代码3_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                TextBox tb = (sender as TextBox);
+                if (ls物料代码.IndexOf(tb.Text) >= 0)
+                {
+                    tb制袋物料名称3.Text = ls物料名称[ls物料代码.IndexOf(tb.Text)];
+                }
+            }
+            catch
+            { }
+        }
+
+        private void tb内包物料代码1_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                TextBox tb = (sender as TextBox);
+                if (ls物料代码.IndexOf(tb.Text) >= 0)
+                {
+                    tb内包物料名称1.Text = ls物料名称[ls物料代码.IndexOf(tb.Text)];
+                }
+            }
+            catch
+            { }
+        }
+
+        private void tb内包物料代码2_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                TextBox tb = (sender as TextBox);
+                if (ls物料代码.IndexOf(tb.Text) >= 0)
+                {
+                    tb内包物料名称2.Text = ls物料名称[ls物料代码.IndexOf(tb.Text)];
+                }
+            }
+            catch
+            { }
+        }
+
+        private void tb内包物料代码3_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                TextBox tb = (sender as TextBox);
+                if (ls物料代码.IndexOf(tb.Text) >= 0)
+                {
+                    tb内包物料名称3.Text = ls物料名称[ls物料代码.IndexOf(tb.Text)];
+                }
+            }
+            catch
+            { }
+        }
+
+        private void tb内包物料代码4_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                TextBox tb = (sender as TextBox);
+                if (ls物料代码.IndexOf(tb.Text) >= 0)
+                {
+                    tb内包物料名称4.Text = ls物料名称[ls物料代码.IndexOf(tb.Text)];
+                }
+            }
+            catch
+            { }
+        }
+
+        private void tb外包物料代码1_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                TextBox tb = (sender as TextBox);
+                if (ls物料代码.IndexOf(tb.Text) >= 0)
+                {
+                    tb外包物料名称1.Text = ls物料名称[ls物料代码.IndexOf(tb.Text)];
+                }
+            }
+            catch
+            { }
+        }
+
+        private void tb外包物料代码2_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                TextBox tb = (sender as TextBox);
+                if (ls物料代码.IndexOf(tb.Text) >= 0)
+                {
+                    tb外包物料名称2.Text = ls物料名称[ls物料代码.IndexOf(tb.Text)];
+                }
+            }
+            catch
+            { }
+        }
+
+        private void tb外包物料代码3_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                TextBox tb = (sender as TextBox);
+                if (ls物料代码.IndexOf(tb.Text) >= 0)
+                {
+                    tb外包物料名称3.Text = ls物料名称[ls物料代码.IndexOf(tb.Text)];
+                }
+            }
+            catch
+            { }
+        }
+
+        
 
 
     }

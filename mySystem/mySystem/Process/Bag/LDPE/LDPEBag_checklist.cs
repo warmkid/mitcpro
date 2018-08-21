@@ -409,7 +409,7 @@ namespace mySystem.Process.Bag.LDPE
                 dr["序号"] = (i + 1);
                 dr["确认项目"] = dt设置.Rows[i]["确认项目"];
                 dr["确认内容"] = dt设置.Rows[i]["确认内容"];
-                dr["确认结果"] = "Yes";
+                dr["确认结果"] = "符合";
                 dt.Rows.InsertAt(dr, dt.Rows.Count);
             }
             return dt;
@@ -437,8 +437,9 @@ namespace mySystem.Process.Bag.LDPE
                         cbc.HeaderText = dc.ColumnName;
                         cbc.Name = dc.ColumnName;
                         cbc.ValueType = dc.DataType;
-                        cbc.Items.Add("Yes");
-                        cbc.Items.Add("No");
+                        cbc.Items.Add("符合");
+                        cbc.Items.Add("不符合");
+                        cbc.Items.Add("不适用");
                         dataGridView1.Columns.Add(cbc);
                         cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
                         //cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
@@ -750,9 +751,9 @@ namespace mySystem.Process.Bag.LDPE
                 mysheet.Cells[4 + i, 2].Value = dt记录详情.Rows[i]["确认项目"].ToString();
                 mysheet.Cells[4 + i, 3].Value = dt记录详情.Rows[i]["确认内容"].ToString();
                 //mysheet.Cells[4 + i, 6].Value = dt记录详情.Rows[i]["确认结果"].ToString() == "Yes" ? "√" : "×";
-                if (dt记录详情.Rows[i]["确认结果"].ToString() == "Yes")
+                if (dt记录详情.Rows[i]["确认结果"].ToString() == "符合")
                     mysheet.Cells[4 + i, 4].Value = "符合☑  不符合□  不适用□";
-                else if (dt记录详情.Rows[i]["确认结果"].ToString() == "No")
+                else if (dt记录详情.Rows[i]["确认结果"].ToString() == "不符合")
                     mysheet.Cells[4 + i, 4].Value = "符合□  不符合☑  不适用□";
                 else
                     mysheet.Cells[4 + i, 4].Value = "符合□  不符合□  不适用☑";
@@ -771,9 +772,9 @@ namespace mySystem.Process.Bag.LDPE
                     mysheet.Cells[4 + i, 2].Value = dt记录详情.Rows[i]["确认项目"].ToString();
                     mysheet.Cells[4 + i, 3].Value = dt记录详情.Rows[i]["确认内容"].ToString();
                     //mysheet.Cells[4 + i, 6].Value = dt记录详情.Rows[i]["确认结果"].ToString() == "Yes" ? "√" : "×";
-                    if (dt记录详情.Rows[i]["确认结果"].ToString() == "Yes")
+                    if (dt记录详情.Rows[i]["确认结果"].ToString() == "符合")
                         mysheet.Cells[4 + i, 4].Value = "符合☑  不符合□  不适用□";
-                    else if (dt记录详情.Rows[i]["确认结果"].ToString() == "No")
+                    else if (dt记录详情.Rows[i]["确认结果"].ToString() == "不符合")
                         mysheet.Cells[4 + i, 4].Value = "符合□  不符合☑  不适用□";
                     else
                         mysheet.Cells[4 + i, 4].Value = "符合□  不符合□  不适用☑";
@@ -847,7 +848,7 @@ namespace mySystem.Process.Bag.LDPE
             if (isFirstBind)
             {
                 readDGVWidthFromSettingAndSet(dataGridView1);
-                isFirstBind = false;
+                isFirstBind = true;
             }
         }
 

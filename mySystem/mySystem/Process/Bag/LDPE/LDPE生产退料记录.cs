@@ -253,8 +253,7 @@ namespace mySystem.Process.Bag.LDPE
                 {
                     //控件都不能点，只有打印,日志可点
                     setControlFalse();
-                    btn数据审核.Enabled = true;
-                    btn退回数据审核.Enabled = true;
+                    
                     //遍历datagridview，如果有一行为待审核，则该行可以修改
                     dataGridView1.ReadOnly = false;
                     for (int i = 0; i < dataGridView1.Rows.Count; i++)
@@ -280,6 +279,12 @@ namespace mySystem.Process.Bag.LDPE
                         else
                             dataGridView1.Rows[i].ReadOnly = true;
                     }
+                }
+                btn数据审核.Enabled = true;
+                btn退回数据审核.Enabled = true;
+                if (_formState == Parameter.FormState.审核通过 || _formState == Parameter.FormState.待审核)
+                {
+                    btn退回数据审核.Enabled = false;
                 }
             }
             else//操作员
@@ -810,6 +815,7 @@ namespace mySystem.Process.Bag.LDPE
         //审核功能
         private void btn审核_Click(object sender, EventArgs e)
         {
+            if (!Utility.check内表审核是否完成(dt记录详情)) return;
             if (mySystem.Parameter.userName == dt记录详情.Rows[0]["操作员"].ToString())
             {
                 MessageBox.Show("当前登录的审核员与操作员为同一人，不可进行审核！");
@@ -1146,7 +1152,7 @@ namespace mySystem.Process.Bag.LDPE
             if (isFirstBind)
             {
                 readDGVWidthFromSettingAndSet(dataGridView1);
-                isFirstBind = false;
+                isFirstBind = true;
             }
             dataGridView1.Columns["时间"].DefaultCellStyle.Format = "HH:mm";
         }

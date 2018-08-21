@@ -35,6 +35,7 @@ namespace mySystem.Process.Bag.LDPE
         // 当前数据在自己表中的id
         int _id;
         String _code;
+        CheckForm ckForm = null;
 
         // 显示界面需要的信息
         String str产品代码;
@@ -362,6 +363,7 @@ namespace mySystem.Process.Bag.LDPE
             dr["宽"] = 0;
             dr["长"] = 0;
             dr["判定尺寸检测"] = "合格";
+            dr["操作员"] = mySystem.Parameter.userName;
             return dr;
         }
 
@@ -447,10 +449,16 @@ namespace mySystem.Process.Bag.LDPE
                     btn审核.Enabled = true;
                 }
                 else setControlFalse();
+                btn退回数据审核.Enabled = true;
+                btn数据审核.Enabled = true;
+                if (_formState == Parameter.FormState.审核通过 || _formState == Parameter.FormState.待审核)
+                {
+                    btn退回数据审核.Enabled = false;
+                }
             }
             if (Parameter.UserState.操作员 == _userState)
             {
-                if (Parameter.FormState.未保存 == _formState || Parameter.FormState.审核通过 == _formState) setControlTrue();
+                if (Parameter.FormState.未保存 == _formState || Parameter.FormState.审核未通过 == _formState) setControlTrue();
                 else setControlFalse();
             }
             //if (2 == _userState)
@@ -494,7 +502,8 @@ namespace mySystem.Process.Bag.LDPE
             // 保证这两个按钮一直是false
             btn审核.Enabled = false;
             btn提交审核.Enabled = false;
-
+            btn数据审核.Enabled = false;
+            btn退回数据审核.Enabled = false;
         }
 
         void setControlFalse()
@@ -630,7 +639,7 @@ namespace mySystem.Process.Bag.LDPE
             if (isFirstBind)
             {
                 readDGVWidthFromSettingAndSet(dataGridView1);
-                isFirstBind = false;
+                isFirstBind = true;
             }
         }
         void addOtherEvenHandler()
@@ -681,7 +690,12 @@ namespace mySystem.Process.Bag.LDPE
         private void btn保存_Click(object sender, EventArgs e)
         {
             if (!checkBeforeSave()) return;
+            save();
+            
+        }
 
+        void save()
+        {
             bsOuter.EndEdit();
             daOuter.Update((DataTable)bsOuter.DataSource);
             readOuterData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
@@ -785,6 +799,21 @@ namespace mySystem.Process.Bag.LDPE
 
         private void btn提交审核_Click(object sender, EventArgs e)
         {
+            if (DialogResult.Yes != MessageBox.Show("提交最后审核后本表单数据不可修改，是否确定？", "提示", MessageBoxButtons.YesNo))
+            {
+                return;
+            }
+
+            //判断内表是否完全提交审核
+            for (int i = 0; i < dtInner.Rows.Count; i++)
+            {
+                if (dtInner.Rows[i]["审核员"].ToString() == "")
+                {
+                    MessageBox.Show("第" + (i + 1) + "行未提交数据审核");
+                    return;
+                }
+            }
+
             if (!dataValidate())
             {
                 MessageBox.Show("数据填写不完整，请仔细检查！");
@@ -826,7 +855,8 @@ namespace mySystem.Process.Bag.LDPE
         {
             try
             {
-                MessageBox.Show(dtOuter.Rows[0]["日志"].ToString());
+                mySystem.Other.LogForm logForm = new Other.LogForm();
+                logForm.setLog(dtOuter.Rows[0]["日志"].ToString()).Show();
             }
             catch (Exception exp)
             {
@@ -836,7 +866,18 @@ namespace mySystem.Process.Bag.LDPE
 
         private void btn审核_Click(object sender, EventArgs e)
         {
-            // TODO 弹出赵梦的窗口            
+            if (!Utility.check内表审核是否完成(dtInner)) return;
+            // TODO 弹出赵梦的窗口    
+            ckForm = new CheckForm(this);
+            ckForm.ShowDialog();
+
+
+            
+        }
+
+        public override void CheckResult()
+        {
+            base.CheckResult();
             SqlDataAdapter da;
             SqlCommandBuilder cb;
             DataTable dt;
@@ -850,12 +891,14 @@ namespace mySystem.Process.Bag.LDPE
             da.Update(dt);
 
             dtOuter.Rows[0]["审核员"] = mySystem.Parameter.userName;
-            dtOuter.Rows[0]["审核是否通过"] = true;
+            dtOuter.Rows[0]["审核是否通过"] = ckForm.ischeckOk;
+            dtOuter.Rows[0]["审核意见"] = ckForm.opinion;
+
             String log = "===================================\n";
             log += DateTime.Now.ToString("yyyy年MM月dd日 HH:mm:ss");
             log += "\n审核员：" + mySystem.Parameter.userName + " 审核完毕\n";
-            log += "审核结果为：通过\n";
-            log += "审核意见为：无\n";
+            log += "审核结果为：" + (ckForm.ischeckOk ? "通过" : "不通过") + "\n";
+            log += "审核意见为：" + ckForm.opinion + "\n";
             dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
             btn保存.PerformClick();
             setFormState();
@@ -863,7 +906,7 @@ namespace mySystem.Process.Bag.LDPE
 
             btn审核.Enabled = false;
         }
-        
+
         //添加打印机
         [DllImport("winspool.drv")]
         public static extern bool SetDefaultPrinter(string Name);
@@ -897,7 +940,8 @@ namespace mySystem.Process.Bag.LDPE
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
-            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\LDPE\13 QB-PA-PP-03-R01A 产品外观和尺寸检验记.xlsx");
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() +
+                @"\..\..\xls\LDPE\13 QB-PA-PP-03-R01A 产品外观和尺寸检验记.xlsx");
             // 选择一个Sheet，注意Sheet的序号是从1开始的
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[wb.Worksheets.Count];
             // 修改Sheet中某行某列的值
@@ -1010,17 +1054,19 @@ namespace mySystem.Process.Bag.LDPE
                 mysheet.Cells[6 + i, 10].Value = dtInner.Rows[i]["抽检量尺寸检测"].ToString();
                 mysheet.Cells[6 + i, 11].Value = dtInner.Rows[i]["宽"].ToString() + " × " + dtInner.Rows[i]["长"].ToString();
                 mysheet.Cells[6 + i, 12].Value = dtInner.Rows[i]["判定尺寸检测"].ToString() == "合格" ? "√" : "×";
+                mysheet.Cells[6 + i, 13].Value = dtInner.Rows[i]["操作员"].ToString();
+                mysheet.Cells[6 + i, 14].Value = dtInner.Rows[i]["审核员"].ToString();
             }
 
-            mysheet.Cells[15 + ind, 3].Value = dtOuter.Rows[0]["抽检量合计"].ToString();
-            mysheet.Cells[15 + ind, 4].Value = dtOuter.Rows[0]["游离异物合计"].ToString();
-            mysheet.Cells[15 + ind, 5].Value = dtOuter.Rows[0]["内含黑点晶点合计"].ToString();
-            mysheet.Cells[15 + ind, 6].Value = dtOuter.Rows[0]["热封线不良合计"].ToString();
-            mysheet.Cells[15 + ind, 7].Value = dtOuter.Rows[0]["其他合计"].ToString();
-            mysheet.Cells[15 + ind, 8].Value = dtOuter.Rows[0]["不良合计"].ToString();
-            mysheet.Cells[15 + ind, 10].Value = dtOuter.Rows[0]["尺寸抽检量合计"].ToString();
-            mysheet.Cells[16 + ind, 10].Value = "检查人:" + dtOuter.Rows[0]["操作员"].ToString()
-                + "   复核人：" + dtOuter.Rows[0]["审核员"].ToString();
+            mysheet.Cells[13 + ind, 3].Value = dtOuter.Rows[0]["抽检量合计"].ToString();
+            mysheet.Cells[13 + ind, 4].Value = dtOuter.Rows[0]["游离异物合计"].ToString();
+            mysheet.Cells[13 + ind, 5].Value = dtOuter.Rows[0]["内含黑点晶点合计"].ToString();
+            mysheet.Cells[13 + ind, 6].Value = dtOuter.Rows[0]["热封线不良合计"].ToString();
+            mysheet.Cells[13 + ind, 7].Value = dtOuter.Rows[0]["其他合计"].ToString();
+            mysheet.Cells[13 + ind, 8].Value = dtOuter.Rows[0]["不良合计"].ToString();
+            mysheet.Cells[13 + ind, 10].Value = dtOuter.Rows[0]["尺寸抽检量合计"].ToString();
+            //mysheet.Cells[16 + ind, 10].Value = "检查人:" + dtOuter.Rows[0]["操作员"].ToString()
+                //+ "   复核人：" + dtOuter.Rows[0]["审核员"].ToString();
             //mysheet.Cells[13 + ind, 9].Value = "尺寸规格： 宽 " + dtOuter.Rows[0]["尺寸规格宽"].ToString() + " mm × 长 " + dtOuter.Rows[0]["尺寸规格长"].ToString() + " mm（标示±5mm）";            
             
             //加页脚
@@ -1045,6 +1091,71 @@ namespace mySystem.Process.Bag.LDPE
         private void 产品外观和尺寸检验记录_FormClosing(object sender, FormClosingEventArgs e)
         {
             writeDGVWidthToSetting(dataGridView1);
+        }
+
+        private void btn提交数据审核_Click(object sender, EventArgs e)
+        {
+            //find the uncheck item in inner list and tag the revoewer __待审核
+            for (int i = 0; i < dtInner.Rows.Count; i++)
+            {
+                if (Convert.ToString(dtInner.Rows[i]["审核员"]).ToString().Trim() == "")
+                {
+                    dtInner.Rows[i]["审核员"] = "__待审核";
+                    dataGridView1.Rows[i].ReadOnly = true;
+                }
+                continue;
+            }
+            // 保存数据的方法，每次保存之后重新读取数据，重新绑定控件
+            daInner.Update((DataTable)bsInner.DataSource);
+            readInnerData(Convert.ToInt32(dtInner.Rows[0]["ID"]));
+            innerBind();
+            setEnableReadOnly();
+        }
+
+        private void btn数据审核_Click(object sender, EventArgs e)
+        {
+            HashSet<Int32> hi待审核行号 = new HashSet<int>();
+            foreach (DataGridViewCell dgvc in dataGridView1.SelectedCells)
+            {
+                hi待审核行号.Add(dgvc.RowIndex);
+            }
+            //find the item in inner tagged the reviewer __待审核 and replace the content his name
+            foreach (int i in hi待审核行号)
+            {
+                if ("__待审核" == Convert.ToString(dtInner.Rows[i]["审核员"]).ToString().Trim())
+                {
+                    if (Parameter.userName != dtInner.Rows[i]["操作员"].ToString())
+                    {
+                        dtInner.Rows[i]["审核员"] = Parameter.userName;
+                    }
+                    else
+                    {
+                        MessageBox.Show("记录员,审核员相同");
+                    }
+                }
+                continue;
+            }
+            // 保存数据的方法，每次保存之后重新读取数据，重新绑定控件
+            daInner.Update((DataTable)bsInner.DataSource);
+            readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
+            innerBind();
+        }
+
+        private void btn退回数据审核_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dataGridView1.SelectedCells.Count <= 0) return;
+                int iid = Convert.ToInt32(dataGridView1.SelectedCells[0].OwningRow.Cells["ID"].Value);
+                Utility.t退回数据审核(dtInner, iid, "审核员");
+                //btn确认.PerformClick();
+                save();
+                //innerBind();
+            }
+            catch
+            {
+                return;
+            }
         }
            
     }

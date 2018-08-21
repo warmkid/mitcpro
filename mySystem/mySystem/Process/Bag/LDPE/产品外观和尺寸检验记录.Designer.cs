@@ -28,6 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.label角色 = new System.Windows.Forms.Label();
+            this.lbl尺寸抽检量合计 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
             this.lbl产品批号 = new System.Windows.Forms.Label();
             this.lbl产品代码 = new System.Windows.Forms.Label();
             this.btn保存 = new System.Windows.Forms.Button();
@@ -71,11 +74,41 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.lbl尺寸抽检量合计 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
-            this.label角色 = new System.Windows.Forms.Label();
+            this.btn退回数据审核 = new System.Windows.Forms.Button();
+            this.btn提交数据审核 = new System.Windows.Forms.Button();
+            this.btn数据审核 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
+            // 
+            // label角色
+            // 
+            this.label角色.AutoSize = true;
+            this.label角色.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label角色.Location = new System.Drawing.Point(616, 26);
+            this.label角色.Name = "label角色";
+            this.label角色.Size = new System.Drawing.Size(42, 16);
+            this.label角色.TabIndex = 125;
+            this.label角色.Text = "角色";
+            // 
+            // lbl尺寸抽检量合计
+            // 
+            this.lbl尺寸抽检量合计.AutoSize = true;
+            this.lbl尺寸抽检量合计.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lbl尺寸抽检量合计.Location = new System.Drawing.Point(434, 463);
+            this.lbl尺寸抽检量合计.Name = "lbl尺寸抽检量合计";
+            this.lbl尺寸抽检量合计.Size = new System.Drawing.Size(16, 16);
+            this.lbl尺寸抽检量合计.TabIndex = 124;
+            this.lbl尺寸抽检量合计.Text = "0";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label20.Location = new System.Drawing.Point(385, 430);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(120, 16);
+            this.label20.TabIndex = 123;
+            this.label20.Text = "尺寸抽检量合计";
             // 
             // lbl产品批号
             // 
@@ -237,7 +270,7 @@
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label13.Location = new System.Drawing.Point(963, 447);
+            this.label13.Location = new System.Drawing.Point(963, 464);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(24, 16);
             this.label13.TabIndex = 106;
@@ -246,7 +279,7 @@
             // tb尺寸规格长
             // 
             this.tb尺寸规格长.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb尺寸规格长.Location = new System.Drawing.Point(889, 443);
+            this.tb尺寸规格长.Location = new System.Drawing.Point(889, 460);
             this.tb尺寸规格长.Name = "tb尺寸规格长";
             this.tb尺寸规格长.Size = new System.Drawing.Size(68, 26);
             this.tb尺寸规格长.TabIndex = 105;
@@ -255,7 +288,7 @@
             // 
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label12.Location = new System.Drawing.Point(813, 447);
+            this.label12.Location = new System.Drawing.Point(813, 464);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(80, 16);
             this.label12.TabIndex = 104;
@@ -374,9 +407,9 @@
             // btn删除
             // 
             this.btn删除.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn删除.Location = new System.Drawing.Point(909, 385);
+            this.btn删除.Location = new System.Drawing.Point(664, 376);
             this.btn删除.Name = "btn删除";
-            this.btn删除.Size = new System.Drawing.Size(75, 26);
+            this.btn删除.Size = new System.Drawing.Size(84, 28);
             this.btn删除.TabIndex = 92;
             this.btn删除.Text = "删除";
             this.btn删除.UseVisualStyleBackColor = true;
@@ -385,29 +418,31 @@
             // btn下移
             // 
             this.btn下移.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn下移.Location = new System.Drawing.Point(806, 385);
+            this.btn下移.Location = new System.Drawing.Point(162, 16);
             this.btn下移.Name = "btn下移";
             this.btn下移.Size = new System.Drawing.Size(75, 26);
             this.btn下移.TabIndex = 91;
             this.btn下移.Text = "下移";
             this.btn下移.UseVisualStyleBackColor = true;
+            this.btn下移.Visible = false;
             this.btn下移.Click += new System.EventHandler(this.btn下移_Click);
             // 
             // btn上移
             // 
             this.btn上移.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn上移.Location = new System.Drawing.Point(700, 385);
+            this.btn上移.Location = new System.Drawing.Point(56, 16);
             this.btn上移.Name = "btn上移";
             this.btn上移.Size = new System.Drawing.Size(75, 26);
             this.btn上移.TabIndex = 90;
             this.btn上移.Text = "上移";
             this.btn上移.UseVisualStyleBackColor = true;
+            this.btn上移.Visible = false;
             this.btn上移.Click += new System.EventHandler(this.btn上移_Click);
             // 
             // tb尺寸规格宽
             // 
             this.tb尺寸规格宽.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb尺寸规格宽.Location = new System.Drawing.Point(739, 443);
+            this.tb尺寸规格宽.Location = new System.Drawing.Point(739, 460);
             this.tb尺寸规格宽.Name = "tb尺寸规格宽";
             this.tb尺寸规格宽.Size = new System.Drawing.Size(68, 26);
             this.tb尺寸规格宽.TabIndex = 89;
@@ -416,7 +451,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label6.Location = new System.Drawing.Point(628, 447);
+            this.label6.Location = new System.Drawing.Point(628, 464);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(112, 16);
             this.label6.TabIndex = 88;
@@ -435,9 +470,9 @@
             // btn添加
             // 
             this.btn添加.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn添加.Location = new System.Drawing.Point(601, 385);
+            this.btn添加.Location = new System.Drawing.Point(572, 376);
             this.btn添加.Name = "btn添加";
-            this.btn添加.Size = new System.Drawing.Size(75, 26);
+            this.btn添加.Size = new System.Drawing.Size(84, 28);
             this.btn添加.TabIndex = 86;
             this.btn添加.Text = "添加";
             this.btn添加.UseVisualStyleBackColor = true;
@@ -500,41 +535,47 @@
             this.label5.TabIndex = 80;
             this.label5.Text = "产品代码/规格";
             // 
-            // lbl尺寸抽检量合计
+            // btn退回数据审核
             // 
-            this.lbl尺寸抽检量合计.AutoSize = true;
-            this.lbl尺寸抽检量合计.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbl尺寸抽检量合计.Location = new System.Drawing.Point(434, 463);
-            this.lbl尺寸抽检量合计.Name = "lbl尺寸抽检量合计";
-            this.lbl尺寸抽检量合计.Size = new System.Drawing.Size(16, 16);
-            this.lbl尺寸抽检量合计.TabIndex = 124;
-            this.lbl尺寸抽检量合计.Text = "0";
+            this.btn退回数据审核.Font = new System.Drawing.Font("宋体", 12F);
+            this.btn退回数据审核.Location = new System.Drawing.Point(855, 416);
+            this.btn退回数据审核.Name = "btn退回数据审核";
+            this.btn退回数据审核.Size = new System.Drawing.Size(129, 30);
+            this.btn退回数据审核.TabIndex = 337;
+            this.btn退回数据审核.Text = "退回数据审核";
+            this.btn退回数据审核.UseVisualStyleBackColor = true;
+            this.btn退回数据审核.Click += new System.EventHandler(this.btn退回数据审核_Click);
             // 
-            // label20
+            // btn提交数据审核
             // 
-            this.label20.AutoSize = true;
-            this.label20.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label20.Location = new System.Drawing.Point(385, 430);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(120, 16);
-            this.label20.TabIndex = 123;
-            this.label20.Text = "尺寸抽检量合计";
+            this.btn提交数据审核.Font = new System.Drawing.Font("宋体", 12F);
+            this.btn提交数据审核.Location = new System.Drawing.Point(766, 375);
+            this.btn提交数据审核.Name = "btn提交数据审核";
+            this.btn提交数据审核.Size = new System.Drawing.Size(116, 30);
+            this.btn提交数据审核.TabIndex = 336;
+            this.btn提交数据审核.Text = "提交数据审核";
+            this.btn提交数据审核.UseVisualStyleBackColor = true;
+            this.btn提交数据审核.Click += new System.EventHandler(this.btn提交数据审核_Click);
             // 
-            // label角色
+            // btn数据审核
             // 
-            this.label角色.AutoSize = true;
-            this.label角色.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label角色.Location = new System.Drawing.Point(616, 26);
-            this.label角色.Name = "label角色";
-            this.label角色.Size = new System.Drawing.Size(42, 16);
-            this.label角色.TabIndex = 125;
-            this.label角色.Text = "角色";
+            this.btn数据审核.Font = new System.Drawing.Font("宋体", 12F);
+            this.btn数据审核.Location = new System.Drawing.Point(887, 376);
+            this.btn数据审核.Name = "btn数据审核";
+            this.btn数据审核.Size = new System.Drawing.Size(97, 30);
+            this.btn数据审核.TabIndex = 335;
+            this.btn数据审核.Text = "数据审核";
+            this.btn数据审核.UseVisualStyleBackColor = true;
+            this.btn数据审核.Click += new System.EventHandler(this.btn数据审核_Click);
             // 
             // 产品外观和尺寸检验记录
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1006, 601);
+            this.Controls.Add(this.btn退回数据审核);
+            this.Controls.Add(this.btn提交数据审核);
+            this.Controls.Add(this.btn数据审核);
             this.Controls.Add(this.label角色);
             this.Controls.Add(this.lbl尺寸抽检量合计);
             this.Controls.Add(this.label20);
@@ -638,5 +679,8 @@
         private System.Windows.Forms.Label lbl尺寸抽检量合计;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label角色;
+        private System.Windows.Forms.Button btn退回数据审核;
+        private System.Windows.Forms.Button btn提交数据审核;
+        private System.Windows.Forms.Button btn数据审核;
     }
 }

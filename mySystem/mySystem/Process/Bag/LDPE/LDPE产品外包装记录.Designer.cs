@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LDPE产品外包装记录));
+            this.btn退回数据审核 = new System.Windows.Forms.Button();
             this.lb产品数量只数合计 = new System.Windows.Forms.Label();
             this.lb包装数量箱数合计 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -52,7 +53,6 @@
             this.label17 = new System.Windows.Forms.Label();
             this.tb领用数量 = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
-            this.lb纸箱批号 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.lb纸箱代码 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
@@ -79,10 +79,21 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.btn退回数据审核 = new System.Windows.Forms.Button();
+            this.tb纸箱批号 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
+            // 
+            // btn退回数据审核
+            // 
+            this.btn退回数据审核.Font = new System.Drawing.Font("宋体", 12F);
+            this.btn退回数据审核.Location = new System.Drawing.Point(897, 424);
+            this.btn退回数据审核.Name = "btn退回数据审核";
+            this.btn退回数据审核.Size = new System.Drawing.Size(129, 30);
+            this.btn退回数据审核.TabIndex = 334;
+            this.btn退回数据审核.Text = "退回数据审核";
+            this.btn退回数据审核.UseVisualStyleBackColor = true;
+            this.btn退回数据审核.Click += new System.EventHandler(this.btn退回数据审核_Click);
             // 
             // lb产品数量只数合计
             // 
@@ -127,7 +138,7 @@
             // btn提交数据审核
             // 
             this.btn提交数据审核.Font = new System.Drawing.Font("宋体", 12F);
-            this.btn提交数据审核.Location = new System.Drawing.Point(909, 388);
+            this.btn提交数据审核.Location = new System.Drawing.Point(806, 388);
             this.btn提交数据审核.Name = "btn提交数据审核";
             this.btn提交数据审核.Size = new System.Drawing.Size(116, 30);
             this.btn提交数据审核.TabIndex = 299;
@@ -138,7 +149,7 @@
             // btn数据审核
             // 
             this.btn数据审核.Font = new System.Drawing.Font("宋体", 12F);
-            this.btn数据审核.Location = new System.Drawing.Point(806, 388);
+            this.btn数据审核.Location = new System.Drawing.Point(929, 386);
             this.btn数据审核.Name = "btn数据审核";
             this.btn数据审核.Size = new System.Drawing.Size(97, 30);
             this.btn数据审核.TabIndex = 298;
@@ -217,6 +228,7 @@
             this.tb标签领用数量.Name = "tb标签领用数量";
             this.tb标签领用数量.Size = new System.Drawing.Size(51, 26);
             this.tb标签领用数量.TabIndex = 290;
+            this.tb标签领用数量.Visible = false;
             // 
             // label18
             // 
@@ -227,6 +239,7 @@
             this.label18.Size = new System.Drawing.Size(120, 16);
             this.label18.TabIndex = 289;
             this.label18.Text = "标签领用数量：";
+            this.label18.Visible = false;
             // 
             // lb标签代码
             // 
@@ -275,6 +288,7 @@
             this.tb退库数量.Name = "tb退库数量";
             this.tb退库数量.Size = new System.Drawing.Size(51, 26);
             this.tb退库数量.TabIndex = 284;
+            this.tb退库数量.Visible = false;
             // 
             // label17
             // 
@@ -285,6 +299,7 @@
             this.label17.Size = new System.Drawing.Size(88, 16);
             this.label17.TabIndex = 283;
             this.label17.Text = "退库数量：";
+            this.label17.Visible = false;
             // 
             // tb领用数量
             // 
@@ -293,6 +308,7 @@
             this.tb领用数量.Name = "tb领用数量";
             this.tb领用数量.Size = new System.Drawing.Size(51, 26);
             this.tb领用数量.TabIndex = 282;
+            this.tb领用数量.Visible = false;
             // 
             // label14
             // 
@@ -303,16 +319,7 @@
             this.label14.Size = new System.Drawing.Size(88, 16);
             this.label14.TabIndex = 281;
             this.label14.Text = "领用数量：";
-            // 
-            // lb纸箱批号
-            // 
-            this.lb纸箱批号.AutoSize = true;
-            this.lb纸箱批号.Font = new System.Drawing.Font("宋体", 12F);
-            this.lb纸箱批号.Location = new System.Drawing.Point(432, 133);
-            this.lb纸箱批号.Name = "lb纸箱批号";
-            this.lb纸箱批号.Size = new System.Drawing.Size(72, 16);
-            this.lb纸箱批号.TabIndex = 280;
-            this.lb纸箱批号.Text = "纸箱批号";
+            this.label14.Visible = false;
             // 
             // label16
             // 
@@ -580,22 +587,20 @@
             this.label1.TabIndex = 254;
             this.label1.Text = "产品外包装记录";
             // 
-            // btn退回数据审核
+            // tb纸箱批号
             // 
-            this.btn退回数据审核.Font = new System.Drawing.Font("宋体", 12F);
-            this.btn退回数据审核.Location = new System.Drawing.Point(897, 424);
-            this.btn退回数据审核.Name = "btn退回数据审核";
-            this.btn退回数据审核.Size = new System.Drawing.Size(129, 30);
-            this.btn退回数据审核.TabIndex = 334;
-            this.btn退回数据审核.Text = "退回数据审核";
-            this.btn退回数据审核.UseVisualStyleBackColor = true;
-            this.btn退回数据审核.Click += new System.EventHandler(this.btn退回数据审核_Click);
+            this.tb纸箱批号.Font = new System.Drawing.Font("宋体", 12F);
+            this.tb纸箱批号.Location = new System.Drawing.Point(436, 126);
+            this.tb纸箱批号.Name = "tb纸箱批号";
+            this.tb纸箱批号.Size = new System.Drawing.Size(114, 26);
+            this.tb纸箱批号.TabIndex = 335;
             // 
             // LDPE产品外包装记录
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1063, 560);
+            this.Controls.Add(this.tb纸箱批号);
             this.Controls.Add(this.btn退回数据审核);
             this.Controls.Add(this.lb产品数量只数合计);
             this.Controls.Add(this.lb包装数量箱数合计);
@@ -620,7 +625,6 @@
             this.Controls.Add(this.label17);
             this.Controls.Add(this.tb领用数量);
             this.Controls.Add(this.label14);
-            this.Controls.Add(this.lb纸箱批号);
             this.Controls.Add(this.label16);
             this.Controls.Add(this.lb纸箱代码);
             this.Controls.Add(this.label15);
@@ -650,6 +654,7 @@
             this.Name = "LDPE产品外包装记录";
             this.Text = "LDPE产品外包装记录";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LDPE产品外包装记录_FormClosing);
+            this.Load += new System.EventHandler(this.LDPE产品外包装记录_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
@@ -682,7 +687,6 @@
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.TextBox tb领用数量;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Label lb纸箱批号;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label lb纸箱代码;
         private System.Windows.Forms.Label label15;
@@ -710,6 +714,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btn退回数据审核;
+        private System.Windows.Forms.TextBox tb纸箱批号;
 
     }
 }

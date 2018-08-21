@@ -293,6 +293,8 @@ namespace mySystem.Query
 
             Bind();
             readDGVWidthFromSettingAndSet(dgv, comboBox2.Text);
+            if (dgv.Rows.Count > 0)
+                dgv.FirstDisplayedScrollingRowIndex = dgv.Rows.Count - 1;
         }
 
         //双击弹出界面

@@ -280,8 +280,7 @@ namespace mySystem.Process.Bag.LDPE
                 {
                     //控件都不能点，只有打印,日志可点
                     setControlFalse();
-                    btn数据审核.Enabled = true;
-                    btn退回数据审核.Enabled = true;
+                    
                     //遍历datagridview，如果有一行为待审核，则该行可以修改
                     dataGridView1.ReadOnly = false;
                     for (int i = 0; i < dataGridView1.Rows.Count; i++)
@@ -307,6 +306,12 @@ namespace mySystem.Process.Bag.LDPE
                         else
                             dataGridView1.Rows[i].ReadOnly = true;
                     }
+                }
+                btn数据审核.Enabled = true;
+                btn退回数据审核.Enabled = true;
+                if (_formState == Parameter.FormState.审核通过 || _formState == Parameter.FormState.待审核)
+                {
+                    btn退回数据审核.Enabled = false;
                 }
             }
             else//操作员
@@ -386,6 +391,9 @@ namespace mySystem.Process.Bag.LDPE
             tb生产指令编号.ReadOnly = true;
             tb产品代码.ReadOnly = true;
             tb产品批号.ReadOnly = true;
+            tb合计.ReadOnly = true;
+            tb实际使用.ReadOnly = true;
+            tb退库合计.ReadOnly = true;
             //tb成品率.ReadOnly = true;
             //查询条件始终不可编辑
         }
@@ -499,7 +507,7 @@ namespace mySystem.Process.Bag.LDPE
             setFormState();  // 获取当前窗体状态：窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过
             setEnableReadOnly();  //根据状态设置可读写性  
 
-            cmb类型.Enabled = false;
+            //cmb类型.Enabled = false;
         }
 
         //根据主键显示
@@ -555,10 +563,18 @@ namespace mySystem.Process.Bag.LDPE
 
             tb合计.DataBindings.Clear();
             tb合计.DataBindings.Add("Text", bs记录.DataSource, "合计");
+            tb退库合计.DataBindings.Clear();
+            tb退库合计.DataBindings.Add("Text", bs记录.DataSource, "退库合计");
+            tb实际使用.DataBindings.Clear();
+            tb实际使用.DataBindings.Add("Text", bs记录.DataSource, "实际使用");
 
 
             cmb类型.DataBindings.Clear();
             cmb类型.DataBindings.Add("Text", bs记录.DataSource, "类型");
+
+            tb备注.DataBindings.Clear();
+            tb备注.DataBindings.Add("Text", bs记录.DataSource, "备注");
+            
         }
 
         //添加外表默认信息
@@ -606,9 +622,27 @@ namespace mySystem.Process.Bag.LDPE
             dr["班次"] = mySystem.Parameter.userflight;
             if (dt记录详情.Rows.Count == 0)
             {
-                dr["物料简称"] = dt物料.Rows[0]["物料简称"];
-                dr["物料代码"] = dt物料.Rows[0]["物料代码"];
-                dr["物料批号"] = dt物料.Rows[0]["物料批号"];
+                switch (_leixing)
+                {
+                    case "膜材":
+                        dr["物料简称"] = dt物料.Rows[0]["物料简称"];
+                        dr["物料代码"] = dt物料.Rows[0]["物料代码"];
+                        dr["物料批号"] = dt物料.Rows[0]["物料批号"];
+                        break;
+                    case "内包":
+                        dr["物料简称"] = dt物料.Rows[3]["物料简称"];
+                        dr["物料代码"] = dt物料.Rows[3]["物料代码"];
+                        dr["物料批号"] = dt物料.Rows[3]["物料批号"];
+                        break;
+                    case "外包":
+                        dr["物料简称"] = dt物料.Rows[7]["物料简称"];
+                        dr["物料代码"] = dt物料.Rows[7]["物料代码"];
+                        dr["物料批号"] = dt物料.Rows[7]["物料批号"];
+                        break;
+                }
+                //dr["物料简称"] = dt物料.Rows[0]["物料简称"];
+                //dr["物料代码"] = dt物料.Rows[0]["物料代码"];
+                //dr["物料批号"] = dt物料.Rows[0]["物料批号"];
             }
             else
             {
@@ -618,6 +652,7 @@ namespace mySystem.Process.Bag.LDPE
             }
             dr["卷号"] = 0;
             dr["领取数量"] = 0;
+            dr["退库数量"] = 0;
             dr["操作员"] = mySystem.Parameter.userName;
             dr["操作员备注"] = "";
             dr["审核员"] = "";
@@ -700,6 +735,7 @@ namespace mySystem.Process.Bag.LDPE
         //添加按钮
         private void btn添加记录_Click(object sender, EventArgs e)
         {
+            if (dt记录详情 == null) return;
             DataRow dr = dt记录详情.NewRow();
             dr = writeInnerDefault(Convert.ToInt32(dt记录.Rows[0]["ID"]), dr);
             dt记录详情.Rows.InsertAt(dr, dt记录详情.Rows.Count);
@@ -713,6 +749,7 @@ namespace mySystem.Process.Bag.LDPE
         //删除按钮
         private void btn删除记录_Click(object sender, EventArgs e)
         {
+            if (dt记录详情 == null) return;
             if (dt记录详情.Rows.Count >= 2)
             {
                 int deletenum = dataGridView1.CurrentRow.Index;
@@ -737,6 +774,7 @@ namespace mySystem.Process.Bag.LDPE
         //内表移交审核按钮
         private void btn提交数据审核_Click(object sender, EventArgs e)
         {
+            if (dt记录详情 == null) return;
             calcSum();
             //find the uncheck item in inner list and tag the revoewer __待审核
             for (int i = 0; i < dt记录详情.Rows.Count; i++)
@@ -744,9 +782,9 @@ namespace mySystem.Process.Bag.LDPE
                 if (Convert.ToString(dt记录详情.Rows[i]["审核员"]).ToString().Trim() == "")
                 {
                     // 如果数量为0，则跳过
-                    if (Convert.ToDouble(dt记录详情.Rows[i]["领取数量"]) == 0)
+                    if (Convert.ToDouble(dt记录详情.Rows[i]["领取数量"]) + Convert.ToDouble(dt记录详情.Rows[i]["退库数量"]) == 0)
                     {
-                        MessageBox.Show("跳过领取数量为0的行！");
+                        MessageBox.Show("跳过数量为0的行！");
                         continue;
                     }
                         
@@ -765,6 +803,7 @@ namespace mySystem.Process.Bag.LDPE
         //内表审核按钮
         private void btn数据审核_Click(object sender, EventArgs e)
         {
+            if (dt记录详情 == null) return;
             HashSet<Int32> hi待审核行号 = new HashSet<int>();
             foreach (DataGridViewCell dgvc in dataGridView1.SelectedCells)
             {
@@ -905,6 +944,8 @@ namespace mySystem.Process.Bag.LDPE
         //审核功能
         private void btn审核_Click(object sender, EventArgs e)
         {
+            if (dt记录详情 == null) return;
+            if (!Utility.check内表审核是否完成(dt记录详情)) return;
             if (mySystem.Parameter.userName == dt记录详情.Rows[0]["操作员"].ToString())
             {
                 MessageBox.Show("当前登录的审核员与操作员为同一人，不可进行审核！");
@@ -988,7 +1029,8 @@ namespace mySystem.Process.Bag.LDPE
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
-            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\LDPEBag\3 SOP-MFG-102-R01A 生产领料记录.xlsx");
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() +
+                @"\..\..\xls\LDPEBag\3 SOP-MFG-102-R01A 生产领料记录.xlsx");
             // 选择一个Sheet，注意Sheet的序号是从1开始的
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[wb.Worksheets.Count];
             // 修改Sheet中某行某列的值
@@ -1080,17 +1122,21 @@ namespace mySystem.Process.Bag.LDPE
             {
                 mysheet.Cells[5 + i, 1].Value = dt记录详情.Rows[i]["序号"].ToString();
                 mysheet.Cells[5 + i, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["领料日期时间"].ToString()).ToString("yyyy/MM/dd");
-                mysheet.Cells[5 + i, 3].Value = Convert.ToDateTime(dt记录详情.Rows[i]["领料日期时间"].ToString()).ToString("HH:mm:ss");
+                mysheet.Cells[5 + i, 3].Value = Convert.ToDateTime(dt记录详情.Rows[i]["领料日期时间"].ToString()).ToString("HH:mm");
                 mysheet.Cells[5 + i, 4].Value = dt记录详情.Rows[i]["班次"].ToString();
                 mysheet.Cells[5 + i, 5].Value = dt记录详情.Rows[i]["物料简称"].ToString();
                 mysheet.Cells[5 + i, 6].Value = dt记录详情.Rows[i]["物料代码"].ToString();
                 mysheet.Cells[5 + i, 7].Value = dt记录详情.Rows[i]["物料批号"].ToString();
                 mysheet.Cells[5 + i, 8].Value = dt记录详情.Rows[i]["领取数量"].ToString();
-                mysheet.Cells[5 + i, 9].Value = dt记录详情.Rows[i]["操作员"].ToString();
+                mysheet.Cells[5 + i, 9].Value = dt记录详情.Rows[i]["退库数量"].ToString();
+                mysheet.Cells[5 + i, 10].Value = dt记录详情.Rows[i]["操作员"].ToString();
                 //mysheet.Cells[5 + i, 10].Value = dt记录详情.Rows[i]["操作员备注"].ToString();
-                mysheet.Cells[5 + i, 10].Value = dt记录详情.Rows[i]["审核员"].ToString();
+                mysheet.Cells[5 + i, 11].Value = dt记录详情.Rows[i]["审核员"].ToString();
             }
-            mysheet.Cells[16 + ind, 1].Value = "合计：" + dt记录.Rows[0]["合计"].ToString();
+            mysheet.Cells[15 + ind, 6].Value = "备注：\n" + dt记录.Rows[0]["备注"].ToString();
+            mysheet.Cells[16 + ind, 1].Value = "合计：" + dt记录.Rows[0]["合计"].ToString() +
+                "  退库合计：" + dt记录.Rows[0]["退库合计"].ToString() +
+                "   实际使用：" + dt记录.Rows[0]["实际使用"].ToString();
             
             //加页脚
             int sheetnum;
@@ -1209,7 +1255,7 @@ namespace mySystem.Process.Bag.LDPE
             if (isFirstBind)
             {
                 readDGVWidthFromSettingAndSet(dataGridView1);
-                isFirstBind = false;
+                isFirstBind = true;
             }
         }
 
@@ -1276,6 +1322,10 @@ namespace mySystem.Process.Bag.LDPE
                 {
                     calcSum();
                 }
+                else if (dataGridView1.Columns[e.ColumnIndex].Name == "退库数量")
+                {
+                    calcSum();
+                }
                 else
                 { }
             }
@@ -1330,16 +1380,36 @@ namespace mySystem.Process.Bag.LDPE
         void calcSum()
         {
             DataRow[] drs;
-            double sum;
+            double sum1, sum2;
             // 膜材用量
-            drs = dt记录详情.Select(String.Format("物料代码='{0}' or 物料代码='{1}' or 物料代码='{2}'",
-                膜代码[0], 膜代码[1], 膜代码[2]));
-            sum = 0;
+            //drs = dt记录详情.Select(String.Format("物料代码='{0}' or 物料代码='{1}' or 物料代码='{2}'",
+            //    膜代码[0], 膜代码[1], 膜代码[2]));
+            sum1 = 0;
+            sum2 = 0;
             foreach (DataRow ddr in dt记录详情.Rows)
             {
-                sum += Convert.ToDouble(ddr["领取数量"]);
+                try
+                {
+                    sum1 += Convert.ToDouble(ddr["领取数量"]);
+                }
+                catch
+                {
+                    sum1 = 0;
+                }
+                try
+                {
+                    sum2 += Convert.ToDouble(ddr["退库数量"]);
+                }
+                catch
+                {
+                    sum2 = 0;
+                }
             }
-            dt记录.Rows[0]["合计"] = Math.Round(sum,2);
+
+            dt记录.Rows[0]["合计"] = Math.Round(sum1,2);
+            dt记录.Rows[0]["退库合计"] = Math.Round(sum2, 2);
+            dt记录.Rows[0]["实际使用"] = Math.Round(sum1 - sum2, 2);
+
             //tb合计.Text = sum.ToString("F2");
 
             //// 内包用量
@@ -1392,7 +1462,7 @@ namespace mySystem.Process.Bag.LDPE
                 btn查看日志.Enabled = false;
                 btn打印.Enabled = false;
             }
-            cmb类型.Enabled = false;
+            //cmb类型.Enabled = false;
         }
         
     }

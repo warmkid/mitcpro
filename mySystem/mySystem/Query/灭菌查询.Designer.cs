@@ -72,7 +72,7 @@
             this.dgv.Location = new System.Drawing.Point(39, 114);
             this.dgv.Name = "dgv";
             this.dgv.RowTemplate.Height = 23;
-            this.dgv.Size = new System.Drawing.Size(1089, 460);
+            this.dgv.Size = new System.Drawing.Size(1000, 460);
             this.dgv.TabIndex = 28;
             this.dgv.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgv_DataBindingComplete);
             // 

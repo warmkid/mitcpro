@@ -617,8 +617,49 @@ namespace mySystem.Process.Bag.CS
             dataGridView1.AllowUserToAddRows = false;
         }
 
+        bool checkBeforeSave()
+        {
+            int c, k;
+            try
+            {
+                k = Convert.ToInt32(tb尺寸规格宽.Text);
+                c = Convert.ToInt32(tb尺寸规格长.Text);
+            }
+            catch
+            {
+                MessageBox.Show("请正确填写长和宽！");
+                return false;
+            }
+            try
+            {
+                for (int i = 0; i < dtInner.Rows.Count; ++i)
+                {
+                    int kk, cc;
+                    kk = Convert.ToInt32(dtInner.Rows[i]["宽"]);
+                    cc = Convert.ToInt32(dtInner.Rows[i]["长"]);
+                    if (Math.Abs(kk - k) > 5)
+                    {
+                        MessageBox.Show(string.Format("第 {0} 行的宽度填写有误!", i + 1));
+                        return false;
+                    }
+                    if (Math.Abs(cc - c) > 5)
+                    {
+                        MessageBox.Show(string.Format("第 {0} 行的长度填写有误!", i + 1));
+                        return false;
+                    }
+                }
+            }
+            catch
+            {
+                MessageBox.Show("请正确填写表格内的长和宽！");
+                return false;
+            }
+            return true;
+        }
+
         private void btn保存_Click(object sender, EventArgs e)
         {
+            if (!checkBeforeSave()) return;
             bsOuter.EndEdit();
             daOuter.Update((DataTable)bsOuter.DataSource);
             readOuterData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));

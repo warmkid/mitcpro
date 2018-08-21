@@ -82,6 +82,9 @@ namespace mySystem.Process.Bag.LDPE
             addComputerEventHandler();
             addOtherEvenHandler();
 
+
+
+            
         }
 
 
@@ -238,7 +241,7 @@ namespace mySystem.Process.Bag.LDPE
         DataRow writeOuterDefault(DataRow dr)
         {
             dr["生产指令ID"] = mySystem.Parameter.ldpebagInstruID;
-            dr["标准"] = 15;
+            dr["标准"] = 20;
             dr["整理人"] = mySystem.Parameter.userName;
             dr["整理时间"] = nowString;
             dr["审核日期"] = DateTime.Now;
@@ -570,6 +573,9 @@ namespace mySystem.Process.Bag.LDPE
 
             // 设置DataGridVew的可见性和只读属性等都放在绑定结束之后
             dataGridView1.DataBindingComplete += dataGridView1_DataBindingComplete;
+
+
+            dataGridView1.Font = new Font("宋体", 12, FontStyle.Regular);
         }
 
         void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -586,7 +592,7 @@ namespace mySystem.Process.Bag.LDPE
             if (isFirstBind)
             {
                 readDGVWidthFromSettingAndSet(dataGridView1);
-                isFirstBind = false;
+                isFirstBind = true;
             }
         }
 
@@ -817,6 +823,7 @@ namespace mySystem.Process.Bag.LDPE
 
             dtOuter.Rows[0]["审核员"] = mySystem.Parameter.userName;
             dtOuter.Rows[0]["审核是否通过"] = ckForm.ischeckOk;
+            dtOuter.Rows[0]["审核意见"] = ckForm. opinion;
             String log = "===================================\n";
             log += DateTime.Now.ToString("yyyy年MM月dd日 HH:mm:ss");
             log += "\n审核员：" + mySystem.Parameter.userName + " 审核完毕\n";

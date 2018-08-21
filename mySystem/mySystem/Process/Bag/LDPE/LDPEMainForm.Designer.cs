@@ -113,7 +113,7 @@
             this.Btn退料.Name = "Btn退料";
             this.Btn退料.Size = new System.Drawing.Size(200, 38);
             this.Btn退料.TabIndex = 18;
-            this.Btn退料.Text = "生产退料记录";
+            this.Btn退料.Text = "查询";
             this.Btn退料.UseVisualStyleBackColor = true;
             this.Btn退料.Click += new System.EventHandler(this.Btn退料_Click);
             // 
@@ -165,6 +165,7 @@
             this.btn生产领料申请单.TabIndex = 29;
             this.btn生产领料申请单.Text = "生产领料申请单";
             this.btn生产领料申请单.UseVisualStyleBackColor = true;
+            this.btn生产领料申请单.Visible = false;
             this.btn生产领料申请单.Click += new System.EventHandler(this.btn生产领料申请单_Click);
             // 
             // Btn外观及检验

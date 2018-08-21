@@ -238,7 +238,19 @@ namespace mySystem.Process.Bag.LDPE
             da = new SqlDataAdapter("select 产品代码,生产批号,产品数量只合计B as 生产数量 from 产品内包装记录 where 生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
             dt = new DataTable();
             da.Fill(dt);
+            if (dt.Rows.Count > 1)
+            {
+                for (int i = 1; i < dt.Rows.Count; ++i)
+                {
+                    dt.Rows[0]["生产数量"] =
+                       Convert.ToInt32(dt.Rows[0]["生产数量"]) +
+                       Convert.ToInt32(dt.Rows[i]["生产数量"]);
+                }
+            }
             dtSource = dt.Copy();
+            dt.Clear();
+            dt.ImportRow(dtSource.Rows[0]);
+            
             dataGridView2.AllowUserToAddRows = false;
             dataGridView2.DataSource = dt;
             dataGridView2.ReadOnly = true;
@@ -791,7 +803,7 @@ namespace mySystem.Process.Bag.LDPE
                 }
                 my.Cells[i + rowStartAt, 3] = accumu[i];
             }
-            for (int i = 0; i < dtSource.Rows.Count; i++)
+            for (int i = 0; i < 1; i++)
             {
                 my.Cells[i + 6, 6].Value = dtSource.Rows[i]["产品代码"];
                 my.Cells[i + 6, 8].Value = dtSource.Rows[i]["生产数量"];

@@ -213,6 +213,7 @@ namespace mySystem.Process.Bag
                     
                 }
                 else btn数据审核.Enabled = true;
+                btn退回数据审核.Enabled = true;
                 btn提交数据审核.Enabled = false;
             }
             if (Parameter.UserState.操作员 == _userState)
@@ -229,6 +230,7 @@ namespace mySystem.Process.Bag
                     btn提交数据审核.Enabled = false;
                 }
                 btn数据审核.Enabled = false;
+                btn退回数据审核.Enabled = false;
             }
         }
 
@@ -510,12 +512,72 @@ namespace mySystem.Process.Bag
         }
         private void bt保存_Click(object sender, EventArgs e)
         {
+            if (!check数字范围()) return;
             bool rt = save();
             readDGVWidthFromSettingAndSet(dataGridView1);
             //控件可见性
             if (rt && _userState == Parameter.UserState.操作员)
                 bt提交审核.Enabled = true;
         }
+
+        bool check数字范围()
+        {
+            try
+            {
+                for (int i = 0; i < dt_in.Rows.Count; ++i)
+                {
+                    if (Convert.ToInt32(dt_in.Rows[i]["横封温度1"]) > 220 ||
+                       Convert.ToInt32(dt_in.Rows[i]["横封温度1"]) < 170)
+                    {
+                        MessageBox.Show(String.Format("第{0}行横封温度1填写有误", i + 1));
+                        return false;
+                    }
+                    if (Convert.ToInt32(dt_in.Rows[i]["横封温度2"]) > 220 ||
+                       Convert.ToInt32(dt_in.Rows[i]["横封温度2"]) < 170)
+                    {
+                        MessageBox.Show(String.Format("第{0}行横封温度2填写有误", i + 1));
+                        return false;
+                    }
+                    if (Convert.ToInt32(dt_in.Rows[i]["纵封温度3"]) > 220 ||
+                       Convert.ToInt32(dt_in.Rows[i]["纵封温度3"]) < 170)
+                    {
+                        MessageBox.Show(String.Format("第{0}行纵封温度3填写有误", i + 1));
+                        return false;
+                    }
+                    if (Convert.ToInt32(dt_in.Rows[i]["纵封温度4"]) > 220 ||
+                       Convert.ToInt32(dt_in.Rows[i]["纵封温度4"]) < 170)
+                    {
+                        MessageBox.Show(String.Format("第{0}行纵封温度4填写有误", i + 1));
+                        return false;
+                    }
+                    if (Convert.ToInt32(dt_in.Rows[i]["纵封温度5"]) > 220 ||
+                       Convert.ToInt32(dt_in.Rows[i]["纵封温度5"]) < 170)
+                    {
+                        MessageBox.Show(String.Format("第{0}行纵封温度5填写有误", i + 1));
+                        return false;
+                    }
+                    if (Convert.ToInt32(dt_in.Rows[i]["热封时间横封"]) > 3.0 ||
+                       Convert.ToInt32(dt_in.Rows[i]["热封时间横封"]) < 1.0)
+                    {
+                        MessageBox.Show(String.Format("第{0}行热封时间横封填写有误", i + 1));
+                        return false;
+                    }
+                    if (Convert.ToInt32(dt_in.Rows[i]["热封时间纵封"]) > 3.0 ||
+                       Convert.ToInt32(dt_in.Rows[i]["热封时间纵封"]) < 1.0)
+                    {
+                        MessageBox.Show(String.Format("第{0}行热封时间纵封填写有误", i + 1));
+                        return false;
+                    }
+                }
+            }
+            catch
+            {
+                MessageBox.Show("数据填写有误！");
+                return false;
+            }
+            return true;
+        }
+
 
         private void bt插入查询_Click(object sender, EventArgs e)
         {
@@ -553,7 +615,10 @@ namespace mySystem.Process.Bag
 
         private void bt提交审核_Click(object sender, EventArgs e)
         {
-
+            if (DialogResult.Yes != MessageBox.Show("提交最后审核后本表单数据不可修改，是否确定？", "提示", MessageBoxButtons.YesNo))
+            {
+                return;
+            }
             foreach (DataRow dr in dt_in.Rows)
             {
                 if (dr["审核员"].ToString() == "" || dr["审核员"].ToString() == "__待审核")
@@ -859,6 +924,7 @@ namespace mySystem.Process.Bag
 
         private void btn提交数据审核_Click(object sender, EventArgs e)
         {
+            if (!check数字范围()) return;
             //find the uncheck item in inner list and tag the revoewer __待审核
             for (int i = 0; i < dt_in.Rows.Count; i++)
             {
@@ -921,6 +987,23 @@ namespace mySystem.Process.Bag
         private void dataGridView1_ColumnWidthChanged(object sender, DataGridViewColumnEventArgs e)
         {
             writeDGVWidthToSetting(dataGridView1);
+        }
+
+        private void btn退回数据审核_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dataGridView1.SelectedCells.Count <= 0) return;
+                int iid = Convert.ToInt32(dataGridView1.SelectedCells[0].OwningRow.Cells["ID"].Value);
+                Utility.t退回数据审核(dt_in, iid, "审核员");
+                //btn确认.PerformClick();
+                save();
+                //innerBind();
+            }
+            catch
+            {
+                return;
+            }
         }
     }
 }

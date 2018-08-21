@@ -182,6 +182,7 @@ namespace mySystem.Setting
             this.dgv人员.Columns["班次"].MinimumWidth = 100;
             this.dgv人员.Columns["用户名"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv人员.Columns["ID"].Visible = false;
+            this.dgv人员.Columns["班次"].Visible = false;
             Utility.setDataGridViewAutoSizeMode(dgv人员);
 
             //************************    人员权限     *******************************************

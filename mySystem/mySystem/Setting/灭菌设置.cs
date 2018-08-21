@@ -184,6 +184,7 @@ namespace mySystem.Setting
             this.dgv人员.Columns["班次"].MinimumWidth = 100;
             Utility.setDataGridViewAutoSizeMode(dgv人员);
             this.dgv人员.Columns["用户名"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            this.dgv人员.Columns["班次"].Visible = false;
             
             //************************    人员权限     *******************************************
             dt权限 = new DataTable("用户权限"); //""中的是表名

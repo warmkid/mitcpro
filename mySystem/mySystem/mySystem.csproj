@@ -59,6 +59,9 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Web">
+      <HintPath>C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.Web.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -80,6 +83,12 @@
     </Compile>
     <Compile Include="Forms\交接班记录.Designer.cs">
       <DependentUpon>交接班记录.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Other\AutoUpdate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Other\AutoUpdate.Designer.cs">
+      <DependentUpon>AutoUpdate.cs</DependentUpon>
     </Compile>
     <Compile Include="Other\BaseForm.cs">
       <SubType>Form</SubType>
@@ -553,6 +562,12 @@
     </Compile>
     <Compile Include="Process\Bag\LDPE\产品热合强度检验记录.Designer.cs">
       <DependentUpon>产品热合强度检验记录.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Bag\LDPE\查询.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\LDPE\查询.Designer.cs">
+      <DependentUpon>查询.cs</DependentUpon>
     </Compile>
     <Compile Include="Process\Bag\PTV\HandOver.cs">
       <SubType>Form</SubType>
@@ -1361,6 +1376,9 @@
     <EmbeddedResource Include="Forms\交接班记录.resx">
       <DependentUpon>交接班记录.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Other\AutoUpdate.resx">
+      <DependentUpon>AutoUpdate.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Other\BaseForm.resx">
       <DependentUpon>BaseForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -1591,6 +1609,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\LDPE\产品热合强度检验记录.resx">
       <DependentUpon>产品热合强度检验记录.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\LDPE\查询.resx">
+      <DependentUpon>查询.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\PTV\HandOver.resx">
       <DependentUpon>HandOver.cs</DependentUpon>

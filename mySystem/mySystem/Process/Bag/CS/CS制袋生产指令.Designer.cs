@@ -396,6 +396,7 @@
             this.tb内包物料代码2.Name = "tb内包物料代码2";
             this.tb内包物料代码2.Size = new System.Drawing.Size(124, 21);
             this.tb内包物料代码2.TabIndex = 58;
+            this.tb内包物料代码2.TextChanged += new System.EventHandler(this.tb内包物料代码2_TextChanged);
             // 
             // tb内包物料代码1
             // 
@@ -403,6 +404,7 @@
             this.tb内包物料代码1.Name = "tb内包物料代码1";
             this.tb内包物料代码1.Size = new System.Drawing.Size(124, 21);
             this.tb内包物料代码1.TabIndex = 57;
+            this.tb内包物料代码1.TextChanged += new System.EventHandler(this.tb内包物料代码1_TextChanged);
             // 
             // tb制袋物料代码3
             // 
@@ -410,6 +412,7 @@
             this.tb制袋物料代码3.Name = "tb制袋物料代码3";
             this.tb制袋物料代码3.Size = new System.Drawing.Size(124, 21);
             this.tb制袋物料代码3.TabIndex = 56;
+            this.tb制袋物料代码3.TextChanged += new System.EventHandler(this.tb制袋物料代码3_TextChanged);
             // 
             // tb制袋物料代码2
             // 
@@ -417,6 +420,7 @@
             this.tb制袋物料代码2.Name = "tb制袋物料代码2";
             this.tb制袋物料代码2.Size = new System.Drawing.Size(124, 21);
             this.tb制袋物料代码2.TabIndex = 55;
+            this.tb制袋物料代码2.TextChanged += new System.EventHandler(this.tb制袋物料代码2_TextChanged);
             // 
             // tb制袋物料领料量1
             // 
@@ -438,6 +442,7 @@
             this.tb制袋物料代码1.Name = "tb制袋物料代码1";
             this.tb制袋物料代码1.Size = new System.Drawing.Size(124, 21);
             this.tb制袋物料代码1.TabIndex = 52;
+            this.tb制袋物料代码1.TextChanged += new System.EventHandler(this.tb制袋物料代码1_TextChanged);
             // 
             // label7
             // 
@@ -469,6 +474,7 @@
             this.tb外包物料代码2.Name = "tb外包物料代码2";
             this.tb外包物料代码2.Size = new System.Drawing.Size(124, 21);
             this.tb外包物料代码2.TabIndex = 75;
+            this.tb外包物料代码2.TextChanged += new System.EventHandler(this.tb外包物料代码2_TextChanged);
             // 
             // tb外包物料领料量1
             // 
@@ -490,6 +496,7 @@
             this.tb外包物料代码1.Name = "tb外包物料代码1";
             this.tb外包物料代码1.Size = new System.Drawing.Size(124, 21);
             this.tb外包物料代码1.TabIndex = 72;
+            this.tb外包物料代码1.TextChanged += new System.EventHandler(this.tb外包物料代码1_TextChanged);
             // 
             // tb备注
             // 
@@ -960,6 +967,7 @@
             this.tb外包物料代码3.Name = "tb外包物料代码3";
             this.tb外包物料代码3.Size = new System.Drawing.Size(124, 21);
             this.tb外包物料代码3.TabIndex = 133;
+            this.tb外包物料代码3.TextChanged += new System.EventHandler(this.tb外包物料代码3_TextChanged);
             // 
             // label20
             // 
@@ -970,6 +978,7 @@
             this.label20.Size = new System.Drawing.Size(24, 16);
             this.label20.TabIndex = 137;
             this.label20.Text = "米";
+            this.label20.Visible = false;
             // 
             // label21
             // 
@@ -980,6 +989,7 @@
             this.label21.Size = new System.Drawing.Size(24, 16);
             this.label21.TabIndex = 138;
             this.label21.Text = "米";
+            this.label21.Visible = false;
             // 
             // label22
             // 
@@ -990,6 +1000,7 @@
             this.label22.Size = new System.Drawing.Size(24, 16);
             this.label22.TabIndex = 139;
             this.label22.Text = "个";
+            this.label22.Visible = false;
             // 
             // label24
             // 
@@ -1000,6 +1011,7 @@
             this.label24.Size = new System.Drawing.Size(24, 16);
             this.label24.TabIndex = 140;
             this.label24.Text = "只";
+            this.label24.Visible = false;
             // 
             // label35
             // 
@@ -1010,6 +1022,7 @@
             this.label35.Size = new System.Drawing.Size(24, 16);
             this.label35.TabIndex = 141;
             this.label35.Text = "张";
+            this.label35.Visible = false;
             // 
             // label36
             // 
@@ -1020,6 +1033,7 @@
             this.label36.Size = new System.Drawing.Size(24, 16);
             this.label36.TabIndex = 142;
             this.label36.Text = "张";
+            this.label36.Visible = false;
             // 
             // label37
             // 
@@ -1030,6 +1044,7 @@
             this.label37.Size = new System.Drawing.Size(24, 16);
             this.label37.TabIndex = 143;
             this.label37.Text = "个";
+            this.label37.Visible = false;
             // 
             // label38
             // 
@@ -1040,6 +1055,7 @@
             this.label38.Size = new System.Drawing.Size(24, 16);
             this.label38.TabIndex = 144;
             this.label38.Text = "只";
+            this.label38.Visible = false;
             // 
             // label角色
             // 
@@ -1119,6 +1135,7 @@
             this.tb内包物料代码4.Name = "tb内包物料代码4";
             this.tb内包物料代码4.Size = new System.Drawing.Size(124, 21);
             this.tb内包物料代码4.TabIndex = 149;
+            this.tb内包物料代码4.TextChanged += new System.EventHandler(this.tb内包物料代码4_TextChanged);
             // 
             // tb内包物料代码3
             // 
@@ -1126,6 +1143,7 @@
             this.tb内包物料代码3.Name = "tb内包物料代码3";
             this.tb内包物料代码3.Size = new System.Drawing.Size(124, 21);
             this.tb内包物料代码3.TabIndex = 148;
+            this.tb内包物料代码3.TextChanged += new System.EventHandler(this.tb内包物料代码3_TextChanged);
             // 
             // label40
             // 
@@ -1136,6 +1154,7 @@
             this.label40.Size = new System.Drawing.Size(24, 16);
             this.label40.TabIndex = 157;
             this.label40.Text = "张";
+            this.label40.Visible = false;
             // 
             // label41
             // 
@@ -1146,6 +1165,7 @@
             this.label41.Size = new System.Drawing.Size(24, 16);
             this.label41.TabIndex = 156;
             this.label41.Text = "只";
+            this.label41.Visible = false;
             // 
             // CS制袋生产指令
             // 

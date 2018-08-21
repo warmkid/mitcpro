@@ -609,7 +609,7 @@ namespace mySystem.Process.Bag.LDPE
             if (isFirstBind)
             {
                 readDGVWidthFromSettingAndSet(dataGridView1);
-                isFirstBind = false;
+                isFirstBind = true;
             }
                 
         }
@@ -626,14 +626,14 @@ namespace mySystem.Process.Bag.LDPE
         //检查内表中是否每条记录都 完成
         private bool datagridview_check()
         {
-            for (int i = 0; i < dataGridView1.Rows.Count; i++)
-            {
-                if (dataGridView1.Rows[i].Cells["清洁操作"].Value.ToString() == "不适用")
-                {
-                    MessageBox.Show("有带确认项目未完成");
-                    return false;
-                }
-            }
+            //for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            //{
+            //    if (dataGridView1.Rows[i].Cells["清洁操作"].Value.ToString() == "不适用")
+            //    {
+            //        MessageBox.Show("有带确认项目未完成");
+            //        return false;
+            //    }
+            //}
             return true;
         }
         //保存功能
@@ -750,12 +750,14 @@ namespace mySystem.Process.Bag.LDPE
             da.Update(dt);
 
             dtOuter.Rows[0]["审核员"] = mySystem.Parameter.userName;
-            dtOuter.Rows[0]["审核是否通过"] = true;
+            dtOuter.Rows[0]["审核是否通过"] = ckform.ischeckOk;
+            dtOuter.Rows[0]["审核意见"] = ckform.opinion;
+
             String log = "===================================\n";
             log += DateTime.Now.ToString("yyyy年MM月dd日 HH:mm:ss");
             log += "\n审核员：" + mySystem.Parameter.userName + " 审核完毕\n";
-            log += "审核结果为：通过\n";
-            log += "审核意见为：无\n";
+            log += "审核结果为：" + (ckform.ischeckOk ? "通过" : "不通过") + "\n";
+            log += "审核意见为：" + ckform.opinion + "\n";
             dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
             btn保存.PerformClick();
             setFormState();
@@ -899,9 +901,9 @@ namespace mySystem.Process.Bag.LDPE
                 my.Cells[5 + i, 1].Value = i + 1;
                 my.Cells[5 + i, 2].Value = dtInner.Rows[i]["清场项目"].ToString(); 
                 my.Cells[5 + i, 3].Value = dtInner.Rows[i]["清场要点"].ToString();
-                if (dtInner.Rows[0]["清洁操作"].ToString() == "完成")
+                if (dtInner.Rows[i]["清洁操作"].ToString() == "完成")
                     my.Cells[5 + i, 6].Value = "完成☑  不适用□";
-                else if (dtOuter.Rows[0]["清洁操作"].ToString() == "不适用")
+                else if (dtInner.Rows[i]["清洁操作"].ToString() == "不适用")
                     my.Cells[5 + i, 6].Value = "完成□  不适用☑";
                 else
                     my.Cells[5 + i, 6].Value = "完成□  不适用□";

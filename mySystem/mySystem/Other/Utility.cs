@@ -603,6 +603,74 @@ namespace mySystem
             if (dt.Rows.Count == 0) return "";
             return dt.Rows[0]["主计量单位名称"].ToString();
         }
-            
+
+        public static string find辅计量单位by代码(string code)
+        {
+            string strConnect = "server=" + Parameter.IP_port + ";database=dingdan_kucun;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
+            SqlConnection conn = new SqlConnection(strConnect);
+            SqlDataAdapter da;
+            DataTable dt = new DataTable();
+            string sql = "select 辅计量单位名称 from 设置存货档案 where 存货代码='{0}'";
+            da = new SqlDataAdapter(string.Format(sql, code), conn);
+            da.Fill(dt);
+            if (dt.Rows.Count == 0) return "";
+            return dt.Rows[0]["辅计量单位名称"].ToString();
+        }
+
+        public static bool check内表审核是否完成(DataTable dt, string colname="审核员")
+        {
+            foreach (DataRow dr in dt.Rows)
+            {
+                if (dr[colname].ToString() == "" || dr[colname].ToString() == "__待审核" || dr[colname].ToString() == "_待审核")
+                {
+                    MessageBox.Show("请先完成数据审核！");
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public static bool check内表审核是否都提交(DataTable dt, string colname = "审核员")
+        {
+            foreach (DataRow dr in dt.Rows)
+            {
+                if (dr[colname].ToString() == "")
+                {
+                    MessageBox.Show("请先提交数据审核！");
+                    return false;
+                }
+            }
+            return true;
+        }
+
+
+        public static string ToBase64String(string value)
+        {
+            if (value == null || value == "")
+            {
+                return "";
+            }
+            byte[] bytes = Encoding.UTF8.GetBytes(value);
+            return Convert.ToBase64String(bytes);
+        }
+
+        public static List<string> get代码By类型And工序(string 类型, string 工序)
+        {
+            List<string> ret = new List<string>();;
+            string strConnect = "server=" + Parameter.IP_port + ";database=dingdan_kucun;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
+            SqlConnection connToOrder = new SqlConnection(strConnect);
+            SqlDataAdapter da;
+            DataTable dt = new DataTable();
+            string sql = @"select 存货代码 from 设置存货档案 where 类型 like '%{0}%' and 属于工序 like '%{1}%'";
+            da = new SqlDataAdapter(string.Format(sql, 类型, 工序), connToOrder);
+            da.Fill(dt);
+            foreach (DataRow dr in dt.Rows)
+            {
+                ret.Add(dr["存货代码"].ToString());
+            }
+            return ret;
+
+
+        }
     }
 }
