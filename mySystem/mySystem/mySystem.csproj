@@ -102,6 +102,12 @@
     <Compile Include="Other\BOMList.Designer.cs">
       <DependentUpon>BOMList.cs</DependentUpon>
     </Compile>
+    <Compile Include="Other\ChartPrint.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Other\ChartPrint.Designer.cs">
+      <DependentUpon>ChartPrint.cs</DependentUpon>
+    </Compile>
     <Compile Include="Other\CheckForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1384,6 +1390,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Other\BOMList.resx">
       <DependentUpon>BOMList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Other\ChartPrint.resx">
+      <DependentUpon>ChartPrint.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Other\CheckForm.resx">
       <DependentUpon>CheckForm.cs</DependentUpon>

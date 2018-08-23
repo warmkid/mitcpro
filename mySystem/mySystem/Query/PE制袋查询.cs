@@ -418,6 +418,12 @@ namespace mySystem.Query
             writeDGVWidthToSetting(dgv, comboBox2.Text);
         }
 
+        private void btnChart_Click(object sender, EventArgs e)
+        {
+            Other.ChartPrint form = new Other.ChartPrint();
+            form.ShowDialog();
+        }
+
 
     }
 }

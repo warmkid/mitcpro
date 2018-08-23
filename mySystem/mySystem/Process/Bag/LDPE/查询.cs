@@ -674,7 +674,6 @@ namespace mySystem.Process.Bag.LDPE
         {
             foreach (DataGridViewRow dgvr in dgv膜.Rows)
             {
-                dgvr.DefaultCellStyle.BackColor = Color.White;
                 if (dgvr.Cells["膜材物料代码"].Value.ToString() == code &&
                     dgvr.Cells["膜材物料批号"].Value.ToString() == batch)
                 {
@@ -686,7 +685,6 @@ namespace mySystem.Process.Bag.LDPE
         {
             foreach (DataGridViewRow dgvr in dgv内.Rows)
             {
-                dgvr.DefaultCellStyle.BackColor = Color.White;
                 if (dgvr.Cells["内包物料代码"].Value.ToString() == code &&
                     dgvr.Cells["内包物料批号"].Value.ToString() == batch)
                 {
@@ -698,7 +696,6 @@ namespace mySystem.Process.Bag.LDPE
         {
             foreach (DataGridViewRow dgvr in dgv外.Rows)
             {
-                dgvr.DefaultCellStyle.BackColor = Color.White;
                 if (dgvr.Cells["外包物料代码"].Value.ToString() == code &&
                     dgvr.Cells["外包物料批号"].Value.ToString() == batch)
                 {
@@ -710,7 +707,6 @@ namespace mySystem.Process.Bag.LDPE
         {
             foreach (DataGridViewRow dgvr in dgv总.Rows)
             {
-                dgvr.DefaultCellStyle.BackColor = Color.White;
                 if (dgvr.Cells["产品代码"].Value.ToString() == code &&
                     dgvr.Cells["产品批号"].Value.ToString() == batch)
                 {
@@ -721,6 +717,10 @@ namespace mySystem.Process.Bag.LDPE
 
         private void dgv膜_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            clearDGVColor(dgv膜);
+            clearDGVColor(dgv内);
+            clearDGVColor(dgv外);
+
             string code = dgv膜.SelectedCells[0].OwningRow.Cells["膜材物料代码"].Value.ToString();
             string batch = dgv膜.SelectedCells[0].OwningRow.Cells["膜材物料批号"].Value.ToString();
             foreach (Hashtable ht in MainInfo)
@@ -740,6 +740,9 @@ namespace mySystem.Process.Bag.LDPE
 
         private void dgv内_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            clearDGVColor(dgv膜);
+            clearDGVColor(dgv内);
+            clearDGVColor(dgv外);
             string code = dgv内.SelectedCells[0].OwningRow.Cells["内包物料代码"].Value.ToString();
             string batch = dgv内.SelectedCells[0].OwningRow.Cells["内包物料批号"].Value.ToString();
             foreach (Hashtable ht in MainInfo)
@@ -759,6 +762,9 @@ namespace mySystem.Process.Bag.LDPE
 
         private void dgv外_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            clearDGVColor(dgv膜);
+            clearDGVColor(dgv内);
+            clearDGVColor(dgv外);
             string code = dgv外.SelectedCells[0].OwningRow.Cells["外包物料代码"].Value.ToString();
             string batch = dgv外.SelectedCells[0].OwningRow.Cells["外包物料批号"].Value.ToString();
             foreach (Hashtable ht in MainInfo)
