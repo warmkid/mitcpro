@@ -21,11 +21,42 @@ namespace mySystem
             
         }
 
+        private void checkFlight()
+        {
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbCommand comm = new OleDbCommand();
+                comm.Connection = Parameter.connOle;
+                comm.CommandText = "SELECT * FROM 用户 WHERE 用户名= " + "'" + Parameter.userName + "'";
+                OleDbDataReader reader = comm.ExecuteReader();
+                while (reader.Read())
+                    Parameter.userflight = reader["班次"].ToString();
+
+                reader.Dispose();
+                comm.Dispose();
+            }
+            else
+            {
+                SqlCommand comm = new SqlCommand();
+                comm.Connection = Parameter.conn;
+                comm.CommandText = "SELECT * FROM 用户 WHERE 用户名= " + "'" + Parameter.userName + "'";
+                SqlDataReader reader = comm.ExecuteReader();
+                while (reader.Read())
+                    Parameter.userflight = reader["班次"].ToString();
+
+                reader.Dispose();
+                comm.Dispose();
+            }
+
+        }
+
+
         //吹膜按钮
         private void ExtructionBtn_Click(object sender, EventArgs e)
         {
             Parameter.selectCon = 1;
             Parameter.InitCon();
+            checkFlight();
             BtnColor();
             Btn吹膜.BackColor = Color.FromArgb(138, 158, 196);
             QueryPanelRight.Controls.Clear();
@@ -43,6 +74,7 @@ namespace mySystem
         {
             Parameter.selectCon = 2;
             Parameter.InitCon();
+            checkFlight();
             BtnColor();
             Btn清洁分切.BackColor = Color.FromArgb(138, 158, 196);
             QueryPanelRight.Controls.Clear();
@@ -79,6 +111,7 @@ namespace mySystem
         {
             Parameter.selectCon = 5;
             Parameter.InitCon();
+            checkFlight();
             BtnColor();
             Btn灭菌.BackColor = Color.FromArgb(138, 158, 196);
             QueryPanelRight.Controls.Clear();
@@ -146,6 +179,7 @@ namespace mySystem
             Parameter.selectCon = 7;
             Parameter.InitCon();
             QueryPanelRight.Controls.Clear();
+            checkFlight();
             BtnColor();
             BtnPE制袋.BackColor = Color.FromArgb(138, 158, 196);
 
@@ -162,6 +196,7 @@ namespace mySystem
             Parameter.selectCon = 3;
             Parameter.InitCon();
             QueryPanelRight.Controls.Clear();
+            checkFlight();
             BtnColor();
             BtnCS制袋.BackColor = Color.FromArgb(138, 158, 196);
 
@@ -185,6 +220,7 @@ namespace mySystem
             Parameter.selectCon = 8;
             Parameter.InitCon();
             QueryPanelRight.Controls.Clear();
+            checkFlight();
             BtnColor();
             BtnPTV制袋.BackColor = Color.FromArgb(138, 158, 196);
 
@@ -201,6 +237,7 @@ namespace mySystem
             Parameter.selectCon = 6;
             Parameter.InitCon();
             QueryPanelRight.Controls.Clear();
+            checkFlight();
             BtnColor();
             BtnBPV制袋.BackColor = Color.FromArgb(138, 158, 196);
 

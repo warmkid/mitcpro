@@ -824,6 +824,8 @@ namespace mySystem.Process.Bag.LDPE
             dtOuter.Rows[0]["审核员"] = mySystem.Parameter.userName;
             dtOuter.Rows[0]["审核是否通过"] = ckForm.ischeckOk;
             dtOuter.Rows[0]["审核意见"] = ckForm. opinion;
+            dtOuter.Rows[0]["审核日期"] = DateTime.Now;
+             
             String log = "===================================\n";
             log += DateTime.Now.ToString("yyyy年MM月dd日 HH:mm:ss");
             log += "\n审核员：" + mySystem.Parameter.userName + " 审核完毕\n";

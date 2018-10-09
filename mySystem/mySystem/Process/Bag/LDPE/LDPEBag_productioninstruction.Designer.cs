@@ -42,7 +42,6 @@
             this.tb外包物料领料量3 = new System.Windows.Forms.TextBox();
             this.tb外包物料批号3 = new System.Windows.Forms.TextBox();
             this.tb外包物料代码3 = new System.Windows.Forms.TextBox();
-            this.cmb产品名称 = new System.Windows.Forms.ComboBox();
             this.btn添加 = new System.Windows.Forms.Button();
             this.btn外包白班 = new System.Windows.Forms.Button();
             this.btn外包夜班 = new System.Windows.Forms.Button();
@@ -142,6 +141,9 @@
             this.label40 = new System.Windows.Forms.Label();
             this.cmb外包规格 = new System.Windows.Forms.ComboBox();
             this.label41 = new System.Windows.Forms.Label();
+            this.label42 = new System.Windows.Forms.Label();
+            this.tb产品名称 = new System.Windows.Forms.TextBox();
+            this.tb产品英文名称 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -149,7 +151,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(395, 13);
+            this.label1.Location = new System.Drawing.Point(671, 13);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(191, 19);
             this.label1.TabIndex = 0;
@@ -159,7 +161,7 @@
             // 
             this.label角色.AutoSize = true;
             this.label角色.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label角色.Location = new System.Drawing.Point(670, 17);
+            this.label角色.Location = new System.Drawing.Point(969, 12);
             this.label角色.Name = "label角色";
             this.label角色.Size = new System.Drawing.Size(42, 16);
             this.label角色.TabIndex = 244;
@@ -284,14 +286,6 @@
             this.tb外包物料代码3.Size = new System.Drawing.Size(124, 21);
             this.tb外包物料代码3.TabIndex = 232;
             this.tb外包物料代码3.TextChanged += new System.EventHandler(this.tb外包物料代码3_TextChanged);
-            // 
-            // cmb产品名称
-            // 
-            this.cmb产品名称.FormattingEnabled = true;
-            this.cmb产品名称.Location = new System.Drawing.Point(64, 47);
-            this.cmb产品名称.Name = "cmb产品名称";
-            this.cmb产品名称.Size = new System.Drawing.Size(216, 20);
-            this.cmb产品名称.TabIndex = 231;
             // 
             // btn添加
             // 
@@ -492,10 +486,11 @@
             // cmb生产工艺
             // 
             this.cmb生产工艺.FormattingEnabled = true;
-            this.cmb生产工艺.Location = new System.Drawing.Point(345, 48);
+            this.cmb生产工艺.Location = new System.Drawing.Point(668, 50);
             this.cmb生产工艺.Name = "cmb生产工艺";
             this.cmb生产工艺.Size = new System.Drawing.Size(121, 20);
             this.cmb生产工艺.TabIndex = 208;
+            this.cmb生产工艺.SelectedIndexChanged += new System.EventHandler(this.cmb生产工艺_SelectedIndexChanged);
             // 
             // comboBox1
             // 
@@ -937,7 +932,7 @@
             // 
             // btn查询插入
             // 
-            this.btn查询插入.Location = new System.Drawing.Point(187, 11);
+            this.btn查询插入.Location = new System.Drawing.Point(228, 11);
             this.btn查询插入.Name = "btn查询插入";
             this.btn查询插入.Size = new System.Drawing.Size(75, 23);
             this.btn查询插入.TabIndex = 155;
@@ -947,22 +942,23 @@
             // 
             // dtp计划生产日期
             // 
-            this.dtp计划生产日期.Location = new System.Drawing.Point(875, 46);
+            this.dtp计划生产日期.Location = new System.Drawing.Point(534, 16);
             this.dtp计划生产日期.Name = "dtp计划生产日期";
             this.dtp计划生产日期.Size = new System.Drawing.Size(107, 21);
             this.dtp计划生产日期.TabIndex = 153;
             // 
             // tb生产设备
             // 
-            this.tb生产设备.Location = new System.Drawing.Point(548, 48);
+            this.tb生产设备.Location = new System.Drawing.Point(850, 50);
             this.tb生产设备.Name = "tb生产设备";
             this.tb生产设备.Size = new System.Drawing.Size(113, 21);
             this.tb生产设备.TabIndex = 152;
+            this.tb生产设备.TextChanged += new System.EventHandler(this.tb生产设备_TextChanged);
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(815, 49);
+            this.label6.Location = new System.Drawing.Point(474, 19);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(53, 12);
             this.label6.TabIndex = 151;
@@ -971,26 +967,28 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(492, 51);
+            this.label5.Location = new System.Drawing.Point(794, 53);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(53, 12);
             this.label5.TabIndex = 150;
             this.label5.Text = "生产设备";
+            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(286, 52);
+            this.label4.Location = new System.Drawing.Point(609, 54);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(53, 12);
             this.label4.TabIndex = 149;
             this.label4.Text = "生产工艺";
+            this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // tb生产指令编号
             // 
             this.tb生产指令编号.Location = new System.Drawing.Point(91, 13);
             this.tb生产指令编号.Name = "tb生产指令编号";
-            this.tb生产指令编号.Size = new System.Drawing.Size(90, 21);
+            this.tb生产指令编号.Size = new System.Drawing.Size(131, 21);
             this.tb生产指令编号.TabIndex = 148;
             // 
             // label3
@@ -1062,7 +1060,7 @@
             // 
             this.cmb类型.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmb类型.FormattingEnabled = true;
-            this.cmb类型.Location = new System.Drawing.Point(1033, 44);
+            this.cmb类型.Location = new System.Drawing.Point(353, 14);
             this.cmb类型.Name = "cmb类型";
             this.cmb类型.Size = new System.Drawing.Size(81, 20);
             this.cmb类型.TabIndex = 247;
@@ -1070,7 +1068,7 @@
             // label39
             // 
             this.label39.AutoSize = true;
-            this.label39.Location = new System.Drawing.Point(999, 48);
+            this.label39.Location = new System.Drawing.Point(319, 18);
             this.label39.Name = "label39";
             this.label39.Size = new System.Drawing.Size(29, 12);
             this.label39.TabIndex = 246;
@@ -1164,7 +1162,7 @@
             // 
             this.cmb外包规格.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmb外包规格.FormattingEnabled = true;
-            this.cmb外包规格.Location = new System.Drawing.Point(732, 48);
+            this.cmb外包规格.Location = new System.Drawing.Point(1029, 50);
             this.cmb外包规格.Name = "cmb外包规格";
             this.cmb外包规格.Size = new System.Drawing.Size(77, 20);
             this.cmb外包规格.TabIndex = 259;
@@ -1172,17 +1170,43 @@
             // label41
             // 
             this.label41.AutoSize = true;
-            this.label41.Location = new System.Drawing.Point(673, 53);
+            this.label41.Location = new System.Drawing.Point(970, 55);
             this.label41.Name = "label41";
             this.label41.Size = new System.Drawing.Size(53, 12);
             this.label41.TabIndex = 258;
             this.label41.Text = "外包规格";
+            // 
+            // label42
+            // 
+            this.label42.AutoSize = true;
+            this.label42.Location = new System.Drawing.Point(298, 53);
+            this.label42.Name = "label42";
+            this.label42.Size = new System.Drawing.Size(77, 12);
+            this.label42.TabIndex = 260;
+            this.label42.Text = "产品英文名称";
+            // 
+            // tb产品名称
+            // 
+            this.tb产品名称.Location = new System.Drawing.Point(91, 48);
+            this.tb产品名称.Name = "tb产品名称";
+            this.tb产品名称.Size = new System.Drawing.Size(201, 21);
+            this.tb产品名称.TabIndex = 262;
+            // 
+            // tb产品英文名称
+            // 
+            this.tb产品英文名称.Location = new System.Drawing.Point(381, 48);
+            this.tb产品英文名称.Name = "tb产品英文名称";
+            this.tb产品英文名称.Size = new System.Drawing.Size(201, 21);
+            this.tb产品英文名称.TabIndex = 263;
             // 
             // LDPEBag_productioninstruction
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1146, 689);
+            this.Controls.Add(this.tb产品英文名称);
+            this.Controls.Add(this.tb产品名称);
+            this.Controls.Add(this.label42);
             this.Controls.Add(this.cmb外包规格);
             this.Controls.Add(this.label41);
             this.Controls.Add(this.label32);
@@ -1211,7 +1235,6 @@
             this.Controls.Add(this.tb外包物料领料量3);
             this.Controls.Add(this.tb外包物料批号3);
             this.Controls.Add(this.tb外包物料代码3);
-            this.Controls.Add(this.cmb产品名称);
             this.Controls.Add(this.btn添加);
             this.Controls.Add(this.btn外包白班);
             this.Controls.Add(this.btn外包夜班);
@@ -1322,7 +1345,6 @@
         private System.Windows.Forms.TextBox tb外包物料领料量3;
         private System.Windows.Forms.TextBox tb外包物料批号3;
         private System.Windows.Forms.TextBox tb外包物料代码3;
-        private System.Windows.Forms.ComboBox cmb产品名称;
         private System.Windows.Forms.Button btn添加;
         private System.Windows.Forms.Button btn外包白班;
         private System.Windows.Forms.Button btn外包夜班;
@@ -1422,5 +1444,8 @@
         private System.Windows.Forms.Label label40;
         private System.Windows.Forms.ComboBox cmb外包规格;
         private System.Windows.Forms.Label label41;
+        private System.Windows.Forms.Label label42;
+        private System.Windows.Forms.TextBox tb产品名称;
+        private System.Windows.Forms.TextBox tb产品英文名称;
     }
 }

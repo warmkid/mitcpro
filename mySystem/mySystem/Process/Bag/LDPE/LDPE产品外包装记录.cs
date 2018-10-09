@@ -553,15 +553,34 @@ namespace mySystem.Process.Bag.LDPE
             dr["序号"] = 0;
             dr["包装日期"] = Convert.ToDateTime(DateTime.Now.ToString("yyyy/MM/dd"));
             dr["时间"] = Convert.ToDateTime(DateTime.Now.ToString("HH:mm:ss"));
-            dr["包装箱号"] = 0;
+            if (dt记录详情.Rows.Count > 0)
+            {
+                try
+                {
+                    dr["包装箱号"] = Convert.ToInt32(dt记录详情.Rows[dt记录详情.Rows.Count - 1]["包装箱号"])
+                        + 1;
+                    dr["产品数量只数"] = Convert.ToInt32(dt记录详情.Rows[dt记录详情.Rows.Count - 1]["产品数量只数"]);
+                }
+                catch
+                {
+                    dr["包装箱号"] = 0;
+                    dr["产品数量只数"] = 0;
+                }
+            }
+            else
+            {
+                dr["包装箱号"] = 0;
+                dr["产品数量只数"] = 0;
+            }
+            
             dr["包装明细"] = "";
-            dr["包装数量箱数"] = 0;
-            dr["产品数量只数"] = 0;
+            dr["包装数量箱数"] = 1;
+            
             dr["是否贴标签"] = "Yes";
             dr["是否打包封箱"] = "Yes";
             dr["操作员"] = mySystem.Parameter.userName;
             dr["审核员"] = "";
-            dr["备注"] = "";
+            dr["备注"] = "无";
             //dt记录详情.Rows.InsertAt(dr, dt记录详情.Rows.Count);
             return dr;
         }
@@ -1027,7 +1046,7 @@ namespace mySystem.Process.Bag.LDPE
             mysheet.Cells[3, 9].Value = "外包标签：" + dt记录.Rows[0]["外包标签"].ToString();
             mysheet.Cells[3, 12].Value = dt记录.Rows[0]["包装规格每包千克"].ToString() + " Kg/包";
             mysheet.Cells[4, 1].Value = "产品代码：" + dt记录.Rows[0]["产品代码"].ToString();
-            mysheet.Cells[4, 5].Value = "纸箱批号：" + dt记录.Rows[0]["纸箱批号"].ToString();
+            //mysheet.Cells[4, 5].Value = "纸箱批号：" + dt记录.Rows[0]["纸箱批号"].ToString();
             mysheet.Cells[4, 9].Value = "标签代码：" + dt记录.Rows[0]["标签代码"].ToString();
             mysheet.Cells[4, 12].Value = dt记录.Rows[0]["包装规格每箱千克"].ToString() + " Kg/箱";
             mysheet.Cells[5, 1].Value = "产品批号：" + dt记录.Rows[0]["产品批号"].ToString();
@@ -1041,15 +1060,15 @@ namespace mySystem.Process.Bag.LDPE
             int rownum = dt记录详情.Rows.Count;
             int ind = 0;
             //插入新行
-            if (dt记录详情.Rows.Count > 14)
+            if (dt记录详情.Rows.Count > 1)
             {
-                ind = dt记录详情.Rows.Count - 14;
+                ind = dt记录详情.Rows.Count - 1;
                 for (int i = 0; i < ind; i++)
                 {
                     //在第8行插入
-                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[8 + i, Type.Missing];
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[7, Type.Missing];
                     range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
-                    Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+                    Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromRightOrBelow);
                 }
             }
 
@@ -1068,8 +1087,8 @@ namespace mySystem.Process.Bag.LDPE
                 mysheet.Cells[7 + i, 11].Value = dt记录详情.Rows[i]["审核员"].ToString();
                 mysheet.Cells[7 + i, 12].Value = dt记录详情.Rows[i]["备注"].ToString();
             }
-            mysheet.Cells[21 + ind, 6].Value = dt记录.Rows[0]["包装数量箱数合计"].ToString();
-            mysheet.Cells[21 + ind, 7].Value = dt记录.Rows[0]["产品数量只数合计"].ToString();
+            mysheet.Cells[8 + ind, 6].Value = dt记录.Rows[0]["包装数量箱数合计"].ToString();
+            mysheet.Cells[8 + ind, 7].Value = dt记录.Rows[0]["产品数量只数合计"].ToString();
                         
             //加页脚
             int sheetnum;

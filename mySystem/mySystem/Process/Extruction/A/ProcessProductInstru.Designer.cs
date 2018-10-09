@@ -143,6 +143,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.lbl产品英文名称 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -245,7 +247,7 @@
             this.cb需要开机清洁.Checked = true;
             this.cb需要开机清洁.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cb需要开机清洁.Font = new System.Drawing.Font("宋体", 12F);
-            this.cb需要开机清洁.Location = new System.Drawing.Point(429, 52);
+            this.cb需要开机清洁.Location = new System.Drawing.Point(571, 15);
             this.cb需要开机清洁.Name = "cb需要开机清洁";
             this.cb需要开机清洁.Size = new System.Drawing.Size(123, 20);
             this.cb需要开机清洁.TabIndex = 38;
@@ -276,7 +278,7 @@
             // button4
             // 
             this.button4.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button4.Location = new System.Drawing.Point(200, 28);
+            this.button4.Location = new System.Drawing.Point(200, 11);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(75, 23);
             this.button4.TabIndex = 36;
@@ -390,7 +392,7 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button1.Location = new System.Drawing.Point(284, 28);
+            this.button1.Location = new System.Drawing.Point(272, 11);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 26;
@@ -402,7 +404,7 @@
             // cb工艺
             // 
             this.cb工艺.FormattingEnabled = true;
-            this.cb工艺.Location = new System.Drawing.Point(379, 82);
+            this.cb工艺.Location = new System.Drawing.Point(372, 85);
             this.cb工艺.Name = "cb工艺";
             this.cb工艺.Size = new System.Drawing.Size(121, 20);
             this.cb工艺.TabIndex = 25;
@@ -414,6 +416,7 @@
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(187, 20);
             this.comboBox1.TabIndex = 24;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // bt查询插入
             // 
@@ -1153,9 +1156,9 @@
             this.label20.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label20.Location = new System.Drawing.Point(17, 12);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(112, 28);
+            this.label20.Size = new System.Drawing.Size(126, 28);
             this.label20.TabIndex = 15;
-            this.label20.Text = "所需原料-内外层\r\n\r\n";
+            this.label20.Text = "所需原料-内中外层\r\n\r\n";
             // 
             // tb卷心管领料量
             // 
@@ -1379,12 +1382,34 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "吹膜工序生产指令";
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label2.Location = new System.Drawing.Point(356, 52);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(49, 14);
+            this.label2.TabIndex = 41;
+            this.label2.Text = "Name：";
+            // 
+            // lbl产品英文名称
+            // 
+            this.lbl产品英文名称.AutoSize = true;
+            this.lbl产品英文名称.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lbl产品英文名称.Location = new System.Drawing.Point(419, 52);
+            this.lbl产品英文名称.Name = "lbl产品英文名称";
+            this.lbl产品英文名称.Size = new System.Drawing.Size(91, 14);
+            this.lbl产品英文名称.TabIndex = 42;
+            this.lbl产品英文名称.Text = "产品英文名称";
+            // 
             // ProcessProductInstru
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1016, 643);
+            this.Controls.Add(this.lbl产品英文名称);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.textBox生产天数);
             this.Controls.Add(this.label43);
             this.Controls.Add(this.tb每日产量);
@@ -1598,5 +1623,7 @@
         private System.Windows.Forms.Label label42;
         private System.Windows.Forms.TextBox textBox生产天数;
         private System.Windows.Forms.Label label43;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lbl产品英文名称;
     }
 }

@@ -71,6 +71,7 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.Title = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.label班次 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -441,12 +442,13 @@
             // 
             this.cb夜班.AutoSize = true;
             this.cb夜班.Font = new System.Drawing.Font("宋体", 12F);
-            this.cb夜班.Location = new System.Drawing.Point(1154, 66);
+            this.cb夜班.Location = new System.Drawing.Point(1187, 22);
             this.cb夜班.Name = "cb夜班";
             this.cb夜班.Size = new System.Drawing.Size(59, 20);
             this.cb夜班.TabIndex = 8;
             this.cb夜班.Text = "夜班";
             this.cb夜班.UseVisualStyleBackColor = true;
+            this.cb夜班.Visible = false;
             // 
             // cb白班
             // 
@@ -454,12 +456,13 @@
             this.cb白班.Checked = true;
             this.cb白班.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cb白班.Font = new System.Drawing.Font("宋体", 12F);
-            this.cb白班.Location = new System.Drawing.Point(1089, 64);
+            this.cb白班.Location = new System.Drawing.Point(1122, 20);
             this.cb白班.Name = "cb白班";
             this.cb白班.Size = new System.Drawing.Size(59, 20);
             this.cb白班.TabIndex = 7;
             this.cb白班.Text = "白班";
             this.cb白班.UseVisualStyleBackColor = true;
+            this.cb白班.Visible = false;
             // 
             // dataGridView1
             // 
@@ -490,11 +493,22 @@
             this.label1.TabIndex = 6;
             this.label1.Text = "班次：";
             // 
+            // label班次
+            // 
+            this.label班次.AutoSize = true;
+            this.label班次.Font = new System.Drawing.Font("宋体", 12F);
+            this.label班次.Location = new System.Drawing.Point(1102, 66);
+            this.label班次.Name = "label班次";
+            this.label班次.Size = new System.Drawing.Size(56, 16);
+            this.label班次.TabIndex = 177;
+            this.label班次.Text = "班次：";
+            // 
             // ExtructionpRoductionAndRestRecordStep6
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1248, 554);
+            this.Controls.Add(this.label班次);
             this.Controls.Add(this.btn新建);
             this.Controls.Add(this.bt查看人员信息);
             this.Controls.Add(this.cb打印机);
@@ -593,5 +607,6 @@
         private System.Windows.Forms.Label label40;
         private System.Windows.Forms.Button bt查看人员信息;
         private System.Windows.Forms.Button btn新建;
+        private System.Windows.Forms.Label label班次;
     }
 }

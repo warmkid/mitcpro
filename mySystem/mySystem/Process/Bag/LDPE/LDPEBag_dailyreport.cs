@@ -177,6 +177,7 @@ namespace mySystem.Process.Bag.LDPE
             // 创建列
             DataTable ret = new DataTable("PE制袋台账");
             ret.Columns.Add("生产指令ID", Type.GetType("System.Int32"));
+            ret.Columns.Add("生产指令编号", Type.GetType("System.String"));
             ret.Columns.Add("生产日期", Type.GetType("System.DateTime"));
             ret.Columns.Add("班次", Type.GetType("System.String"));
             ret.Columns.Add("客户或订单号", Type.GetType("System.String"));
@@ -235,6 +236,7 @@ namespace mySystem.Process.Bag.LDPE
                 else
                 {
                     ndr["生产指令ID"] = instr_id;
+                    ndr["生产指令编号"] = dt.Rows[0]["生产指令编号"];
                     string[] info = getOtherData(Convert.ToInt32(dr["生产指令ID"]));
                     int[] KandG = getChangAndKuan(info[1]);
                     ndr["膜材规格（mm）"] = KandG[0];
@@ -298,6 +300,7 @@ namespace mySystem.Process.Bag.LDPE
 
 
             // 读内包记录
+            // Note：一个指令下可能有多个内包记录
             foreach (DataRow dr in ret.Rows)
             {
                 int instr_id = Convert.ToInt32(dr["生产指令ID"]);
@@ -312,9 +315,16 @@ namespace mySystem.Process.Bag.LDPE
                 dr["客户或订单号"] = info[0];
                 dr["产品代码"] = info[1];
                 dr["批号"] = info[2];
-                dr["入库量（只）"] = dt.Rows[0]["产品数量只合计B"];
-                dr["内包产品数量（只）"] = dt.Rows[0]["产品数量只合计B"];
-                dr["工时（小时）"] = dt.Rows[0]["工时"];
+                int zhi = 0;
+                double gongshi = 0;
+                foreach (DataRow fff in dt.Rows)
+                {
+                    zhi += Convert.ToInt32(fff["产品数量只合计B"]);
+                    gongshi += Convert.ToDouble(fff["工时"]);
+                }
+                dr["入库量（只）"] = zhi;
+                dr["内包产品数量（只）"] = zhi;
+                dr["工时（小时）"] = gongshi;
                 try
                 {
                     dr["效率（只/小时）"] = Math.Round(Convert.ToDouble(dr["入库量（只）"]) /
@@ -403,14 +413,16 @@ namespace mySystem.Process.Bag.LDPE
                 DateTime currDateTime = Convert.ToDateTime(dr["生产日期"]);
                 string fight = dr["班次"].ToString();
                 // 膜材
-                sql = "select * from 生产领料使用记录,生产领料使用记录详细信息 where 生产领料使用记录详细信息.T生产领料使用记录ID=生产领料使用记录.ID and 生产领料使用记录.生产指令ID={0} and 生产领料使用记录详细信息.领料日期时间 between '{1}' and '{2}' and 生产领料使用记录详细信息.班次='{3}' and 类型='膜材'";
-                if (fight == "白班") {
-                    da = new SqlDataAdapter(string.Format(sql, id, currDateTime.Date, currDateTime.AddDays(1).Date, fight), mySystem.Parameter.conn);
-                }
-                else {
-                    da = new SqlDataAdapter(string.Format(sql, id, currDateTime.Date.AddHours(12), currDateTime.AddDays(1).Date.AddHours(12), fight), mySystem.Parameter.conn);
-                }
-                da = new SqlDataAdapter(string.Format(sql, id, currDateTime.Date.AddHours(-12), currDateTime.AddDays(1).Date.AddHours(12), fight), mySystem.Parameter.conn);
+                //sql = "select * from 生产领料使用记录,生产领料使用记录详细信息 where 生产领料使用记录详细信息.T生产领料使用记录ID=生产领料使用记录.ID and 生产领料使用记录.生产指令ID={0} and 生产领料使用记录详细信息.领料日期时间 between '{1}' and '{2}' and 生产领料使用记录详细信息.班次='{3}' and 类型='膜材'";
+                sql = "select * from 生产领料使用记录,生产领料使用记录详细信息 where 生产领料使用记录详细信息.T生产领料使用记录ID=生产领料使用记录.ID and 生产领料使用记录.生产指令ID={0} and 类型='膜材'";
+                //if (fight == "白班") {
+                //    da = new SqlDataAdapter(string.Format(sql, id, currDateTime.Date, currDateTime.AddDays(1).Date, fight), mySystem.Parameter.conn);
+                //}
+                //else {
+                //    da = new SqlDataAdapter(string.Format(sql, id, currDateTime.Date.AddHours(12), currDateTime.AddDays(1).Date.AddHours(12), fight), mySystem.Parameter.conn);
+                //}
+                //da = new SqlDataAdapter(string.Format(sql, id, currDateTime.Date.AddHours(-12), currDateTime.AddDays(1).Date.AddHours(12), fight), mySystem.Parameter.conn);
+                da = new SqlDataAdapter(string.Format(sql, id), mySystem.Parameter.conn);
                 dt = new DataTable();
                 da.Fill(dt);
                 DataRow[] drs;
@@ -591,7 +603,7 @@ namespace mySystem.Process.Bag.LDPE
             }
             lbl入库量合计.Text = 入库量合计.ToString("F2");
             lbl工时合计.Text = 工时.ToString("F2");
-            lbl工时效率.Text =(入库量合计/工时*100).ToString("F2");
+            lbl工时效率.Text =(入库量合计/工时).ToString("F2");
             lbl成品数量合计.Text = 产品数量.ToString("F2");
             lbl膜材用量合计.Text=膜材用量.ToString("F2");
             lbl制袋收率.Text = (产品数量/膜材用量*100).ToString("F2");
@@ -610,6 +622,7 @@ namespace mySystem.Process.Bag.LDPE
             dataGridView1.ReadOnly = true;
             Utility.setDataGridViewAutoSizeMode(dataGridView1);
             dataGridView1.Columns["生产指令ID"].Visible = false;
+            dataGridView1.Columns["班次"].Visible = false;
         }
 
         private void btn查询_Click(object sender, EventArgs e)

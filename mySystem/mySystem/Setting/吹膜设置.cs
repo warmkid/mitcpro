@@ -109,6 +109,16 @@ namespace mySystem.Setting
             EachInitdgv(dgv权限);
             bs代码批号 = new BindingSource();
             EachInitdgv(dgv代码批号);
+
+
+            dgv人员.DataError += dgv人员_DataError;
+        }
+
+        void dgv人员_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            MessageBox.Show("人员设置第"+(e.RowIndex+1)+"行有错误");
+
+            dgv人员.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = "123";
         }
 
         private void EachInitdgv(DataGridView dgv)

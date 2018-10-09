@@ -484,6 +484,8 @@
             this.Name = "LDPEBag_materialrecord";
             this.Text = "生产领料使用记录";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LDPEBag_materialrecord_FormClosing);
+            this.Load += new System.EventHandler(this.LDPEBag_materialrecord_Load);
+            this.Enter += new System.EventHandler(this.LDPEBag_materialrecord_Enter);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

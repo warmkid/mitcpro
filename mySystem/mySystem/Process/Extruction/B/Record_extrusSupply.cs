@@ -61,6 +61,7 @@ namespace WindowsFormsApplication1
         void addDataEventHandler()
         {
             //this.cb产品代码.SelectedIndexChanged += new System.EventHandler(this.cb产品代码_SelectedIndexChanged);
+            dataGridView1.DataError+=dataGridView1_DataError;
             this.tb用料ab1c.TextChanged += new EventHandler(tb用料ab1c_TextChanged);
             this.tb用料b2.TextChanged += new EventHandler(tb用料b2_TextChanged);
         }
@@ -234,8 +235,8 @@ namespace WindowsFormsApplication1
         void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             // 获取选中的列，然后提示
-            String name = ((DataGridView)sender).Columns[((DataGridView)sender).SelectedCells[0].ColumnIndex].Name;
-            MessageBox.Show(name + "填写错误");
+            String name = ((DataGridView)sender).Columns[e.ColumnIndex].Name;
+            MessageBox.Show("第" + (e.RowIndex + 1) + "行的" + name + "填写错误");
         }
 
         public Record_extrusSupply(mySystem.MainForm mainform):base(mainform)
@@ -1620,7 +1621,7 @@ namespace WindowsFormsApplication1
                 my.Cells[6 + i, 10] = dataGridView1.Rows[i].Cells["原料抽查结果"].Value.ToString();
                 my.Cells[6 + i, 11] = dataGridView1.Rows[i].Cells["供料人"].Value.ToString();
                 my.Cells[6 + i, 12] = dataGridView1.Rows[i].Cells["审核员"].Value.ToString();
-                my.Cells[6 + i, 13] = dataGridView1.Rows[i].Cells["备注"].Value.ToString();
+                my.Cells[6 + i, 13] = dataGridView1.Rows[i].Cells["操作员备注"].Value.ToString();
 
             }
 

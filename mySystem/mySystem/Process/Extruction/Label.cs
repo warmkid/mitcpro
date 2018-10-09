@@ -94,7 +94,6 @@ namespace mySystem.Process.Extruction
                 dr["产品代码"] = cmb膜代码.SelectedItem.ToString();
                 dr["卷号"] = 1;
                 dt.Rows.Add(dr);
-                da.Update(dt);
             }
             
 
@@ -134,7 +133,18 @@ namespace mySystem.Process.Extruction
                     codeToLabel.Add(dr["产品编码"].ToString(), Convert.ToInt32(dr["标签"]));
                 }
             }
-            
+
+            // 产品名称
+            {
+                SqlDataAdapter da = new SqlDataAdapter("select * from 生产指令信息表 where ID=" + mySystem.Parameter.proInstruID, mySystem.Parameter.conn);
+                System.Data.DataTable dt = new System.Data.DataTable("temp");
+                da.Fill(dt);
+                if (dt.Rows.Count > 0)
+                {
+                    tc产品名称.Text = dt.Rows[0]["产品名称"].ToString();
+                    teName.Text = dt.Rows[0]["产品英文名称"].ToString();
+                }
+            }
         }
 
         private void BtnPrint_Click(object sender, EventArgs e)

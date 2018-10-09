@@ -746,7 +746,8 @@ namespace mySystem.Process.Bag.LDPE
             dt记录.Rows[0]["审核员"] = mySystem.Parameter.userName;
             dt记录.Rows[0]["审核意见"] = checkform.opinion;
             dt记录.Rows[0]["审核是否通过"] = checkform.ischeckOk;
-
+            dt记录.Rows[0]["审核日期"] = checkform.ischeckOk;
+            
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
             //BindingSource bs_temp = new BindingSource();
@@ -804,12 +805,13 @@ namespace mySystem.Process.Bag.LDPE
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
-            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\LDPEBag\7 SOP-MFG-304-R03A 1#制袋机运行记录.xlsx");
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() +
+                @"\..\..\xls\LDPEBag\7 SOP-MFG-304-R03A 1#制袋机运行记录.xlsx");
             // 选择一个Sheet，注意Sheet的序号是从1开始的
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
             // 修改Sheet中某行某列的值
             my = printValue(my, wb);
-
+           
             if (isShow)
             {
                 //true->预览
@@ -884,9 +886,23 @@ namespace mySystem.Process.Bag.LDPE
             //mysheet.Cells[20, 11].Value = "审核员：" + dt记录.Rows[0]["审核员"].ToString() + "   审核日期：" + Convert.ToDateTime(dt记录.Rows[0]["审核日期"].ToString()).ToString("yyyy/MM/dd");
             
             //内表信息
+
+            // 先把空行全部插进去
             int rownum = dt记录详情.Rows.Count;
+            if (rownum > 1)
+            {
+                for (int i = 0; i < rownum - 1; ++i)
+                {
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[8, Type.Missing];
+
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                        Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromRightOrBelow);
+                }
+                ind = rownum - 1;
+                
+            }
             //无需插入的部分
-            for (int i = 0; i < (rownum > 6 ? 6 : rownum); i++)
+            for (int i = 0; i < rownum; i++)
             {
                 mysheet.Cells[8 + i, 1].Value = Convert.ToDateTime(dt记录详情.Rows[i]["检查时间"].ToString()).ToString("yyyy/MM/dd");
                 mysheet.Cells[8 + i, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["检查时间"].ToString()).ToString("HH:mm");
@@ -902,35 +918,36 @@ namespace mySystem.Process.Bag.LDPE
                 mysheet.Cells[8 + i, 11].Value = dt记录详情.Rows[i]["操作员"].ToString();
                 mysheet.Cells[8 + i, 12].Value = dt记录详情.Rows[i]["审核员"].ToString();
             }
-            //需要插入的部分
-            if (rownum > 6)
-            {
-                ind = rownum - 6;
-                for (int i = 6; i < rownum; i++)
-                {
-                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[6 + i, Type.Missing];
+            ////需要插入的部分
+            //if (rownum > 1)
+            //{
+            //    ind = rownum - 1;
+            //    for (int i = 1; i < rownum; i++)
+            //    {
+            //        Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[7 + i, Type.Missing];
 
-                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
-                        Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+            //        range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+            //            Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromRightOrBelow);
 
-                    mysheet.Cells[8 + i, 1].Value = Convert.ToDateTime(dt记录详情.Rows[i]["检查时间"].ToString()).ToString("yyyy/MM/dd");
-                    //mysheet.Cells[8 + i, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["检查时间"].ToString()).ToString("HH：mm");
-                    mysheet.Cells[8 + i, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["检查时间"].ToString()).ToString("HH:mm");
-                    mysheet.Cells[8 + i, 3].Value = dt记录详情.Rows[i]["温度"].ToString();
-                    mysheet.Cells[8 + i, 4].Value = dt记录详情.Rows[i]["湿度"].ToString();
-                    mysheet.Cells[8 + i, 5].Value = dt记录详情.Rows[i]["热封刀温度（300-340）"].ToString();
-                    mysheet.Cells[8 + i, 6].Value = dt记录详情.Rows[i]["底座温度（40-60）"].ToString();
-                    mysheet.Cells[8 + i, 7].Value = dt记录详情.Rows[i]["制袋速度（个/分钟）（30-50）"].ToString();
-                    mysheet.Cells[8 + i, 8].Value = dt记录详情.Rows[i]["切刀工作是否正常"].ToString();
-                    mysheet.Cells[8 + i, 9].Value = dt记录详情.Rows[i]["张力控制是否正常"].ToString();
-                    mysheet.Cells[8 + i, 10].Value = dt记录详情.Rows[i]["膜材运转是否平整"].ToString();
-                    mysheet.Cells[8 + i, 11].Value = dt记录详情.Rows[i]["操作员"].ToString();
-                    mysheet.Cells[8 + i, 12].Value = dt记录详情.Rows[i]["审核员"].ToString();
-                }
+            //        mysheet.Cells[8 + i, 1].Value = Convert.ToDateTime(dt记录详情.Rows[i]["检查时间"].ToString()).ToString("yyyy/MM/dd");
+            //        //mysheet.Cells[8 + i, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["检查时间"].ToString()).ToString("HH：mm");
+            //        mysheet.Cells[8 + i, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["检查时间"].ToString()).ToString("HH:mm");
+            //        mysheet.Cells[8 + i, 3].Value = dt记录详情.Rows[i]["温度"].ToString();
+            //        mysheet.Cells[8 + i, 4].Value = dt记录详情.Rows[i]["湿度"].ToString();
+            //        mysheet.Cells[8 + i, 5].Value = dt记录详情.Rows[i]["热封刀温度（300-340）"].ToString();
+            //        mysheet.Cells[8 + i, 6].Value = dt记录详情.Rows[i]["底座温度（40-60）"].ToString();
+            //        mysheet.Cells[8 + i, 7].Value = dt记录详情.Rows[i]["制袋速度（个/分钟）（30-50）"].ToString();
+            //        mysheet.Cells[8 + i, 8].Value = dt记录详情.Rows[i]["切刀工作是否正常"].ToString();
+            //        mysheet.Cells[8 + i, 9].Value = dt记录详情.Rows[i]["张力控制是否正常"].ToString();
+            //        mysheet.Cells[8 + i, 10].Value = dt记录详情.Rows[i]["膜材运转是否平整"].ToString();
+            //        mysheet.Cells[8 + i, 11].Value = dt记录详情.Rows[i]["操作员"].ToString();
+            //        mysheet.Cells[8 + i, 12].Value = dt记录详情.Rows[i]["审核员"].ToString();
+            //    }
                 
-            }
-            mysheet.Cells[15 + ind, 7].Value = "复核人: " + dt记录.Rows[0]["审核员"].ToString() + "   " +
-                Convert.ToDateTime(dt记录.Rows[0]["审核日期"]).ToString("yyyy年MM月dd日");
+            //}
+            //mysheet.Cells[9 + ind, 8].Value = "复核人: " +
+            //    (dt记录.Rows[0]["审核员"].ToString() == "" ? "      " : dt记录.Rows[0]["审核员"].ToString())
+            //    + "   " + Convert.ToDateTime(dt记录.Rows[0]["审核日期"]).ToString("yyyy年MM月dd日");
             //加页脚
             int sheetnum;
             SqlDataAdapter da = new SqlDataAdapter("select ID from 制袋机组运行记录  where 生产指令ID=" + InstruID.ToString(), mySystem.Parameter.conn);

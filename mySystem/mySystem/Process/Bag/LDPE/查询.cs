@@ -208,21 +208,21 @@ namespace mySystem.Process.Bag.LDPE
                                 {
                                     htM.Add(key, 0);
                                 }
-                                htM[key] = Convert.ToDouble(h[key]) + Convert.ToDouble(h["领取数量"]);
+                                htM[key] = Convert.ToDouble(htM[key]) + Convert.ToDouble(h["领取数量"]);
                                 break;
                             case "内包":
                                 if (!htN.ContainsKey(key))
                                 {
                                     htN.Add(key, 0);
                                 }
-                                htN[key] = Convert.ToDouble(h[key]) + Convert.ToDouble(h["领取数量"]);
+                                htN[key] = Convert.ToDouble(htN[key]) + Convert.ToDouble(h["领取数量"]);
                                 break;
                             case "外包":
                                 if (!htW.ContainsKey(key))
                                 {
                                     htW.Add(key, 0);
                                 }
-                                htW[key] = Convert.ToDouble(h[key]) + Convert.ToDouble(h["领取数量"]);
+                                htW[key] = Convert.ToDouble(htW[key]) + Convert.ToDouble(h["领取数量"]);
                                 break;
                         }
                     }
@@ -537,6 +537,7 @@ namespace mySystem.Process.Bag.LDPE
             foreach (DataRow dr in dt.Rows)
             {
                 Hashtable ht = new Hashtable();
+                if (dr["物料代码"].ToString() == "") continue;
                 ht.Add("类型", dr["类型"]);
                 ht.Add("物料代码", dr["物料代码"]);
                 ht.Add("物料批号", dr["物料批号"]);

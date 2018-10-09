@@ -576,6 +576,12 @@ namespace mySystem
                             清空PE表数据();
                         }
                         break;
+                    case "吹膜":
+                        if (DialogResult.OK == MessageBox.Show("确认要清空吹膜表数据吗？", "提示", MessageBoxButtons.OKCancel))
+                        {
+                            清空吹膜表数据();
+                        }
+                        break;
                     default:
                         MessageBox.Show("请先在配置文件中说明需要清空的工序");
                         break;

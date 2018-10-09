@@ -83,7 +83,7 @@ namespace mySystem.Setting
             if (isFirstBindDGV存货档案)
             {
                 readDGVWidthFromSettingAndSet(dgv存货档案);
-                isFirstBindDGV存货档案 = false;
+                isFirstBindDGV存货档案 = true;
             }
         }
 
@@ -418,12 +418,12 @@ namespace mySystem.Setting
             //setDataGridViewRowNums(this.dgv存货档案);
             if (dgv存货档案.Rows.Count > 0)
             {
-                dgv存货档案.FirstDisplayedScrollingRowIndex = 0;
+                dgv存货档案.FirstDisplayedScrollingRowIndex = dgv存货档案.Rows.Count - 1;
                 for (int i = 0; i < dgv存货档案.SelectedCells.Count; ++i)
                 {
                     dgv存货档案.SelectedCells[i].Selected = false;
                 }
-                dgv存货档案.Rows[0].Selected = true;
+                dgv存货档案.Rows[dgv存货档案.Rows.Count-1].Selected = true;
             }
             refresh序号();
         }
@@ -848,7 +848,7 @@ namespace mySystem.Setting
             //dgv存货档案.DataSource = bs存货档案.DataSource;
             //Utility.setDataGridViewAutoSizeMode(dgv存货档案);
             dgv存货档案.Columns.Clear();
-            string sql = "select * from 设置存货档案 where  存货代码 like '%{0}%' and 存货名称 like '%{1}%'";
+            string sql = "select * from 设置存货档案 where  存货代码 like '%{0}%' and 存货名称 like '%{1}%' order by ID DESC";
             dt存货档案 = new DataTable("设置存货档案"); //""中的是表名
             da存货档案 = new SqlDataAdapter(string.Format(sql, tb代码q.Text, tb名称q.Text), mySystem.Parameter.conn);
             cb存货档案 = new SqlCommandBuilder(da存货档案);
@@ -871,14 +871,14 @@ namespace mySystem.Setting
             //Utility.setDataGridViewAutoSizeMode(dgv存货档案);
             setDGV存货档案Column();
             dgv存货档案.RowHeadersVisible = true;
-            foreach (DataGridViewColumn dgvc in dgv存货档案.Columns)
-            {
-                dgvc.SortMode = DataGridViewColumnSortMode.Programmatic;
-                if (dgvc.Name == "存货代码")
-                {
-                    dgv存货档案.Sort(dgvc, ListSortDirection.Ascending); 
-                }
-            }
+            //foreach (DataGridViewColumn dgvc in dgv存货档案.Columns)
+            //{
+            //    dgvc.SortMode = DataGridViewColumnSortMode.Programmatic;
+            //    if (dgvc.Name == "存货代码")
+            //    {
+            //        dgv存货档案.Sort(dgvc, ListSortDirection.Ascending); 
+            //    }
+            //}
             
            
             dgv存货档案.Columns["存货代码"].Frozen = true;
@@ -910,9 +910,9 @@ namespace mySystem.Setting
             dgv存货档案.Columns["BOM列表"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 
             //dgv存货档案.Columns["存货代码"].Width = 100;
-            dgv存货档案.Columns["存货名称"].Width = 300;
-            dgv存货档案.Columns["规格型号"].Width = 300;
-            dgv存货档案.Columns["BOM列表"].Width = 100;
+            //dgv存货档案.Columns["存货名称"].Width = 300;
+            //dgv存货档案.Columns["规格型号"].Width = 300;
+            //dgv存货档案.Columns["BOM列表"].Width = 100;
 
             dgv存货档案.Columns["存货代码"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
         }
@@ -1151,6 +1151,11 @@ namespace mySystem.Setting
                         break;
                 }
             }
+        }
+
+        private void dgv存货档案_ColumnWidthChanged(object sender, DataGridViewColumnEventArgs e)
+        {
+            writeDGVWidthToSetting(dgv存货档案);
         }
        
 

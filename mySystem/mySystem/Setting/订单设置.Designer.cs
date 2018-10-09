@@ -281,6 +281,7 @@
             this.dgv存货档案.RowTemplate.Height = 23;
             this.dgv存货档案.Size = new System.Drawing.Size(940, 324);
             this.dgv存货档案.TabIndex = 2;
+            this.dgv存货档案.ColumnWidthChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dgv存货档案_ColumnWidthChanged);
             this.dgv存货档案.RowStateChanged += new System.Windows.Forms.DataGridViewRowStateChangedEventHandler(this.dgv存货档案_RowStateChanged);
             // 
             // tb代码q

@@ -251,8 +251,8 @@ namespace mySystem.Process.Bag.LDPE
             //String sql = "select * from 清场记录 where 生产指令ID={0} and 生产日期=#{1}# and 生产班次='{2}'";
             //DateTime date = DateTime.Parse(DateTime.Now.ToString("yyyy/MM/dd"));
             //daOuter = new SqlDataAdapter(String.Format(sql, i生产指令ID, date, mySystem.Parameter.userflight), conn);
-            String sql = "select * from 清场记录 where 生产指令ID={0}";
-            daOuter = new SqlDataAdapter(String.Format(sql, i生产指令ID), conn);
+            String sql = "select * from 清场记录 where 生产指令ID={0} and 生产日期='{1}'";
+            daOuter = new SqlDataAdapter(String.Format(sql, i生产指令ID, DateTime.Now.Date), conn);
             cbOuter = new SqlCommandBuilder(daOuter);
             dtOuter = new DataTable("清场记录");
             bsOuter = new BindingSource();
@@ -737,6 +737,9 @@ namespace mySystem.Process.Bag.LDPE
 
         public override void CheckResult()
         {
+
+            //btn保存.PerformClick();
+
             SqlDataAdapter da;
             SqlCommandBuilder cb;
             DataTable dt;
@@ -746,7 +749,13 @@ namespace mySystem.Process.Bag.LDPE
 
             dt = new DataTable("temp");
             da.Fill(dt);
-            dt.Rows[0].Delete();
+            try
+            {
+                dt.Rows[0].Delete();
+            }
+            catch
+            {
+            }
             da.Update(dt);
 
             dtOuter.Rows[0]["审核员"] = mySystem.Parameter.userName;
@@ -882,16 +891,31 @@ namespace mySystem.Process.Bag.LDPE
             else
                 my.Cells[3, 7].Value = String.Format("生产日期：{0}\n生产班次： 白班□   夜班☑", Convert.ToDateTime(dtOuter.Rows[0]["生产日期"]).ToString("yyyy年MM月dd日"));
             //插入新行
-            if (dtInner.Rows.Count > 14)
+            if (dtInner.Rows.Count > 1)
             {
-                i插入行数 = dtInner.Rows.Count - 14;
+                i插入行数 = dtInner.Rows.Count - 1;
                 for (int i = 0; i < i插入行数; i++)
                 {
-                    //在第6行插入
-                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[18 + i, Type.Missing];
+                    //在第5行插入
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[6, Type.Missing];
                     range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
-                    Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+                    Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromRightOrBelow);
                 }
+                for (int i = 0; i < i插入行数; i++)
+                {
+                    //在第5行插入
+                    Microsoft.Office.Interop.Excel.Range range1 = my.Cells[5 , 1];
+                    Microsoft.Office.Interop.Excel.Range range2 = my.Cells[5 , 6];
+                    Microsoft.Office.Interop.Excel.Range templateRange = my.get_Range(range1, range2);
+                    //Microsoft.Office.Interop.Excel.Range templateRange = my.get_Range(my.Cells[5 + i插入行数, 1], my.Cells[5 + i插入行数, 6]);
+                    Microsoft.Office.Interop.Excel.Range range3 = my.Cells[6 + i, 1];
+                    Microsoft.Office.Interop.Excel.Range range4 = my.Cells[6 + i, 6];
+                    Microsoft.Office.Interop.Excel.Range targetRange = my.get_Range(range3, range4);
+                    templateRange.Copy(targetRange);
+
+
+                }
+
                 ind = i插入行数;
             }
 
@@ -919,7 +943,7 @@ namespace mySystem.Process.Bag.LDPE
                 my.Cells[5, 7].Value = "合格□\n不合格□";
             my.Cells[5, 8].Value = dtOuter.Rows[0]["操作员"].ToString(); 
             my.Cells[5, 9].Value = dtOuter.Rows[0]["审核员"].ToString();
-            my.Cells[19 + ind, 1].Value = "备注：" + dtOuter.Rows[0]["备注"].ToString();
+            my.Cells[6 + ind, 1].Value = "备注：" + dtOuter.Rows[0]["备注"].ToString();
 
         }
 

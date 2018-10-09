@@ -41,7 +41,6 @@ namespace mySystem.Process.Bag.LDPE
             InitializeComponent();
 
             conn = Parameter.conn;
-            mySystem.Parameter.conn = mySystem.Parameter.conn;
             isSqlOk = Parameter.isSqlOk;
             InstruID = Parameter.ldpebagInstruID;
             Instruction = Parameter.ldpebagInstruction;
@@ -53,7 +52,7 @@ namespace mySystem.Process.Bag.LDPE
             addOtherEvnetHandler();  // 其他事件，datagridview：DataError、CellEndEdit、DataBindingComplete 
             addDataEventHandler();  // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged
 
-            DataShow(InstruID);
+            DataShow(InstruID, DateTime.Now.Date);
         }
 
 
@@ -62,7 +61,6 @@ namespace mySystem.Process.Bag.LDPE
             InitializeComponent();
 
             conn = Parameter.conn;
-            mySystem.Parameter.conn = mySystem.Parameter.conn;
             isSqlOk = Parameter.isSqlOk;
 
             fill_printer(); //添加打印机
@@ -274,10 +272,10 @@ namespace mySystem.Process.Bag.LDPE
         //******************************显示数据******************************//
 
         //显示根据信息查找
-        private void DataShow(Int32 InstruID)
+        private void DataShow(Int32 InstruID, DateTime datetime)
         {
             //******************************外表 根据条件绑定******************************//  
-            readOuterData(InstruID);
+            readOuterData(InstruID, datetime);
             outerBind();
             //MessageBox.Show("记录数目：" + dt记录.Rows.Count.ToString());
 
@@ -293,7 +291,7 @@ namespace mySystem.Process.Bag.LDPE
                 bs记录.EndEdit();
                 da记录.Update((DataTable)bs记录.DataSource);
                 //外表重新绑定
-                readOuterData(InstruID);
+                readOuterData(InstruID, datetime);
                 outerBind();
 
                 //********* 内表新建、保存 *********//
@@ -327,18 +325,19 @@ namespace mySystem.Process.Bag.LDPE
             if (reader1.Read())
             {
                 InstruID = Convert.ToInt32(reader1["生产指令ID"].ToString());
-                DataShow(Convert.ToInt32(reader1["生产指令ID"].ToString()));
+                DateTime datetime = Convert.ToDateTime(reader1["操作日期"]);
+                DataShow(Convert.ToInt32(reader1["生产指令ID"].ToString()), datetime.Date);
             }
         }
 
         //****************************** 嵌套 ******************************//
 
         //外表读数据，填datatable
-        private void readOuterData(Int32 InstruID)
+        private void readOuterData(Int32 InstruID, DateTime datetime)
         {
             bs记录 = new BindingSource();
             dt记录 = new DataTable(table);
-            da记录 = new SqlDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID.ToString(), mySystem.Parameter.conn);
+            da记录 = new SqlDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID.ToString() + " and 操作日期='"+datetime.Date+"'", mySystem.Parameter.conn);
             cb记录 = new SqlCommandBuilder(da记录);
             da记录.Fill(dt记录);
         }
@@ -526,7 +525,8 @@ namespace mySystem.Process.Bag.LDPE
                 //外表保存
                 bs记录.EndEdit();
                 da记录.Update((DataTable)bs记录.DataSource);
-                readOuterData(InstruID);
+                readOuterData(InstruID,
+                    Convert.ToDateTime(dt记录.Rows[0]["操作日期"].ToString()));
                 outerBind();
 
                 setDataGridViewBackColor();
@@ -621,6 +621,8 @@ namespace mySystem.Process.Bag.LDPE
             dt记录.Rows[0]["审核员"] = mySystem.Parameter.userName;
             dt记录.Rows[0]["审核意见"] = checkform.opinion;
             dt记录.Rows[0]["审核是否通过"] = checkform.ischeckOk;
+            dt记录.Rows[0]["审核日期"] = DateTime.Now;
+            
 
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
@@ -682,10 +684,12 @@ namespace mySystem.Process.Bag.LDPE
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
-            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\LDPE\2 SOP-MFG-304-R02A 1#制袋机开机前确认表.xlsx");
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() +
+                @"\..\..\xls\LDPE\2 SOP-MFG-304-R02A 1#制袋机开机前确认表.xlsx");
             // 选择一个Sheet，注意Sheet的序号是从1开始的
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
             // 修改Sheet中某行某列的值
+            //oXL.Visible = true;
             my = printValue(my, wb);
 
             if (isShow)
@@ -742,10 +746,26 @@ namespace mySystem.Process.Bag.LDPE
         private Microsoft.Office.Interop.Excel._Worksheet printValue(Microsoft.Office.Interop.Excel._Worksheet mysheet, Microsoft.Office.Interop.Excel._Workbook mybook)
         {
             int ind = 0;
+            // 模版中的行数
+            int origRow = 1;
             //内表信息
             int rownum = dt记录详情.Rows.Count;
+            //先插入空行
+            if (rownum > origRow)
+            {
+                for (int i = origRow; i < rownum; i++)
+                {
+                    // 4 是开始的行号
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[4, Type.Missing];
+
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                        Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromRightOrBelow);
+                    
+                }
+                ind = rownum - origRow;
+            }
             //无需插入的部分
-            for (int i = 0; i < (rownum > 9 ? 9 : rownum); i++)
+            for (int i = 0; i < rownum; i++)
             {
                 mysheet.Cells[4 + i, 1].Value = dt记录详情.Rows[i]["序号"].ToString();
                 mysheet.Cells[4 + i, 2].Value = dt记录详情.Rows[i]["确认项目"].ToString();
@@ -759,38 +779,39 @@ namespace mySystem.Process.Bag.LDPE
                     mysheet.Cells[4 + i, 4].Value = "符合□  不符合□  不适用☑";
             }
             //需要插入的部分
-            if (rownum > 9)
-            {
-                for (int i = 9; i < rownum; i++)
-                {
-                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[4 + i, Type.Missing];
+            //if (rownum > origRow)
+            //{
+            //    for (int i = origRow; i < rownum; i++)
+            //    {
+            //        // 4 是开始的行号
+            //        Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[4 + i, Type.Missing];
 
-                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
-                        Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+            //        range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+            //            Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
 
-                    mysheet.Cells[4 + i, 1].Value = dt记录详情.Rows[i]["序号"].ToString();
-                    mysheet.Cells[4 + i, 2].Value = dt记录详情.Rows[i]["确认项目"].ToString();
-                    mysheet.Cells[4 + i, 3].Value = dt记录详情.Rows[i]["确认内容"].ToString();
-                    //mysheet.Cells[4 + i, 6].Value = dt记录详情.Rows[i]["确认结果"].ToString() == "Yes" ? "√" : "×";
-                    if (dt记录详情.Rows[i]["确认结果"].ToString() == "符合")
-                        mysheet.Cells[4 + i, 4].Value = "符合☑  不符合□  不适用□";
-                    else if (dt记录详情.Rows[i]["确认结果"].ToString() == "不符合")
-                        mysheet.Cells[4 + i, 4].Value = "符合□  不符合☑  不适用□";
-                    else
-                        mysheet.Cells[4 + i, 4].Value = "符合□  不符合□  不适用☑";
-                }
-                ind = rownum - 9;
-            }
+            //        mysheet.Cells[4 + i, 1].Value = dt记录详情.Rows[i]["序号"].ToString();
+            //        mysheet.Cells[4 + i, 2].Value = dt记录详情.Rows[i]["确认项目"].ToString();
+            //        mysheet.Cells[4 + i, 3].Value = dt记录详情.Rows[i]["确认内容"].ToString();
+            //        //mysheet.Cells[4 + i, 6].Value = dt记录详情.Rows[i]["确认结果"].ToString() == "Yes" ? "√" : "×";
+            //        if (dt记录详情.Rows[i]["确认结果"].ToString() == "符合")
+            //            mysheet.Cells[4 + i, 4].Value = "符合☑  不符合□  不适用□";
+            //        else if (dt记录详情.Rows[i]["确认结果"].ToString() == "不符合")
+            //            mysheet.Cells[4 + i, 4].Value = "符合□  不符合☑  不适用□";
+            //        else
+            //            mysheet.Cells[4 + i, 4].Value = "符合□  不符合□  不适用☑";
+            //    }
+            //    ind = rownum - origRow;
+            //}
 
             //外表信息
-            mysheet.Cells[14 + ind, 1].Value = " 备注： " + dt记录.Rows[0]["备注"].ToString();
+            mysheet.Cells[5 + ind, 1].Value = " 备注： " + dt记录.Rows[0]["备注"].ToString();
             String stringtemp = "";
             stringtemp = "确认人/日期：" + dt记录.Rows[0]["操作员"].ToString();
             stringtemp = stringtemp + "       " + Convert.ToDateTime(dt记录.Rows[0]["操作日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dt记录.Rows[0]["操作日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dt记录.Rows[0]["操作日期"].ToString()).Day.ToString() + "日";
-            mysheet.Cells[15 + ind, 1].Value = stringtemp;
+            mysheet.Cells[6 + ind, 1].Value = stringtemp;
             stringtemp = "复核人/日期：" + dt记录.Rows[0]["审核员"].ToString();
             stringtemp = stringtemp + "       " + Convert.ToDateTime(dt记录.Rows[0]["审核日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dt记录.Rows[0]["审核日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dt记录.Rows[0]["审核日期"].ToString()).Day.ToString() + "日";
-            mysheet.Cells[15 + ind, 3].Value = stringtemp;
+            mysheet.Cells[6 + ind, 3].Value = stringtemp;
             //加页脚
             int sheetnum;
             SqlDataAdapter da = new SqlDataAdapter("select ID from " + table + " where 生产指令ID=" + InstruID.ToString(), mySystem.Parameter.conn);

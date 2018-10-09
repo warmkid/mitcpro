@@ -176,9 +176,12 @@ namespace 订单和库存管理
 
         DataTable get销售订单(DateTime start, DateTime end, string code, string status)
         {
+            //MessageBox.Show(String.Format("{0}-{1}",start,end));
+            //MessageBox.Show(String.Format("{0}", end));
             string sql = "select * from 销售订单 where 订单日期 between '{0}' and '{1}' and 状态 like '%{2}%' and 订单号 like '%{3}%'";
-            
-            SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, start, end, status, code), mySystem.Parameter.conn);
+
+            SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, start.ToString("yyyy-MM-dd HH:mm:ss"), end.ToString("yyyy-MM-dd HH:mm:ss"), status, code), mySystem.Parameter.conn);
+            //MessageBox.Show(String.Format("{0}", da.SelectCommand.CommandText));
             DataTable dt = new DataTable("销售订单");
             da.Fill(dt);
             return dt;
@@ -233,7 +236,7 @@ namespace 订单和库存管理
             //string sql = "select * from 采购需求单 where 申请日期 between #{0}# and #{1}# and 状态 like '%{2}%' and 用途 like '%{3}%'";
             string sql = "select * from 采购需求单 where 申请日期 between '{0}' and '{1}'";
             //SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, start, end, status, yongtu), mySystem.Parameter.conn);
-            SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, start, end), mySystem.Parameter.conn);
+            SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, start.ToString("yyyy-MM-dd HH:mm:ss"), end.ToString("yyyy-MM-dd HH:mm:ss")), mySystem.Parameter.conn);
             DataTable dt = new DataTable("采购需求单");
             da.Fill(dt);
             string select = "状态 like '%{0}%' and 用途 like '%{1}%'";
@@ -297,7 +300,7 @@ namespace 订单和库存管理
         private DataTable get采购批准单(DateTime start, DateTime end, string status)
         {
             string sql = "select * from 采购批准单 where 申请日期 between '{0}' and '{1}' and 状态 like '%{2}%'";
-            SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, start, end, status), mySystem.Parameter.conn);
+            SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, start.ToString("yyyy-MM-dd HH:mm:ss"), end.ToString("yyyy-MM-dd HH:mm:ss"), status), mySystem.Parameter.conn);
             DataTable dt = new DataTable("采购批准单");
             da.Fill(dt);
             return dt;
@@ -411,7 +414,7 @@ namespace 订单和库存管理
         private DataTable get采购订单(DateTime start, DateTime end, string status, string 采购合同号)
         {
             string sql = "select * from 采购订单 where 申请日期 between '{0}' and '{1}' and 状态 like '%{2}%' and 采购合同号 like '%{3}%'";
-            SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, start, end, status, 采购合同号), mySystem.Parameter.conn);
+            SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, start.ToString("yyyy-MM-dd HH:mm:ss"), end.ToString("yyyy-MM-dd HH:mm:ss"), status, 采购合同号), mySystem.Parameter.conn);
             DataTable dt = new DataTable("采购批准单");
             da.Fill(dt);
             return dt;
@@ -567,7 +570,7 @@ namespace 订单和库存管理
         private DataTable get采购出库单(DateTime start, DateTime end, string 销售订单号, string statue)
         {
             string sql = "select * from 出库单 where 出库日期 between '{0}' and '{1}' and 销售订单号 like '%{2}%' and 状态 like '%{3}%'";
-            SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, start, end, 销售订单号, statue), mySystem.Parameter.conn);
+            SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, start.ToString("yyyy-MM-dd HH:mm:ss"), end.ToString("yyyy-MM-dd HH:mm:ss"), 销售订单号, statue), mySystem.Parameter.conn);
             DataTable dt = new DataTable("出库单");
             da.Fill(dt);
             return dt;

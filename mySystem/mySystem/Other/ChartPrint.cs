@@ -23,6 +23,8 @@ namespace mySystem.Other
             InitializeComponent();
             comboboxProcess.SelectedIndex = 0;
             comboBoxChart.SelectedIndex = 0;
+            DateTime start = DateTime.Now;
+            dtpStart.Value = start.AddDays(-start.Day+1);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -71,8 +73,9 @@ cast(生产领料使用记录详细信息.领料日期时间 as date),
             DataTable dt = new DataTable();
             
             //comboBoxChart // 0 内包，1 外包
+            
             SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, dtpStart.Value, dtpEnd.Value, 
-                (comboBoxChart.SelectedIndex==0?"内包":"外包")), conn);
+                comboBoxChart.SelectedItem.ToString()), conn);
             da.Fill(dt);
 
             dt.Columns.Add("主计量单位", Type.GetType("System.String"));

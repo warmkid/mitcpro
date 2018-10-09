@@ -662,7 +662,7 @@ namespace mySystem.Process.Bag.LDPE
                 string[] t = dt记录详情.Rows[dt记录详情.Rows.Count - 1]["内包序号"].ToString().Split('-');
                 if (t.Length>1 &&  Int32.TryParse(t[1], out numtemp) == true)
                 {
-                    dr["内包序号"] = (numtemp + 1).ToString("D4");
+                    dr["内包序号"] = (numtemp + 1).ToString();
                 }
                 DateTime end, start;
                 start = Convert.ToDateTime(dr["生产开始时间"]);
@@ -1088,7 +1088,8 @@ namespace mySystem.Process.Bag.LDPE
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
-            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\LDPEBag\5 SOP-MFG-109-R01A 产品内包装记录.xlsx");
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() +
+                @"\..\..\xls\LDPEBag\5 SOP-MFG-109-R01A 产品内包装记录.xlsx");
             // 选择一个Sheet，注意Sheet的序号是从1开始的
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[wb.Worksheets.Count];
             // 修改Sheet中某行某列的值
@@ -1151,16 +1152,16 @@ namespace mySystem.Process.Bag.LDPE
         private void fill_excel(Microsoft.Office.Interop.Excel._Worksheet mysheet, Microsoft.Office.Interop.Excel._Workbook mybook)
         {
             int ind = 0;
-            if (dt记录详情.Rows.Count > 13)
+            if (dt记录详情.Rows.Count > 1)
             {
                 //在第8行插入
-                for (int i = 0; i < dt记录详情.Rows.Count - 13; i++)
+                for (int i = 0; i < dt记录详情.Rows.Count - 1; i++)
                 {
-                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[12, Type.Missing];
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[7, Type.Missing];
                     range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
-                    Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+                    Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromRightOrBelow);
                 }
-                ind = dt记录详情.Rows.Count - 13;
+                ind = dt记录详情.Rows.Count - 1;
             }
 
             //外表信息
@@ -1174,24 +1175,24 @@ namespace mySystem.Process.Bag.LDPE
             mysheet.Cells[4, 14].Value = Convert.ToDateTime(dt记录.Rows[0]["生产日期"]).ToString("yyyy年MM月dd日");
             mysheet.Cells[4, 16].Value = dt记录.Rows[0]["班次"].ToString();
 
-            mysheet.Cells[20 + ind, 1].Value = "工时：" + dt记录.Rows[0]["工时"].ToString();
-            mysheet.Cells[20 + ind, 4].Value = dt记录.Rows[0]["产品数量包合计A"].ToString();
-            mysheet.Cells[20 + ind, 5].Value = dt记录.Rows[0]["产品数量只合计B"].ToString();
-            mysheet.Cells[20 + ind, 6].Value = dt记录.Rows[0]["热封线不合格合计"].ToString();
-            mysheet.Cells[20 + ind, 7].Value = dt记录.Rows[0]["黑点晶点不合格合计"].ToString();
-            mysheet.Cells[20 + ind, 8].Value = dt记录.Rows[0]["指示剂不良合计"].ToString();
-            mysheet.Cells[20 + ind, 9].Value = dt记录.Rows[0]["其他合计"].ToString();
-            mysheet.Cells[20 + ind, 10].Value = dt记录.Rows[0]["不良合计"].ToString();
-            mysheet.Cells[20 + ind, 10].Value = dt记录.Rows[0]["不良合计"].ToString();
-            mysheet.Cells[20 + ind, 12].Value = dt记录.Rows[0]["废品重量"].ToString();
+            mysheet.Cells[8 + ind, 1].Value = "工时：" + dt记录.Rows[0]["工时"].ToString();
+            mysheet.Cells[8 + ind, 4].Value = dt记录.Rows[0]["产品数量包合计A"].ToString();
+            mysheet.Cells[8 + ind, 5].Value = dt记录.Rows[0]["产品数量只合计B"].ToString();
+            mysheet.Cells[8 + ind, 6].Value = dt记录.Rows[0]["热封线不合格合计"].ToString();
+            mysheet.Cells[8 + ind, 7].Value = dt记录.Rows[0]["黑点晶点不合格合计"].ToString();
+            mysheet.Cells[8 + ind, 8].Value = dt记录.Rows[0]["指示剂不良合计"].ToString();
+            mysheet.Cells[8 + ind, 9].Value = dt记录.Rows[0]["其他合计"].ToString();
+            mysheet.Cells[8 + ind, 10].Value = dt记录.Rows[0]["不良合计"].ToString();
+            mysheet.Cells[8 + ind, 10].Value = dt记录.Rows[0]["不良合计"].ToString();
+            mysheet.Cells[8 + ind, 12].Value = dt记录.Rows[0]["废品重量"].ToString();
             StringBuilder sb = new StringBuilder();
             sb.Append("其他操作人员：\n").Append("制袋：").Append(
                 dt记录.Rows[0]["制袋人"].ToString() == "" ? "     " : dt记录.Rows[0]["制袋人"].ToString()).Append(
                 "  分检:").Append(dt记录.Rows[0]["分检人"].ToString() == "" ? "     " : dt记录.Rows[0]["分检人"].ToString()).Append(
                 "   包装：").Append(dt记录.Rows[0]["包装人"].ToString() == "" ? "     " : dt记录.Rows[0]["包装人"].ToString());
             String t = sb.ToString();
-            mysheet.Cells[21 + ind, 6].Value = t;
-            mysheet.Cells[21 + ind, 13].Value = "备注:\n"+dt记录.Rows[0]["备注"];
+            mysheet.Cells[9 + ind, 6].Value = t;
+            mysheet.Cells[9 + ind, 13].Value = "备注:\n"+dt记录.Rows[0]["备注"];
             //mysheet.Cells[20 + ind, 11].Value = "审核员：" + dt记录.Rows[0]["审核员"].ToString();
 
             //内表信息
@@ -1466,8 +1467,16 @@ namespace mySystem.Process.Bag.LDPE
                     dataGridView1.Columns[e.ColumnIndex].Name == "生产结束时间")
                 {
                     DateTime end, start;
-                    start = Convert.ToDateTime(dt记录详情.Rows[e.RowIndex]["生产开始时间"]);
-                    end = Convert.ToDateTime(dt记录详情.Rows[e.RowIndex]["生产结束时间"]);
+                    try
+                    {
+                        start = Convert.ToDateTime(dt记录详情.Rows[e.RowIndex]["生产开始时间"]);
+                        end = Convert.ToDateTime(dt记录详情.Rows[e.RowIndex]["生产结束时间"]);
+                    }
+                    catch
+                    {
+                        dataGridView1.CancelEdit();
+                        return;
+                    }
                     dt记录详情.Rows[e.RowIndex]["生产工时"] = Math.Round((end - start).TotalMinutes / 60.0, 1);
                     合计工时和工时效率();
                     //getTotalColFloat("生产工时", "tb工时");
@@ -1564,8 +1573,16 @@ namespace mySystem.Process.Bag.LDPE
                     dataGridView1.Columns[e.ColumnIndex].Name == "生产结束时间")
                 {
                     DateTime end, start;
-                    start = Convert.ToDateTime(dt记录详情.Rows[e.RowIndex]["生产开始时间"]);
-                    end = Convert.ToDateTime(dt记录详情.Rows[e.RowIndex]["生产结束时间"]);
+                    try
+                    {
+                        start = Convert.ToDateTime(dt记录详情.Rows[e.RowIndex]["生产开始时间"]);
+                        end = Convert.ToDateTime(dt记录详情.Rows[e.RowIndex]["生产结束时间"]);
+                    }
+                    catch
+                    {
+                        dataGridView1.CancelEdit();
+                        return;
+                    }
                     dt记录详情.Rows[e.RowIndex]["生产工时"] = Math.Round((end - start).TotalMinutes / 60.0, 1);
                     getTotalColFloat("生产工时", "tb工时");
                 }

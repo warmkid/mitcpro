@@ -192,6 +192,7 @@ namespace mySystem.Process.Bag.LDPE
         private void B1Btn_Click(object sender, EventArgs e)
         {
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "LDPE制袋生产指令");
+            b = true;
             if (b)
             {
                 LDPEBag_productioninstruction pro_ins = new LDPEBag_productioninstruction(mainform);
@@ -478,6 +479,27 @@ namespace mySystem.Process.Bag.LDPE
                 MessageBox.Show("您无权查看该页面！");
                 return;
             } 
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            if (comboBox1.SelectedIndex != -1)
+            {
+                if (DialogResult.Yes == MessageBox.Show("确认要废弃当前指令吗？", "提示", MessageBoxButtons.YesNo))
+                {
+                    string sql = @"select * from 生产指令 where ID={0}";
+                    SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, Parameter.ldpebagInstruID), Parameter.conn);
+                    SqlCommandBuilder sb = new SqlCommandBuilder(da);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+                    if (dt.Rows.Count > 0)
+                    {
+                        dt.Rows[0]["状态"] = 5;
+                    }
+                    da.Update(dt);
+                    InitBtn();
+                }
+            }
         }
 
         

@@ -53,6 +53,7 @@ namespace BatchProductRecord
         private List<string> list_审核员;
         private List<string> list_负责员;
         private List<string> list_生产指令;
+        List<string> list_产品名称, list_Name;
         Hashtable ht代码面数;
 
         //用于带id参数构造函数，存储已存在记录的相关信息
@@ -85,8 +86,8 @@ namespace BatchProductRecord
             // 如果即不是操作员也不是审核员，则是管理员
             if (Parameter.UserState.NoBody == _userState)
             {
-                _userState = Parameter.UserState.管理员;
-                label角色.Text = mySystem.Parameter.userName+"(管理员)";
+                _userState = Parameter.UserState.操作员;
+                label角色.Text = mySystem.Parameter.userName + "(操作员)";
             }
             // 让用户选择操作员还是审核员，选“是”表示操作员
             if (Parameter.UserState.Both == _userState)
@@ -370,7 +371,8 @@ namespace BatchProductRecord
                     {
                         mian = 2;
                     }
-                    ht代码面数.Add(code, mian);
+                    if (!ht代码面数.ContainsKey(code))
+                        ht代码面数.Add(code, mian);
                 }
             }
             
@@ -380,6 +382,8 @@ namespace BatchProductRecord
         //读取产品列表填入产品名称下拉列表
         private void fill_prodname()
         {
+            list_Name = new List<string>();
+            list_产品名称 = new List<string>();
             if (!mySystem.Parameter.isSqlOk)
             {
                 DataTable dt = new System.Data.DataTable();
@@ -396,13 +400,15 @@ namespace BatchProductRecord
             else
             {
                 DataTable dt = new System.Data.DataTable();
-                SqlDataAdapter da = new SqlDataAdapter("select 产品名称 from 设置吹膜产品", mySystem.Parameter.conn);
+                SqlDataAdapter da = new SqlDataAdapter("select 产品名称,产品英文名称 from 设置吹膜产品", mySystem.Parameter.conn);
                 SqlCommandBuilder cb = new SqlCommandBuilder(da);
                 da.Fill(dt);
                 da.Dispose();
                 cb.Dispose();
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
+                    list_产品名称.Add(dt.Rows[i][0].ToString());
+                    list_Name.Add(dt.Rows[i][1].ToString());
                     comboBox1.Items.Add(dt.Rows[i][0].ToString());
                 }
             }
@@ -698,6 +704,7 @@ namespace BatchProductRecord
         {
             //textBox1.DataBindings.Add("Text", bs_prodinstr.DataSource, "产品名称");
             comboBox1.DataBindings.Add("Text",bs_prodinstr.DataSource,"产品名称");
+            lbl产品英文名称.DataBindings.Add("Text", bs_prodinstr.DataSource, "产品英文名称");
             tb指令编号.DataBindings.Add("Text", bs_prodinstr.DataSource, "生产指令编号");
             cb工艺.DataBindings.Add("Text", bs_prodinstr.DataSource, "生产工艺");
             tb设备编号.DataBindings.Add("Text", bs_prodinstr.DataSource, "生产设备编号");
@@ -1563,6 +1570,7 @@ namespace BatchProductRecord
         {
             //解除之前的绑定
             comboBox1.DataBindings.Clear();
+            lbl产品英文名称.DataBindings.Clear();
             tb指令编号.DataBindings.Clear();
             cb工艺.DataBindings.Clear();
             tb设备编号.DataBindings.Clear();
@@ -2723,6 +2731,11 @@ namespace BatchProductRecord
             dataGridView1.DataBindingComplete += dataGridView1_DataBindingComplete;
             dataGridView1.EditingControlShowing += new DataGridViewEditingControlShowingEventHandler(dataGridView1_EditingControlShowing);
             估计天数();
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            lbl产品英文名称.Text = list_Name[comboBox1.SelectedIndex];
         }
 
 

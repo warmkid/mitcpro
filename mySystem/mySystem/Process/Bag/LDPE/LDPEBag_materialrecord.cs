@@ -23,6 +23,7 @@ namespace mySystem.Process.Bag.LDPE
         //private OleDbConnection mySystem.Parameter.conn = null;
         private bool isSqlOk;
         private CheckForm checkform = null;
+        bool _close = false;
 
         private DataTable dt记录, dt记录详情, dt代码批号, dt物料;  //生产指令：代码批号唯一确定
         private SqlDataAdapter da记录, da记录详情;
@@ -121,7 +122,15 @@ namespace mySystem.Process.Bag.LDPE
             // 让用户选择操作员还是审核员，选“是”表示操作员
             if (Parameter.UserState.Both == _userState)
             {
-                if (DialogResult.Yes == MessageBox.Show("您是否要以操作员身份进入", "提示", MessageBoxButtons.YesNo)) _userState = Parameter.UserState.操作员;
+                DialogResult res = MessageBox.Show("您是否要以操作员身份进入",
+                    "提示", MessageBoxButtons.YesNo);
+                if (DialogResult.Yes == res) _userState = Parameter.UserState.操作员;
+                //else if (DialogResult.Cancel == res)
+                //{
+                //    _close = true;
+                //    //this.Close();
+                //    return;
+                //}
                 else _userState = Parameter.UserState.审核员;
 
             }
@@ -834,6 +843,7 @@ namespace mySystem.Process.Bag.LDPE
         //保存按钮
         private void btn确认_Click(object sender, EventArgs e)
         {
+            if (dt记录 == null) return;
             bool isSaved = Save();
             //控件可见性
             if (_userState == Parameter.UserState.操作员 && isSaved == true)
@@ -886,6 +896,7 @@ namespace mySystem.Process.Bag.LDPE
         //提交审核按钮
         private void btn提交审核_Click(object sender, EventArgs e)
         {
+            if (dt记录 == null) return;
             if (DialogResult.Yes != MessageBox.Show("提交最后审核后本表单数据不可修改，是否确定？", "提示", MessageBoxButtons.YesNo))
             {
                 return;
@@ -937,6 +948,7 @@ namespace mySystem.Process.Bag.LDPE
         //查看日志按钮
         private void btn查看日志_Click(object sender, EventArgs e)
         {
+            if (dt记录 == null) return;
             mySystem.Other.LogForm logform = new mySystem.Other.LogForm();
             logform.setLog(dt记录.Rows[0]["日志"].ToString()).Show();
         }
@@ -968,6 +980,7 @@ namespace mySystem.Process.Bag.LDPE
             dt记录.Rows[0]["审核员"] = mySystem.Parameter.userName;
             dt记录.Rows[0]["审核意见"] = checkform.opinion;
             dt记录.Rows[0]["审核是否通过"] = checkform.ischeckOk;
+            dt记录.Rows[0]["审核日期"] = DateTime.Now;
 
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
@@ -1011,6 +1024,7 @@ namespace mySystem.Process.Bag.LDPE
         //打印按钮
         private void btn打印_Click(object sender, EventArgs e)
         {
+            if (dt记录== null) { return; }
             if (cb打印机.Text == "")
             {
                 MessageBox.Show("选择一台打印机");
@@ -1106,15 +1120,15 @@ namespace mySystem.Process.Bag.LDPE
             int rownum = dt记录详情.Rows.Count;
             int ind = 0;
             //插入新行
-            if (dt记录详情.Rows.Count > 10)
+            if (dt记录详情.Rows.Count > 1)
             {
-                ind = dt记录详情.Rows.Count - 10;
+                ind = dt记录详情.Rows.Count - 1;
                 for (int i = 0; i < ind; i++)
                 {
                     //在第6行插入
-                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[6 + i, Type.Missing];
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[5, Type.Missing];
                     range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
-                    Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+                    Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromRightOrBelow);
                 }
             }
             //无需插入的部分
@@ -1133,10 +1147,10 @@ namespace mySystem.Process.Bag.LDPE
                 //mysheet.Cells[5 + i, 10].Value = dt记录详情.Rows[i]["操作员备注"].ToString();
                 mysheet.Cells[5 + i, 11].Value = dt记录详情.Rows[i]["审核员"].ToString();
             }
-            mysheet.Cells[15 + ind, 6].Value = "备注：\n" + dt记录.Rows[0]["备注"].ToString();
-            mysheet.Cells[16 + ind, 1].Value = "合计：" + dt记录.Rows[0]["合计"].ToString() +
-                "  退库合计：" + dt记录.Rows[0]["退库合计"].ToString() +
-                "   实际使用：" + dt记录.Rows[0]["实际使用"].ToString();
+            mysheet.Cells[6 + ind, 6].Value = "备注：\n" + dt记录.Rows[0]["备注"].ToString();
+            mysheet.Cells[7 + ind, 1].Value = "合计：" + dt记录.Rows[0]["合计"].ToString() +
+                "  \t\t退库合计：" + dt记录.Rows[0]["退库合计"].ToString() +
+                "   \t\t实际使用：" + dt记录.Rows[0]["实际使用"].ToString();
             
             //加页脚
             int sheetnum;
@@ -1463,6 +1477,22 @@ namespace mySystem.Process.Bag.LDPE
                 btn打印.Enabled = false;
             }
             //cmb类型.Enabled = false;
+        }
+
+        private void LDPEBag_materialrecord_Load(object sender, EventArgs e)
+        {
+            if (_close)
+            {
+                Close();
+            }
+        }
+
+        private void LDPEBag_materialrecord_Enter(object sender, EventArgs e)
+        {
+            if (_close)
+            {
+                Close();
+            }
         }
         
     }

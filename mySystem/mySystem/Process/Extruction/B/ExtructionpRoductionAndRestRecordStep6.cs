@@ -397,7 +397,6 @@ namespace mySystem.Extruction.Process
             tb累计同规格膜卷重量T.ReadOnly = true;
             //查询条件始终不可编辑
             //cb产品名称.Enabled = false;
-            dtp生产日期.Enabled = false;
             btn查询新建.Enabled = false;
         }
 
@@ -641,6 +640,15 @@ namespace mySystem.Extruction.Process
 
             cb白班.DataBindings.Clear();
             cb白班.DataBindings.Add("Checked", bs记录.DataSource, "班次");
+
+            //label班次.DataBindings.Add(
+            try
+            {
+                label班次.Text = Convert.ToBoolean(dt记录.Rows[0]["班次"]) ? "白班" : "夜班";
+            }
+            catch
+            {
+            }
         }
 
         //添加外表默认信息
@@ -923,6 +931,7 @@ namespace mySystem.Extruction.Process
                 //求合计
                 getTotal();
                 setDataGridViewRowNums();
+                dataGridView1.Rows[dataGridView1.Rows.Count - 1].Selected = true;
             }
         }
 
@@ -1520,7 +1529,7 @@ namespace mySystem.Extruction.Process
 
             bs记录 = new BindingSource();
             //dt记录 = new DataTable(table);
-            dtp生产日期.Value = DateTime.Now;
+            //dtp生产日期.Value = DateTime.Now;
             if (!mySystem.Parameter.isSqlOk)
             {
                 da记录 = new OleDbDataAdapter("select * from " + table + " where 0=1", connOle);
@@ -1541,7 +1550,9 @@ namespace mySystem.Extruction.Process
                 SqlCommandBuilder cb = new SqlCommandBuilder(da);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
-                if (Convert.ToInt32(dt.Rows[0]["是否可以新建"]) == 0)
+                
+                if (Convert.ToInt32(dt.Rows[0]["是否可以新建"]) == 0
+                    && Parameter.proInstruction != "E-XP1-2018-003")// 特例:
                 {
                     MessageBox.Show("该班次已有记录，无法新建");
                 }

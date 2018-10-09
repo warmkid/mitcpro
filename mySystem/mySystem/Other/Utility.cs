@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using Newtonsoft.Json.Linq;
 using System.Data.SqlClient;
 using System.Management;
+using System.Text.RegularExpressions;
 
 namespace mySystem
 {
@@ -669,8 +670,35 @@ namespace mySystem
                 ret.Add(dr["存货代码"].ToString());
             }
             return ret;
+        }
 
-
+        public static string get外包规格(string[] strs)
+        {
+            string ret = "";
+            foreach (string size in strs)
+            {
+                try
+                {
+                    // 先找ZX开头的
+                    Match m = Regex.Match(size, @"^ZX.*\d+X\d+X\d+");
+                    if (m.Value != "")
+                    {
+                        ret = Regex.Match(m.Value, @"\d+X\d+X\d+").Value;
+                        return ret;
+                        break;
+                    }
+                    m = Regex.Match(size, @"\d+X\d+X\d+");
+                    if (m.Value != "")
+                    {
+                        ret = m.Value;
+                    }
+                }
+                catch
+                {
+                    continue;
+                }
+            }
+            return ret;
         }
     }
 }

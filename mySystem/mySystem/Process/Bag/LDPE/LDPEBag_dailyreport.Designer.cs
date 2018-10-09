@@ -28,6 +28,26 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.lbl外包产品数量 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.lbl纸箱用量 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.lbl内包产品数量 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.lbl内包装用量 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.lbl制袋收率 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.lbl膜材用量合计 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.lbl工时效率 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.lbl工时合计 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.lbl成品数量合计 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.lbl入库量合计 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.btn查询 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -38,28 +58,208 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.b打印 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.lbl入库量合计 = new System.Windows.Forms.Label();
-            this.lbl成品数量合计 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.lbl工时合计 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.lbl工时效率 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.lbl膜材用量合计 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.lbl制袋收率 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.lbl内包装用量 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.lbl内包产品数量 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.lbl纸箱用量 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
-            this.lbl外包产品数量 = new System.Windows.Forms.Label();
-            this.label22 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
+            // 
+            // lbl外包产品数量
+            // 
+            this.lbl外包产品数量.AutoSize = true;
+            this.lbl外包产品数量.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lbl外包产品数量.Location = new System.Drawing.Point(856, 436);
+            this.lbl外包产品数量.Name = "lbl外包产品数量";
+            this.lbl外包产品数量.Size = new System.Drawing.Size(104, 16);
+            this.lbl外包产品数量.TabIndex = 256;
+            this.lbl外包产品数量.Text = "外包产品数量";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label22.Location = new System.Drawing.Point(753, 436);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(120, 16);
+            this.label22.TabIndex = 255;
+            this.label22.Text = "外包产品数量：";
+            // 
+            // lbl纸箱用量
+            // 
+            this.lbl纸箱用量.AutoSize = true;
+            this.lbl纸箱用量.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lbl纸箱用量.Location = new System.Drawing.Point(135, 436);
+            this.lbl纸箱用量.Name = "lbl纸箱用量";
+            this.lbl纸箱用量.Size = new System.Drawing.Size(72, 16);
+            this.lbl纸箱用量.TabIndex = 254;
+            this.lbl纸箱用量.Text = "纸箱用量";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label20.Location = new System.Drawing.Point(32, 436);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(88, 16);
+            this.label20.TabIndex = 253;
+            this.label20.Text = "纸箱用量：";
+            // 
+            // lbl内包产品数量
+            // 
+            this.lbl内包产品数量.AutoSize = true;
+            this.lbl内包产品数量.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lbl内包产品数量.Location = new System.Drawing.Point(856, 406);
+            this.lbl内包产品数量.Name = "lbl内包产品数量";
+            this.lbl内包产品数量.Size = new System.Drawing.Size(104, 16);
+            this.lbl内包产品数量.TabIndex = 252;
+            this.lbl内包产品数量.Text = "内包产品数量";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label18.Location = new System.Drawing.Point(753, 406);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(120, 16);
+            this.label18.TabIndex = 251;
+            this.label18.Text = "内包产品数量：";
+            // 
+            // lbl内包装用量
+            // 
+            this.lbl内包装用量.AutoSize = true;
+            this.lbl内包装用量.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lbl内包装用量.Location = new System.Drawing.Point(135, 406);
+            this.lbl内包装用量.Name = "lbl内包装用量";
+            this.lbl内包装用量.Size = new System.Drawing.Size(88, 16);
+            this.lbl内包装用量.TabIndex = 250;
+            this.lbl内包装用量.Text = "内包装用量";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label16.Location = new System.Drawing.Point(32, 406);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(104, 16);
+            this.label16.TabIndex = 249;
+            this.label16.Text = "内包装用量：";
+            // 
+            // lbl制袋收率
+            // 
+            this.lbl制袋收率.AutoSize = true;
+            this.lbl制袋收率.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lbl制袋收率.Location = new System.Drawing.Point(856, 376);
+            this.lbl制袋收率.Name = "lbl制袋收率";
+            this.lbl制袋收率.Size = new System.Drawing.Size(72, 16);
+            this.lbl制袋收率.TabIndex = 248;
+            this.lbl制袋收率.Text = "制袋收率";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label14.Location = new System.Drawing.Point(753, 376);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(112, 16);
+            this.label14.TabIndex = 247;
+            this.label14.Text = "制袋收率(%)：";
+            // 
+            // lbl膜材用量合计
+            // 
+            this.lbl膜材用量合计.AutoSize = true;
+            this.lbl膜材用量合计.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lbl膜材用量合计.Location = new System.Drawing.Point(527, 376);
+            this.lbl膜材用量合计.Name = "lbl膜材用量合计";
+            this.lbl膜材用量合计.Size = new System.Drawing.Size(104, 16);
+            this.lbl膜材用量合计.TabIndex = 246;
+            this.lbl膜材用量合计.Text = "膜材用量合计";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label12.Location = new System.Drawing.Point(365, 376);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(176, 16);
+            this.label12.TabIndex = 245;
+            this.label12.Text = "膜材用量合计(平米）：";
+            // 
+            // lbl工时效率
+            // 
+            this.lbl工时效率.AutoSize = true;
+            this.lbl工时效率.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lbl工时效率.Location = new System.Drawing.Point(904, 345);
+            this.lbl工时效率.Name = "lbl工时效率";
+            this.lbl工时效率.Size = new System.Drawing.Size(72, 16);
+            this.lbl工时效率.TabIndex = 244;
+            this.lbl工时效率.Text = "工时效率";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label10.Location = new System.Drawing.Point(753, 345);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(160, 16);
+            this.label10.TabIndex = 243;
+            this.label10.Text = "工时效率(只/小时)：";
+            // 
+            // lbl工时合计
+            // 
+            this.lbl工时合计.AutoSize = true;
+            this.lbl工时合计.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lbl工时合计.Location = new System.Drawing.Point(494, 345);
+            this.lbl工时合计.Name = "lbl工时合计";
+            this.lbl工时合计.Size = new System.Drawing.Size(72, 16);
+            this.lbl工时合计.TabIndex = 242;
+            this.lbl工时合计.Text = "工时合计";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label8.Location = new System.Drawing.Point(365, 345);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(128, 16);
+            this.label8.TabIndex = 241;
+            this.label8.Text = "工时合计（H）：";
+            // 
+            // lbl成品数量合计
+            // 
+            this.lbl成品数量合计.AutoSize = true;
+            this.lbl成品数量合计.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lbl成品数量合计.Location = new System.Drawing.Point(192, 376);
+            this.lbl成品数量合计.Name = "lbl成品数量合计";
+            this.lbl成品数量合计.Size = new System.Drawing.Size(104, 16);
+            this.lbl成品数量合计.TabIndex = 240;
+            this.lbl成品数量合计.Text = "成品数量合计";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label6.Location = new System.Drawing.Point(32, 376);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(168, 16);
+            this.label6.TabIndex = 239;
+            this.label6.Text = "成品数量合计(平米)：";
+            // 
+            // lbl入库量合计
+            // 
+            this.lbl入库量合计.AutoSize = true;
+            this.lbl入库量合计.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lbl入库量合计.Location = new System.Drawing.Point(172, 345);
+            this.lbl入库量合计.Name = "lbl入库量合计";
+            this.lbl入库量合计.Size = new System.Drawing.Size(88, 16);
+            this.lbl入库量合计.TabIndex = 238;
+            this.lbl入库量合计.Text = "入库量合计";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label4.Location = new System.Drawing.Point(30, 345);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(152, 16);
+            this.label4.TabIndex = 237;
+            this.label4.Text = "入库量合计（只）：";
             // 
             // btn查询
             // 
@@ -155,206 +355,6 @@
             this.label1.Size = new System.Drawing.Size(129, 16);
             this.label1.TabIndex = 0;
             this.label1.Text = "LDPE生产日报表";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label4.Location = new System.Drawing.Point(30, 345);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(104, 16);
-            this.label4.TabIndex = 237;
-            this.label4.Text = "入库量合计：";
-            // 
-            // lbl入库量合计
-            // 
-            this.lbl入库量合计.AutoSize = true;
-            this.lbl入库量合计.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbl入库量合计.Location = new System.Drawing.Point(133, 345);
-            this.lbl入库量合计.Name = "lbl入库量合计";
-            this.lbl入库量合计.Size = new System.Drawing.Size(88, 16);
-            this.lbl入库量合计.TabIndex = 238;
-            this.lbl入库量合计.Text = "入库量合计";
-            // 
-            // lbl成品数量合计
-            // 
-            this.lbl成品数量合计.AutoSize = true;
-            this.lbl成品数量合计.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbl成品数量合计.Location = new System.Drawing.Point(135, 376);
-            this.lbl成品数量合计.Name = "lbl成品数量合计";
-            this.lbl成品数量合计.Size = new System.Drawing.Size(104, 16);
-            this.lbl成品数量合计.TabIndex = 240;
-            this.lbl成品数量合计.Text = "成品数量合计";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label6.Location = new System.Drawing.Point(32, 376);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(120, 16);
-            this.label6.TabIndex = 239;
-            this.label6.Text = "成品数量合计：";
-            // 
-            // lbl工时合计
-            // 
-            this.lbl工时合计.AutoSize = true;
-            this.lbl工时合计.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbl工时合计.Location = new System.Drawing.Point(468, 345);
-            this.lbl工时合计.Name = "lbl工时合计";
-            this.lbl工时合计.Size = new System.Drawing.Size(72, 16);
-            this.lbl工时合计.TabIndex = 242;
-            this.lbl工时合计.Text = "工时合计";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label8.Location = new System.Drawing.Point(365, 345);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(88, 16);
-            this.label8.TabIndex = 241;
-            this.label8.Text = "工时合计：";
-            // 
-            // lbl工时效率
-            // 
-            this.lbl工时效率.AutoSize = true;
-            this.lbl工时效率.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbl工时效率.Location = new System.Drawing.Point(856, 345);
-            this.lbl工时效率.Name = "lbl工时效率";
-            this.lbl工时效率.Size = new System.Drawing.Size(72, 16);
-            this.lbl工时效率.TabIndex = 244;
-            this.lbl工时效率.Text = "工时效率";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label10.Location = new System.Drawing.Point(753, 345);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(88, 16);
-            this.label10.TabIndex = 243;
-            this.label10.Text = "工时效率：";
-            // 
-            // lbl膜材用量合计
-            // 
-            this.lbl膜材用量合计.AutoSize = true;
-            this.lbl膜材用量合计.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbl膜材用量合计.Location = new System.Drawing.Point(468, 376);
-            this.lbl膜材用量合计.Name = "lbl膜材用量合计";
-            this.lbl膜材用量合计.Size = new System.Drawing.Size(104, 16);
-            this.lbl膜材用量合计.TabIndex = 246;
-            this.lbl膜材用量合计.Text = "膜材用量合计";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label12.Location = new System.Drawing.Point(365, 376);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(120, 16);
-            this.label12.TabIndex = 245;
-            this.label12.Text = "膜材用量合计：";
-            // 
-            // lbl制袋收率
-            // 
-            this.lbl制袋收率.AutoSize = true;
-            this.lbl制袋收率.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbl制袋收率.Location = new System.Drawing.Point(856, 376);
-            this.lbl制袋收率.Name = "lbl制袋收率";
-            this.lbl制袋收率.Size = new System.Drawing.Size(72, 16);
-            this.lbl制袋收率.TabIndex = 248;
-            this.lbl制袋收率.Text = "制袋收率";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label14.Location = new System.Drawing.Point(753, 376);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(88, 16);
-            this.label14.TabIndex = 247;
-            this.label14.Text = "制袋收率：";
-            // 
-            // lbl内包装用量
-            // 
-            this.lbl内包装用量.AutoSize = true;
-            this.lbl内包装用量.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbl内包装用量.Location = new System.Drawing.Point(135, 406);
-            this.lbl内包装用量.Name = "lbl内包装用量";
-            this.lbl内包装用量.Size = new System.Drawing.Size(88, 16);
-            this.lbl内包装用量.TabIndex = 250;
-            this.lbl内包装用量.Text = "内包装用量";
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label16.Location = new System.Drawing.Point(32, 406);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(104, 16);
-            this.label16.TabIndex = 249;
-            this.label16.Text = "内包装用量：";
-            // 
-            // lbl内包产品数量
-            // 
-            this.lbl内包产品数量.AutoSize = true;
-            this.lbl内包产品数量.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbl内包产品数量.Location = new System.Drawing.Point(856, 406);
-            this.lbl内包产品数量.Name = "lbl内包产品数量";
-            this.lbl内包产品数量.Size = new System.Drawing.Size(104, 16);
-            this.lbl内包产品数量.TabIndex = 252;
-            this.lbl内包产品数量.Text = "内包产品数量";
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label18.Location = new System.Drawing.Point(753, 406);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(120, 16);
-            this.label18.TabIndex = 251;
-            this.label18.Text = "内包产品数量：";
-            // 
-            // lbl纸箱用量
-            // 
-            this.lbl纸箱用量.AutoSize = true;
-            this.lbl纸箱用量.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbl纸箱用量.Location = new System.Drawing.Point(135, 436);
-            this.lbl纸箱用量.Name = "lbl纸箱用量";
-            this.lbl纸箱用量.Size = new System.Drawing.Size(72, 16);
-            this.lbl纸箱用量.TabIndex = 254;
-            this.lbl纸箱用量.Text = "纸箱用量";
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label20.Location = new System.Drawing.Point(32, 436);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(88, 16);
-            this.label20.TabIndex = 253;
-            this.label20.Text = "纸箱用量：";
-            // 
-            // lbl外包产品数量
-            // 
-            this.lbl外包产品数量.AutoSize = true;
-            this.lbl外包产品数量.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbl外包产品数量.Location = new System.Drawing.Point(856, 436);
-            this.lbl外包产品数量.Name = "lbl外包产品数量";
-            this.lbl外包产品数量.Size = new System.Drawing.Size(104, 16);
-            this.lbl外包产品数量.TabIndex = 256;
-            this.lbl外包产品数量.Text = "外包产品数量";
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label22.Location = new System.Drawing.Point(753, 436);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(120, 16);
-            this.label22.TabIndex = 255;
-            this.label22.Text = "外包产品数量：";
             // 
             // LDPEBag_dailyreport
             // 

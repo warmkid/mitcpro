@@ -61,6 +61,7 @@
             this.comboBoxChart.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.comboBoxChart.FormattingEnabled = true;
             this.comboBoxChart.Items.AddRange(new object[] {
+            "膜材",
             "内包",
             "外包"});
             this.comboBoxChart.Location = new System.Drawing.Point(343, 75);

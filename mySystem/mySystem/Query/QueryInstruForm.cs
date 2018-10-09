@@ -235,6 +235,7 @@ namespace mySystem
                     {
                         case "吹膜":
                             b = mySystem.ExtructionMainForm.checkUser(Parameter.userName, Parameter.userRole, "生产指令信息表");
+                            b = true;
                             if (b)
                             {
                                 BatchProductRecord.ProcessProductInstru form1 = new BatchProductRecord.ProcessProductInstru(base.mainform, ID);
@@ -310,6 +311,7 @@ namespace mySystem
                     setDataGridViewBackColor("审批人");
             }
             catch { }
+
         }
 
         //设置datagridview背景颜色，待审核标红
@@ -324,6 +326,10 @@ namespace mySystem
                 else if (dgv.Rows[i].Cells[checker].Value.ToString() == "")
                 {
                     dgv.Rows[i].DefaultCellStyle.BackColor = Color.Gray;
+                }
+                if (dgv.Rows[i].Cells["状态"].Value.ToString() == "5")
+                {
+                    dgv.Rows[i].DefaultCellStyle.BackColor = Color.Red;
                 }
             }
         }

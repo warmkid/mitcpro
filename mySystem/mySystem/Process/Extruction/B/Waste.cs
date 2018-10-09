@@ -81,11 +81,11 @@ namespace mySystem.Process.Extruction.B
             getStartTime();
             getUsrList();
             getWasteRason();
-            
-            
-            
 
-            readOuterData(lbl生产指令.Text);
+
+
+
+            readOuterData(__生产指令);
             removeOuterBinding();
             outerBind();
             if (0 == dtOuter.Rows.Count)
@@ -106,8 +106,8 @@ namespace mySystem.Process.Extruction.B
                     //((DataTable)bsOuter.DataSource).Rows[0]["审核是否通过"] = 0;
                     daOuterSQL.Update((DataTable)bsOuter.DataSource);
                 }
-                
-                readOuterData(lbl生产指令.Text);    
+
+                readOuterData(__生产指令);    
                 removeOuterBinding();
                 outerBind();
 
@@ -129,6 +129,10 @@ namespace mySystem.Process.Extruction.B
             }
 
 
+
+            readOuterData(__生产指令);
+            removeOuterBinding();
+            outerBind();
             setEnableReadOnly();
             
 
@@ -921,6 +925,12 @@ namespace mySystem.Process.Extruction.B
                 }
             }
 
+            if (!checkALL日期代码班次())
+            {
+                
+                return;
+            }
+
             // 保存数据的方法，每次保存之后重新读取数据，重新绑定控件
             if (!mySystem.Parameter.isSqlOk)
             {
@@ -956,6 +966,31 @@ namespace mySystem.Process.Extruction.B
             catch (NullReferenceException exp) { }
             
         }
+
+        bool checkALL日期代码班次()
+        {
+            string sql = @"select * from 吹膜工序生产和检验记录 where 生产指令ID={0}";
+            SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, __生产指令ID), Parameter.conn);
+            DataTable dt = new DataTable();
+            da.Fill(dt); // 里面只到日期，不到时间
+            for (int i=0;i<dataGridView1.Rows.Count;++i)
+            {
+                string datetime = Convert.ToDateTime(
+                    dataGridView1.Rows[i].Cells["生产日期"].Value).ToString("yyyy/MM/dd");
+                string banci = dataGridView1.Rows[i].Cells["班次"].Value.ToString();
+                string code = dataGridView1.Rows[i].Cells["产品代码"].Value.ToString();
+                string sel = "生产日期='{0}' and 产品名称='{1}' and 班次={2}";
+                DataRow[] drs =  dt.Select(string.Format(sel, datetime, code, (banci == "白班" ? 1 : 0)));
+                if (drs.Length <= 0)
+                {
+                    MessageBox.Show("第"+(i+1)+"行数据有误！");
+                    return false;
+                }
+            }
+            return true;
+        }
+
+       
 
         private void btn提交审核_Click(object sender, EventArgs e)
         {

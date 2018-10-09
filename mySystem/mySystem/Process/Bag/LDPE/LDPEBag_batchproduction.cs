@@ -19,7 +19,7 @@ namespace mySystem.Process.Bag.LDPE
         List<Int32> noid = null;
         int totalPage = 4;
         int _生产指令ID;
-        string _生产指令;
+        string _生产指令;        
         delegate void printF(int id);
         printF[] prtBatch = null;
         mySystem.Parameter.UserState _userState;
@@ -64,7 +64,7 @@ namespace mySystem.Process.Bag.LDPE
             }
             setFormState();
             setEnableReadOnly();
-
+            setDTP();
         }
 
 
@@ -100,9 +100,19 @@ namespace mySystem.Process.Bag.LDPE
             }
             setFormState();
             setEnableReadOnly();
-
+            setDTP();
         }
 
+
+        void setDTP()
+        {
+            SqlDataAdapter da = new SqlDataAdapter("select * from 生产指令 where ID=" + _生产指令ID, mySystem.Parameter.conn);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            int s = Convert.ToInt32(dt.Rows[0]["状态"]);
+            if (s == 4) { return; }
+            dtOuter.Rows[0]["结束生产时间"] = DateTime.Now;
+        }
 
         private void init()
         {
@@ -604,6 +614,8 @@ namespace mySystem.Process.Bag.LDPE
             dtOuter.Rows[0]["审核员"] = ckform.userName;
             dtOuter.Rows[0]["审核是否通过"] = ckform.ischeckOk;
             dtOuter.Rows[0]["审核意见"] = ckform.opinion;
+            dtOuter.Rows[0]["审核时间"] = DateTime.Now;
+            
 
 
             save();
@@ -759,10 +771,13 @@ namespace mySystem.Process.Bag.LDPE
             int[] accumu = new int[dataGridView1.Rows.Count];
                 
                 // 打开一个Excel进程
-            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            Microsoft.Office.Interop.Excel.Application oXL = 
+                new Microsoft.Office.Interop.Excel.Application();
                 // 利用这个进程打开一个Excel文件
                 //System.IO.Directory.GetCurrentDirectory;
-            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\LDPE\0 SOP-MFG-105-R01 制袋工序批生产记录封面.xlsx");
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(
+                System.IO.Directory.GetCurrentDirectory() + 
+@"\..\..\xls\LDPE\0 SOP-MFG-105-R01 制袋工序批生产记录封面.xlsx");
                 // 选择一个Sheet，注意Sheet的序号是从1开始的
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
                 // 设置该进程是否可见

@@ -85,6 +85,11 @@ namespace BatchProductRecord
             init();
             initly();
             addOtherEventHandler();
+
+
+            // 更新结束时间
+            //if (dtOuter.Rows.Count > 0)
+            //    dtOuter.Rows[0]["结束生产时间"] = DateTime.Now;
         }
 
         public BatchProductRecord(mySystem.MainForm mainform, int id)
@@ -259,6 +264,7 @@ namespace BatchProductRecord
                 dr["汇总时间"] = DateTime.Now;
                 dr["批准时间"] = DateTime.Now;
                 dr["审核时间"] = DateTime.Now;
+                
                 return dr;
             }
             else
@@ -278,6 +284,7 @@ namespace BatchProductRecord
                 dr["汇总时间"] = DateTime.Now;
                 dr["批准时间"] = DateTime.Now;
                 dr["审核时间"] = DateTime.Now;
+                dr["备注"] = "无";
                 return dr;
             }
 
@@ -1836,7 +1843,7 @@ namespace BatchProductRecord
         }
 
         private void btn保存_Click(object sender, EventArgs e)
-        {
+        { 
             
 
             save();
@@ -2253,14 +2260,16 @@ namespace BatchProductRecord
             }
             my.Cells[22, 2].Value = dtOuter.Rows[0]["备注"];
             my.Cells[22, 5].Value = dtOuter.Rows[0]["汇总人"].ToString() + "   " + dtOuter.Rows[0]["汇总时间"];
-            my.Cells[24, 5].Value = dtOuter.Rows[0]["审核人"].ToString() + "   " + dtOuter.Rows[0]["审核时间"];
-            my.Cells[26, 5].Value = dtOuter.Rows[0]["批准人"].ToString() + "   " + dtOuter.Rows[0]["批准时间"];
+            //my.Cells[24, 5].Value = dtOuter.Rows[0]["审核人"].ToString() + "   " + dtOuter.Rows[0]["审核时间"];
+            //my.Cells[26, 5].Value = dtOuter.Rows[0]["批准人"].ToString() + "   " + dtOuter.Rows[0]["批准时间"];
 
             //int prePage = 0;
             //int curPage = 0;
-            for (int i = 5; i <= 21; ++i)
+            for (int i = 5; i <= 20; ++i)
             {
+                my.Cells[i, 1] = i - 4;
                 my.Cells[i, 3] = 0;
+                my.Cells[i, 2] = dataGridView1.Rows[i - 5].Cells["Column2"].Value.ToString();
                 if (htRow2Page.ContainsKey(i - 5))
                 {
                     //curPage += Convert.ToInt32(htRow2Page[i - 5]);

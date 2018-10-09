@@ -1174,5 +1174,10 @@ namespace mySystem.Process.Order
             //
         }
 
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
     }
 }

@@ -81,7 +81,7 @@ namespace mySystem
             string[] widths = ws.Split('|');
             if (widths.Length != dgv.Columns.Count)
             {
-                MessageBox.Show(this.GetType().ToString() +"中的"+dgv.Name+"列宽设置失败，列数不匹配");
+                //MessageBox.Show(this.GetType().ToString() +"中的"+dgv.Name+"列宽设置失败，列数不匹配");
                 setDGVWidth(dgv, Convert.ToInt32(DEFAULT_DGV_COLUMN_WIDTH));
             }
             else
