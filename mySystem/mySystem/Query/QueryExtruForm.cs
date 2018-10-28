@@ -690,6 +690,28 @@ namespace mySystem.Query
             {
                 // get id of current selected row
                 int id = Convert.ToInt32(dgv.SelectedCells[0].OwningRow.Cells["ID"].Value);
+                // 检查审核员
+                string colname = "";
+                foreach (DataGridViewColumn dgvc in dgv.Columns)
+                {
+                    if (dgvc.Name == "审核员" || dgvc.Name == "审核人")
+                    {
+                        colname = dgvc.Name;
+                        break;
+                    }
+                }
+                if (colname == "")
+                {
+                    MessageBox.Show("无法识别审核员所在的列");
+                    return;
+                }
+                string 审核员;
+                审核员 = dgv.SelectedCells[0].OwningRow.Cells[colname].Value.ToString();
+                if (审核员 == "__待审核")
+                {
+                    MessageBox.Show("请先退回审核再删除");
+                    return;
+                }
                 // delete 
                 dt.Select("ID=" + id)[0].Delete();
                 da.Update(dt);
@@ -714,6 +736,11 @@ namespace mySystem.Query
                         break;
                     }
                 }
+                if (colname == "")
+                {
+                    MessageBox.Show("无法识别审核员所在的列");
+                    return;
+                }
                 string 审核员;
                 try
                 {
@@ -721,8 +748,13 @@ namespace mySystem.Query
                     if (审核员 == "") return;
                     else
                     {
+                        dt.Columns.Remove("序号");
+                        cb = new System.Data.SqlClient.SqlCommandBuilder(da);
                         dt.Select("ID=" + id)[0][colname] = "";
-                        da.Update(dt);
+                        int ret = da.Update(dt);
+
+
+
                         SearchBtn.PerformClick();
 
 
