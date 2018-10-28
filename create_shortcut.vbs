@@ -13,7 +13,7 @@ Dim fullpath
 fullpath = fso1.GetAbsolutePathName(folderName1)
 
 
-set oShellLink = WshShell.CreateShortcut(strDesktop & "\颇尔奥新ERP系统.lnk")
+set oShellLink = WshShell.CreateShortcut(strDesktop & "\颇尔奥星ERP系统.lnk")
 oShellLink.TargetPath = fullpath  + "\mySystem\mySystem\bin\Release\mySystem.exe" : '目标
 oShellLink.WindowStyle = 3 :'参数1默认窗口激活，参数3最大化激活，参数7最小化
 oShellLink.IconLocation = fullpath  + "\mySystem\mySystem\pic\logo32.png"
@@ -21,7 +21,7 @@ oShellLink.WorkingDirectory = fullpath  + "\mySystem\mySystem\bin\Release" '起始
 oShellLink.Save : '创建保存快捷方式
 
 
-set oShellLink = WshShell.CreateShortcut(strDesktop & "\颇尔奥新ERP系统自动更新.lnk")
+set oShellLink = WshShell.CreateShortcut(strDesktop & "\颇尔奥星ERP系统自动更新.lnk")
 oShellLink.TargetPath = fullpath  + "\mySystem\mySystem\bin\Release\autoupdateERP.exe" : '目标
 oShellLink.IconLocation = fullpath  + "\mySystem\mySystem\pic\automaticupdates.png"
 oShellLink.WorkingDirectory = fullpath  + "\mySystem\mySystem\bin\Release" '起始位置
