@@ -566,7 +566,7 @@ namespace BatchProductRecord
             getPeople();
             setUserState();
             getOtherData();
-
+            用料代码自动补全();
             setControlFalse();
             tb指令编号.ReadOnly = false;
             bt打印.Enabled = false;
@@ -617,7 +617,7 @@ namespace BatchProductRecord
             getPeople();
             setUserState();
             getOtherData();
-
+            用料代码自动补全();
             string asql = "select * from 生产指令信息表 where ID=" + id;
             DataTable tempdt = new DataTable();
 
@@ -1513,7 +1513,7 @@ namespace BatchProductRecord
             dr["每卷长度"]=0;
             dr["计划产量卷"]=0;
             dr["卷心管规格"]=0;
-            dr["标签"]=0;
+            dr["标签"] = "吹膜半成品标签";
             dr["标签领料量"]=0;
             return dr;
         }
@@ -1718,6 +1718,37 @@ namespace BatchProductRecord
                         // 重写cell value changed 事件，自动填写id
                         break;
 
+                    case "标签":
+                        DataGridViewComboBoxColumn c10 = new DataGridViewComboBoxColumn();
+                        c10.DataPropertyName = dc.ColumnName;
+                        c10.HeaderText = dc.ColumnName;
+                        c10.Name = dc.ColumnName;
+                        c10.SortMode = DataGridViewColumnSortMode.NotSortable;
+                        c10.ValueType = dc.DataType;
+                        // 如果换了名字会报错，把当前值也加上就好了
+                        // 加序号，按序号显示
+                        c10.Items.Add("吹膜半成品标签");
+                        c10.Items.Add("内标签-英文照射");
+                        c10.Items.Add("内标签-英文不照射");
+                        c10.Items.Add("内标签-中文照射");
+                        c10.Items.Add("内标签-中文不照射");
+                        c10.Items.Add("外标签-中文照射");
+                        c10.Items.Add("外标签-中文不照射");
+                        c10.Items.Add("外箱-英文照射");
+                        c10.Items.Add("外箱-英文不照射");
+                        
+
+
+
+
+
+
+
+
+                        dataGridView1.Columns.Add(c10);
+                        // 重写cell value changed 事件，自动填写id
+                        break;
+
                     default:
                         DataGridViewTextBoxColumn c2 = new DataGridViewTextBoxColumn();
                         c2.DataPropertyName = dc.ColumnName;
@@ -1771,7 +1802,7 @@ namespace BatchProductRecord
                 MessageBox.Show("中层领料量输入不合法");
                 return false;
             }
-            if (tempvalue + tempvalue2 < float.Parse(tb用料重量合计.Text))
+            if (tempvalue + tempvalue2 < float.Parse(tb用料重量合计.Text)-10)
             {
                 MessageBox.Show("内外、中层领料量之和必须大于等于用料量");
                 return false;
@@ -2738,6 +2769,23 @@ namespace BatchProductRecord
             lbl产品英文名称.Text = list_Name[comboBox1.SelectedIndex];
         }
 
+
+        private void 用料代码自动补全()
+        {
+
+            AutoCompleteStringCollection acsc = new AutoCompleteStringCollection();
+            acsc.AddRange(ht代码面数.Keys.OfType<String>().ToArray<String>());
+
+            cb内外层物料代码.AutoCompleteCustomSource = acsc;
+            cb内外层物料代码.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            cb内外层物料代码.AutoCompleteSource = AutoCompleteSource.CustomSource;
+
+            cb中层物料代码.AutoCompleteCustomSource = acsc;
+            cb中层物料代码.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            cb中层物料代码.AutoCompleteSource = AutoCompleteSource.CustomSource;
+
+               
+        }
 
     }
 }

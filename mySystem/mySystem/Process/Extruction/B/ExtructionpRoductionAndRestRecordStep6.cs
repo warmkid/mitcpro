@@ -398,6 +398,7 @@ namespace mySystem.Extruction.Process
             //查询条件始终不可编辑
             //cb产品名称.Enabled = false;
             btn查询新建.Enabled = false;
+            dtp生产日期.Enabled = false;
         }
 
         /// <summary>
@@ -657,7 +658,13 @@ namespace mySystem.Extruction.Process
             dr["生产指令ID"] = InstruID;
             dr["产品名称"] = cb产品名称.Text;
             dr["产品批号"] = dt代码批号.Rows[cb产品名称.FindString(cb产品名称.Text)]["产品批号"].ToString();
-            dr["生产日期"] = Convert.ToDateTime(dtp生产日期.Value.ToString("yyyy/MM/dd"));
+            // 夜班,上午，日期自动-1
+            DateTime datetime = DateTime.Now;
+            if (!cb白班.Checked && datetime.Hour >= 0 && datetime.Hour < 12)
+            {
+                datetime.AddDays(-1);
+            }
+            dr["生产日期"] = datetime.ToString("yyyy/MM/dd");
             dr["班次"] = cb白班.Checked;
             dr["依据工艺"] = dt工艺设备.Rows[0]["依据工艺"];
             dr["生产设备"] = dt工艺设备.Rows[0]["生产设备"];
@@ -729,7 +736,14 @@ namespace mySystem.Extruction.Process
             else
             {
                 //新建第一行
-                dr["开始时间"] = DateTime.Now;
+                String sql = "select top 1 结束时间 from 吹膜工序生产和检验记录详细信息 order by ID desc";
+                SqlDataAdapter dat = new SqlDataAdapter(sql, conn);
+                DataTable dtt = new DataTable();
+                dat.Fill(dtt);
+                if (dtt.Rows.Count > 0)
+                    dr["开始时间"] = dtt.Rows[0]["结束时间"];
+                else
+                    dr["开始时间"] = DateTime.Now;
                 dr["膜卷编号"] = (pre_no + 1).ToString("D2");
                 dr["宽度"] = 0;
                 dr["膜卷长度"] = 0;
@@ -857,6 +871,7 @@ namespace mySystem.Extruction.Process
             SqlDataAdapter da = new SqlDataAdapter(String.Format(sql,cpdm, instrID),mySystem.Parameter.conn);
             DataTable dt = new DataTable();
             da.Fill(dt);
+            
             if (dt.Rows.Count == 0)
                 return 0;
             else
@@ -918,7 +933,8 @@ namespace mySystem.Extruction.Process
         {
             if (dt记录详情.Rows.Count >= 2)
             {
-                int deletenum = dataGridView1.CurrentRow.Index;
+                if(dataGridView1.SelectedCells.Count<=0) return;
+                int deletenum = dataGridView1.SelectedCells[0].OwningRow.Index;
                 //dt记录详情.Rows.RemoveAt(deletenum);
                 dt记录详情.Rows[deletenum].Delete();
                 // 保存
@@ -931,6 +947,7 @@ namespace mySystem.Extruction.Process
                 //求合计
                 getTotal();
                 setDataGridViewRowNums();
+                dataGridView1.ClearSelection();
                 dataGridView1.Rows[dataGridView1.Rows.Count - 1].Selected = true;
             }
         }
@@ -1550,9 +1567,9 @@ namespace mySystem.Extruction.Process
                 SqlCommandBuilder cb = new SqlCommandBuilder(da);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
-                
-                if (Convert.ToInt32(dt.Rows[0]["是否可以新建"]) == 0
-                    && Parameter.proInstruction != "E-XP1-2018-003")// 特例:
+
+                if (Convert.ToInt32(dt.Rows[0]["是否可以新建"]) == 0/*
+                    && Parameter.proInstruction != "E-XP1-2018-003"*/)// 特例:
                 {
                     MessageBox.Show("该班次已有记录，无法新建");
                 }

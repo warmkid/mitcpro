@@ -239,7 +239,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(1276, 683);
+            this.ClientSize = new System.Drawing.Size(1276, 695);
             this.Controls.Add(this.MainPanel);
             this.Controls.Add(this.groupBox1);
             this.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -248,7 +248,7 @@
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "欢迎使用颇尔奥星管理系统    v0.9.17  201809260900";
+            this.Text = "欢迎使用颇尔奥星管理系统    v0.9.17  201812121402";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -265,7 +265,6 @@
         private System.Windows.Forms.Button ExitBtn;
         private System.Windows.Forms.Label userLabel;
         private System.Windows.Forms.Label label1;
-        public System.Windows.Forms.Panel MainPanel;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button btn导入;
@@ -274,6 +273,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button btnUpdate;
+        public System.Windows.Forms.Panel MainPanel;
 
 
     }

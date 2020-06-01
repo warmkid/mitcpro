@@ -111,6 +111,17 @@ namespace mySystem.Process.Extruction
 
         private void getCodeAndBatch()
         {
+            Hashtable htLabelToIdx = new Hashtable();
+            htLabelToIdx.Add("吹膜半成品标签",0);
+            htLabelToIdx.Add("内标签-英文照射",1);
+            htLabelToIdx.Add("内标签-英文不照射",2);
+            htLabelToIdx.Add("内标签-中文照射",3);
+            htLabelToIdx.Add("内标签-中文不照射",4);
+            htLabelToIdx.Add("外标签-中文照射",5);
+            htLabelToIdx.Add("外标签-中文不照射",6);
+            htLabelToIdx.Add("外箱-英文照射",7);
+            htLabelToIdx.Add("外箱-英文不照射",8);
+
             if (!mySystem.Parameter.isSqlOk)
             {
                 OleDbDataAdapter da = new OleDbDataAdapter("select * from 生产指令产品列表 where 生产指令ID=" + mySystem.Parameter.proInstruID, mySystem.Parameter.connOle);
@@ -119,7 +130,7 @@ namespace mySystem.Process.Extruction
                 foreach (DataRow dr in dt.Rows)
                 {
                     codeToBatch.Add(dr["产品编码"].ToString(), dr["产品批号"].ToString());
-                    codeToLabel.Add(dr["产品编码"].ToString(), Convert.ToInt32(dr["标签"]));
+                    codeToLabel.Add(dr["产品编码"].ToString(), htLabelToIdx[dr["标签"].ToString()]);
                 }
             }
             else

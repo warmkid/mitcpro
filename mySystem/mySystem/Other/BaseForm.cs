@@ -20,13 +20,13 @@ namespace mySystem
             mainform = mForm;
             InitializeComponent();
             this.MaximizeBox = false;
-            //this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
         }
 
         public BaseForm()
         {
             this.MaximizeBox = false;
-            //this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
         }
 
         public virtual void CheckResult()

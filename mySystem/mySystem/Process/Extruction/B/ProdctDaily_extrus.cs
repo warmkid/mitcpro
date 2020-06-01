@@ -410,6 +410,7 @@ namespace mySystem
                     TimeSpan delt = (DateTime)dt_检验记录_详细.Rows[dt_检验记录_详细.Rows.Count - 1]["结束时间"] - (DateTime)dt_检验记录_详细.Rows[0]["开始时间"];
                     //dr["工时"] = Math.Ceiling(delt.TotalHours);//工时
                     dr["工时"] = Math.Round(delt.TotalHours, 1);
+                    
                 }
 
 

@@ -983,7 +983,7 @@ namespace mySystem.Process.Extruction.B
                 DataRow[] drs =  dt.Select(string.Format(sel, datetime, code, (banci == "白班" ? 1 : 0)));
                 if (drs.Length <= 0)
                 {
-                    MessageBox.Show("第"+(i+1)+"行数据有误！");
+                    MessageBox.Show("第"+(i+1)+"行数据有误！\n请务必保证该行记录的时间、班次和产品代码与生产检验记录一致！");
                     return false;
                 }
             }
@@ -1008,7 +1008,13 @@ namespace mySystem.Process.Extruction.B
                 MessageBox.Show("请填写完整的表单信息", "提示");
                 return;
             }
-            
+
+            if (!checkALL日期代码班次())
+            {
+
+                return;
+            }
+
             if (DialogResult.Yes == MessageBox.Show("确认本指令废品记录已经填完吗？提交审核之后不可修改", "提示", MessageBoxButtons.YesNo))
             {
                 //foreach (DataRow dr in dtInner.Rows)
@@ -1112,6 +1118,10 @@ namespace mySystem.Process.Extruction.B
 
         private void btn提交数据审核_Click(object sender, EventArgs e)
         {
+            if (!checkALL日期代码班次())
+            {
+                return;
+            }
             if (!checkInnerData(dataGridView1))
             {
                 MessageBox.Show("请填写完整的表单信息", "提示");

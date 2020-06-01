@@ -274,6 +274,7 @@
             // dtp生产日期
             // 
             this.dtp生产日期.CalendarFont = new System.Drawing.Font("宋体", 12F);
+            this.dtp生产日期.Enabled = false;
             this.dtp生产日期.Font = new System.Drawing.Font("宋体", 12F);
             this.dtp生产日期.Location = new System.Drawing.Point(887, 97);
             this.dtp生产日期.Name = "dtp生产日期";

@@ -802,6 +802,13 @@ namespace mySystem.Process.Bag.LDPE
                 }
             }
 
+            //判断 内外包是否一致
+            String sql = @"select 产品数量包合计A from 产品内包装记录 where 生产指令编号='{0}' and 产品代码='{1}'";
+            SqlDataAdapter da = new SqlDataAdapter(String.Format(sql, Instruction, cb产品代码.Text), conn);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            // TODO 包和箱？？
+            //if(Convert.ToInt32( dt.Rows["产品数量包合计A"])!=)
             //保存
             bool isSaved = Save();
             if (isSaved == false)

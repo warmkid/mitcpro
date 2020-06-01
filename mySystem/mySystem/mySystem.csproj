@@ -75,9 +75,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Controllers\交接班Controller.cs" />
-    <Compile Include="Controllers\交接班设置Controller.cs" />
+    <Compile Include="Forms\Controllers\BaseController.cs" />
+    <Compile Include="Forms\Controllers\交接班Controller.cs" />
+    <Compile Include="Forms\Controllers\交接班设置Controller.cs" />
     <Compile Include="Forms\交接班记录.cs">
       <SubType>Form</SubType>
     </Compile>

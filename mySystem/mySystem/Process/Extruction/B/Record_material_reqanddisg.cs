@@ -10,6 +10,7 @@ using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
+using System.Collections;
 
 namespace mySystem.Extruction.Process
 {
@@ -30,6 +31,8 @@ namespace mySystem.Extruction.Process
         private string person_审核员;
         private List<string> list_操作员;
         private List<string> list_审核员;
+
+        Hashtable ht代码批号;
 
         //用于带id参数构造函数，存储已存在记录的相关信息
         int instrid;
@@ -408,7 +411,7 @@ namespace mySystem.Extruction.Process
             fill_printer();
             getPeople();
             setUserState();
-
+            getOtherData();
             //setControlFalse();
 
             
@@ -468,6 +471,7 @@ namespace mySystem.Extruction.Process
         {
             if (!mySystem.Parameter.isSqlOk)
             {
+                ht代码批号 = new Hashtable();
                 OleDbCommand comm = new OleDbCommand();
                 comm.Connection = mySystem.Parameter.connOle;
                 comm.CommandText = "select * from 生产指令信息表 where ID=" + mySystem.Parameter.proInstruID;
@@ -479,6 +483,16 @@ namespace mySystem.Extruction.Process
                 {
                     cB物料代码.Items.Add(tempdt.Rows[i]["内外层物料代码"].ToString());
                     cB物料代码.Items.Add(tempdt.Rows[i]["中层物料代码"].ToString());
+                    ht代码批号.Add(tempdt.Rows[i]["内外层物料代码"].ToString(),
+                        tempdt.Rows[i]["内外层物料批号"].ToString());
+                    try
+                    {
+                        ht代码批号.Add(tempdt.Rows[i]["中层物料代码"].ToString(),
+                            tempdt.Rows[i]["中层物料批号"].ToString());
+                    }
+                    catch
+                    {
+                    }
                 }
                 da.Dispose();
                 tempdt.Dispose();
@@ -486,6 +500,7 @@ namespace mySystem.Extruction.Process
             }
             else
             {
+                ht代码批号 = new Hashtable();
                 SqlCommand comm = new SqlCommand();
                 comm.Connection = mySystem.Parameter.conn;
                 comm.CommandText = "select * from 生产指令信息表 where ID=" + mySystem.Parameter.proInstruID;
@@ -497,6 +512,16 @@ namespace mySystem.Extruction.Process
                 {
                     cB物料代码.Items.Add(tempdt.Rows[i]["内外层物料代码"].ToString());
                     cB物料代码.Items.Add(tempdt.Rows[i]["中层物料代码"].ToString());
+                    ht代码批号.Add(tempdt.Rows[i]["内外层物料代码"].ToString(),
+                        tempdt.Rows[i]["内外层物料批号"].ToString());
+                    try
+                    {
+                        ht代码批号.Add(tempdt.Rows[i]["中层物料代码"].ToString(),
+                            tempdt.Rows[i]["中层物料批号"].ToString());
+                    }
+                    catch
+                    {
+                    }
                 }
                 da.Dispose();
                 tempdt.Dispose();
@@ -1013,6 +1038,7 @@ namespace mySystem.Extruction.Process
         {
             dr["T吹膜工序领料退料记录ID"] = dt_prodinstr.Rows[0]["ID"];
             dr["领料日期"] = DateTime.Now;
+            dr["物料批号"] = ht代码批号[cB物料代码.Text];
             dr["数量"] = 0;
             dr["重量每件"] = 0;
             dr["重量"] = 0;
